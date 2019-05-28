@@ -20,26 +20,6 @@ cva:
   domain: "net.sap.corp"
   password: "arista"
 
-#cva:
-#  ip: "10.83.30.232"
-#  mask: "255.255.252.0"
-#  gw: "10.83.28.1"
-#  name: "naa-hec19-01"
-#  dns1: "10.83.28.52"
-#  dns2: "10.83.29.222"
-#  domain: "lab.local"
-#  password: "arista"
-
-#cva:
-#  ip: "192.168.178.110"
-#  mask: "255.255.255.0"
-#  gw: "192.168.178.1"
-#  name: "naa-hec19-01"
-#  dns1: "192.168.178.1"
-#  dns2: "8.8.4.4"
-#  domain: "fritz.box"
-#  password: "arista"
-
 oob01:
   dhcp:
     prefix: "10.178.146.0"
@@ -78,68 +58,6 @@ cvp:
     mask: "255.255.254.0"
     range_low: "10.178.147.224"
     range_high: "10.178.147.247"
-
-#cvp:
-#  ip_eth0: "10.83.30.233"
-#  ip_eth1: "198.1.1.1"
-#  mask_eth0: "255.255.252.0"
-#  mask_eth1: "255.255.255.0"
-#  gw: "10.83.28.1"
-#  name: "cvp-hec19-01.lab.local"
-#  dns1: "10.83.28.52"
-#  dns2: "10.83.29.222"
-#  domain: "lab.local"
-#  ntp1: "144.76.197.108"
-#  ntp2: "100.127.109.2"
-#  device_int: eth0
-#  cluster_int: eth1
-#  ingest_key: "SecureKey19"
-#  vmname: "cvp-hec19"
-#  KvmDomain: "cvp"
-#  password: "arista"
-#  eth1_routes:
-#    - prefix: "198.19.194.0"
-#      mask: "24"
-#      nexthop: "198.1.1.2"
-#    - prefix: "198.19.204.0"
-#      mask: "24"
-#      nexthop: "198.1.1.2"
-#  dhcp:
-#    prefix: "10.83.28.0"
-#    mask: "255.255.252.0"
-#    range_low: "10.83.30.244"
-#    range_high: "10.83.30.244"
-
-#cvp:
-#  ip_eth0: "192.168.178.102"
-#  ip_eth1: "198.1.1.1"
-#  mask_eth0: "255.255.255.0"
-#  mask_eth1: "255.255.255.0"
-#  gw: "192.168.178.1"
-#  name: "cvp-hec19-01.fritz.box"
-#  dns1: "192.168.178.1"
-#  dns2: "8.8.4.4"
-#  domain: "lab.local"
-#  ntp1: "0.de.pool.ntp.org"
-#  ntp2: "1.de.pool.ntp.org"
-#  device_int: eth0
-#  cluster_int: eth1
-#  ingest_key: "SecureKey19"
-#  vmname: "cvp-hec19"
-#  KvmDomain: "cvp"
-#  password: "arista"
-#  eth1_routes:
-#    - prefix: "198.19.194.0"
-#      mask: "24"
-#      nexthop: "198.1.1.2"
-#    - prefix: "198.19.204.0"
-#      mask: "24"
-#      nexthop: "198.1.1.2"
-#  dhcp:
-#    prefix: "192.168.178.0"
-#    mask: "255.255.255.0"
-#    range_low: "192.168.178.240"
-#    range_high: "192.168.178.244"
 
 hec: 
   hec_nr: 19

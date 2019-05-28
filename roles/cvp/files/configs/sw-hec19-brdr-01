@@ -1,0 +1,141 @@
+vlan 900
+   name NW-MGMT
+vlan 914
+   name FW-CORE-TRANS
+vlan 915
+   name FWTTEMP-CORE-TRANS
+vlan 916
+   name FW-BRDR-TRANS
+vlan 920
+   name RT-TRANS
+vlan 940
+   name Internet_DMZ 
+vlan 2001
+   name TEST-CUSTOMER
+vlan 2002-2499
+!
+interface Vxlan1
+   vxlan vlan 914 vni 10914
+   vxlan vlan 916 vni 10916
+   vxlan vlan 920 vni 10920
+!
+interface Port-Channel1101
+   description rt-19-101
+   switchport mode trunk
+   mlag 1101
+interface Port-Channel1102
+   description rt-19-102
+   switchport mode trunk
+   mlag 1102
+interface Port-Channel1401
+   description rt-19-401
+   switchport mode trunk
+   mlag 1401
+interface Port-Channel1402
+   description rt-19-402
+   switchport mode trunk
+   mlag 1402
+interface Port-Channel1501
+   description rt-19-501
+   switchport mode trunk
+   mlag 1501
+interface Port-Channel1502
+   description rt-19-502
+   switchport mode trunk
+   mlag 1502
+interface Port-Channel1601
+   description rt-19-601
+   switchport mode trunk
+   mlag 1601
+interface Port-Channel1602
+   description rt-19-602
+   switchport mode trunk
+   mlag 1602
+!
+interface Ethernet1/1
+   channel-group 1101 mode active
+interface Ethernet2/1
+   channel-group 1102 mode active
+interface Ethernet3/1
+   channel-group 1601 mode active
+interface Ethernet4/1
+   channel-group 1602 mode active
+interface Ethernet5/1
+   channel-group 1501 mode active
+interface Ethernet6/1
+   channel-group 1502 mode active
+interface Ethernet7/1
+   channel-group 1401 mode active
+interface Ethernet8/1
+   channel-group 1402 mode active
+!
+! ===== MLAG Peer Link =====
+mlag configuration
+   domain-id MLAG-BRDR-01
+!
+interface Ethernet30/1,31/1
+   description "MLAG-BRDR-01"
+   channel-group 42 mode active
+!
+! ===== Spine Uplinks =====
+interface Ethernet25/1,26/1,35/1,36/1
+   mtu 9100
+   no switchport
+!
+interface Ethernet25/1
+   description ->sw-19-spine-11
+interface Ethernet26/1
+   description ->sw-19-spine-12
+interface Ethernet35/1
+   description ->sw-19-spine-13
+interface Ethernet36/1
+   description ->sw-19-spine-14
+!
+interface Loopback2
+   ip address 10.200.1.1/32
+!
+router bgp 64119.10001
+   bgp asn notation asdot
+   maximum-paths 8 ecmp 16
+   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG remote-as 64119.10000
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG maximum-routes 12000
+   neighbor EVPN-PG fall-over bfd
+   !
+   neighbor SPINE-PG peer-group
+   neighbor SPINE-PG soft-reconfiguration inbound all
+   neighbor SPINE-PG send-community
+   neighbor SPINE-PG fall-over bfd
+   neighbor SPINE-PG route-map MLPEER-RM out
+   neighbor SPINE-PG maximum-routes 12000
+   neighbor SPINE-PG remote-as 64119.10000
+   !
+   neighbor MLPEER-PG peer-group
+   neighbor MLPEER-PG next-hop-self
+   neighbor MLPEER-PG maximum-routes 12000
+   neighbor MLPEER-PG remote-as 64119.10001
+   network 10.200.1.1/32
+   !
+   neighbor 10.100.0.11 peer-group EVPN-PG
+   neighbor 10.100.0.12 peer-group EVPN-PG
+   neighbor 10.100.0.13 peer-group EVPN-PG
+   neighbor 10.100.0.14 peer-group EVPN-PG
+   !
+   address-family evpn
+      neighbor EVPN-PG activate
+   !
+   address-family ipv4
+      no neighbor EVPN-PG activate
+   !
+   address-family ipv6
+      no neighbor EVPN-PG activate
+   !
+   vlan-aware-bundle all-vlans
+      rd 10.200.1.1:1
+      route-target both 1:1
+      redistribute learned
+      vlan 5-2999
+

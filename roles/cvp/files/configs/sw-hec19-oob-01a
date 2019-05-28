@@ -1,0 +1,141 @@
+hostname sw-hec19-oob-01a
+!
+snmp-server contact 34360483:ncons-hec19-01.fra2.hec.sap.biz:1015
+snmp-server location DE-FRA3-680-226-36
+!
+!=== if descriptions start ============================
+!
+interface Ethernet2
+   description ->rt-hec19-101
+!
+interface Ethernet3
+   description ->rt-hec19-401
+!
+interface Ethernet4
+   description ->rt-hec19-501
+!
+interface Ethernet5
+   description ->rt-hec19-503
+!
+interface Ethernet6
+   description ->rt-hec19-601
+!
+interface Ethernet7
+   description ->rt-hec19-701
+!
+interface Ethernet8
+   description ->fw-hec19-01
+!
+interface Ethernet9
+   description ->lb-hec19-01
+!
+interface Ethernet10
+   description ->sw-hec19-spine-11
+!
+interface Ethernet11
+   description ->sw-hec19-spine-12
+!
+interface Ethernet12
+   description ->sw-hec19-brdr-01a
+!
+interface Ethernet13
+   description ->sw-hec19-brdr-02a
+!
+interface Ethernet14
+   description ->sw-hec19-str-01a
+!
+interface Ethernet15
+   description ->ncons-hec19-01
+!
+interface Ethernet16
+   description ->ncons-hec19-02
+!
+interface Ethernet17
+   description ->sw-hec19-fwt-01a
+!
+interface Ethernet18
+   description ->sw-hec19-cwan-01a
+!
+interface Ethernet19
+   description ->sw-hec19-brdr-03a
+!
+interface Ethernet20
+   description ->rt-hec19-103
+!
+interface Ethernet21
+   description ->sw-hec19-oob-02 P47
+!
+interface Ethernet22
+   description ->sw-hec19-oob-03 P47
+!
+interface Ethernet23
+   description ->sw-hec19-oob-04 P47
+!
+interface Ethernet24
+   description ->sw-hec19-oob-05 P47
+!
+interface Ethernet25
+   description ->sw-hec19-oob-06 P47
+!
+interface Ethernet26
+   description ->sw-hec19-oob-07 P47
+!
+interface Ethernet27
+   description ->ncons-hec19-03 Uplink 1
+!
+interface Ethernet28
+   description ->ncons-hec19-04 Uplink 1
+!
+interface Ethernet29
+   description ->ncons-hec19-05 Uplink 1
+!
+interface Ethernet30
+   description ->ncons-hec19-06 Uplink 1
+!
+interface Ethernet31
+   description ->ncons-hec19-07 Uplink 1
+!
+interface Ethernet32
+   description ->ncons-hec19-08 Uplink 1
+!
+interface Ethernet33
+   description ->fwm-emea-08
+!
+interface Ethernet47
+   description ->sw-hec19-oob-01b P47
+!
+interface Ethernet48
+   description ->sw-hec19-oob-01b P48
+!
+interface Ethernet49
+   description ->fra3dc01-adm-03-co P1/13
+!
+!=== if descriptions end ============================
+!
+interface Ethernet49
+  ip address 10.255.215.8/31
+!
+interface Loopback0
+  ip address 198.19.251.20/32
+!
+interface Management1
+!
+interface Vlan21
+  vrrp 21 priority 105
+  ip address 10.178.146.2/23
+!
+router bgp 64531
+   router-id 198.19.251.20
+   neighbor 10.255.215.9 remote-as 65999
+   neighbor 10.255.215.9 route-map ADMIN_MPLS_IN in
+   neighbor 10.255.215.9 route-map ADMIN_MPLS_OUT out
+   neighbor 10.255.215.9 maximum-routes 12000
+   neighbor 198.19.224.2 remote-as 64531
+   neighbor 198.19.224.2 next-hop-self
+   neighbor 198.19.224.2 maximum-routes 12000
+   network 10.178.146.0/23
+!
+router ospf 1
+ router-id 198.19.251.20
+!
+

@@ -1,0 +1,96 @@
+username cfmadm privilege 15 role network-admin secret 5 $1$EaZmGCRk$gwoPz3UrfjPwVuK6MQg8l.
+!
+vlan 900
+!
+!# HANA CFM VLANs (1101-1140->HANA, 1141-1180->GPFS)
+vlan 1101-1180
+!
+interface Port-Channel101
+   mlag 101
+!
+interface Port-Channel102
+   mlag 102
+!
+interface Port-Channel103
+   mlag 103
+!
+interface Port-Channel104
+   mlag 104
+!
+interface Port-Channel105
+   mlag 105
+!
+interface Port-Channel106
+   mlag 106
+!
+interface Port-Channel107
+   mlag 107
+!
+interface Port-Channel108
+   mlag 108
+!
+interface Port-Channel109
+   mlag 109
+!
+interface Port-Channel110
+   mlag 110
+!
+interface Port-Channel111
+   mlag 111
+!
+interface Port-Channel112
+   mlag 112
+!
+interface Port-Channel113
+   mlag 113
+!
+interface Port-Channel114
+   mlag 114
+!
+interface Port-Channel115
+   mlag 115
+!
+interface Port-Channel116
+   mlag 116
+!
+interface Port-Channel117
+   mlag 117
+!
+interface Port-Channel118
+   mlag 118
+!
+interface Port-Channel900
+   description ->sw-hec19-ipmi-xx
+   switchport mode trunk
+   mlag 900
+!
+interface Port-Channel101-118
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 5,40
+   switchport mode trunk
+   ip access-group HEC19-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+!
+ip access-list HEC19-L2-HANA
+10 permit icmp any any
+20 permit pim any any
+30 permit 92 any any
+40 permit vrrp any any
+50 permit ip any 224.0.0.0/5
+60 permit ip 100.96.200.0/22 host 100.96.201.255
+70 permit ip 100.96.200.0/22 host 100.96.203.255
+80 permit ip 100.96.200.0/22 host 100.96.200.5
+90 permit ip host 100.96.200.5 100.96.200.0/22
+100 permit ip 100.96.200.0/22 host 100.96.200.6
+110 permit ip host 100.96.200.6 100.96.200.0/22
+120 permit ip 100.96.200.0/22 100.96.201.224/27
+130 permit ip 100.96.201.224/27 100.96.200.0/22
+140 permit ip 100.96.200.0/22 100.96.203.192/26
+150 permit ip 100.96.203.192/26 100.96.200.0/22
+160 permit ip 100.96.201.224/27 100.96.203.192/26
+170 permit ip 100.96.203.192/26 100.96.201.224/27
+180 permit ip 100.96.200.0/22 host 100.96.200.1
+190 deny ip 100.96.200.0/22 100.96.200.0/22
+200 permit ip 100.96.200.0/22 any
+210 permit ip any any

@@ -1,0 +1,19 @@
+radius-server timeout 3
+radius-server deadtime 1
+radius-server key 7 11061A161E115E5951
+!
+radius-server host 10.17.122.21 auth-port 1645 acct-port 1646
+radius-server host 10.17.121.35 auth-port 1645 acct-port 1646
+!
+aaa authentication login default local group radius
+aaa authorization console
+aaa authorization exec default local group radius
+!
+username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
+!
+management telnet
+   shutdown
+!
+management ssh
+   idle-timeout 30
+

@@ -1,0 +1,91 @@
+hardware port-group 1 select Et1/1-4
+!
+interface Ethernet 1/1,1/2,1/3,1/4,2/1,2/2,2/3,2/4,3/1,3/2,3/3,3/4,4/1,4/2,4/3,4/4,5/1,5/2,5/3,5/4,6/1,6/2,6/3,6/4,7/1,7/2,7/3,7/4,8/1,8/2,8/3,8/4,9/1,9/2,9/3,9/4,10/1,10/2,10/3,10/4,11/1,11/2,11/3,11/4
+   speed forced 25gfull
+   switchport trunk native vlan 5
+   switchport mode trunk
+   ip access-group HEC19-L2-APP in
+   spanning-tree portfast
+!
+! === MLAG Peer Link: ===
+interface Ethernet27/1,28/1
+   channel-group 42 mode active
+!
+! === Spine Uplinks: ===
+interface Ethernet29/1,30/1,31/1,32/1
+   speed forced 40gfull
+   no switchport
+!
+interface Ethernet1/1-2
+   channel-group 101 mode active
+!
+interface Ethernet1/3-4
+   channel-group 102 mode active
+!
+interface Ethernet2/1-2
+   channel-group 103 mode active
+!
+interface Ethernet2/3-4
+   channel-group 104 mode active
+!
+interface Ethernet3/1-2
+   channel-group 105 mode active
+!
+interface Ethernet3/3-4
+   channel-group 106 mode active
+!
+interface Ethernet4/1-2
+   channel-group 107 mode active
+!
+interface Ethernet4/3-4
+   channel-group 108 mode active
+!
+interface Ethernet5/1-2
+   channel-group 109 mode active
+!
+interface Ethernet5/3-4
+   channel-group 110 mode active
+!
+interface Ethernet6/1-2
+   channel-group 111 mode active
+!
+interface Ethernet6/3-4
+   channel-group 112 mode active
+!
+interface Ethernet7/1-2
+   channel-group 113 mode active
+!
+interface Ethernet7/3-4
+   channel-group 114 mode active
+!
+interface Ethernet8/1-2
+   channel-group 115 mode active
+!
+interface Ethernet8/3-4
+   channel-group 116 mode active
+!
+interface Ethernet9/1-2
+   channel-group 117 mode active
+!
+interface Ethernet9/3-4
+   channel-group 118 mode active
+!
+interface Ethernet10/1-2
+   channel-group 119 mode active
+!
+interface Ethernet10/3-4
+   channel-group 120 mode active
+!
+interface Ethernet11/1-2
+   channel-group 121 mode active
+!
+interface Ethernet11/3-4
+   channel-group 122 mode active
+!
+interface Ethernet26/1
+   description ->sw-hec19-ipmi-xx
+   speed forced 10000full
+   switchport mode trunk
+   channel-group 900 mode active
+   exit
+

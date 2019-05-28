@@ -1,0 +1,168 @@
+vlan 900
+   name NW-MGMT
+vlan 920
+   name RT-TRANS
+vlan 2001
+   name TEST-CUSTOMER
+vlan 2002-2499
+!
+interface Vxlan1
+   vxlan vlan 920 vni 10920
+!
+interface Port-Channel10
+   description hec{{ hec.hec_nr }}f0001
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 10
+!
+interface Port-Channel20
+   description hec{{ hec.hec_nr }}f0002
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 20
+!
+interface Port-Channel30
+   description hec{{ hec.hec_nr }}f0003
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 30
+!
+interface Port-Channel40
+   description hec{{ hec.hec_nr }}f0004
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 40
+!
+interface Port-Channel50
+   description hec{{ hec.hec_nr }}f0005
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 50
+!
+interface Port-Channel60
+   description hec{{ hec.hec_nr }}f0006
+   switchport mode trunk
+   switchport trunk allowed vlan 30,40,50,55,130,2001-2499
+   mlag 60
+!
+interface Port-Channel401
+   description hec{{ hec.hec_nr }}b0001
+   switchport trunk allowed vlan 40,50,110,140
+   switchport mode trunk
+   mlag 401
+!
+interface Port-Channel701
+   description rt-hec{{ hec.hec_nr }}-701
+   switchport mode trunk
+   mlag 701
+!
+interface Port-Channel702
+   description rt-hec{{ hec.hec_nr }}-702
+   switchport mode trunk
+   mlag 702
+!
+interface Ethernet1/1
+   channel-group 10 mode active
+   speed forced 40gfull
+!
+interface Ethernet2/1
+   channel-group 20 mode active
+   speed forced 40gfull
+!
+interface Ethernet3/1
+   channel-group 30 mode active
+   speed forced 40gfull
+!
+interface Ethernet4/1
+   channel-group 40 mode active
+   speed forced 40gfull
+!
+interface Ethernet13/1
+   channel-group 50 mode active
+!
+interface Ethernet13/2
+   channel-group 60 mode active
+!
+interface Ethernet14/1
+   channel-group 50 mode active
+!
+interface Ethernet14/2
+   channel-group 60 mode active
+!
+interface Ethernet15/1,16/1
+   channel-group 401 mode active
+!
+! ===== Spine Uplinks =====
+interface Ethernet25/1,26/1,35/1,36/1
+   no switchport
+   mtu 9100
+!
+interface Ethernet25/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
+interface Ethernet26/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
+interface Ethernet35/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-13
+interface Ethernet36/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-14
+!
+interface Ethernet27/1
+   channel-group 701 mode active
+!
+interface Ethernet30/1,31/1
+   channel-group 42 mode active
+!
+interface Ethernet32/1
+   channel-group 702 mode active
+!
+interface Loopback2
+   ip address 10.200.1.3/32
+!
+mlag configuration
+   domain-id MLAG-STR-01
+!
+router bgp 641{{ hec.hec_nr }}.10003
+   bgp asn notation asdot
+   maximum-paths 8 ecmp 16
+   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG remote-as 641{{ hec.hec_nr }}.10000
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG maximum-routes 12000
+   neighbor EVPN-PG fall-over bfd
+   !
+   neighbor SPINE-PG peer-group
+   neighbor SPINE-PG soft-reconfiguration inbound all
+   neighbor SPINE-PG send-community
+   neighbor SPINE-PG fall-over bfd
+   neighbor SPINE-PG route-map MLPEER-RM out
+   neighbor SPINE-PG maximum-routes 12000
+   neighbor SPINE-PG remote-as 641{{ hec.hec_nr }}.10000
+   !
+   neighbor MLPEER-PG peer-group
+   neighbor MLPEER-PG next-hop-self
+   neighbor MLPEER-PG maximum-routes 12000
+   neighbor MLPEER-PG remote-as 641{{ hec.hec_nr }}.10003
+   network 10.200.1.3/32
+   !
+   neighbor 10.100.0.11 peer-group EVPN-PG
+   neighbor 10.100.0.12 peer-group EVPN-PG
+   neighbor 10.100.0.13 peer-group EVPN-PG
+   neighbor 10.100.0.14 peer-group EVPN-PG
+   !
+   address-family evpn
+      neighbor EVPN-PG activate
+   !
+   address-family ipv4
+      no neighbor EVPN-PG activate
+   !
+   address-family ipv6
+      no neighbor EVPN-PG activate
+   !
+   vlan-aware-bundle all-vlans
+      rd 10.200.1.3:1
+      route-target both 1:1
+      redistribute learned
+      vlan 5-2999
+

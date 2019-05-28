@@ -1,0 +1,510 @@
+---
+# file: roles/cvp/tasks/main.yml
+
+- name: Render and create YAML File
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/singlenode.j2"
+    dest: "{{role_path}}/files/singlenode.yaml"
+  tags:
+    - cvp_init
+
+- name: Copy YAML File to CVA
+  copy:
+    src: "{{role_path}}/files/singlenode.yaml"
+    dest: /tmp/singlenode.yaml
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy cvpConfigParser.py to CVA
+  copy:
+    src: "{{role_path}}/files/cvpConfigParser.py"
+    dest: /tmp/cvpConfigParser.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy geniso.py to CVA
+  copy:
+    src: "{{role_path}}/files/geniso.py"
+    dest: /tmp/geniso.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy setuptools to CVA
+  copy:
+    src: "{{role_path}}/files/setuptools-41.0.1.tar.gz"
+    dest: /tmp/setuptools-41.0.1.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Unzip setuptools
+  command: "tar -zxvf /tmp/setuptools-41.0.1.tar.gz -C /tmp"
+  tags:
+    - cvp_init
+
+#- name: Extract setuptools to CVA
+#  unarchive:
+#    src: "{{role_path}}/files/setuptools-41.0.1.zip"
+#    dest: /tmp/
+#  tags:
+#    - cvp_init
+
+- name: Build setuptools
+  command: "python /tmp/setuptools-41.0.1/setup.py build"
+  tags:
+    - cvp_init
+
+- name: Install setuptools
+  command: "python /tmp/setuptools-41.0.1/setup.py install"
+  tags:
+    - cvp_init
+
+- name: Copy setuptools folder to python libs
+  command: "cp -r /tmp/setuptools-41.0.1/. /usr/lib/python2.7/site-packages/"
+  tags:
+    - cvp_init
+
+- name: Extract pip to CVA
+  unarchive:
+    src: "{{role_path}}/files/pip-19.1.1.tar.gz"
+    dest: /tmp/
+  tags:
+    - cvp_init
+
+- name: Install pip
+  shell: python setup.py install
+  args:
+    chdir: /tmp/pip-19.1.1/
+  tags:
+    - cvp_init
+
+- name: Copy PyYAML-5.1.tar.gz to CVA
+  copy:
+    src: "{{role_path}}/files/PyYAML-5.1.tar.gz"
+    dest: /tmp/PyYAML-5.1.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Install PyYaml
+  command: "pip install /tmp/PyYAML-5.1.tar.gz"
+  tags:
+    - cvp_init
+
+- name: Generate ISO file
+  command: "/tmp/geniso.py -y /tmp/singlenode.yaml -p {{ cvp.password }} -o /tmp"
+  tags:
+    - cvp_init
+
+- name: Start cvp VM if not running
+  command: "virsh start {{ cvp.KvmDomain }}"
+  ignore_errors: yes 
+  tags:
+    - cvp_init
+
+- name: Attach the cdrom to the cvp VM
+  command: "virsh attach-disk {{ cvp.KvmDomain }} /tmp/node1-{{ cvp.vmname }}.iso  hdc --type cdrom --mode readonly"
+  tags:
+    - cvp_init
+
+- name: Reboot cvp VM with the cdrom infos
+  command: "virsh reboot {{ cvp.KvmDomain }}"
+  tags:
+    - cvp_init
+
+# Pause for 480 seconds to power up vm
+- pause:
+    seconds: 480
+  tags:
+    - cvp_init
+
+- name: Render CVP routes and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/route-eth1.j2"
+    dest: "/etc/sysconfig/network-scripts/route-eth1"
+  tags:
+    - cvp_init
+
+- name: Restart network service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: network
+    state: restarted
+  tags:
+    - cvp_init
+
+- name: Render DHCP config and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/dhcpd.conf.j2"
+    dest: "/etc/dhcp/dhcpd.conf"
+  tags:
+    - cvp_init
+
+- name: Set the dhcpd to enabled for persistence after reboot
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "systemctl enable dhcpd"
+  tags:
+    - cvp_init
+
+- name: Restart dhcp service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: dhcpd
+    state: restarted
+  tags:
+    - cvp_init
+
+- name: Reset cvpadmin password
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "/cvpi/tools/update-mgmt-password -auth none -password {{ cvp.password }}"
+  tags:
+    - cvp_init
+
+- name: Render sw-hecxx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-aaa
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-aaa.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-aaa"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-fab-L900
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-fab-L900.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-fab-L900"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-vrf
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-vrf.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-vrf"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-tele-oob
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-tele-oob.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-tele-oob"
+  tags:
+    - configlets
+
+- name: Render sw-HECxx-IPMI
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/HECxx-IPMI.j2"
+    dest: "{{role_path}}/files/configs/HEC{{ hec.hec_nr }}-IPMI"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-common
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-common.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-common"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-tele-default
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-tele-default.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-tele-default"
+  tags:
+    - configlets
+
+- name: Render sw-HECxx-VLANs
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/HECxx-VLANs.j2"
+    dest: "{{role_path}}/files/configs/HEC{{ hec.hec_nr }}-VLANs"
+  tags:
+    - configlets
+
+- name: Render hecxx-hana
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/hecxx-hana.j2"
+    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-hana"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-leaf
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-leaf.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-leaf"
+  tags:
+    - configlets
+
+- name: Render hecxx-vmware
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/hecxx-vmware.j2"
+    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-vmware"
+  tags:
+    - configlets
+
+- name: Render hecxx-xen
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/hecxx-xen.j2"
+    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-xen"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-spine
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-spine.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-spine"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-spine-xx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-spine-xx.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-spine-{{ item }}"
+  with_items: "{{ hec.spine_nr }}"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-hana-7160-32CQ
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-hana-7160-32CQ.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hana-7160-32CQ"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-hvv-7160-32CQ
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-hvv-7160-32CQ.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvv-7160-32CQ"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-hvx-7160-32CQ
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-hvx-7160-32CQ.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvx-7160-32CQ"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-hvx-7160-48YC6
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-hvx-7160-48YC6.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvx-7160-48YC6"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-xx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-xx.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-0{{ item.number }}"
+  with_items: "{{ hec.oobs_2_7 }}"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-str-01
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-01.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-str-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-01a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-str-01b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-01b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01b"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-01
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-01.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-01a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-01b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-01b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01b"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-02
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-02.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-02a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-02a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-02b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-02b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02b"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-03
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-03.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-03a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-03a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-brdr-03b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-brdr-03b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03b"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-01
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-01.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-01a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-oob-01b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-oob-01b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01b"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-autoconf
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-autoconf.j2"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-autoconf"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-autoconf-ipmi
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-autoconf-ipmi.j2"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-autoconf-ipmi"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-descriptions
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-descriptions.j2"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-descriptions"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-descriptions-hvv
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-descriptions-hvv.j2"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-descriptions-hvv"
+  tags:
+    - configlets
+
+- name: Upload generated configlet builders
+  delegate_to: 127.0.0.1
+  command: python {{role_path}}/files/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - upload_configlets
+
+- name: Upload all generated configlets
+  delegate_to: 127.0.0.1
+  command: python {{role_path}}/files/configlets.py "{{role_path}}/files/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - upload_configlets
+
+- name: Create the container structure in CVP and add configlets to containers
+  delegate_to: 127.0.0.1
+  command: python {{role_path}}/files/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - create_containers
+

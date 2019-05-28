@@ -1,0 +1,141 @@
+hostname sw-hec{{ hec.hec_nr }}-oob-01a
+!
+snmp-server contact {{ hec.oob01a_snmp_contact }}
+snmp-server location {{ hec.oob01a_snmp_location }}
+!
+!=== if descriptions start ============================
+!
+interface Ethernet2
+   description ->rt-hec{{ hec.hec_nr }}-101
+!
+interface Ethernet3
+   description ->rt-hec{{ hec.hec_nr }}-401
+!
+interface Ethernet4
+   description ->rt-hec{{ hec.hec_nr }}-501
+!
+interface Ethernet5
+   description ->rt-hec{{ hec.hec_nr }}-503
+!
+interface Ethernet6
+   description ->rt-hec{{ hec.hec_nr }}-601
+!
+interface Ethernet7
+   description ->rt-hec{{ hec.hec_nr }}-701
+!
+interface Ethernet8
+   description ->fw-hec{{ hec.hec_nr }}-01
+!
+interface Ethernet9
+   description ->lb-hec{{ hec.hec_nr }}-01
+!
+interface Ethernet10
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
+!
+interface Ethernet11
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
+!
+interface Ethernet12
+   description ->sw-hec{{ hec.hec_nr }}-brdr-01a
+!
+interface Ethernet13
+   description ->sw-hec{{ hec.hec_nr }}-brdr-02a
+!
+interface Ethernet14
+   description ->sw-hec{{ hec.hec_nr }}-str-01a
+!
+interface Ethernet15
+   description ->ncons-hec{{ hec.hec_nr }}-01
+!
+interface Ethernet16
+   description ->ncons-hec{{ hec.hec_nr }}-02
+!
+interface Ethernet17
+   description ->sw-hec{{ hec.hec_nr }}-fwt-01a
+!
+interface Ethernet18
+   description ->sw-hec{{ hec.hec_nr }}-cwan-01a
+!
+interface Ethernet19
+   description ->sw-hec{{ hec.hec_nr }}-brdr-03a
+!
+interface Ethernet20
+   description ->rt-hec{{ hec.hec_nr }}-103
+!
+interface Ethernet21
+   description ->sw-hec{{ hec.hec_nr }}-oob-02 P47
+!
+interface Ethernet22
+   description ->sw-hec{{ hec.hec_nr }}-oob-03 P47
+!
+interface Ethernet23
+   description ->sw-hec{{ hec.hec_nr }}-oob-04 P47
+!
+interface Ethernet24
+   description ->sw-hec{{ hec.hec_nr }}-oob-05 P47
+!
+interface Ethernet25
+   description ->sw-hec{{ hec.hec_nr }}-oob-06 P47
+!
+interface Ethernet26
+   description ->sw-hec{{ hec.hec_nr }}-oob-07 P47
+!
+interface Ethernet27
+   description ->ncons-hec{{ hec.hec_nr }}-03 Uplink 1
+!
+interface Ethernet28
+   description ->ncons-hec{{ hec.hec_nr }}-04 Uplink 1
+!
+interface Ethernet29
+   description ->ncons-hec{{ hec.hec_nr }}-05 Uplink 1
+!
+interface Ethernet30
+   description ->ncons-hec{{ hec.hec_nr }}-06 Uplink 1
+!
+interface Ethernet31
+   description ->ncons-hec{{ hec.hec_nr }}-07 Uplink 1
+!
+interface Ethernet32
+   description ->ncons-hec{{ hec.hec_nr }}-08 Uplink 1
+!
+interface Ethernet33
+   description ->fwm-emea-08
+!
+interface Ethernet47
+   description ->sw-hec{{ hec.hec_nr }}-oob-01b P47
+!
+interface Ethernet48
+   description ->sw-hec{{ hec.hec_nr }}-oob-01b P48
+!
+interface {{ hec.admin_sw_interface }}
+   description ->{{ hec.admin_sw_description_oob1a }}
+!
+!=== if descriptions end ============================
+!
+interface {{ hec.admin_sw_interface }}
+  ip address {{ hec.admin_sw_ip_oob1a }}/{{ hec.admin_sw_mask }}
+!
+interface Loopback0
+  ip address {{ hec.oob01_lo0_prefix }}.20/32
+!
+interface Management1
+!
+interface Vlan21
+  vrrp 21 priority 105
+  ip address {{ hec.oob_prefix }}.2/{{ hec.oob_mask }}
+!
+router bgp {{ hec.oob01_as }}
+   router-id {{ hec.oob01_lo0_prefix }}.20
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} remote-as {{ hec.admin_sw_neig_as_oob1a }}
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} route-map ADMIN_MPLS_IN in
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} route-map ADMIN_MPLS_OUT out
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} maximum-routes 12000
+   neighbor 198.19.224.2 remote-as {{ hec.oob01_as }}
+   neighbor 198.19.224.2 next-hop-self
+   neighbor 198.19.224.2 maximum-routes 12000
+   network {{ hec.oob_prefix }}.0/{{ hec.oob_mask }}
+!
+router ospf 1
+ router-id {{ hec.oob01_lo0_prefix }}.20
+!
+

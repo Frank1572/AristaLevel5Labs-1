@@ -1,0 +1,52 @@
+hostname sw-hec{{ hec.hec_nr }}-brdr-01a
+!
+interface Ethernet1/1
+   description "->rt-{{ hec.hec_nr }}-101, Fo0/2/0"
+interface Ethernet2/1
+   description "->rt-{{ hec.hec_nr }}-102, Fo0/2/0"
+interface Ethernet3/1
+   description "->rt-{{ hec.hec_nr }}-601, Fo0/0/0"
+interface Ethernet4/1
+   description "->rt-{{ hec.hec_nr }}-602, Fo0/0/0"
+interface Ethernet5/1
+   description "->rt-{{ hec.hec_nr }}-501, Fo0/0/0"
+interface Ethernet6/1
+   description "->rt-{{ hec.hec_nr }}-502, Fo0/0/0"
+interface Ethernet7/1
+   description "->rt-{{ hec.hec_nr }}-401, Fo0/2/0"
+interface Ethernet8/1
+   description "->rt-{{ hec.hec_nr }}-402, Fo0/2/0"
+!
+! ===== Spine Uplinks =====
+interface Ethernet25/1
+   ip address 10.11.0.1/31
+interface Ethernet26/1
+   ip address 10.12.0.1/31
+interface Ethernet35/1
+   ip address 10.13.0.1/31
+interface Ethernet36/1
+   ip address 10.14.0.1/31
+!
+interface Loopback1
+   description Router-ID
+   ip address 10.100.1.1/32
+!
+interface Loopback900
+   description NW-MGMT
+   ip address {{ hec.lo900_prefix }}.15/32
+!
+interface Management1
+   vrf forwarding OOB
+   ip address {{ hec.oob_prefix }}.15/{{ hec.oob_mask }}
+!
+router bgp 641{{ hec.hec_nr }}.10001
+   router-id 10.100.1.1
+   neighbor 10.11.0.0 peer-group SPINE-PG
+   neighbor 10.12.0.0 peer-group SPINE-PG
+   neighbor 10.13.0.0 peer-group SPINE-PG
+   neighbor 10.14.0.0 peer-group SPINE-PG
+   neighbor 198.19.224.2 peer-group MLPEER-PG
+   network 10.100.1.1/32
+   network {{ hec.lo900_prefix }}.15/32
+
+

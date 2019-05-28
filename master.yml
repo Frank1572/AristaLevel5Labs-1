@@ -1,0 +1,28 @@
+---
+# file: master.yml
+
+- hosts: localhost
+  gather_facts: no
+  roles:
+    - role: oob01
+
+- hosts: CVA-DHCP 
+  gather_facts: no
+  roles:
+    - role: idrac
+      vars:
+        - ansible_user: root
+
+- hosts: CVA-DHCP
+  gather_facts: no
+  roles:
+    - role: cva
+      vars:
+        - ansible_user: root
+
+- hosts: CVA-STATIC
+  gather_facts: no
+  roles:
+    - role: cvp
+      vars:
+        - ansible_user: root

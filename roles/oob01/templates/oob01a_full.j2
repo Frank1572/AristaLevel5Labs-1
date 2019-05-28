@@ -1,0 +1,451 @@
+!
+alias bs show ip bgp summary
+alias es show bgp evpn summary
+alias ic show interface counter | nz
+alias ie show interface counter errors | nz
+alias ipa show ip interface brief
+alias ipr show ip route
+alias ir show interface counter rates | nz
+alias os show ip ospf neighbor
+alias po show port-channel summary
+alias ru show running section %1
+!
+alias dhcp-off
+   10 bash sudo service dhcpd stop
+   20 bash sudo service dhcpd status
+!
+alias dhcp-on
+   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+   20 bash sudo service dhcpd start
+   30 bash sudo service dhcpd status
+!
+alias dhcp-status
+   10 bash sudo service dhcpd status
+   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
+!
+!
+daemon TerminAttr 
+  exec /usr/bin/TerminAttr -ingestgrpcurl={{ hec.oob_cvp }}:9910 -taillogs -ingestauth=key,{{hec.cvp_ingest_key }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent 
+  no shutdown 
+!
+load-interval default 5
+!
+transceiver qsfp default-mode 4x10G
+!
+logging host {{ hec.syslog1 }}
+logging host {{ hec.syslog2 }}
+logging source-interface Vlan21
+!
+hostname sw-hec{{ hec.hec_nr }}-oob-01a
+!
+ntp source Vlan21
+ntp server {{ hec.ntp1 }} prefer
+ntp server {{ hec.ntp2 }}
+!
+track 494 interface Loopback494 line-protocol
+!
+radius-server key 7 11061A161E115E5951
+radius-server timeout 3
+radius-server deadtime 1
+radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
+radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
+!
+snmp-server contact {{ hec.oob01a_snmp_contact }}
+snmp-server location {{ hec.oob01a_snmp_location }}
+snmp-server community o4CSPCu1sap ro ACL_SNMP_VTY
+snmp-server community r0c4s ro ACL_SNMP_VTY
+!
+spanning-tree mode mstp
+no spanning-tree vlan 4094
+!
+aaa authentication login default local group radius
+aaa authorization console
+aaa authorization exec default local group radius
+!
+enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
+username cvpadmin privilege 15 secret sha512 $6$oESaSCeRkmPKB12P$foDOwsz5s8C54jhPkd0iDEUcSoCPfYF57bqVuWpN0DAJXYvqyzsKQKOXdohJDH742sIBTo5pbEiNKtZ.g2Uz./
+username scp privilege 15 secret 5 $1$N8nIuE88$TCC9cVWog9.riMuiVcJOh.
+!
+vlan 21,100
+   name OOB
+!
+vlan 4094
+   name MLAG_Vlan
+   trunk group MLAG-PEER
+!
+vrf definition OOB
+   description "Out of Band"
+!
+interface Port-Channel42
+   description MLAG-PEER
+   switchport mode trunk
+   switchport trunk group MLAG-PEER
+!
+interface Port-Channel102
+   description ->sw-hec{{ hec.hec_nr }}-oob-02,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 102
+!
+interface Port-Channel103
+   description ->sw-hec{{ hec.hec_nr }}-oob-03,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 103
+!
+interface Port-Channel104
+   description ->sw-hec{{ hec.hec_nr }}-oob-04,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 104
+!
+interface Port-Channel105
+   description ->sw-hec{{ hec.hec_nr }}-oob-05,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 105
+!
+interface Port-Channel106
+   description ->sw-hec{{ hec.hec_nr }}-oob-06,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 106
+!
+interface Port-Channel107
+   description ->sw-hec{{ hec.hec_nr }}-oob-07,Po101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+   mlag 107
+!
+interface Ethernet1
+   description ->naa-hec{{ hec.hec_nr }}-01 Mgm1
+   switchport access vlan 21
+!
+interface Ethernet2
+   description ->rt-hec{{ hec.hec_nr }}-101
+   switchport access vlan 21
+!
+interface Ethernet3
+   description ->rt-hec{{ hec.hec_nr }}-401
+   switchport access vlan 21
+!
+interface Ethernet4
+   description ->rt-hec{{ hec.hec_nr }}-501
+   switchport access vlan 21
+!
+interface Ethernet5
+   description ->rt-hec{{ hec.hec_nr }}-503
+   switchport access vlan 21
+!
+interface Ethernet6
+   description ->rt-hec{{ hec.hec_nr }}-601
+   switchport access vlan 21
+!
+interface Ethernet7
+   description ->rt-hec{{ hec.hec_nr }}-701
+   switchport access vlan 21
+!
+interface Ethernet8
+   description ->fw-hec{{ hec.hec_nr }}-01
+   switchport access vlan 21
+!
+interface Ethernet9
+   description ->lb-hec{{ hec.hec_nr }}-01
+   switchport access vlan 21
+!
+interface Ethernet10
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
+   switchport access vlan 21
+!
+interface Ethernet11
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
+   switchport access vlan 21
+!
+interface Ethernet12
+   description ->sw-hec{{ hec.hec_nr }}-brdr-01a
+   switchport access vlan 21
+!
+interface Ethernet13
+   description ->sw-hec{{ hec.hec_nr }}-brdr-02a
+   switchport access vlan 21
+!
+interface Ethernet14
+   description ->sw-hec{{ hec.hec_nr }}-str-01a
+   switchport access vlan 21
+!
+interface Ethernet15
+   description ->ncons-hec{{ hec.hec_nr }}-01
+   switchport access vlan 21
+!
+interface Ethernet16
+   description ->ncons-hec{{ hec.hec_nr }}-02
+   switchport access vlan 21
+!
+interface Ethernet17
+   description ->sw-hec{{ hec.hec_nr }}-fwt-01a
+   switchport access vlan 21
+!
+interface Ethernet18
+   description ->sw-hec{{ hec.hec_nr }}-cwan-01a
+   switchport access vlan 21
+!
+interface Ethernet19
+   description ->sw-hec{{ hec.hec_nr }}-brdr-03a
+   switchport access vlan 21
+!
+interface Ethernet20
+   description ->rt-hec{{ hec.hec_nr }}-103
+   switchport access vlan 21
+!
+interface Ethernet21
+   description ->sw-hec{{ hec.hec_nr }}-oob-02
+   switchport access vlan 21
+   channel-group 102 mode active
+!
+interface Ethernet22
+   description ->sw-hec{{ hec.hec_nr }}-oob-03
+   switchport access vlan 21
+   channel-group 103 mode active
+!
+interface Ethernet23
+   description ->sw-hec{{ hec.hec_nr }}-oob-04
+   switchport access vlan 21
+   channel-group 104 mode active
+!
+interface Ethernet24
+   description ->sw-hec{{ hec.hec_nr }}-oob-05
+   switchport access vlan 21
+   channel-group 105 mode active
+!
+interface Ethernet25
+   description ->sw-hec{{ hec.hec_nr }}-oob-06
+   switchport access vlan 21
+   channel-group 106 mode active
+!
+interface Ethernet26
+   description ->sw-hec{{ hec.hec_nr }}-oob-07
+   switchport access vlan 21
+   channel-group 107 mode active
+!
+interface Ethernet27
+   description ->ncons-hec{{ hec.hec_nr }}-03
+   switchport access vlan 21
+!
+interface Ethernet28
+   description ->ncons-hec{{ hec.hec_nr }}-04
+   switchport access vlan 21
+!
+interface Ethernet29
+   description ->ncons-hec{{ hec.hec_nr }}-05
+   switchport access vlan 21
+!
+interface Ethernet30
+   description ->ncons-hec{{ hec.hec_nr }}-06
+   switchport access vlan 21
+!
+interface Ethernet31
+   description ->ncons-hec{{ hec.hec_nr }}-07
+   switchport access vlan 21
+!
+interface Ethernet32
+   description ->ncons-hec{{ hec.hec_nr }}-08
+   switchport access vlan 21
+!
+interface Ethernet33
+   description ->fwm-emea-08
+   switchport access vlan 21
+!
+interface Ethernet34
+   switchport access vlan 21
+!
+interface Ethernet35
+   switchport access vlan 21
+!
+interface Ethernet36
+   switchport access vlan 21
+!
+interface Ethernet37
+   switchport access vlan 21
+!
+interface Ethernet38
+   switchport access vlan 21
+!
+interface Ethernet39
+   switchport access vlan 21
+!
+interface Ethernet40
+   switchport access vlan 21
+!
+interface Ethernet41
+   switchport access vlan 21
+!
+interface Ethernet42
+   switchport access vlan 21
+!
+interface Ethernet43
+   switchport access vlan 21
+!
+interface Ethernet44
+   switchport access vlan 21
+!
+interface Ethernet45
+   switchport access vlan 21
+!
+interface Ethernet46
+   switchport access vlan 21
+!
+interface Ethernet47
+   description ->sw-hec{{ hec.hec_nr }}-oob-01b P47
+   channel-group 42 mode active
+!
+interface Ethernet48
+   description ->sw-hec{{ hec.hec_nr }}-oob-01b P48
+   channel-group 42 mode active
+!
+interface {{ hec.admin_sw_interface }}
+   description ->{{ hec.admin_sw_description_oob1a }}
+   no switchport
+   ip address {{ hec.admin_sw_ip_oob1a }}/{{ hec.admin_sw_mask }}
+!
+interface Ethernet50
+!
+interface Ethernet51
+!
+interface Ethernet52
+!
+interface Ethernet53
+!
+interface Ethernet54
+!
+interface Loopback0
+   ip address {{ hec.oob01_lo0_prefix }}.20/32
+!
+interface Loopback494
+   description !!! DO NOT TOUCH - HSRP tracking interface !!!
+!
+interface Management1
+!
+interface Vlan21
+   ip address {{ hec.oob_prefix }}.2/{{ hec.oob_mask }}
+   vrrp 21 priority 105
+   vrrp 21 preempt delay minimum 180
+   vrrp 21 preempt delay reload 180
+   vrrp 21 authentication text oobnw
+   vrrp 21 ip {{ hec.oob_def_gw }}
+   vrrp 21 track 494 decrement 10
+!
+interface Vlan4094
+   mtu 9100
+   no autostate
+   ip address 198.19.224.1/30
+   ip ospf network point-to-point
+!
+event-handler CONFIG_VERSIONING
+   trigger on-startup-config
+   action bash FN=/mnt/flash/startup-config; LFN="`ls -1 $FN.*-* | tail -n 1`"; if [ -z "$LFN" -o -n "`diff -I 'last modified' $FN $LFN`" ]; then cp $FN $FN.`date +%Y%m%d-%H%M%S`; ls -1r $FN.*-* | tail -n +11 | xargs -I % rm %; fi
+   delay 0
+!
+{{ hec.snmp_acl }}
+!
+ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
+ip route vrf OOB 0.0.0.0/0 {{ hec.oob_def_gw }}
+!
+ip routing
+no ip routing vrf OOB
+!
+ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
+ip prefix-list PREF_ADMIN_MPLS seq 5 permit {{ hec.admin_mpls_1 }}
+ip prefix-list PREF_ADMIN_MPLS seq 10 permit {{ hec.admin_mpls_2 }}
+ip prefix-list PREF_ADMIN_MPLS seq 15 permit {{ hec.admin_mpls_3 }}
+ip prefix-list PREF_ADMIN_MPLS seq 20 permit {{ hec.admin_mpls_4 }}
+!
+mlag configuration
+   domain-id MLAG-oob
+   local-interface Vlan4094
+   peer-address 198.19.224.2
+   peer-link Port-Channel42
+!
+ip radius source-interface Vlan21
+!
+route-map ADMIN_MPLS_IN deny 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+route-map ADMIN_MPLS_IN permit 20
+   match ip address prefix-list MATCH_ANY
+!
+route-map ADMIN_MPLS_OUT permit 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+router bgp {{ hec.oob01_as }}
+   router-id {{ hec.oob01_lo0_prefix }}.20
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} remote-as {{ hec.admin_sw_neig_as_oob1a }}
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} route-map ADMIN_MPLS_IN in
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} route-map ADMIN_MPLS_OUT out
+   neighbor {{ hec.admin_sw_neig_ip_oob1a }} maximum-routes 12000
+   neighbor 198.19.224.2 remote-as {{ hec.oob01_as }}
+   neighbor 198.19.224.2 next-hop-self
+   neighbor 198.19.224.2 maximum-routes 12000
+   network {{ hec.oob_prefix }}.0/{{ hec.oob_mask }}
+!
+router ospf 1
+   router-id {{ hec.oob01_lo0_prefix }}.20
+   passive-interface default
+   no passive-interface {{ hec.admin_sw_interface }}
+   no passive-interface Vlan4094
+   network {{ hec.inband_trans_prefix }}.0/24 area 0.0.0.0
+   network 198.19.224.0/30 area 0.0.0.0
+   network {{ hec.oob01_lo0_prefix }}.0/24 area 0.0.0.0
+   max-lsa 12000
+!
+banner login
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@'~~~     ~~~`@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@'                     `@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@'    H   H  EEEEE  CCCCC    `@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@'      H   H  E      C          `@@@@@@@@@@@@@@@
+      @@@@@@@@@@@'        HHHHH  EEEE   C            `@@@@@@@@@@@@@
+      @@@@@@@@@@'         H   H  E      C             `@@@@@@@@@@@@
+      @@@@@@@@@'          H   H  EEEEE  CCCCC          `@@@@@@@@@@@
+      @@@@@@@@@                                         @@@@@@@@@@@
+      @@@@@@@@'                      n,                 `@@@@@@@@@@
+      @@@@@@@@                     _/ | _                @@@@@@@@@@
+      @@@@@@@@                    /'  `'/                @@@@@@@@@@
+      @@@@@@@@a                 <~    .'                a@@@@@@@@@@
+      @@@@@@@@@                 .'    |                 @@@@@@@@@@@
+      @@@@@@@@@a              _/      |                a@@@@@@@@@@@
+      @@@@@@@@@@a           _/      `.`.              a@@@@@@@@@@@@
+      @@@@@@@@@@@a     ____/ '   _ | |______       a@@@@@@@@@@@@@
+      @@@@@@@@@@@@@a__/___/      /__    __.a@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@/  (___.'______)|_|        @@@@@@@@@@@@@@@
+      @@@@@@@@@@@@|_______                       ~~~~~@@@@@@@@@
+****************************  W A R N I N G  *****************************
+*     Access to this system is restricted to authorized users only.      *
+*     All data residing on this system is the property of SAP.           *
+*     All activities on this system may be monitored.                    *
+*     Unauthorized usage is prohibited and may attract penalties.        *
+**************************************************************************
+
+**************************  I M P O R T A N T  ***************************
+*     Do not make configuration changes to this device on the CLI.       *
+*     This device is maintained by CVP! Changes will be overwritten.     *
+**************************************************************************
+
+      Device: $(hostname)
+EOF
+!
+management api http-commands
+   no shutdown
+!
+management ssh
+   idle-timeout 30
+!
+end

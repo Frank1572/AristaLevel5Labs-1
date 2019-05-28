@@ -1,0 +1,34 @@
+---
+# file: roles/cva/tasks/main.yml
+
+- name: Render and create hostname
+  template:
+    src: "templates/hostname.j2"
+    dest: "/etc/hostname"
+  tags:
+    - cva
+
+- name: Set hostname with hostnamectl
+  command: hostnamectl set-hostname {{ cva.name }}.{{ cva.domain }}
+  tags:
+    - cva
+
+- name: Render and create ifcfg-devicebr
+  template:
+    src: "templates/ifcfg-devicebr.j2"
+    dest: "/etc/sysconfig/network-scripts/ifcfg-devicebr"
+  tags:
+    - cva
+
+- name: Render and create resolv.conf
+  template:
+    src: "templates/resolv.conf.j2"
+    dest: "/etc/resolv.conf"
+  tags:
+    - cva
+
+- name: Restart network service
+  command: "systemctl restart network"
+  ignore_errors: yes 
+  tags:
+    - cva

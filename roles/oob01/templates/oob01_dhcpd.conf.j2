@@ -1,0 +1,23 @@
+class "IDRAC" {
+ match if option vendor-class-identifier = "iDRAC";
+}
+
+class "ARISTA" {
+ match if substring(option vendor-class-identifier, 0, 6) = "Arista";
+}
+
+subnet {{ oob01.dhcp.prefix }} netmask {{ oob01.dhcp.mask }} {
+ pool {
+  option routers {{ oob01.dhcp.router }};
+  option subnet-mask {{ oob01.dhcp.mask }};
+  range {{ oob01.dhcp.idrac_ip}} {{ oob01.dhcp.idrac_ip }};
+  allow members of "IDRAC";
+ }
+ pool {
+  option routers {{ oob01.dhcp.router }};
+  option subnet-mask {{ oob01.dhcp.mask }};
+  range {{ oob01.dhcp.cva_ip }} {{ oob01.dhcp.cva_ip }};
+  deny members of "ARISTA";
+ }
+}
+

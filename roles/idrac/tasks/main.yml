@@ -1,0 +1,62 @@
+---
+# file: roles/idrac/tasks/main.yml
+
+- name: Get iDRAC Sys Information before change
+  command: racadm getSysInfo
+  register: sysInfoBefore
+  tags:
+    - idrac
+
+- name: Disable all iDRAC related DHCP configuration
+  command: racadm set iDRAC.IPv4.DHCPEnable 0
+  command: racadm set iDRAC.IPv4.DNSFromDHCP 0
+  command: racadm set iDRAC.NIC.DNSDomainFromDHCP 0
+  tags:
+    - idrac
+
+- name: Configure IP network settings for the iDRAC interface
+  command: racadm set iDRAC.NIC.Enable 1
+  command: racadm set iDRAC.IPv4.Address {{ idrac.ip }}
+  command: racadm set iDRAC.IPv4.Netmask {{ idrac.mask }}
+  command: racadm set iDRAC.IPv4.Gateway {{ idrac.gw }}
+  tags:
+    - idrac
+
+- name: Configure DNS settings for the iDRAC interface
+  command: racadm set iDRAC.IPv4.DNS1 {{ idrac.dns1 }}
+  command: racadm set iDRAC.IPv4.DNS2 {{ idrac.dns2 }}
+  command: racadm set iDRAC.NIC.DNSRacName {{ idrac.name }}
+  command: racadm set iDRAC.NIC.DNSDomainName {{ idrac.domain }}
+  tags:
+    - idrac
+
+- name: Get iDRAC Sys Information after change
+  command: racadm getSysInfo
+  register: sysInfoAfter
+  tags:
+    - idrac
+
+- name: Configure iDRAC Password
+  command: racadm set iDRAC.Users.2.Password {{ idrac.password }}
+  tags:
+    - idrac
+
+- name: Change Server Front Panel from Service Tag to Host Name
+  command: racadm set System.LCD.Configuration 16
+  tags:
+    - idrac
+
+- name: Enable Serial console
+  command: racadm config -g cfgSerial -o cfgSerialBaudRate 9600
+  command: racadm config -g cfgSerial -o cfgSerialCom2RedirEnable 1
+  command: racadm config -g cfgSerial -o cfgSerialSshEnable 1
+  command: racadm config -g cfgIpmiSol -o cfgIpmiSolEnable 1
+  command: racadm config -g cfgIpmiSol -o cfgIpmiSolBaudRate 9600
+  tags:
+    - idrac
+
+
+- name: Restart iDRAC 
+  command: racadm racreset soft
+  tags:
+    - idrac

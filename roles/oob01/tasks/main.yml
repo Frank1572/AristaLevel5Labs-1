@@ -1,0 +1,23 @@
+---
+# file: roles/oob01/tasks/main.yml
+
+- name: Render DHCP config and put the file to files folder of the role oob01
+  template:
+    src: "templates/oob01_dhcpd.conf.j2"
+    dest: "{{role_path}}/files/dhcpd.conf"
+  tags:
+    - oob01
+
+- name: Render sw-hecxx-oob-01a
+  template:
+    src: "templates/oob01a_full.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01a"
+  tags:
+    - oob01
+
+- name: Render sw-hecxx-oob-01b
+  template:
+    src: "templates/oob01b_full.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01b"
+  tags:
+    - oob01

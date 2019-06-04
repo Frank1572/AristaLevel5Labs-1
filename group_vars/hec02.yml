@@ -1,3 +1,4 @@
+---
 # file: group_vars/hec02.yml
 idrac:
   ip: "10.178.141.254"

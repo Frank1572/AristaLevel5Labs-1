@@ -53,7 +53,7 @@ cvp:
     - prefix: "198.19.195.0"
       mask: "24"
       nexthop: "10.255.252.78"
- dhcp:
+  dhcp:
     prefix: "10.178.140.0"
     mask: "255.255.254.0"
     range_low: "10.178.141.224"

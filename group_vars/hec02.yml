@@ -1,10 +1,10 @@
-# file: group_vars/all
+# file: group_vars/hec02.yml
 idrac:
   ip: "10.178.141.254"
   mask: "255.255.254.0"
   gw: "10.178.140.1"
   name: "naa-hec02-idrac-01"
- dns1: "100.127.141.1"
+  dns1: "100.127.141.1"
   dns2: "100.127.141.2"
   domain: "net.sap.corp"
   password: "arista"

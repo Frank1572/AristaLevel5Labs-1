@@ -30,7 +30,7 @@ oob01:
 
 cvp:
   ip_eth0: "10.178.141.253"
-  ip_eth1: "10.255.252.69
+  ip_eth1: "10.255.252.69"
   mask_eth0: "255.255.254.0"
   mask_eth1: "255.255.240.0"
   gw: "10.178.140.1"
@@ -47,7 +47,7 @@ cvp:
   KvmDomain: "cvp"
   password: "arista"
   eth1_routes:
-    - prefix: "198.19.241.0”
+    - prefix: "198.19.241.0"
       mask: "24"
       nexthop: "10.255.252.78"
     - prefix: "198.19.195.0"

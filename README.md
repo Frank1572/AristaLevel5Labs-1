@@ -44,13 +44,13 @@ The following describes how to use the ansible playbook in a greenfield envrionm
   
  - Run the ansible playbooks to setup the environment
  
-      ansible-playbook master.yml -i production/production.yml --tags "idrac" --timeout 60
+      ansible-playbook master.yml -i production/production.yml --tags "idrac" --timeout 60 -c paramiko
 
-      ansible-playbook master.yml -i production/production.yml --tags "cva" --timeout 60
+      ansible-playbook master.yml -i production/production.yml --tags "cva" --timeout 60 -c paramiko
 
-      ansible-playbook master.yml -i production/production.yml --tags "cvp_init" --timeout 60
+      ansible-playbook master.yml -i production/production.yml --tags "cvp_init" --timeout 60 -c paramiko
 
-      ansible-playbook master.yml -i production/production.yml --tags "configlets, upload_configlets, create_containers" --timeout 60
+      ansible-playbook master.yml -i production/production.yml --tags "configlets, upload_configlets, create_containers" --timeout 60 -c paramiko
 
 
  - Software Images need to be assigned manually to the containers (will be automated in future)

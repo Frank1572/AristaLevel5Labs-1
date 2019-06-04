@@ -7,6 +7,7 @@
     dest: "{{role_path}}/files/dhcpd.conf"
   tags:
     - oob01
+    - oob01_dhcp
 
 - name: Render sw-hecxx-oob-01a
   template:

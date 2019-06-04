@@ -5,7 +5,8 @@ This ansible playbook is used to configure the cloud vision appliance (CVA), iDR
 The following describes how to use the ansible playbook in a greenfield envrionment (currently configlets are designed for EVPN):
 
 - Create OOB01 a/b configuration with the ansible scripts
- 		ansible-playbook master.yml -i production/production.yml --tags "oob01"
+ 		
+		ansible-playbook master.yml -i production/production.yml --tags "oob01"
 
  - Copy the generated configs onto the OOB01 a/b switches. File location is from main ansible folder in "roles/oob01/files/configs/"
  

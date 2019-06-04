@@ -1,20 +1,20 @@
 ---
 # file: group_vars/all
 idrac:
-  ip: "10.178.147.254"
+  ip: "10.178.141.254"
   mask: "255.255.254.0"
-  gw: "10.178.146.1"
-  name: "naa-hec19-idrac-01"
+  gw: "10.178.140.1"
+  name: "naa-hec02-idrac-01"
   dns1: "100.127.141.1"
   dns2: "100.127.141.2"
   domain: "net.sap.corp"
   password: "arista"
 
 cva:
-  ip: "10.178.146.43"
+  ip: "10.178.140.43"
   mask: "255.255.254.0"
-  gw: "10.178.146.1"
-  name: "naa-hec19-01"
+  gw: "10.178.140.1"
+  name: "naa-hec02-01"
   dns1: "100.127.141.1"
   dns2: "100.127.141.2"
   domain: "net.sap.corp"
@@ -22,19 +22,19 @@ cva:
 
 oob01:
   dhcp:
-    prefix: "10.178.146.0"
+    prefix: "10.178.140.0"
     mask: "255.255.254.0"
-    router: "10.178.146.1"
-    idrac_ip: "10.178.147.248"
-    cva_ip: "10.178.147.249"
+    router: "10.178.140.1"
+    idrac_ip: "10.178.141.248"
+    cva_ip: "10.178.141.249"
 
 cvp:
-  ip_eth0: "10.178.147.253"
-  ip_eth1: "10.255.245.69"
+  ip_eth0: "10.178.141.253"
+  ip_eth1: "10.255.252.69
   mask_eth0: "255.255.254.0"
   mask_eth1: "255.255.240.0"
-  gw: "10.178.146.1"
-  name: "naa-hec19-cvp-01.net.sap.corp"
+  gw: "10.178.140.1"
+  name: "naa-hec02-cvp-01.net.sap.corp"
   dns1: "10.17.121.30"
   dns2: "10.17.122.10"
   domain: "net.sap.corp"
@@ -42,22 +42,22 @@ cvp:
   ntp2: "10.4.12.100"
   device_int: eth0
   cluster_int: eth1
-  ingest_key: "SecureKey19"
-  vmname: "cvp-hec19"
+  ingest_key: "SecureKey02"
+  vmname: "cvp-hec02"
   KvmDomain: "cvp"
   password: "arista"
   eth1_routes:
-    - prefix: "198.19.194.0"
+    - prefix: "198.19.241.0”
       mask: "24"
-      nexthop: "10.255.245.78"
-    - prefix: "198.19.204.0"
+      nexthop: "10.255.252.78"
+    - prefix: "198.19.195.0"
       mask: "24"
-      nexthop: "10.255.245.78"
-  dhcp:
-    prefix: "10.178.146.0"
+      nexthop: "10.255.252.78"
+ dhcp:
+    prefix: "10.178.140.0"
     mask: "255.255.254.0"
-    range_low: "10.178.147.224"
-    range_high: "10.178.147.247"
+    range_low: "10.178.141.224"
+    range_high: "10.178.141.247"
 
 hec: 
   hec_nr: 19

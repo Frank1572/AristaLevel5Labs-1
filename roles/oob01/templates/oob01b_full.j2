@@ -167,7 +167,7 @@ interface Ethernet10
    switchport access vlan 21
 !
 interface Ethernet11
-   description ->->sw-hec{{ hec.hec_nr }}-spine-14
+   description ->sw-hec{{ hec.hec_nr }}-spine-14
    switchport access vlan 21
 !
 interface Ethernet12
@@ -310,7 +310,7 @@ interface Ethernet48
    description ->sw-hec{{ hec.hec_nr }}-oob-01a P48
    channel-group 42 mode active
 !
-interface Ethernet49
+interface {{ hec.admin_sw_interface }}
    description ->{{ hec.admin_sw_description_oob1b }}
    no switchport
    ip address {{ hec.admin_sw_ip_oob1b }}/{{ hec.admin_sw_mask }}

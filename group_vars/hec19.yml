@@ -59,6 +59,21 @@ cvp:
     mask: "255.255.254.0"
     range_low: "10.178.147.224"
     range_high: "10.178.147.247"
+  aaa_config:
+    aaa_type: "RADIUS"
+    servers:
+      - ip: "10.17.121.35"
+        secret: "secretRadPw"
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
+      - ip: "10.17.122.21"
+        secret: "secretRadPw"
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
 
 hec: 
   hec_nr: 19

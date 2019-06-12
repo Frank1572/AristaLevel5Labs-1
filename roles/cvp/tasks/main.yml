@@ -170,6 +170,22 @@
   tags:
     - cvp_init
 
+- name: "Create backup user account and add user to group cvp"
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  user:
+    name: "{{ cvp.backupuser }}"
+    groups: "cvp"
+  tags:
+    - cvp_init
+
+- name: "Add authorized keys"
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  authorized_key:
+    user: "{{ cvp.backupuser }}"
+    key: "{{ lookup('file', '{{role_path}}/files/'+ cvp.backupuser + '.key.pub') }}"
+  tags:
+    - cvp_init
+
 - name: Reset cvpadmin password
   delegate_to: "{{ cvp.ip_eth0 }}"
   command: "/cvpi/tools/update-mgmt-password -auth none -password {{ cvp.password }}"

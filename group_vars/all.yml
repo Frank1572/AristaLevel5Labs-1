@@ -46,6 +46,7 @@ cvp:
   vmname: "cvp-hec02"
   KvmDomain: "cvp"
   password: "arista"
+  backupuser: "cvpbkp"
   eth1_routes:
     - prefix: "198.19.241.0"
       mask: "24"

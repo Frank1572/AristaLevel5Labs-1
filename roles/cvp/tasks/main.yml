@@ -524,3 +524,8 @@
   tags:
     - create_containers
 
+- name: Configure AAA servers
+  delegate_to: 127.0.0.1
+  command: python {{role_path}}/files/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - configure_aaa

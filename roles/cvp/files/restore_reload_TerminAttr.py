@@ -18,7 +18,6 @@
 import sys
 import json
 import requests
-from cvprac.cvp_client import CvpClient
 import paramiko
 
 param1 = sys.argv[1]
@@ -35,9 +34,6 @@ auth_url = "https://%s/cvpservice/login/authenticate.do" % CVP_HOST
 auth_response = requests.post(auth_url, data=auth_data, verify=False)
 assert auth_response.ok
 cookies = auth_response.cookies
-
-client = CvpClient()
-client.connect([CVP_HOST], CVP_USER, CVP_PW, protocol='https')
 
 
 # Get a list of provisioned devices IP addresses

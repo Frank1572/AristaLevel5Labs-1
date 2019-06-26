@@ -530,8 +530,19 @@
   tags:
     - configure_aaa
 
+- name: Copy restore_reload_TerminAttr.py to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  copy:
+    src: "{{role_path}}/files/restore_reload_TerminAttr.py"
+    dest: /tmp/restore_reload_TerminAttr.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - reload_TerminAttr
+
 - name: Reload TerminAttr on devices after restoring a backup
-  delegate_to: 127.0.0.1
-  command: python {{role_path}}/files/restore_reload_TerminAttr.py "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "python /tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
   tags:
     - reload_TerminAttr

@@ -529,3 +529,9 @@
   command: python {{role_path}}/files/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - configure_aaa
+
+- name: Reload TerminAttr on devices after restoring a backup
+  delegate_to: 127.0.0.1
+  command: python {{role_path}}/files/restore_reload_TerminAttr.py "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - reload_TerminAttr

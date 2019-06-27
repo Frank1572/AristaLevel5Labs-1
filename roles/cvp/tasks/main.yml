@@ -192,6 +192,98 @@
   tags:
     - cvp_init
 
+- name: Check if directory for configlet builders exists
+  delegate_to: 127.0.0.1
+  stat:
+    path: '{{role_path}}/files/configlet_builders'
+  register: dir_to_delete
+  tags:
+    - configlets
+
+- name: Delete {{role_path}}/files/configlet_builders if exists
+  delegate_to: 127.0.0.1
+  file:
+    state: absent
+    path: '{{role_path}}/files/configlet_builders'
+  when: dir_to_delete.stat.exists and dir_to_delete.stat.isdir
+  tags:
+    - configlets
+
+- name: Create directory for configlet_builders again
+  delegate_to: 127.0.0.1
+  file:
+    state: directory
+    path: '{{role_path}}/files/configlet_builders'
+  when: dir_to_delete is defined or dir_to_delete.stat.exist == False
+  tags:
+    - configlets
+
+- name: Check if directory for configs exists
+  delegate_to: 127.0.0.1
+  stat:
+    path: '{{role_path}}/files/configs'
+  register: dir_to_delete
+  tags:
+    - configlets
+
+- name: Delete {{role_path}}/files/configs if exists
+  delegate_to: 127.0.0.1
+  file:
+    state: absent
+    path: '{{role_path}}/files/configs'
+  when: dir_to_delete.stat.exists and dir_to_delete.stat.isdir
+  tags:
+    - configlets
+
+- name: Create directory for configs again
+  delegate_to: 127.0.0.1
+  file:
+    state: directory
+    path: '{{role_path}}/files/configs'
+  when: dir_to_delete is defined or dir_to_delete.stat.exist == False
+  tags:
+    - configlets
+
+- name: Copy CVP-Arista to config directory
+  delegate_to: 127.0.0.1
+  copy:
+    src: "{{role_path}}/templates/config_templates/CVP-Arista"
+    dest: "{{role_path}}/files/configs/CVP-Arista"
+  tags:
+    - configlets
+
+- name: Copy mgmt-default to config directory
+  delegate_to: 127.0.0.1
+  copy:
+    src: "{{role_path}}/templates/config_templates/mgmt-default"
+    dest: "{{role_path}}/files/configs/mgmt-default"
+  tags:
+    - configlets
+
+- name: Copy mgmt-oob to config directory
+  delegate_to: 127.0.0.1
+  copy:
+    src: "{{role_path}}/templates/config_templates/mgmt-oob"
+    dest: "{{role_path}}/files/configs/mgmt-oob"
+  tags:
+    - configlets
+
+- name: Copy sw-mlag-a to config directory
+  delegate_to: 127.0.0.1
+  copy:
+    src: "{{role_path}}/templates/config_templates/sw-mlag-a"
+    dest: "{{role_path}}/files/configs/sw-mlag-a"
+  tags:
+    - configlets
+
+- name: Copy sw-mlag-b to config directory
+  delegate_to: 127.0.0.1
+  copy:
+    src: "{{role_path}}/templates/config_templates/sw-mlag-b"
+    dest: "{{role_path}}/files/configs/sw-mlag-b"
+  tags:
+    - configlets
+
 - name: Render sw-hecxx
   delegate_to: 127.0.0.1
   template:

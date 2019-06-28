@@ -622,6 +622,17 @@
   tags:
     - configure_aaa
 
+- name: Copy cvprac to /tmp/cvprac/ direcory on CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/cvprac"
+    dest: /tmp
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - reload_TerminAttr
+
 - name: Copy restore_reload_TerminAttr.py to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:

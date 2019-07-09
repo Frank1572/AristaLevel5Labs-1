@@ -2,4 +2,4 @@
 # file: group_vars/all
 
 ### Copy your topology variables to this file ###
-### example HEC19 ->   cp /group_vars/hec19.yml group_vars/all.yml ###
+### example HEC19 ->   cp group_vars/hec19.yml group_vars/all.yml ###

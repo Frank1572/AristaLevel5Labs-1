@@ -1,11 +1,15 @@
 # file: production
 
+### uncomment or insert the CVA DHCP and CVA Static IP address for the environment you want to work in ###
+
 [CVA-DHCP]
-10.178.147.249
-#10.83.30.232
-#192.168.178.108
+#HEC19
+#10.178.147.249
+#HEC10
+#10.178.143.249
 
 [CVA-STATIC]
-10.178.146.43
-#10.83.30.232
-#192.168.178.110
+#HEC19
+#10.178.146.43
+#HEC10
+#10.178.142.43

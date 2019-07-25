@@ -162,7 +162,7 @@ interface Port-Channel900
    mlag 900
 !
 interface Port-Channel101-124
-   switchport trunk native vlan 5
+   switchport trunk native vlan 7
    switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
@@ -170,8 +170,8 @@ interface Port-Channel101-124
    spanning-tree portfast
 !
 interface Port-Channel151-174
-   switchport trunk native vlan 5
-   switchport trunk allowed vlan 20,930-931
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    port-channel lacp fallback individual

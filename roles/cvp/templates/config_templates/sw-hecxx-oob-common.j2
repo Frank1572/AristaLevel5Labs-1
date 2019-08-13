@@ -2,6 +2,12 @@
 snmp-server community r0c4s ro ACL_SNMP_VTY
 snmp-server community o4CSPCu1sap ro ACL_SNMP_VTY
 !
+! OOB specific Global NTP Server (same NTP as used by CVP)
+no ntp server {{ hec.ntp1 }} prefer
+no ntp server {{ hec.ntp2 }}
+ntp server {{ cvp.ntp1 }} prefer
+ntp server {{ cvp.ntp2 }}
+!
 vlan 21,100
    name OOB
 !

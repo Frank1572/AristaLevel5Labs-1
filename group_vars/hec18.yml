@@ -122,10 +122,15 @@ hec:
   radius1: ....
   radius2: ....
   # Admin MPLS Prefixlist
-  admin_mpls_1: ..../..
-  admin_mpls_2: ..../..
-  admin_mpls_3: ..../..
-  admin_mpls_4: ..../..
+  admin_mpls: 
+    - prefix_mask: "..../.."
+      sequence: "5"
+    - prefix_mask: "..../.."
+      sequence: "10"
+    - prefix_mask: "..../.."
+      sequence: "15"
+    - prefix_mask: "..../.."
+      sequence: "20"
   admin_sw_interface: Ethernet45
   admin_sw_description_oob1a: "cosdc02-adm-03-co P1/13"
   admin_sw_description_oob1b: "cosdc02-adm-04-co P1/13"

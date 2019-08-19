@@ -41,6 +41,9 @@ snmp-server community r0c4s ro
 !
 logging host {{ hec.syslog1 }}
 logging host {{ hec.syslog2 }}
+{% if hec.syslog3 is defined %}
+logging host {{ hec.syslog3 }}
+{% endif %}
 !
 alias ic show interface counter | nz
 alias ie show interface counter errors | nz

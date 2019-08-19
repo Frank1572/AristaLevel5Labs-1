@@ -116,7 +116,9 @@ hec:
   syslog3: 147.204.146.42
   radius1: 10.17.122.21
   radius2: 10.17.121.35
-  admin_mpls_2: 10.178.140.0/23
+  admin_mpls: 
+    - prefix_mask: "10.178.140.0/23"
+      sequence: "20"
   admin_sw_interface: Ethernet49
   admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
   admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"

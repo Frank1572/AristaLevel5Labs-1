@@ -113,10 +113,9 @@ ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 ip routing
 !
 ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
-ip prefix-list PREF_ADMIN_MPLS seq 5 permit {{ hec.admin_mpls_1 }}
-ip prefix-list PREF_ADMIN_MPLS seq 10 permit {{ hec.admin_mpls_2 }}
-ip prefix-list PREF_ADMIN_MPLS seq 15 permit {{ hec.admin_mpls_3 }}
-ip prefix-list PREF_ADMIN_MPLS seq 20 permit {{ hec.admin_mpls_4 }}
+{% for prefix in hec.admin_mpls %}
+ip prefix-list PREF_ADMIN_MPLS seq {{ prefix.sequence }} permit {{ prefix.prefix_mask }}
+{% endfor %}
 !
 route-map ADMIN_MPLS_IN deny 10
    match ip address prefix-list PREF_ADMIN_MPLS

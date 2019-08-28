@@ -20,35 +20,35 @@ interface Vxlan1
    vxlan vlan 920 vni 10920
 !
 interface Port-Channel1101
-   description rt-{{ hec.hec_nr }}-101
+   description rt-hec{{ hec.hec_nr }}-101
    switchport mode trunk
    mlag 1101
 interface Port-Channel1102
-   description rt-{{ hec.hec_nr }}-102
+   description rt-hec{{ hec.hec_nr }}-102
    switchport mode trunk
    mlag 1102
 interface Port-Channel1401
-   description rt-{{ hec.hec_nr }}-401
+   description rt-hec{{ hec.hec_nr }}-401
    switchport mode trunk
    mlag 1401
 interface Port-Channel1402
-   description rt-{{ hec.hec_nr }}-402
+   description rt-hec{{ hec.hec_nr }}-402
    switchport mode trunk
    mlag 1402
 interface Port-Channel1501
-   description rt-{{ hec.hec_nr }}-501
+   description rt-hec{{ hec.hec_nr }}-501
    switchport mode trunk
    mlag 1501
 interface Port-Channel1502
-   description rt-{{ hec.hec_nr }}-502
+   description rt-hec{{ hec.hec_nr }}-502
    switchport mode trunk
    mlag 1502
 interface Port-Channel1601
-   description rt-{{ hec.hec_nr }}-601
+   description rt-hec{{ hec.hec_nr }}-601
    switchport mode trunk
    mlag 1601
 interface Port-Channel1602
-   description rt-{{ hec.hec_nr }}-602
+   description rt-hec{{ hec.hec_nr }}-602
    switchport mode trunk
    mlag 1602
 !
@@ -83,13 +83,13 @@ interface Ethernet25/1,26/1,35/1,36/1
    no switchport
 !
 interface Ethernet25/1
-   description ->sw-{{ hec.hec_nr }}-spine-11
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
 interface Ethernet26/1
-   description ->sw-{{ hec.hec_nr }}-spine-12
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
 interface Ethernet35/1
-   description ->sw-{{ hec.hec_nr }}-spine-13
+   description ->sw-hec{{ hec.hec_nr }}-spine-13
 interface Ethernet36/1
-   description ->sw-{{ hec.hec_nr }}-spine-14
+   description ->sw-hec{{ hec.hec_nr }}-spine-14
 !
 interface Loopback2
    ip address 10.200.1.1/32

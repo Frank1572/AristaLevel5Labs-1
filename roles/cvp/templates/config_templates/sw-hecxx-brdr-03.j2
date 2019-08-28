@@ -20,11 +20,11 @@ interface Vxlan1
    vxlan vlan 920 vni 10920
 ! 
 interface Port-Channel1103
-   description rt-{{ hec.hec_nr }}-103
+   description rt-hec{{ hec.hec_nr }}-103
    switchport mode trunk
    mlag 1103
 interface Port-Channel1104
-   description rt-{{ hec.hec_nr }}-104
+   description rt-hec{{ hec.hec_nr }}-104
    switchport mode trunk
    mlag 1104
 !
@@ -34,20 +34,20 @@ interface Ethernet2/1
    channel-group 1104 mode active
 !
 interface Ethernet25/1
-   description ->sw-{{ hec.hec_nr }}-spine-11
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
    no switchport
 interface Ethernet26/1
-   description ->sw-{{ hec.hec_nr }}-spine-12
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
    no switchport
 interface Ethernet30/1
    channel-group 42 mode active
 interface Ethernet31/1
    channel-group 42 mode active
 interface Ethernet35/1
-   description ->sw-{{ hec.hec_nr }}-spine-13
+   description ->sw-hec{{ hec.hec_nr }}-spine-13
    no switchport
 interface Ethernet36/1
-  description ->sw-{{ hec.hec_nr }}-spine-14
+  description ->sw-hec{{ hec.hec_nr }}-spine-14
   no switchport
 !
 interface Loopback2

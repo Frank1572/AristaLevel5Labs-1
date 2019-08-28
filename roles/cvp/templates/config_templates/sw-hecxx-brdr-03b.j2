@@ -1,9 +1,9 @@
 hostname sw-hec{{ hec.hec_nr }}-brdr-03b
 !
 interface Ethernet1/1
-   description "->rt-{{ hec.hec_nr }}-103, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-103, Fo1/0/0"
 interface Ethernet2/1
-   description "->rt-{{ hec.hec_nr }}-104, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-104, Fo1/0/0"
 !
 interface Ethernet25/1
    ip address 10.11.0.15/31
@@ -13,9 +13,9 @@ interface Ethernet26/1
    mtu 9100
 !
 interface Ethernet30/1
-   description "->sw-{{ hec.hec_nr }}-brdr-03a, Et30"
+   description "->sw-hec{{ hec.hec_nr }}-brdr-03a, Et30"
 interface Ethernet31/1
-   description "->sw-{{ hec.hec_nr }}-brdr-03a, Et31"
+   description "->sw-hec{{ hec.hec_nr }}-brdr-03a, Et31"
 !
 interface Ethernet35/1
    ip address 10.13.0.15/31

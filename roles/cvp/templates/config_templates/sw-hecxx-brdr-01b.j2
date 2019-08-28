@@ -1,21 +1,21 @@
 hostname sw-hec{{ hec.hec_nr }}-brdr-01b
 !
 interface Ethernet1/1
-   description "->rt-{{ hec.hec_nr }}-101, Fo0/2/1"
+   description "->rt-hec{{ hec.hec_nr }}-101, Fo0/2/1"
 interface Ethernet2/1
-   description "->rt-{{ hec.hec_nr }}-102, Fo0/2/1"
+   description "->rt-hec{{ hec.hec_nr }}-102, Fo0/2/1"
 interface Ethernet3/1
-   description "->rt-{{ hec.hec_nr }}-601, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-601, Fo1/0/0"
 interface Ethernet4/1
-   description "->rt-{{ hec.hec_nr }}-602, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-602, Fo1/0/0"
 interface Ethernet5/1
-   description "->rt-{{ hec.hec_nr }}-501, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-501, Fo1/0/0"
 interface Ethernet6/1
-   description "->rt-{{ hec.hec_nr }}-502, Fo1/0/0"
+   description "->rt-hec{{ hec.hec_nr }}-502, Fo1/0/0"
 interface Ethernet7/1
-   description "->rt-{{ hec.hec_nr }}-401, Fo0/2/1"
+   description "->rt-hec{{ hec.hec_nr }}-401, Fo0/2/1"
 interface Ethernet8/1
-   description "->rt-{{ hec.hec_nr }}-402, Fo0/2/1"
+   description "->rt-hec{{ hec.hec_nr }}-402, Fo0/2/1"
 !
 ! ===== Spine Uplinks =====
 interface Ethernet25/1

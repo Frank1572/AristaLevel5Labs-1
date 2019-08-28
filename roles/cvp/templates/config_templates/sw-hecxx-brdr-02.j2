@@ -31,12 +31,12 @@ interface Port-Channel6
    mlag 6
 !
 interface Port-Channel10
-   description ->fw-{{ hec.hec_nr }}-01
+   description ->fw-hec{{ hec.hec_nr }}-01
    switchport mode trunk 
    mlag 10
 !
 interface Port-Channel20
-   description ->fw-{{ hec.hec_nr }}-02
+   description ->fw-hec{{ hec.hec_nr }}-02
    switchport mode trunk 
    mlag 20
 !
@@ -47,19 +47,19 @@ interface Port-Channel30
 !
 ! =============== Port-Channel for CVA ===============
 interface Port-Channel48
-   description "->naa-{{ hec.hec_nr }}-01, in-band"
+   description "->naa-hec{{ hec.hec_nr }}-01, in-band"
    switchport access vlan 916
    mlag 48
 ! =============== xxxxxxxxxxxxxxxxxxxx ===============
 !
 interface Port-Channel1503
-   description rt-{{ hec.hec_nr }}-503
+   description rt-hec{{ hec.hec_nr }}-503
    switchport trunk allowed vlan 900,920,940
    switchport mode trunk
    mlag 1503
 !
 interface Port-Channel1504
-   description rt-{{ hec.hec_nr }}-504
+   description rt-hec{{ hec.hec_nr }}-504
    switchport trunk allowed vlan 900,920,940
    switchport mode trunk
    mlag 1504
@@ -71,26 +71,26 @@ interface Ethernet2
    channel-group 1504 mode active
 !
 interface Ethernet3
-   description "->lb-{{ hec.hec_nr }}-0[12], e1.1"
+   description "->lb-hec{{ hec.hec_nr }}-0[12], e1.1"
    switchport mode trunk
    switchport trunk allowed vlan 940
 !
 interface Ethernet4
-   description "->lb-{{ hec.hec_nr }}-0[12], e1.2"
+   description "->lb-hec{{ hec.hec_nr }}-0[12], e1.2"
    switchport mode trunk
    switchport trunk allowed vlan 85,90,95,100,2000-2499
 !
 interface Ethernet5
-   description "->lb-{{ hec.hec_nr }}-0[12], e1.3"
+   description "->lb-hec{{ hec.hec_nr }}-0[12], e1.3"
    switchport mode trunk
    switchport trunk allowed vlan 900
 !
 interface Ethernet6
-   description "->fw-{{ hec.hec_nr }}-01, et1-0[12]"
+   description "->fw-hec{{ hec.hec_nr }}-01, et1-0[12]"
    channel-group 10 mode active
 !
 interface Ethernet7
-   description "->fw-{{ hec.hec_nr }}-02, et1-0[21]"
+   description "->fw-hec{{ hec.hec_nr }}-02, et1-0[21]"
    channel-group 20 mode active
 !
 interface Ethernet27
@@ -144,7 +144,7 @@ interface Ethernet47
    channel-group 30 mode active
 
 interface Ethernet48
-   description ->naa-{{ hec.hec_nr }}-01
+   description ->naa-hec{{ hec.hec_nr }}-01
    switchport access vlan 916
    channel-group 48 mode active
 

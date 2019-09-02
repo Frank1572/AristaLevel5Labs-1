@@ -82,7 +82,7 @@ cvp:
   aaa_config:
     aaa_type: "RADIUS"
     servers:
-	# Below IP is the same as for Ashburn
+    # Below IP is the same as for Ashburn
       - ip: "10.4.201.55"
         secret: ""
         authMode: "PAP"
@@ -207,7 +207,7 @@ hec:
   snmp_acl: |
     ip access-list standard ACL_SNMP_VTY
      permit ip any any
-	 !
+     !
     
 container:
   - name: "HEC"

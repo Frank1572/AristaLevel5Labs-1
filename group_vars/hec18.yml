@@ -1,22 +1,28 @@
 ---
 # file: group_vars/hec18
 idrac:
+  # IDRAC IP reserved in IPAM :
   ip: "10.9.237.254"
   mask: "255.255.254.0"
   gw: "10.9.236.1"
+  # IDRAC Hostname reserved in IPAM :
   name: "naa-hec18-01-idrac"
-  dns1: ""
-  dns2: ""
+  # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01: 
+  dns1: "100.127.133.0"
+  dns2: "100.127.133.1"
   domain: "net.sap.corp"
   password: "arista"
 
 cva:
+  # CVA IP reserved in IPAM :
   ip: "10.9.236.43"
   mask: "255.255.254.0"
   gw: "10.9.236.1"
+  # CVA Hostname reserved in IPAM :
   name: "naa-hec18-01"
-  dns1: ""
-  dns2: ""
+  # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01: 
+  dns1: "100.127.133.0"
+  dns2: "100.127.133.1"
   domain: "net.sap.corp"
   password: "arista"
 
@@ -25,23 +31,28 @@ oob01:
     prefix: "10.9.236.0"
     mask: "255.255.254.0"
     router: "10.9.236.1"
+	# .248 and .249 reserved in IPAM as for installation or server replacement purpose:
     idrac_ip: "10.9.237.248"
     cva_ip: "10.9.237.249"
 
 cvp:
   version: "cvp-2018.2.5-kvm.tgz"
   path_to_cvp_file: "/ens/bin/images/arista/"
+  # out of band ip for cvp :
   ip_eth0: "10.9.237.253"
+  # inband transport ip for cvp (for configuration purpose)
   ip_eth1: "10.255.244.69"
   mask_eth0: "255.255.254.0"
   mask_eth1: "255.255.240.0"
   gw: "10.9.236.1"
   name: "naa-hec18-cvp-01.net.sap.corp"
+  # nsq-dns-01 and dns-02 :
   dns1: "10.4.202.200"
   dns2: "10.4.12.200"
   domain: "net.sap.corp"
-  ntp1: ""
-  ntp2: ""
+   # ntp as used for hec16 - Ashburn
+  ntp1: "10.4.12.100"
+  ntp2: "10.4.12.128"
   device_int: eth0
   cluster_int: eth1
   ingest_key: "SecureKey18"
@@ -51,32 +62,35 @@ cvp:
   backupuser: "cvpbkp"
   eth1_routes:
       # IPMI NW Mgmt Range (VLAN900)
-    - prefix: ""
+    - prefix: "198.19.170.0"
       mask: "24"
       nexthop: "10.255.244.78"
       # Leaf and Spine NW Mgmt Range (Lo900)
     - prefix: "198.19.171.0"
       mask: "24"
       nexthop: "10.255.244.78"
-      # CFM VM IP
+      # CFM VM IP - Not yet available
     - prefix: ""
       mask: "32"
       nexthop: "10.255.244.78"
   dhcp:
     prefix: "10.9.236.0"
     mask: "255.255.254.0"
+	# Below range is reserved in IPAM
     range_low: "10.9.237.224"
     range_high: "10.9.237.247"
   aaa_config:
     aaa_type: "RADIUS"
     servers:
-      - ip: "10.17.121.35"
+	    # Below IP is the same as for Ashburn
+      - ip: "10.4.201.55"
         secret: ""
         authMode: "PAP"
         authPort: 1645
         accPort: 1646
         status: "Enabled"
-      - ip: "10.17.122.21"
+        # Below IP is the same as for Ashburn
+      - ip: "169.145.33.70"
         secret: ""
         authMode: "PAP"
         authPort: 1645
@@ -90,11 +104,11 @@ hec:
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
   ma_domain: "net.sap.corp"
-  lo900_domain: ""
-  vl900_domain: ""
+  lo900_domain: "cos2.hec.sap.biz"
+  vl900_domain: "cos2.hec.sap.biz"
   vl900_mask: 24
-  vl900_def_gw: ....
-  vl900_net: ..../..
+  vl900_def_gw: 198.19.170.1
+  vl900_net: 198.19.170.0/24
   lo900_net: 198.19.171.0/24
   lo900_prefix: 198.19.171
   inband_trans_brdr: 10.255.244.78
@@ -113,24 +127,38 @@ hec:
   as_low: 4202047249
   as_high: 4202048447
   cvp_ingest_key: SecureKey18
-  dns1: ....
-  dns2: ....
-  ntp1: ....
-  ntp2: ....
-  syslog1: ....
-  syslog2: ....
-  radius1: ....
-  radius2: ....
+  # nsq-dns-01 and dns-02 :
+  dns1: 10.4.202.200
+  dns2: 10.4.12.200
+  # ntp as for hec16 / Ashburn
+  ntp1: 169.145.33.88
+  ntp2: 
+  # HECxx-CIS01-SPLUNKIDX01 - Local Syslog:
+  syslog1: 100.127.133.64
+  syslog2: 100.127.133.65
+  # Radius taken from HEC16 / Ashburn
+  radius1: 10.4.201.55
+  radius2: 169.145.33.70
   # Admin MPLS Prefixlist
   admin_mpls: 
-    - prefix_mask: "..../.."
-      sequence: "5"
-    - prefix_mask: "..../.."
+      # HEC1x-IPMI01 (vlan10)
+    - prefix_mask: "100.96.160.0/23"
+	  sequence: "5"
+	  # HEC1x-TS01 (vlan70) and HEC1x-TIC1 (vlan75) 
+    - prefix_mask: "100.127.128.0/21"
       sequence: "10"
-    - prefix_mask: "..../.."
+	  # HEC1x-NW-MGMT01 (vlan900)
+    - prefix_mask: "198.19.170.0/24"
       sequence: "15"
-    - prefix_mask: "..../.."
+	  # HEC18-NW-MGMT02 (fabric/loopback900)
+    - prefix_mask: "198.19.171.0/24"
       sequence: "20"
+      # HEC18-NW-MGMT03 (wan)
+    - prefix_mask: "198.19.224.64/24"
+      sequence: "20"
+      # vlan915 (transport)
+    - prefix_mask: "10.255.244.0/28"
+      sequence: "20"		
   admin_sw_interface: Ethernet45
   admin_sw_description_oob1a: "cosdc02-adm-03-co P1/13"
   admin_sw_description_oob1b: "cosdc02-adm-04-co P1/13"
@@ -142,153 +170,44 @@ hec:
   admin_sw_neig_as_oob1a: 65999
   admin_sw_neig_ip_oob1b: 10.255.222.12
   admin_sw_neig_as_oob1b: 65999
-  oob01_lo0_prefix: ...
+  # oob network / vlan21:
+  oob01_lo0_prefix: 10.9.236
+  # with dot 18 once provider advertise this
   oob01_as: 64531
   spine_nr: 
     - 11
     - 12
     - 13
     - 14
-  oob01a_snmp_contact: ...
-  oob01a_snmp_location: ...
-  oob01b_snmp_contact: ...
-  oob01b_snmp_location: ...
-  oobs_2_7: 
-    - number: 02
-      snmp_contact: ...
-      snmp_location: ...
+  oob01a_snmp_contact: 636126:ncons-hec18-01:1010
+  oob01a_snmp_location: AMER-USA-COS02-NT-PV01(DH01)-R2-10-40
+  oob01b_snmp_contact: 636127:ncons-hec18-02:1001
+  oob01b_snmp_location: AMER-USA-COS02-NT-PV02(DH01)-R2-11-40
+  oobs_2a_2b_3_4: 
+    - number: 02a
+      snmp_contact: 00:ncons-hec18-03:1016
+      snmp_location: AMER-USA-COS02-DH01-4-1-19
       ip_last_octett: 4
-    - number: 03
-      snmp_contact: ...
-      snmp_location: ...
+    - number: 02b
+      snmp_contact: 00:ncons-hec18-01:1010
+      snmp_location: AMER-USA-COS02-DH01-6-1-43
       ip_last_octett: 5
-    - number: 04
-      snmp_contact: ...
-      snmp_location:  ...
+    - number: 03
+      snmp_contact: 00:ncons-hec18-03:1004
+      snmp_location: AMER-USA-COS02-DH1-6-4-43
       ip_last_octett: 6
-    - number: 05
-      snmp_contact: ...
-      snmp_location: ...
+    - number: 04
+      snmp_contact: 00:ncons-hec18-04:1004
+      snmp_location: AMER-USA-COS02-DH1-6-6-43
       ip_last_octett: 7
-    - number: 06
-      snmp_contact: ...
-      snmp_location: ...
-      ip_last_octett: 8
-    - number: 07
-      snmp_contact: ...
-      snmp_location: ...
-      ip_last_octett: 9
   hvv_hvx_acl_rules: |
-      10 permit vlan 50 0x000 icmp any any
-      20 permit vlan 50 0x000 pim any any
-      30 permit vlan 50 0x000 92 any any
-      40 permit vlan 50 0x000 vrrp any any
-      50 permit vlan 50 0x000 ip any 224.0.0.0/5
-      60 permit vlan 50 0x000 ip 100.96.208.0/22 host 100.96.211.255
-      70 permit vlan 50 0x000 ip 100.96.208.0/22 100.96.211.0/24
-      80 permit vlan 50 0x000 ip 100.96.211.0/24 100.96.208.0/22
-      90 permit vlan 50 0x000 ip 100.96.208.0/22 host 100.96.208.1
-      100 deny vlan 50 0x000 ip 100.96.208.0/22 100.96.208.0/22
-      110 permit vlan 50 0x000 ip 100.96.208.0/22 any
-      120 permit vlan 60 0x000 icmp any any
-      130 permit vlan 60 0x000 pim any any
-      140 permit vlan 60 0x000 92 any any
-      150 permit vlan 60 0x000 vrrp any any
-      160 permit vlan 60 0x000 ip any 224.0.0.0/5
-      170 permit vlan 60 0x000 ip 100.96.216.0/21 host 100.96.223.255
-      180 permit vlan 60 0x000 ip 100.96.216.0/21 host 100.96.216.1
-      190 deny vlan 60 0x000 ip 100.96.216.0/21 100.96.216.0/21
-      200 permit vlan 60 0x000 ip 100.96.216.0/21 any
-      210 permit ip any any
+      10 permit ip any any
   hana_acl_rules: |
-      10 permit icmp any any
-      20 permit pim any any
-      30 permit 92 any any
-      40 permit vrrp any any
-      50 permit ip any 224.0.0.0/5
-      60 permit ip 100.96.200.0/22 host 100.96.201.255
-      70 permit ip 100.96.200.0/22 host 100.96.203.255
-      80 permit ip 100.96.200.0/22 host 100.96.200.5
-      90 permit ip host 100.96.200.5 100.96.200.0/22
-      100 permit ip 100.96.200.0/22 host 100.96.200.6
-      110 permit ip host 100.96.200.6 100.96.200.0/22
-      120 permit ip 100.96.200.0/22 100.96.201.224/27
-      130 permit ip 100.96.201.224/27 100.96.200.0/22
-      140 permit ip 100.96.200.0/22 100.96.203.192/26
-      150 permit ip 100.96.203.192/26 100.96.200.0/22
-      160 permit ip 100.96.201.224/27 100.96.203.192/26
-      170 permit ip 100.96.203.192/26 100.96.201.224/27
-      180 permit ip 100.96.200.0/22 host 100.96.200.1
-      190 deny ip 100.96.200.0/22 100.96.200.0/22
-      200 permit ip 100.96.200.0/22 any
-      210 permit ip any any
+      10 permit ip any any
   snmp_acl: |
     ip access-list standard ACL_SNMP_VTY
-     permit host 10.17.53.58
-     permit host 10.17.53.57
-     permit host 10.17.47.44
-     permit host 169.145.33.36
-     permit host 169.145.33.160
-     permit host 147.204.148.20
-     permit host 147.204.148.87
-     permit host 147.204.148.100
-     permit host 147.204.148.101
-     permit host 147.204.148.156
-     permit host 194.39.131.37
-     permit 10.18.117.0 0.0.0.255
-     permit 10.21.104.0 0.0.0.255
-     permit 10.23.111.0 0.0.0.255
-     permit 10.17.120.0 0.0.252.255
-     permit 10.17.158.0 0.0.254.255
-     permit 10.17.160.0 0.0.252.255
-     permit 147.204.128.0 0.0.0.127
-     permit 147.204.144.0 0.0.0.127
-     permit 169.145.80.0 0.0.0.127
-     permit 169.145.104.0 0.0.0.127
-     permit 169.145.152.0 0.0.0.127
-     permit 169.145.208.0 0.0.0.127
-     permit 169.145.216.0 0.0.0.127
-     permit 169.145.240.0 0.0.0.127
-     permit 169.145.248.0 0.0.0.127
-     permit 100.127.0.0 0.0.0.127
-     permit 100.127.8.0 0.0.0.127
-     permit 100.127.16.0 0.0.0.127
-     permit 100.127.32.0 0.0.0.127
-     permit 147.204.128.32 0.0.0.1
-     permit 147.204.146.32 0.0.0.1
-     permit 169.145.80.32 0.0.0.1
-     permit 169.145.104.32 0.0.0.1
-     permit 169.145.152.32 0.0.0.1
-     permit 169.145.208.32 0.0.0.1
-     permit 169.145.216.32 0.0.0.1
-     permit 169.145.240.32 0.0.0.1
-     permit 169.145.248.32 0.0.0.1
-     permit host 169.145.82.6
-     permit host 169.145.106.32
-     permit host 169.145.106.33
-     permit 100.127.0.32 0.0.0.1
-     permit 100.127.8.32 0.0.0.1
-     permit 100.127.16.32 0.0.0.1
-     permit 100.127.32.32 0.0.0.1
-     permit 169.145.33.64 0.0.0.63
-     permit 198.19.224.0 0.0.31.255
-     permit 198.19.166.0 0.0.0.255
-     permit 198.19.167.0 0.0.0.255
-     permit 198.19.170.0 0.0.0.255
-     permit 198.19.171.0 0.0.0.255
-     permit 198.19.190.0 0.0.0.255
-     permit 198.19.191.0 0.0.0.127
-     permit 198.19.194.0 0.0.0.255
-     permit 198.19.195.0 0.0.0.255
-     permit 198.19.200.0 0.0.0.255
-     permit 198.19.201.0 0.0.0.255
-     permit 198.19.202.0 0.0.0.255
-     permit 198.19.203.0 0.0.0.255
-     permit 198.19.204.0 0.0.0.255
-     permit 198.19.206.0 0.0.0.255
-     permit 198.19.207.0 0.0.0.255
-     deny any
-    !
+     permit ip any any
+	 !
     
 container:
   - name: "HEC"
@@ -354,4 +273,3 @@ container:
         - name: "HEC18-Svc"
     - name: "HEC18-Unmanaged"
       below_root: "yes"
-      # comments

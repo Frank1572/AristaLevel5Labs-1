@@ -31,7 +31,7 @@ oob01:
     prefix: "10.9.236.0"
     mask: "255.255.254.0"
     router: "10.9.236.1"
-	# .248 and .249 reserved in IPAM as for installation or server replacement purpose:
+    # .248 and .249 reserved in IPAM as for installation or server replacement purpose:
     idrac_ip: "10.9.237.248"
     cva_ip: "10.9.237.249"
 
@@ -76,13 +76,13 @@ cvp:
   dhcp:
     prefix: "10.9.236.0"
     mask: "255.255.254.0"
-	# Below range is reserved in IPAM
+    # Below range is reserved in IPAM
     range_low: "10.9.237.224"
     range_high: "10.9.237.247"
   aaa_config:
     aaa_type: "RADIUS"
     servers:
-	    # Below IP is the same as for Ashburn
+	# Below IP is the same as for Ashburn
       - ip: "10.4.201.55"
         secret: ""
         authMode: "PAP"
@@ -143,14 +143,14 @@ hec:
   admin_mpls: 
       # HEC1x-IPMI01 (vlan10)
     - prefix_mask: "100.96.160.0/23"
-	  sequence: "5"
-	  # HEC1x-TS01 (vlan70) and HEC1x-TIC1 (vlan75) 
+      sequence: "5"
+      # HEC1x-TS01 (vlan70) and HEC1x-TIC1 (vlan75) 
     - prefix_mask: "100.127.128.0/21"
       sequence: "10"
-	  # HEC1x-NW-MGMT01 (vlan900)
+      # HEC1x-NW-MGMT01 (vlan900)
     - prefix_mask: "198.19.170.0/24"
       sequence: "15"
-	  # HEC18-NW-MGMT02 (fabric/loopback900)
+      # HEC18-NW-MGMT02 (fabric/loopback900)
     - prefix_mask: "198.19.171.0/24"
       sequence: "20"
       # HEC18-NW-MGMT03 (wan)

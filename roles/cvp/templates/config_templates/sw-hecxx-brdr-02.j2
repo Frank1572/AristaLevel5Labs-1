@@ -53,13 +53,13 @@ interface Port-Channel48
 ! =============== xxxxxxxxxxxxxxxxxxxx ===============
 !
 interface Port-Channel1503
-   description rt-hec{{ hec.hec_nr }}-503
+   description rt-hec{{ hec.hec_nr }}-vpn-01a
    switchport trunk allowed vlan 900,920,940
    switchport mode trunk
    mlag 1503
 !
 interface Port-Channel1504
-   description rt-hec{{ hec.hec_nr }}-504
+   description rt-hec{{ hec.hec_nr }}-vpn-01b
    switchport trunk allowed vlan 900,920,940
    switchport mode trunk
    mlag 1504

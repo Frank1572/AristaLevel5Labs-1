@@ -624,6 +624,30 @@
   tags:
     - configlets
 
+- name: Render sw-hecxx-str-02
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-02.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-str-02a
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-02a.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02a"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-str-02b
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-str-02b.j2"
+    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02b"
+  tags:
+    - configlets
+
 - name: Render sw-hecxx-brdr-01
   delegate_to: 127.0.0.1
   template:

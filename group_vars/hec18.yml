@@ -158,7 +158,7 @@ hec:
       sequence: "20"
       # vlan915 (transport)
     - prefix_mask: "10.255.244.0/28"
-      sequence: "20"		
+      sequence: "20"
   admin_sw_interface: Ethernet45
   admin_sw_description_oob1a: "cosdc02-adm-03-co P1/13"
   admin_sw_description_oob1b: "cosdc02-adm-04-co P1/13"

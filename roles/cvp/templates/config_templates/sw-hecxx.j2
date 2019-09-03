@@ -15,10 +15,10 @@ banner login
       @@@@@@@@@                 .'    |                 @@@@@@@@@@@
       @@@@@@@@@a              _/      |                a@@@@@@@@@@@
       @@@@@@@@@@a           _/      `.`.              a@@@@@@@@@@@@
-      @@@@@@@@@@@a     ____/ '   _ | |______       a@@@@@@@@@@@@@
-      @@@@@@@@@@@@@a__/___/      /__    __.a@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@/  (___.'______)|_|        @@@@@@@@@@@@@@@
-      @@@@@@@@@@@@|_______                       ~~~~~@@@@@@@@@
+      @@@@@@@@@@@a     ____/ '   _ | |______         a@@@@@@@@@@@@@
+      @@@@@@@@@@@@@a__/___/      /__    __.        a@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@/  (___.'______)|_|              @@@@@@@@@@@@@@@
+      @@@@@@@@@@@@|_______                           ~~~~~@@@@@@@@@
 ****************************  W A R N I N G  *****************************
 *     Access to this system is restricted to authorized users only.      *
 *     All data residing on this system is the property of SAP.           *
@@ -37,7 +37,10 @@ EOF
 ntp server {{ hec.ntp1 }} prefer
 ntp server {{ hec.ntp2 }}
 !
-snmp-server community r0c4s ro
+snmp-server community r0c4s ro ACL_SNMP_VTY
+!
+{{ hec.snmp_acl }}
+!
 !
 logging host {{ hec.syslog1 }}
 logging host {{ hec.syslog2 }}

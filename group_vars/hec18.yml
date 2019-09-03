@@ -70,9 +70,9 @@ cvp:
       mask: "24"
       nexthop: "10.255.244.78"
       # CFM VM IP - Not yet available
-    - prefix: ""
-      mask: "32"
-      nexthop: "10.255.244.78"
+      # - prefix: ""
+      # mask: "32"
+      # nexthop: "10.255.244.78"
   dhcp:
     prefix: "10.9.236.0"
     mask: "255.255.254.0"

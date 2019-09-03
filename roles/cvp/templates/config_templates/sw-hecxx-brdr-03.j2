@@ -20,11 +20,11 @@ interface Vxlan1
    vxlan vlan 920 vni 10920
 ! 
 interface Port-Channel1103
-   description rt-hec{{ hec.hec_nr }}-103
+   description rt-hec{{ hec.hec_nr }}-core-01c
    switchport mode trunk
    mlag 1103
 interface Port-Channel1104
-   description rt-hec{{ hec.hec_nr }}-104
+   description rt-hec{{ hec.hec_nr }}-core-01d
    switchport mode trunk
    mlag 1104
 !

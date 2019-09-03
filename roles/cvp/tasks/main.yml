@@ -776,29 +776,49 @@
   tags:
     - configlets
 
-- name: Upload generated configlet builders
-  delegate_to: 127.0.0.1
-  command: python {{role_path}}/files/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+- name: Copy configlet builders to the CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/configlet_builders"
+    dest: /tmp
+    owner: root
+    group: root
+    mode: 0755
   tags:
     - upload_configlets
 
-- name: Upload all generated configlets
-  delegate_to: 127.0.0.1
-  command: python {{role_path}}/files/configlets.py "{{role_path}}/files/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+- name: Copy configlets to the CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/configs"
+    dest: /tmp
+    owner: root
+    group: root
+    mode: 0755
   tags:
     - upload_configlets
 
-- name: Create the container structure in CVP and add configlets to containers
-  delegate_to: 127.0.0.1
-  command: python {{role_path}}/files/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+- name: Copy python upload script for configlet builders to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/configlet_builder.py"
+    dest: /tmp/configlet_builder.py
+    owner: root
+    group: root
+    mode: 0755
   tags:
-    - create_containers
+    - upload_configlets
 
-- name: Configure AAA servers
-  delegate_to: 127.0.0.1
-  command: python {{role_path}}/files/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+- name: Copy python upload script for configlets to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/configlets.py"
+    dest: /tmp/configlets.py
+    owner: root
+    group: root
+    mode: 0755
   tags:
-    - configure_aaa
+    - upload_configlets
 
 - name: Copy cvprac to /tmp/cvprac/ direcory on CVP
   delegate_to: "{{ cvp.ip_eth0 }}" 
@@ -810,6 +830,53 @@
     mode: 0755
   tags:
     - reload_TerminAttr
+    - upload_configlets
+
+- name: Upload generated configlet builders
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: python /tmp/configlet_builder.py "/tmp/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - upload_configlets
+
+- name: Upload all generated configlets
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: python /tmp/configlets.py "/tmp/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - upload_configlets
+
+- name: Copy container creation script to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/container_and_mapping.py"
+    dest: /tmp/container_and_mapping.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - create_containers
+
+- name: Create the container structure in CVP and add configlets to containers
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  command: python /tmp/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - create_containers
+
+- name: Copy aaa server creation script to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}" 
+  copy:
+    src: "{{role_path}}/files/aaa_configuration.py"
+    dest: /tmp/aaa_configuration.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - configure_aaa
+
+- name: Configure AAA servers
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: python /tmp/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - configure_aaa
 
 - name: Copy restore_reload_TerminAttr.py to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"

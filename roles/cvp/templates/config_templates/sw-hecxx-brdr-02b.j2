@@ -1,9 +1,9 @@
 hostname sw-hec{{ hec.hec_nr }}-brdr-02b
 !
 interface Ethernet1
-   description "->rt-hec{{ hec.hec_nr }}-503, Te0/1/2"
+   description "->rt-hec{{ hec.hec_nr }}-vpn-01a, Te0/1/2"
 interface Ethernet2
-   description "->rt-hec{{ hec.hec_nr }}-504, Te0/1/2"
+   description "->rt-hec{{ hec.hec_nr }}-vpn-01b, Te0/1/2"
 interface Ethernet3
    description "->lb-hec{{ hec.hec_nr }}-02, e1.1"
 interface Ethernet4

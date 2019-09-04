@@ -170,8 +170,8 @@ hec:
   admin_sw_neig_as_oob1a: 65999
   admin_sw_neig_ip_oob1b: 10.255.222.12
   admin_sw_neig_as_oob1b: 65999
-  # oob network / vlan21:
-  oob01_lo0_prefix: 10.9.236
+  # oob network / lo 0 range:
+  oob01_lo0_prefix: 198.19.171
   # with dot 18 once provider advertise this
   oob01_as: 64531
   spine_nr: 

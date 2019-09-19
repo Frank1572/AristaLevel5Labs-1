@@ -66,12 +66,12 @@ cvp:
       # HEC1x-NW-MGMT01 (VLAN900)
     - prefix: "198.19.166.0"
       mask: "24"
-	  # This IP is the Firewall but for the begining we bypass the firewall
+      # This IP is the Firewall but for the begining we bypass the firewall
       nexthop: "10.255.243.78"
       # HEC1x-NW-MGMT02 (Lo900)
     - prefix: "198.19.167.0
       mask: "24"
-	  # This IP is the Firewall but for the begining we bypass the firewall
+      # This IP is the Firewall but for the begining we bypass the firewall
       nexthop: "10.255.243.78"
       # CFM VM IP - Not yet available
       # - prefix: ""

@@ -38,7 +38,7 @@ oob01:
 cvp:
   version: "cvp-2018.2.5-kvm.tgz"
   # Problem is that from the server the netsecadmint is not reachable
-    path_to_cvp_file: "/root/"
+  path_to_cvp_file: "/root/"
   # path_to_cvp_file: "/ens/bin/images/arista/"
   # out of band ip for cvp :
   ip_eth0: "10.9.233.253"

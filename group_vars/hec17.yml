@@ -128,8 +128,8 @@ hec:
   oob_mask: 23
   oob_cvx: 10.9.233.252
   oob_cvp: 10.9.233.253
-  as_low: 4202047249
-  as_high: 4202048447
+  as_low: 4201981713
+  as_high: 4201982911
   cvp_ingest_key: SecureKey17
   # nsq-dns-01 and dns-02 :
   dns1: 10.4.202.200

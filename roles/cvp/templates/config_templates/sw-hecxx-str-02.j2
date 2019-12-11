@@ -96,7 +96,7 @@ router bgp 641{{ hec.hec_nr }}.10005
    neighbor EVPN-PG update-source Loopback1
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG ebgp-multihop 2
-   neighbor EVPN-PG maximum-routes 12000
+   neighbor EVPN-PG maximum-routes 0
    neighbor EVPN-PG fall-over bfd
    !
    neighbor SPINE-PG peer-group

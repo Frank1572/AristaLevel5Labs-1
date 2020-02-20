@@ -1,0 +1,3 @@
+- name: roles_cvp_templates
+  src: https://github.wdf.sap.corp/thecoolkids/roles_cvp_templates
+  version: master

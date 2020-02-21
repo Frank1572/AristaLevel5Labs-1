@@ -280,9 +280,9 @@
   tags:
     - cvp_init
 
-# Pause for 480 seconds to power up vm
+# Pause for 720 seconds to power up vm
 - pause:
-    seconds: 480
+    seconds: 720
   tags:
     - cvp_init
 

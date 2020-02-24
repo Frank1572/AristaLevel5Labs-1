@@ -1,5 +1,5 @@
 ---
-# file: master.yml
+# file: dhcp.yml
 
 - hosts: localhost
   gather_facts: no
@@ -12,12 +12,5 @@
     - role:
       - cva
       - idrac
-      vars:
-        - ansible_user: root
-
-- hosts: CVA-STATIC
-  gather_facts: no
-  roles:
-    - role: cvp
       vars:
         - ansible_user: root

@@ -1,11 +1,6 @@
 ---
 # file: dhcp.yml
 
-- hosts: localhost
-  gather_facts: no
-  roles:
-    - role: oob01
-
 - hosts: CVA-DHCP
   gather_facts: no
   roles:

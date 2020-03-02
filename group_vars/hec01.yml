@@ -136,12 +136,12 @@ container:
           - name: "mgmt-default"
         subcontainer:
         - name: "HEC01-Spine"
-            configlets:
-              - name: "sw-hec01-spine"
+          configlets:
+            - name: "sw-hec01-spine"
         subcontainer:
         - name: "HEC01-Leaf"
-            configlets:
-              - name: "sw-hec01-leaf"
+          configlets:
+            - name: "sw-hec01-leaf"
         subcontainer:
         - name: "HEC01-Special leaf"
         subcontainer:

@@ -1,71 +1,4 @@
 banner login
-{% if hec.bender_banner is defined %}
-                     (   )
-                      '-'
-                      J L
-                      | |
-                     J   L
-                     |   |
-                    J     L
-                  .-'.___.'-.
-                 /___________\
-            _.-""'           `bmw._
-          .'                       `.
-        J                            `.
-       F                               L
-      J                                 J
-     J                                  `
-     |                                   L
-     |           H   H  EEEEE  CCCCC     |
-     |           H   H  E      C         |
-     |           HHHHH  EEEE   C         |
-     |           H   H  E      C         |
-     |           H   H  EEEEE  CCCCC     |
-     |                                   |
-     |             ,.___          ___....--._
-     |           ,'     `""""""""'           `-._
-     |          J           _____________________`-.
-     |         F         .-'   `-88888-'    `Y8888b.`.
-     |         |       .'         `P'         `88888b \
-     |         |      J       #     L      #    q8888b L
-     |         |      |             |           )8888D )
-     |         J      \             J           d8888P P
-     |          L      `.         .b.         ,88888P /
-     |           `.      `-.___,o88888o.___,o88888P'.'
-     |             `-.__________________________..-'
-     |                                    |
-     |         .-----.........____________J
-     |       .' |       |      |       |
-     |      J---|-----..|...___|_______|
-     |      |   |       |      |       |
-     |      Y---|-----..|...___|_______|
-     |       `. |       |      |       |
-     |         `'-------:....__|______.J
-     |                                  |
-      L___                              |
-          """----...______________....--'
-{% else %}
-      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@@@@@@@@@@@'~~~     ~~~`@@@@@@@@@@@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@@@@@@'                     `@@@@@@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@@@'    H   H  EEEEE  CCCCC    `@@@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@'      H   H  E      C          `@@@@@@@@@@@@@@@
-      @@@@@@@@@@@'        HHHHH  EEEE   C            `@@@@@@@@@@@@@
-      @@@@@@@@@@'         H   H  E      C             `@@@@@@@@@@@@
-      @@@@@@@@@'          H   H  EEEEE  CCCCC          `@@@@@@@@@@@
-      @@@@@@@@@                                         @@@@@@@@@@@
-      @@@@@@@@'                      n,                 `@@@@@@@@@@
-      @@@@@@@@                     _/ | _                @@@@@@@@@@
-      @@@@@@@@                    /'  `'/                @@@@@@@@@@
-      @@@@@@@@a                 <~    .'                a@@@@@@@@@@
-      @@@@@@@@@                 .'    |                 @@@@@@@@@@@
-      @@@@@@@@@a              _/      |                a@@@@@@@@@@@
-      @@@@@@@@@@a           _/      `.`.              a@@@@@@@@@@@@
-      @@@@@@@@@@@a     ____/ '   _ | |______         a@@@@@@@@@@@@@
-      @@@@@@@@@@@@@a__/___/      /__    __.        a@@@@@@@@@@@@@@@
-      @@@@@@@@@@@@@/  (___.'______)|_|              @@@@@@@@@@@@@@@
-      @@@@@@@@@@@@|_______                           ~~~~~@@@@@@@@@
-{% endif %}
 ****************************  W A R N I N G  *****************************
 *     Access to this system is restricted to authorized users only.      *
 *     All data residing on this system is the property of SAP.           *
@@ -81,10 +14,9 @@ banner login
       Device: $(hostname)
 EOF
 !
-ntp server {{ hec.ntp1 }} prefer
-ntp server {{ hec.ntp2 }}
+{% include "templates/config_templates/sw-hecxx-ntp.j2" %}
 !
-snmp-server community r0c4s ro ACL_SNMP_VTY
+{% include "templates/config_templates/sw-hecxx-snmp.j2" %}
 !
 {{ hec.snmp_acl }}
 !
@@ -113,4 +45,3 @@ event-handler CONFIG_VERSIONING
 !
 ! === Interval for averaging the load in CLI commands, in seconds
 load-interval default 5
-

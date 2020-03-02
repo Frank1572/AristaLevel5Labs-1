@@ -142,30 +142,30 @@ container:
             - name: "HEC01-Leaf"
               configlets:
                 - name: "sw-hec01-leaf"
-            subcontainer:
-              - name: "HEC01-Special leaf"
-            subcontainer:
-              - name: "HEC01-NGDR"
-            subcontainer:
-              - name: "HEC01-HANA leaf"
-                configlets:
-                  - name: "hec01-hana"
-                  - name: "sw-hec01-autoconf"
-                  - name: "sw-hec01-descriptions"
-              - name: "HEC01-Service leaf"
-              - name: "HEC01-HV leaf"
-                configlets:
-                  - name: "HEC01-VLANs"
-                  - name: "sw-hec01-autoconf"
-                subcontainer:
-                  - name: "HEC01-VMWare leaf"
-                    configlets:
-                      - name: "hec01-vmware"
-                      - name: "sw-hec01-descriptions-hvv"
-                subcontainer:
-                  - name: "HEC01-Xen leaf"
-                    configlets:
-                      - name: "hec01-xen"
-                      - name: "sw-hec01-descriptions"
+              subcontainer:
+                - name: "HEC01-Special leaf"
+              subcontainer:
+                - name: "HEC01-NGDR"
+              subcontainer:
+                - name: "HEC01-HANA leaf"
+                  configlets:
+                    - name: "hec01-hana"
+                    - name: "sw-hec01-autoconf"
+                    - name: "sw-hec01-descriptions"
+                - name: "HEC01-Service leaf"
+                - name: "HEC01-HV leaf"
+                  configlets:
+                    - name: "HEC01-VLANs"
+                    - name: "sw-hec01-autoconf"
+                  subcontainer:
+                    - name: "HEC01-VMWare leaf"
+                      configlets:
+                        - name: "hec01-vmware"
+                        - name: "sw-hec01-descriptions-hvv"
+                  subcontainer:
+                    - name: "HEC01-Xen leaf"
+                      configlets:
+                        - name: "hec01-xen"
+                        - name: "sw-hec01-descriptions"
     - name: "HEC01-Unmanaged"
       below_root: "yes"

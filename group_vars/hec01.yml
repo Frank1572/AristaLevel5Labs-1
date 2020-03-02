@@ -312,46 +312,46 @@ container:
         - name: "HEC01-FWT"
         - name: "HEC01-InterDC"
         - name: "HEC01-Backup Routers"
-      - name: "HEC01-Switched Fabric"
-        configlets:
-          - name: "HEC01-VLANs"
-        subcontainer:
-          - name: "HEC01-Core"
-          - name: "HEC01-Top of rack"
-      - name: "HEC01-Routed Fabric"
-        configlets:
-          - name: "CVP-Arista"
-          - name: "sw-hec01-fab-L900"
-          - name: "sw-hec01-oob-vrf"
-          - name: "sw-hec01-tele-oob"
-          - name: "mgmt-default"
-        subcontainer:
-          - name: "HEC01-Spine"
-            configlets:
-              - name: "sw-hec01-spine"
-          - name: "HEC01-Special leaf"
-          - name: "HEC01-Service leaf"
-          - name: "HEC01-NGDR"
-          - name: "HEC01-Leaf"
-            configlets:
-              - name: "sw-hec01-leaf"
-            subcontainer:
-              - name: "HEC01-HANA leaf"
-                configlets:
-                  - name: "hec01-hana"
-                  - name: "sw-hec01-autoconf"
-                  - name: "sw-hec01-descriptions"
-              - name: "HEC01-HV leaf"
-                configlets:
-                  - name: "HEC01-VLANs"
-                  - name: "sw-hec01-autoconf"
-              - name: "HEC01-VMWare leaf"
-                configlets:
-                  - name: "hec01-vmware"
-                  - name: "sw-hec01-descriptions-hvv"
-              - name: "HEC01-Xen leaf"
-                configlets:
-                  - name: "hec01-xen"
-                  - name: "sw-hec01-descriptions"
+        - name: "HEC01-Switched Fabric"
+          configlets:
+            - name: "HEC01-VLANs"
+          subcontainer:
+            - name: "HEC01-Core"
+            - name: "HEC01-Top of rack"
+        - name: "HEC01-Routed Fabric"
+          configlets:
+            - name: "CVP-Arista"
+            - name: "sw-hec01-fab-L900"
+            - name: "sw-hec01-oob-vrf"
+            - name: "sw-hec01-tele-oob"
+            - name: "mgmt-default"
+          subcontainer:
+            - name: "HEC01-Spine"
+              configlets:
+                - name: "sw-hec01-spine"
+            - name: "HEC01-Special leaf"
+            - name: "HEC01-Service leaf"
+            - name: "HEC01-NGDR"
+            - name: "HEC01-Leaf"
+              configlets:
+                - name: "sw-hec01-leaf"
+              subcontainer:
+                - name: "HEC01-HANA leaf"
+                  configlets:
+                    - name: "hec01-hana"
+                    - name: "sw-hec01-autoconf"
+                    - name: "sw-hec01-descriptions"
+                - name: "HEC01-HV leaf"
+                  configlets:
+                    - name: "HEC01-VLANs"
+                    - name: "sw-hec01-autoconf"
+                - name: "HEC01-VMWare leaf"
+                  configlets:
+                    - name: "hec01-vmware"
+                    - name: "sw-hec01-descriptions-hvv"
+                - name: "HEC01-Xen leaf"
+                  configlets:
+                    - name: "hec01-xen"
+                    - name: "sw-hec01-descriptions"
     - name: "HEC01-Unmanaged"
       below_root: "yes"

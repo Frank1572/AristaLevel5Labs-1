@@ -1,0 +1,7 @@
+---
+# file: oob01.yml
+
+- hosts: localhost
+  gather_facts: no
+  roles:
+    - role: oob01

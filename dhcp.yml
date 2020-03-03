@@ -1,0 +1,11 @@
+---
+# file: dhcp.yml
+
+- hosts: CVA-DHCP
+  gather_facts: no
+  roles:
+    - role:
+      - cva
+      - idrac
+      vars:
+        - ansible_user: root

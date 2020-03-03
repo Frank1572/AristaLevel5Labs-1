@@ -482,7 +482,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/HECxx-IPMI.j2"
-    dest: "{{role_path}}/files/configs/HEC{{ hec.hec_nr }}-IPMI"
+    dest: "{{role_path}}/files/configs/HEC-IPMI"
   tags:
     - configlets
 
@@ -506,7 +506,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/HECxx-VLANs.j2"
-    dest: "{{role_path}}/files/configs/HEC{{ hec.hec_nr }}-VLANs"
+    dest: "{{role_path}}/files/configs/HEC-VLANs"
   tags:
     - configlets
 

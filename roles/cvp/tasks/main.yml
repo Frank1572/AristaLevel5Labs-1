@@ -82,14 +82,14 @@
   tags:
     - cvp_install
 
-- name: Unzip the CVP KVM file on the CVA 
+- name: Unzip the CVP KVM file on the CVA
   command: "tar -zxvf /data/cvp/{{ cvp.version }} -C /data/cvp"
   args:
     warn: no
   tags:
     - cvp_install
 
-- name: Find name of old disk 1 
+- name: Find name of old disk 1
   find:
     paths: /data/cvp_old
     file_type: file
@@ -98,7 +98,7 @@
   tags:
     - cvp_install
 
-- name: Find name of old disk 2 
+- name: Find name of old disk 2
   find:
     paths: /data/cvp_old
     file_type: file
@@ -107,7 +107,7 @@
   tags:
     - cvp_install
 
-- name: Find name of new disk 1 
+- name: Find name of new disk 1
   find:
     paths: /data/cvp
     file_type: file
@@ -116,7 +116,7 @@
   tags:
     - cvp_install
 
-- name: Find name of new disk 2 
+- name: Find name of new disk 2
   find:
     paths: /data/cvp
     file_type: file
@@ -125,23 +125,23 @@
   tags:
     - cvp_install
 
-- name: Rename the new disk 1 the same as the old disk 1 was named 
+- name: Rename the new disk 1 the same as the old disk 1 was named
   command: "mv /data/cvp/{{ disk1_new.files[0].path | regex_replace('.*cvp/(.*)', '\\1') }} /data/cvp/{{ disk1_old.files[0].path | regex_replace('.*cvp_old/(.*)', '\\1') }}"
-  ignore_errors: yes 
+  ignore_errors: yes
   args:
     warn: no
   tags:
     - cvp_install
 
-- name: Rename the new disk 2 the same as the old disk 2 was named 
+- name: Rename the new disk 2 the same as the old disk 2 was named
   command: "mv /data/cvp/{{ disk2_new.files[0].path | regex_replace('.*cvp/(.*)', '\\1') }} /data/cvp/{{ disk2_old.files[0].path | regex_replace('.*cvp_old/(.*)', '\\1') }}"
-  ignore_errors: yes 
+  ignore_errors: yes
   args:
     warn: no
   tags:
     - cvp_install
 
-- name: Copy old cvp.xml VM definition file to /data/cvp folder 
+- name: Copy old cvp.xml VM definition file to /data/cvp folder
   command: "cp /data/cvp_old/cvp.xml /data/cvp/cvp.xml"
   args:
     warn: no
@@ -266,7 +266,7 @@
 
 - name: Start cvp VM if not running
   command: "virsh start {{ cvp.KvmDomain }}"
-  ignore_errors: yes 
+  ignore_errors: yes
   tags:
     - cvp_init
 
@@ -442,7 +442,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}"
+    dest: "{{role_path}}/files/configs/sw-hec"
   tags:
     - configlets
 
@@ -450,7 +450,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-aaa.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-aaa"
+    dest: "{{role_path}}/files/configs/sw-hec-aaa"
   tags:
     - configlets
 
@@ -458,7 +458,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-fab-L900.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-fab-L900"
+    dest: "{{role_path}}/files/configs/sw-hec-fab-L900"
   tags:
     - configlets
 
@@ -466,7 +466,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-vrf.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-vrf"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-vrf"
   tags:
     - configlets
 
@@ -474,7 +474,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-tele-oob.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-tele-oob"
+    dest: "{{role_path}}/files/configs/sw-hec-tele-oob"
   tags:
     - configlets
 
@@ -490,7 +490,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-common.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-common"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-common"
   tags:
     - configlets
 
@@ -498,7 +498,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-tele-default.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-tele-default"
+    dest: "{{role_path}}/files/configs/sw-hec-tele-default"
   tags:
     - configlets
 
@@ -514,7 +514,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/hecxx-hana.j2"
-    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-hana"
+    dest: "{{role_path}}/files/configs/hec-hana"
   tags:
     - configlets
 
@@ -522,7 +522,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-leaf.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-leaf"
+    dest: "{{role_path}}/files/configs/sw-hec-leaf"
   tags:
     - configlets
 
@@ -530,7 +530,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/hecxx-vmware.j2"
-    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-vmware"
+    dest: "{{role_path}}/files/configs/hec-vmware"
   tags:
     - configlets
 
@@ -538,7 +538,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/hecxx-xen.j2"
-    dest: "{{role_path}}/files/configs/hec{{ hec.hec_nr }}-xen"
+    dest: "{{role_path}}/files/configs/hec-xen"
   tags:
     - configlets
 
@@ -546,7 +546,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-spine.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-spine"
+    dest: "{{role_path}}/files/configs/sw-hec-spine"
   tags:
     - configlets
 
@@ -554,7 +554,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-spine-xx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-spine-{{ item }}"
+    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item }}"
   with_items: "{{ hec.spine_nr }}"
   tags:
     - configlets
@@ -563,7 +563,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-hana-7160-32CQ.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hana-7160-32CQ"
+    dest: "{{role_path}}/files/configs/sw-hec-hana-7160-32CQ"
   tags:
     - configlets
 
@@ -571,7 +571,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-hvv-7160-32CQ.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvv-7160-32CQ"
+    dest: "{{role_path}}/files/configs/sw-hec-hvv-7160-32CQ"
   tags:
     - configlets
 
@@ -579,7 +579,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-hvx-7160-32CQ.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvx-7160-32CQ"
+    dest: "{{role_path}}/files/configs/sw-hec-hvx-7160-32CQ"
   tags:
     - configlets
 
@@ -587,7 +587,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-hvx-7160-48YC6.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-hvx-7160-48YC6"
+    dest: "{{role_path}}/files/configs/sw-hec-hvx-7160-48YC6"
   tags:
     - configlets
 
@@ -595,7 +595,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-xx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-0{{ item.number }}"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-0{{ item.number }}"
   with_items: "{{ hec.oobs_2_7 }}"
   tags:
     - configlets
@@ -604,7 +604,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-01.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01"
+    dest: "{{role_path}}/files/configs/sw-hec-str-01"
   tags:
     - configlets
 
@@ -612,7 +612,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-01a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01a"
+    dest: "{{role_path}}/files/configs/sw-hec-str-01a"
   tags:
     - configlets
 
@@ -620,7 +620,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-01b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-01b"
+    dest: "{{role_path}}/files/configs/sw-hec-str-01b"
   tags:
     - configlets
 
@@ -628,7 +628,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-02.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02"
+    dest: "{{role_path}}/files/configs/sw-hec-str-02"
   tags:
     - configlets
 
@@ -636,7 +636,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-02a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02a"
+    dest: "{{role_path}}/files/configs/sw-hec-str-02a"
   tags:
     - configlets
 
@@ -644,7 +644,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-str-02b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-str-02b"
+    dest: "{{role_path}}/files/configs/sw-hec-str-02b"
   tags:
     - configlets
 
@@ -652,7 +652,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-01.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-01"
   tags:
     - configlets
 
@@ -660,7 +660,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-01a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01a"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-01a"
   tags:
     - configlets
 
@@ -668,7 +668,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-01b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-01b"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-01b"
   tags:
     - configlets
 
@@ -676,7 +676,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-02.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-02"
   tags:
     - configlets
 
@@ -684,7 +684,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-02a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02a"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-02a"
   tags:
     - configlets
 
@@ -692,7 +692,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-02b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-02b"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-02b"
   tags:
     - configlets
 
@@ -700,7 +700,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-03.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-03"
   tags:
     - configlets
 
@@ -708,7 +708,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-03a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03a"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-03a"
   tags:
     - configlets
 
@@ -716,7 +716,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-brdr-03b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-brdr-03b"
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-03b"
   tags:
     - configlets
 
@@ -724,7 +724,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-01.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-01"
   tags:
     - configlets
 
@@ -732,7 +732,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-01a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01a"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-01a"
   tags:
     - configlets
 
@@ -740,7 +740,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-oob-01b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec{{ hec.hec_nr }}-oob-01b"
+    dest: "{{role_path}}/files/configs/sw-hec-oob-01b"
   tags:
     - configlets
 
@@ -748,7 +748,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-autoconf.j2"
-    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-autoconf"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec-autoconf"
   tags:
     - configlets
 
@@ -756,7 +756,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-autoconf-ipmi.j2"
-    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-autoconf-ipmi"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec-autoconf-ipmi"
   tags:
     - configlets
 
@@ -764,7 +764,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-descriptions.j2"
-    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-descriptions"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec-descriptions"
   tags:
     - configlets
 
@@ -772,12 +772,12 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-descriptions-hvv.j2"
-    dest: "{{role_path}}/files/configlet_builders/sw-hec{{ hec.hec_nr }}-descriptions-hvv"
+    dest: "{{role_path}}/files/configlet_builders/sw-hec-descriptions-hvv"
   tags:
     - configlets
 
 - name: Copy configlet builders to the CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builders"
     dest: /tmp
@@ -788,7 +788,7 @@
     - upload_configlets
 
 - name: Copy configlets to the CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configs"
     dest: /tmp
@@ -799,7 +799,7 @@
     - upload_configlets
 
 - name: Copy python upload script for configlet builders to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
     dest: /tmp/configlet_builder.py
@@ -810,7 +810,7 @@
     - upload_configlets
 
 - name: Copy python upload script for configlets to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlets.py"
     dest: /tmp/configlets.py
@@ -821,7 +821,7 @@
     - upload_configlets
 
 - name: Copy cvprac to /tmp/cvprac/ direcory on CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/cvprac"
     dest: /tmp
@@ -845,7 +845,7 @@
     - upload_configlets
 
 - name: Copy container creation script to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/container_and_mapping.py"
     dest: /tmp/container_and_mapping.py
@@ -856,13 +856,13 @@
     - create_containers
 
 - name: Create the container structure in CVP and add configlets to containers
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   command: python /tmp/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - create_containers
 
 - name: Copy aaa server creation script to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}" 
+  delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/aaa_configuration.py"
     dest: /tmp/aaa_configuration.py

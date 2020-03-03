@@ -6,17 +6,12 @@
   roles:
     - role: oob01
 
-- hosts: CVA-DHCP 
-  gather_facts: no
-  roles:
-    - role: idrac
-      vars:
-        - ansible_user: root
-
 - hosts: CVA-DHCP
   gather_facts: no
   roles:
-    - role: cva
+    - role:
+      - cva
+      - idrac
       vars:
         - ansible_user: root
 

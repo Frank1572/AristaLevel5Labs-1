@@ -1,7 +1,7 @@
 ---
 # file: dhcp.yml
 
-- hosts: CVA-DHCP
+- hosts: all
   gather_facts: no
   roles:
     - role:

@@ -19,12 +19,15 @@ container:
         - name: "HEC-Out of band"
           configlets:
             - name: "mgmt-default"
-            - name: "sw-hec-oob-common"        
+            - name: "sw-hec-oob-common"
             - name: "sw-hec-tele-default"
         - name: "HEC-External Connectivity"
         - name: "HEC-CWAN"
         - name: "HEC-FWT"
         - name: "HEC-InterDC"
+          configlets:
+            - name: "sw-mlag-a"
+            - name: "sw-mlag-b"
         - name: "HEC-Backup Routers"
         - name: "HEC-Switched Fabric"
           configlets:

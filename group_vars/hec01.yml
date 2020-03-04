@@ -82,14 +82,14 @@ cvp:
         accPort: 1646
         status: "Enabled"
 hec:
-  hec_nr: "02"
+  hec_nr: "01"
   hana_hvx_descriptions_PO_MIN: 101
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
   ma_domain: "net.sap.corp"
-  lo900_domain: "ams.hec.sap.biz"
-  vl900_domain: "ams.hec.sap.biz"
+  lo900_domain: "rot.hec.sap.biz"
+  vl900_domain: "rot.hec.sap.biz"
   vl900_mask: 24
   vl900_def_gw: 198.19.241.1
   vl900_net: 198.19.241.0/24
@@ -143,6 +143,12 @@ hec:
     - 12
     - 13
     - 14
+  spine:
+    # valid models are: 7504, 7508, 7280
+    - model: "7508"
+  fabric:
+    # valid modes are: manual, cvx, evpn
+    - vtep_distribution_mode: evpn
   oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
   oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
   oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015

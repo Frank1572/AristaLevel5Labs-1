@@ -8,19 +8,18 @@ container:
         - name: "sw-hec"
         - name: "sw-hec-aaa"
         - name: "CVP-Arista"
+        - name: "sw-hec-oob-vrf"
       subcontainer:
         - name: "HEC-IPMI"
           configlets:
             - name: "HEC-IPMI"
             - name: "mgmt-oob"
-            - name: "sw-hec-oob-vrf"
             - name: "sw-hec-tele-oob"
             - name: "sw-hec-autoconf-ipmi"
         - name: "HEC-Out of band"
           configlets:
             - name: "mgmt-default"
-            - name: "sw-hec-oob-common"
-            - name: "sw-hec-oob-vrf"
+            - name: "sw-hec-oob-common"        
             - name: "sw-hec-tele-default"
         - name: "HEC-External Connectivity"
         - name: "HEC-CWAN"
@@ -44,13 +43,16 @@ container:
             - name: "HEC-Spine"
               configlets:
                 - name: "sw-hec-spine"
-            - name: "HEC-Special leaf"
-            - name: "HEC-Service leaf"
             - name: "HEC-NGDR"
             - name: "HEC-Leaf"
               configlets:
                 - name: "sw-hec-leaf"
+                - name: "sw-mlag-a"
+                - name: "sw-mlag-b"
+                - name: "HEC-VLANs"
               subcontainer:
+                - name: "HEC-Service leaf"
+                - name: "HEC-Special leaf"
                 - name: "HEC-HANA leaf"
                   configlets:
                     - name: "hec-hana"
@@ -58,15 +60,15 @@ container:
                     - name: "sw-hec-descriptions"
                 - name: "HEC-HV leaf"
                   configlets:
-                    - name: "HEC-VLANs"
                     - name: "sw-hec-autoconf"
-                - name: "HEC-VMWare leaf"
-                  configlets:
-                    - name: "hec-vmware"
-                    - name: "sw-hec-descriptions-hvv"
-                - name: "HEC-Xen leaf"
-                  configlets:
-                    - name: "hec-xen"
-                    - name: "sw-hec-descriptions"
+                  subcontainer:
+                    - name: "HEC-VMWare leaf"
+                      configlets:
+                        - name: "hec-vmware"
+                        - name: "sw-hec-descriptions-hvv"
+                    - name: "HEC-Xen leaf"
+                      configlets:
+                        - name: "hec-xen"
+                        - name: "sw-hec-descriptions"
     - name: "HEC-Unmanaged"
       below_root: "yes"

@@ -18,7 +18,7 @@
 interface Ethernet{{ subintf }}/1
 {% endif %}
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-interface Ethernet{{ lc }}/{{ subintf }}
+interface Ethernet{{ lc }}/{{ subintf }}/1
 {% endif %}
 {% if create_ip_on_interface == 'yes' %}
  ip address 10.{{ item }}.{{ nextsubnet }}.{{ ip }}/31

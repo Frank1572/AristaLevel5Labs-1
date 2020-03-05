@@ -1,41 +1,6 @@
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-{% set lc_start = 3 %}
-{% set lc_end   = lc_start + hec.spine.linecards %}
-{% endif %}
-{% if hec.spine.model|string == '7280' %}
-{% set lc_start = 3 %}
-{% set lc_end   = 4 %}
-{% endif %}
-
-{% for lc in range(lc_start, lc_end ) %}
-{% for subintf in range(1,37) %}
-{% set ip = loop.index * 2 - 2 %}
-{% set offset = lc - 3 %}
-{% set ip = ip + 72 * offset %}
-{% set nextsubnet = 0 %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 1 %}
-{% endif %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 2 %}
-{% endif %}
-{% if hec.spine.model|string == '7280' %}
-interface Ethernet{{ subintf }}/1
-{% endif %}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-interface Ethernet{{ lc }}/{{ subintf }}
-{% endif %}
- no switchport
- shutdown
- mtu {{ hec.fabric.interlink_mtu }}
- ip address 10.{{ spine_id }}.{{ nextsubnet }}.{{ ip }}/31
- speed forced {{ hec.fabric.interlink_speed }}
-!
-{% endfor %}
-{% endfor %}
+{% set create_ip_on_interface = "no" %}
+{% include "config_templates/sw-hecxx-spine-ips.j2" %}
 {########## BGP CONFIGURATION ##########}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####

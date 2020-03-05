@@ -1,5 +1,8 @@
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 !
+{% set create_ip_on_interface = "yes" %}
+{% include "config_templates/sw-hecxx-spine-ips.j2" %}
+!
 interface Loopback1
    description Router-ID
    ip address 10.100.0.{{ item }}/32

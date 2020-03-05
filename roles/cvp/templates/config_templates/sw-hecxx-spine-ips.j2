@@ -1,10 +1,10 @@
 {# below lines get included by sw-hecxx-spine-xx.j2 and sw-hecxx-spine.j2 #}
 
-{% if hec.spine.model == "7504" or hec.spine.model == "7508"  %}
+{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}
 {% endif %}
-{% if hec.spine.model == "7280" %}
+{% if hec.spine.model|string == '7280' %}
 {% set lc_start = 3 %}
 {% set lc_end   = 4 %}
 {% endif %}

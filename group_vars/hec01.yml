@@ -145,7 +145,7 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: "7508"
+    model: 7508
     # number of linecards if spine is modular switch
     linecards: 1
   fabric:

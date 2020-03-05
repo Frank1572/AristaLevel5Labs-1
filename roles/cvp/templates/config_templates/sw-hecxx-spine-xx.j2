@@ -1,5 +1,13 @@
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 !
+{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+{% set lc_start = 3 %}
+{% set lc_end   = lc_start + hec.spine.linecards %}
+{% endif %}
+{% if hec.spine.model|string == '7280' %}
+{% set lc_start = 3 %}
+{% set lc_end   = 4 %}
+{% endif %}
 {% set create_ip_on_interface = "yes" %}
 {% include "templates/config_templates/sw-hecxx-spine-ips.j2" %}
 !

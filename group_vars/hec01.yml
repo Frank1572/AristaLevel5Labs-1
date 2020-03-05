@@ -145,9 +145,9 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7508
+    model: 7504
     # number of linecards if spine is modular switch
-    linecards: 1
+    linecards: 4
   fabric:
     # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: evpn

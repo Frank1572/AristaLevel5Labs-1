@@ -146,9 +146,15 @@ hec:
   spine:
     # valid models are: 7504, 7508, 7280
     model: "7508"
+    # number of linecards if spine is modular switch
+    linecards: 1
   fabric:
     # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: evpn
+    interlink_mtu: 9214
+    # valid speeds are 40gfull, 100gfull
+    interlink_speed: 100gfull
+    bgp_maximum_routes: 12000
   oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
   oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
   oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015

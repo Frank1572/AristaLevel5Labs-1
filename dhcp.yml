@@ -4,8 +4,7 @@
 - hosts: all
   gather_facts: no
   roles:
-    - role:
-      - cva
-      - idrac
-      vars:
-        - ansible_user: root
+    - cva
+    - idrac
+    vars:
+      - ansible_user: root

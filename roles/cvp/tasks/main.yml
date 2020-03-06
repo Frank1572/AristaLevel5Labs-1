@@ -454,6 +454,30 @@
   tags:
     - configlets
 
+- name: Render sw-hecxx-snmp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-snmp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-snmp"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-fab-snmp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-fab-snmp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-fab-snmp"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-ntp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-ntp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-ntp"
+  tags:
+    - configlets
+
 - name: Render sw-hecxx-fab-L900
   delegate_to: 127.0.0.1
   template:

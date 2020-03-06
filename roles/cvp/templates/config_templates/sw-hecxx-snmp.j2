@@ -1,6 +1,5 @@
 {# sw-hecxx-snmp.j2 #}
 snmp-server community r0c4s ro ACL_SNMP_VTY
-snmp-server source-interface Loopback900
 snmp-server host {{ hec.snmp1 }} version 2c r0c4s
 snmp-server host {{ hec.snmp2 }} version 2c r0c4s
 snmp-server enable traps bgp

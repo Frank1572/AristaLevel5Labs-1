@@ -9,6 +9,7 @@ container:
         - name: "sw-hec-aaa"
         - name: "CVP-Arista"
         - name: "sw-hec-oob-vrf"
+        - name: sw-hec-snmp
       subcontainer:
         - name: "HEC-IPMI"
           configlets:
@@ -16,6 +17,8 @@ container:
             - name: "mgmt-oob"
             - name: "sw-hec-tele-oob"
             - name: "sw-hec-autoconf-ipmi"
+            - name: sw-hec-switch-snmp
+            - name: sw-hec-switch-ntp
         - name: "HEC-Out of band"
           configlets:
             - name: "mgmt-default"
@@ -28,17 +31,24 @@ container:
           configlets:
             - name: "sw-mlag-a"
             - name: "sw-mlag-b"
+            - name: sw-hec-switch-snmp
+            - name: sw-hec-switch-ntp
         - name: "HEC-Backup Routers"
         - name: "HEC-Switched Fabric"
           configlets:
             - name: "HEC-VLANs"
+            - name: sw-hec-switch-snmp
+            - name: sw-hec-switch-ntp
           subcontainer:
             - name: "HEC-Core"
             - name: "HEC-Top of rack"
         - name: "HEC-Routed Fabric"
           configlets:
             - name: "CVP-Arista"
+            - name: sw-hec-switch-snmp
             - name: "sw-hec-fab-L900"
+            - name: sw-hec-fab-ntp
+            - name: sw-hec-fab-snmp
             - name: "sw-hec-oob-vrf"
             - name: "sw-hec-tele-oob"
             - name: "mgmt-default"
@@ -55,6 +65,7 @@ container:
                 - name: "HEC-VLANs"
               subcontainer:
                 - name: "HEC-Service leaf"
+                - name: "HEC-Storage leaf"
                 - name: "HEC-Special leaf"
                 - name: "HEC-HANA leaf"
                   configlets:

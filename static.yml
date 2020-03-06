@@ -1,7 +1,7 @@
 ---
 # file: static.yml
 
-- hosts: CVA-STATIC
+- hosts: all
   gather_facts: no
   roles:
     - role: cvp

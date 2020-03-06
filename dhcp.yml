@@ -5,6 +5,8 @@
   gather_facts: no
   roles:
     - cva
+      vars:
+        - ansible_user: root
     - idrac
-    vars:
-      - ansible_user: root
+      vars:
+        - ansible_user: root

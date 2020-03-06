@@ -1,8 +1,21 @@
+
+
+
+
+
+#### don't add anything here, do not use playbook master.yml ####
+
+
+
+
+
+
+
 # file: production
 
 ### uncomment or insert the CVA DHCP and CVA Static IP address for the environment you want to work in ###
 
-[CVA-DHCP]
+#[CVA-DHCP]
 #HEC19
 #10.178.147.249
 #HEC10
@@ -14,9 +27,9 @@
 #HEC01
 #10.9.237.249
 #HEC03
-10.9.241.249
+#10.9.241.249
 
-[CVA-STATIC]
+#[CVA-STATIC]
 #HEC19
 #10.178.146.43
 #HEC10
@@ -28,4 +41,4 @@
 #HEC01
 #10.9.236.41
 #HEC03
-10.9.240.41
+#10.9.240.41

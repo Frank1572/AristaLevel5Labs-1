@@ -18,14 +18,7 @@ EOF
 !
 {% include "templates/config_templates/sw-hecxx-snmp.j2" %}
 !
-{{ hec.snmp_acl }}
-!
-!
-logging host {{ hec.syslog1 }}
-logging host {{ hec.syslog2 }}
-{% if hec.syslog3 is defined %}
-logging host {{ hec.syslog3 }}
-{% endif %}
+{% include "templates/config_templates/sw-hecxx-logging.j2" %}
 !
 alias ic show interface counter | nz
 alias ie show interface counter errors | nz
@@ -45,3 +38,6 @@ event-handler CONFIG_VERSIONING
 !
 ! === Interval for averaging the load in CLI commands, in seconds
 load-interval default 5
+!
+{{ hec.snmp_acl }}
+!

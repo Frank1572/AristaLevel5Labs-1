@@ -10,6 +10,8 @@ container:
         - name: "CVP-Arista"
         - name: "sw-hec-oob-vrf"
         - name: sw-hec-snmp
+        - name: sw-hec-ntp
+        - name: sw-hec-logging
       subcontainer:
         - name: "HEC-IPMI"
           configlets:
@@ -19,6 +21,7 @@ container:
             - name: "sw-hec-autoconf-ipmi"
             - name: sw-hec-switch-snmp
             - name: sw-hec-switch-ntp
+            - name: sw-hec-switch-logging
         - name: "HEC-Out of band"
           configlets:
             - name: "mgmt-default"
@@ -33,22 +36,24 @@ container:
             - name: "sw-mlag-b"
             - name: sw-hec-switch-snmp
             - name: sw-hec-switch-ntp
+            - name: sw-hec-switch-logging
         - name: "HEC-Backup Routers"
         - name: "HEC-Switched Fabric"
           configlets:
             - name: "HEC-VLANs"
             - name: sw-hec-switch-snmp
             - name: sw-hec-switch-ntp
+            - name: sw-hec-switch-logging
           subcontainer:
             - name: "HEC-Core"
             - name: "HEC-Top of rack"
         - name: "HEC-Routed Fabric"
           configlets:
             - name: "CVP-Arista"
-            - name: sw-hec-switch-snmp
             - name: "sw-hec-fab-L900"
             - name: sw-hec-fab-ntp
             - name: sw-hec-fab-snmp
+            - name: sw-hec-fab-logging
             - name: "sw-hec-oob-vrf"
             - name: "sw-hec-tele-oob"
             - name: "mgmt-default"

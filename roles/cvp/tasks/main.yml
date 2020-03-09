@@ -470,11 +470,59 @@
   tags:
     - configlets
 
+- name: Render sw-hecxx-switch-snmp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-switch-snmp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-switch-snmp"
+  tags:
+    - configlets
+
 - name: Render sw-hecxx-ntp
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hecxx-ntp.j2"
     dest: "{{role_path}}/files/configs/sw-hec-ntp"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-fab-ntp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-fab-ntp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-fab-ntp"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-switch-ntp
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-switch-ntp.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-switch-ntp"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-logging
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-logging.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-logging"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-fab-logging
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-fab-logging.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-fab-logging"
+  tags:
+    - configlets
+
+- name: Render sw-hecxx-switch-logging
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hecxx-switch-logging.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-switch-logging"
   tags:
     - configlets
 

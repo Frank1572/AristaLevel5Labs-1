@@ -1,5 +1,5 @@
 # static hosts only - after CVA already received an IP and
-# was configured basically
+# was configured initially
 
 [hec19]
 #10.178.146.43
@@ -15,3 +15,6 @@
 
 [hec01]
 10.178.137.253
+
+[hec03]
+#10.9.240.41

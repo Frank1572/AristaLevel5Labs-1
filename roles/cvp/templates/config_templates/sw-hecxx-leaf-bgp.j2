@@ -1,0 +1,40 @@
+!
+{% set asn_spine = '641' + hec.hec_nr + '10000' %}
+   bgp asn notation asdot
+   maximum-paths 8 ecmp 16
+   {% if hec.fabric.vtep_distribution_mode == "evpn" %}
+   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG remote-as {{ asn_spine }}
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG maximum-routes 0
+   neighbor EVPN-PG fall-over bfd
+   !
+   address-family evpn
+      neighbor EVPN-PG activate
+   !
+   address-family ipv4
+      no neighbor EVPN-PG activate
+   !
+   address-family ipv6
+      no neighbor EVPN-PG activate
+   !
+   {% endif %}
+   !
+   neighbor SPINE-PG peer-group
+   neighbor SPINE-PG soft-reconfiguration inbound all
+   neighbor SPINE-PG send-community
+   neighbor SPINE-PG fall-over bfd
+   neighbor SPINE-PG route-map MLPEER-RM out
+   neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+   neighbor SPINE-PG remote-as {{ asn_spine }}
+   !
+   neighbor MLPEER-PG peer-group
+   neighbor MLPEER-PG next-hop-self
+   neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+   !
+   {% for i in range(11,14) %}
+   neighbor 10.100.0.{{ i }} peer-group EVPN-PG
+   {% endfor %}
+!

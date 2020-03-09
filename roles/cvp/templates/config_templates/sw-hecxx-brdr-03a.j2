@@ -1,3 +1,7 @@
+{% set cell_id = 4 %}
+{% set Lo1     = '10.100.1.' + cell_id %}
+{% set asn_spine = '641' + hec.hec_nr + '10000' %}
+
 hostname sw-hec{{ hec.hec_nr }}-brdr-03a
 !
 interface Ethernet1/1
@@ -45,5 +49,3 @@ router bgp 641{{ hec.hec_nr }}.10004
    neighbor 198.19.224.2 peer-group MLPEER-PG
    network 10.100.1.4/32
    network {{ hec.lo900_prefix }}.21/32
-
-

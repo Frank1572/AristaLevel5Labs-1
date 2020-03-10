@@ -1,127 +1,124 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {# hec_sw_leaf_routing_configuration.j2 #}
+{% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
+{% set brdrtype = id | regex_replace('^(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
+!leafid {{ leafid }}
+{% for allbrdrs in hec.brdr %}
+!allbrdrs.number {{allbrdrs.number}}
+  {% if allbrdrs.number == id %}
+    {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+    {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
+    {# Chassis based devices #}
+    {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
+    {% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
+    {% endif %}
+    {% if hec.spine.model|string == '7280' %}
+    {# Non-modular switches like 7280 #}
+    {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
+    {% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
+    {% endif %}
 
-{% set leafid   = inventory_hostname | regex_replace('^sw-.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
-{% if spines_model|string == '7504' or spines_model|string == '7508'  %}
-{# if spine_port_towards_leaf is search('^Et\d{1,2}/\d{1,2}/1$') #}
-{# Chassis based devices #}
-{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
-{% endif %}
-{% if spines_model|string == '7280' %}
-{# Non-modular switches like 7280 #}
-{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
-{% endif %}
+    {% if leafid == 'a' %}
+    {% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
+    {% endif %}
 
-{% if leafid == 'a' %}
-{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
-{% endif %}
+    {% if leafid == 'b' %}
+    {% set cell_id  = (( spine_po|int ) / 2 )|int %}
+    {% endif %}
 
-{% if leafid == 'b' %}
-{% set cell_id  = (( spine_po|int ) / 2 )|int %}
-{% endif %}
+    {% if spine_lc|int > 0 %}
+    {% set offset = spine_lc|int - 3 %}
+    {% set cell_id = cell_id + (offset * 18) %}
+    {% endif %}
 
-{% if spine_lc|int > 0 %}
-{% set offset = spine_lc|int - 3 %}
-{% set cell_id = cell_id + (offset * 18) %}
-{% endif %}
+    {% set asn_part = cell_id + 11000 %}
+    {% if type == 'borderleaf' or type == 'storageleaf' %}
+    {% set asn_part = cell_id + 10000 %}
+    {% endif %}
+    {% set asn_generated = "641" + location_id|string + "." + asn_part|string %}
+    !
+    {% if leafid == 'b' %}
+    {% set Lo1 = cell_id + 100 %}
+    {% else %}
+    {% set Lo1 = cell_id %}
+    {% endif %}
 
-{% set asn_part = cell_id + 11000 %}
-{% if type == 'borderleaf' or type == 'storageleaf' %}
-{% set asn_part = cell_id + 10000 %}
-{% endif %}
-{% set asn_generated = "641" + location_id|string + "." + asn_part|string %}
-!
-{% if leafid == 'b' %}
-{% set Lo1 = cell_id + 100 %}
-{% else %}
-{% set Lo1 = cell_id %}
-{% endif %}
+    interface Loopback1
+       ip address 10.100.1.{{ Lo1 }}/32
+    !
+    interface Loopback2
+       ip address 10.200.1.{{ cell_id }}/32
+    !
+    {% if spine_lc|int > 0 %}
+      {% set offset = spine_lc|int - 3 %}
+    {% else %}
+      {% set offset = 0 %}
+    {% endif %}
+    {% set ip = spine_po|int * 2 - 1 %}
+    {% set ip = ip + 72 * offset %}
+    {% set nextsubnet = 0 %}
+    {% if ip > 255 %}
+      {% set ip = ip - 256 %}
+      {% set nextsubnet = 1 %}
+    {% endif %}
+    {% if ip > 255 %}
+      {% set ip = ip - 256 %}
+      {% set nextsubnet = 2 %}
+    {% endif %}
 
-interface Loopback1
-   ip address 10.100.1.{{ Lo1 }}/32
-!
-interface Loopback2
-   ip address 10.200.1.{{ cell_id }}/32
-!
-{% if spine_lc|int > 0 %}
-{% set offset = spine_lc|int - 3 %}
-{% else %}
-{% set offset = 0 %}
-{% endif %}
-{% set ip = spine_po|int * 2 - 1 %}
-{% set ip = ip + 72 * offset %}
-{% set nextsubnet = 0 %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 1 %}
-{% endif %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 2 %}
-{% endif %}
-{# offset: {{ offset }} #}
-{# spine_lc: {{ spine_lc }} #}
-{# spine_po {{ spine_po }} #}
-{# ip: {{ nextsubnet }}.{{ ip }} #}
+    {# set link_ip = (spine_po|int * 2 - 1)|int #}
+    {% set link_ip = ip %}
 
-{# set link_ip = (spine_po|int * 2 - 1)|int #}
-{% set link_ip = ip %}
-
-{% set intf_list = uplinks.computeleaf %}
-{% if type == 'storageleaf' %}
-{% set intf_list = uplinks.storageleaf %}
-{% endif %}
-
-{# for intf in range(29,33) #}
-{% for intf in intf_list %}
-interface Ethernet{{ intf }}/1
-   mtu 9100
-{% if type != "borderleaf" %}
-   speed forced 40gfull
-{% endif %}
-   no switchport
-   ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
+    {% for intf in range(29,33) %}
+    {# for intf in intf_list #}
+    interface Ethernet{{ intf }}/1
+       mtu {{ hec.fabric.interlink_mtu }}
+    {# if type != "borderleaf" #}
+       speed forced 40gfull
+    {# endif #}
+       no switchport
+       ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
+    {% endfor %}
+    !
+    ip routing
+    no ip routing vrf OOB
+    !
+    ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
+    !
+    route-map MLPEER-RM permit 10
+       match interface Vlan4094
+       set as-path prepend auto
+    !
+    route-map MLPEER-RM permit 20
+       match ip address prefix-list ANY-PL
+    !
+    router bgp {{ asn_generated }}
+       bgp asn notation asdot
+       router-id 10.100.1.{{ Lo1 }}
+       maximum-paths 8 ecmp 16
+       neighbor MLPEER-PG peer-group
+       neighbor MLPEER-PG remote-as {{ asn_generated }}
+       neighbor MLPEER-PG next-hop-self
+       neighbor MLPEER-PG maximum-routes 12000
+       neighbor SPINE-PG peer-group
+       neighbor SPINE-PG remote-as 641{{ location_id }}.10000
+       neighbor SPINE-PG soft-reconfiguration inbound all
+       neighbor SPINE-PG route-map MLPEER-RM out
+       neighbor SPINE-PG send-community
+       neighbor SPINE-PG maximum-routes 12000
+    {% for i in range(1,5) %}
+       neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
+    {% endfor %}
+    {% if leafid == 'a' %}
+    {% set mlag_ip_peer  = '198.19.224.2' %}
+    {% endif %}
+    {% if leafid == 'b' %}
+    {% set mlag_ip_peer  = '198.19.224.1' %}
+    {% endif %}
+       neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
+       network 10.100.1.{{ Lo1 }}/32
+       network 10.200.1.{{ cell_id }}/32
+       network {{ nw_mgmt_ipv4 }}/32
+    !
+  {% endif %}
 {% endfor %}
-!
-ip routing
-no ip routing vrf OOB
-!
-ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
-!
-route-map MLPEER-RM permit 10
-   match interface Vlan4094
-   set as-path prepend auto
-!
-route-map MLPEER-RM permit 20
-   match ip address prefix-list ANY-PL
-!
-router bgp {{ asn_generated }}
-   bgp asn notation asdot
-   router-id 10.100.1.{{ Lo1 }}
-   maximum-paths 8 ecmp 16
-   neighbor MLPEER-PG peer-group
-   neighbor MLPEER-PG remote-as {{ asn_generated }}
-   neighbor MLPEER-PG next-hop-self
-   neighbor MLPEER-PG maximum-routes 12000
-   neighbor SPINE-PG peer-group
-   neighbor SPINE-PG remote-as 641{{ location_id }}.10000
-   neighbor SPINE-PG soft-reconfiguration inbound all
-   neighbor SPINE-PG route-map MLPEER-RM out
-   neighbor SPINE-PG send-community
-   neighbor SPINE-PG maximum-routes 12000
-{% for i in range(1,5) %}
-   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
-{% endfor %}
-{% if leafid == 'a' %}
-{% set mlag_ip_peer  = '198.19.224.2' %}
-{% endif %}
-{% if leafid == 'b' %}
-{% set mlag_ip_peer  = '198.19.224.1' %}
-{% endif %}
-   neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
-   network 10.100.1.{{ Lo1 }}/32
-   network 10.200.1.{{ cell_id }}/32
-   network {{ nw_mgmt_ipv4 }}/32
-!

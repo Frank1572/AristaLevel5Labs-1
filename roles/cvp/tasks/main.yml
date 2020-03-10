@@ -848,16 +848,32 @@
   tags:
     - configlets
 
-- name: Render sw-hecxx-brdr-0[123][ab]
+- set_fact:
+    id: '1a'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-01a
   delegate_to: 127.0.0.1
-  set_fact:
-    id: "{{ item }}"
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
-    dest: "{{role_path}}/files/configs/sw-hec-brdr-0{{ item }}"
-  with_items:
-    - '1a'
-    - '1b'
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-01a"
+  tags:
+    - configlets
+    - borderleafs
+
+- set_fact:
+    id: '1b'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-01b"
   tags:
     - configlets
     - borderleafs

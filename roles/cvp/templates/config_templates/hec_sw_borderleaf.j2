@@ -44,7 +44,7 @@
 {% endfor %}
 
 {% for allbrdrs in hec.brdr %}
-  {% if allbrdrs.number == leafid %}
+  {% if allbrdrs.number == id %}
     {% if allbrdrs.port_channels is defined %}
     {% for item in allbrdrs.port_channels %}
       {% for po in item %}

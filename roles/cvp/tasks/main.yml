@@ -848,6 +848,19 @@
   tags:
     - configlets
 
+- name: Render sw-hecxx-brdr-0[123][ab]
+  delegate_to: 127.0.0.1
+  set_fact: id = {{ item }}
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: {{role_path}}/files/configs/sw-hec-brdr-0{{ item }}
+  with_items:
+    - 1a
+    - 1b
+  tags:
+    - configlets
+    - borderleafs
+
 - name: Copy configlet builders to the CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:

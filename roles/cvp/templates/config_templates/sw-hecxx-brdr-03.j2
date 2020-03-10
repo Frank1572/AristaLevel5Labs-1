@@ -36,22 +36,19 @@ interface Ethernet1/1
 interface Ethernet2/1
    channel-group 1104 mode active
 !
+! ===== Spine Uplinks =====
+interface Ethernet25/1,26/1,35/1,36/1
+   no switchport
+   mtu {{ hec.fabric.interlink_mtu }}
+!
 interface Ethernet25/1
    description ->sw-hec{{ hec.hec_nr }}-spine-11
-   no switchport
 interface Ethernet26/1
    description ->sw-hec{{ hec.hec_nr }}-spine-12
-   no switchport
-interface Ethernet30/1
-   channel-group 42 mode active
-interface Ethernet31/1
-   channel-group 42 mode active
 interface Ethernet35/1
    description ->sw-hec{{ hec.hec_nr }}-spine-13
-   no switchport
 interface Ethernet36/1
-  description ->sw-hec{{ hec.hec_nr }}-spine-14
-  no switchport
+   description ->sw-hec{{ hec.hec_nr }}-spine-14
 !
 interface Loopback2
    ip address {{ Lo2 }}/32

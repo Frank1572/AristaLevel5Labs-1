@@ -9,28 +9,32 @@ interface Ethernet1/1
 interface Ethernet2/1
    description "->rt-hec{{ hec.hec_nr }}-core-01d, Fo0/0/0"
 !
+! ===== Spine Uplinks =====
+interface Ethernet25/1,26/1,35/1,36/1
+   no switchport
+   mtu {{ hec.fabric.interlink_mtu }}
+!
 interface Ethernet25/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-11
    ip address 10.11.0.13/31
-   mtu 9100
 interface Ethernet26/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-12
    ip address 10.12.0.13/31
-   mtu 9100
+interface Ethernet35/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-13
+   ip address 10.13.0.13/31
+interface Ethernet36/1
+   description ->sw-hec{{ hec.hec_nr }}-spine-14
+   ip address 10.14.0.13/31
 !
 interface Ethernet30/1
    description "->sw-hec{{ hec.hec_nr }}-brdr-03b, Et30"
 interface Ethernet31/1
    description "->sw-hec{{ hec.hec_nr }}-brdr-03b, Et31"
 !
-interface Ethernet35/1
-   ip address 10.13.0.13/31
-   mtu 9100
-interface Ethernet36/1
-   ip address 10.14.0.13/31
-   mtu 9100
-!
 interface Loopback1
    description Router-ID
-   ip address 10.100.1.4/32
+   ip address {{ Lo1 }}/32
 !
 interface Loopback900
    description NW-MGMT

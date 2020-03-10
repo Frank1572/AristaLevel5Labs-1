@@ -1,0 +1,51 @@
+{# make sure all vlans are created #}
+{#vlan 2001-2499,1101-1118#}
+!
+interface Loopback1
+   description Router-ID
+{% if id is defined %}
+   ip address {{ id }}/32
+{% endif %}
+!
+interface Loopback2
+   description VTEP
+{% if id is defined %}
+   ip address {{ vtep }}/32
+{% endif %}
+!
+interface Vxlan1
+   vxlan source-interface Loopback2
+   vxlan udp-port 4789
+{% if type == 'leaf-hvv' %}
+   vxlan vlan 7 vni 10007
+{% else %}
+   vxlan vlan 5 vni 10005
+{% endif %}
+   vxlan vlan 6 vni 10006
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
+   vxlan vlan 22 vni 10022
+   vxlan vlan 23 vni 10023
+   vxlan vlan 30 vni 10030
+   vxlan vlan 40 vni 10040
+   vxlan vlan 50 vni 10050
+   vxlan vlan 60 vni 10060
+   vxlan vlan 70 vni 10070
+   vxlan vlan 75 vni 10075
+   vxlan vlan 85 vni 10085
+   vxlan vlan 90 vni 10090
+   vxlan vlan 95 vni 10095
+   vxlan vlan 100 vni 10100
+   vxlan vlan 110 vni 10110
+   vxlan vlan 130 vni 10130
+   vxlan vlan 140 vni 10140
+   vxlan vlan 900 vni 10900
+{% if type == 'borderleaf' %}
+   vxlan vlan 920 vni 10920
+{% endif %}
+{% for vlan in range(2001,2500) %}
+   vxlan vlan {{ vlan }} vni {{ vlan }}000
+{% endfor %}
+{# for vtep in vtep_ips #}
+   vxlan flood vtep add {{ vtep_ips|join(' ') }}
+{# endfor #}

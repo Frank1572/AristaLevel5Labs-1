@@ -869,7 +869,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-01a
+- name: Render sw-hecxx-brdr-01b
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2

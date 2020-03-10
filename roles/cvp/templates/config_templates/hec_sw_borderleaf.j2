@@ -1,15 +1,13 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {# hec_sw_borderleaf.j2 #}
-{# #}
-{# #}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
 {% if brdrtype == '2' %}
 {% set lo2 = '10.100.1.2/32' %}
 {% endif %}
-{# #}
-!
+leafid {{ leafid }}
 {% for allbrdrs in hec.brdr %}
+allbrdrs.number {{allbrdrs.number}}
   {% if allbrdrs.number == leafid %}
     {% for item in allbrdrs.ports %}
       {% if item.type is defined %}

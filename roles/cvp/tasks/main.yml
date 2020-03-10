@@ -849,7 +849,7 @@
     - configlets
 
 - set_fact:
-    id: '1a'
+    leafid: '1a'
   tags:
     - configlets
     - borderleafs
@@ -864,7 +864,7 @@
     - borderleafs
 
 - set_fact:
-    id: '1b'
+    leafid: '1b'
   tags:
     - configlets
     - borderleafs

@@ -1,3 +1,4 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {# hec_sw_borderleaf.j2 #}
 {# #}
 {# #}
@@ -8,60 +9,70 @@
 {% endif %}
 {# #}
 !
-{% for item in hec.brdr.[brdrtype].ports %}
-{% if item.type is defined %}
-{% if item.type != "Ethernet" %}
-{% if item.type == 'vlan' %}
-{% set inttype = 'Vlan' %}
-{% endif %}
-{% if item.type == 'spine_link' %}
-{% set inttype = 'Ethernet' %}
-{% endif %}
-interface {{ inttype }}{{ item.id }}
-{% endif %}
-{% endif %}
-{% if item.type is not defined %}
-interface Ethernet{{ item.id }}
-{% endif %}
-   description ->{{ item.description }}
-{% if item.po is defined %}
-   channel-group {{ item.po }} mode active
-{% endif %}
-{% if item.ip is defined %}
-{% if item.type is defined %}
-{% if item.type != "vlan" %}
-   no switchport
-{% endif %}
-{% if item.type == "spine_link" %}
-   mtu {{ hec.fabric.interlink_mtu }}
-{% endif %}
-{% endif %}
-   ip address {{ item.ip }}
-{% endif %}
-!
+{% for allbrdrs in hec.brdr.number %}
+  {% if allbrdrs == leafid %}
+    {% for item in allbrdrs.ports %}
+      {% if item.type is defined %}
+        {% if item.type != "Ethernet" %}
+          {% if item.type == 'vlan' %}
+            {% set inttype = 'Vlan' %}
+          {% endif %}
+          {% if item.type == 'spine_link' %}
+            {% set inttype = 'Ethernet' %}
+          {% endif %}
+          interface {{ inttype }}{{ item.id }}
+        {% endif %}
+      {% endif %}
+      {% if item.type is not defined %}
+        interface Ethernet{{ item.id }}
+      {% endif %}
+        description ->{{ item.description }}
+      {% if item.po is defined %}
+        channel-group {{ item.po }} mode active
+      {% endif %}
+      {% if item.ip is defined %}
+        {% if item.type is defined %}
+          {% if item.type != "vlan" %}
+            no switchport
+          {% endif %}
+          {% if item.type == "spine_link" %}
+            mtu {{ hec.fabric.interlink_mtu }}
+          {% endif %}
+        {% endif %}
+        ip address {{ item.ip }}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% endfor %}
-{% if port_channels is defined %}
-{% for po in port_channels %}
-interface Port-Channel{{ po.id }}
-{% if po.id == 42 %}
-   description {{ po.description }}
-   switchport mode trunk
-   switchport trunk group MLAG-Peer
-{% else %}
-   description {{ po.description }}
-   mlag {{ po.id }}
-{% if po.trunk is defined %}
-   switchport mode trunk
-{% if po.trunk != "all" %}
-   switchport trunk allowed vlan {{ po.trunk }}
-{% endif %}
-{% endif %}
-{% if po.access_vlan is defined %}
-   switchport access vlan {{ po.access_vlan }}
-{% endif %}
-{% endif %}
-!
+
+{% for allbrdrs in hec.brdr.number %}
+  {% if allbrdrs == leafid %}
+    {% if allbrdrs.port_channels is defined %}
+    {% for item in allbrdrs.port_channels %}
+      {% for po in item %}
+        interface Port-Channel{{ po.id }}
+        {% if po.id == 42 %}
+          description {{ po.description }}
+          switchport mode trunk
+          switchport trunk group MLAG-Peer
+        {% else %}
+          description {{ po.description }}
+          mlag {{ po.id }}
+          {% if po.trunk is defined %}
+            switchport mode trunk
+            {% if po.trunk != "all" %}
+              switchport trunk allowed vlan {{ po.trunk }}
+            {% endif %}
+          {% endif %}
+          {% if po.access_vlan is defined %}
+            switchport access vlan {{ po.access_vlan }}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% endif %}
+  {% endif %}
 {% endfor %}
-{% endif %}
+
 ip routing
 !

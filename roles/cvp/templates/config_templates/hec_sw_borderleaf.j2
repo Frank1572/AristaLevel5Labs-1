@@ -9,8 +9,8 @@
 {% endif %}
 {# #}
 !
-{% for allbrdrs in hec.brdr.number %}
-  {% if allbrdrs == leafid %}
+{% for allbrdrs in hec.brdr %}
+  {% if allbrdrs.number == leafid %}
     {% for item in allbrdrs.ports %}
       {% if item.type is defined %}
         {% if item.type != "Ethernet" %}
@@ -45,8 +45,8 @@
   {% endif %}
 {% endfor %}
 
-{% for allbrdrs in hec.brdr.number %}
-  {% if allbrdrs == leafid %}
+{% for allbrdrs in hec.brdr %}
+  {% if allbrdrs.number == leafid %}
     {% if allbrdrs.port_channels is defined %}
     {% for item in allbrdrs.port_channels %}
       {% for po in item %}

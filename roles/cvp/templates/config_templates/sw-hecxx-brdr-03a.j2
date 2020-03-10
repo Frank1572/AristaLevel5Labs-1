@@ -9,22 +9,13 @@ interface Ethernet1/1
 interface Ethernet2/1
    description "->rt-hec{{ hec.hec_nr }}-core-01d, Fo0/0/0"
 !
-! ===== Spine Uplinks =====
-interface Ethernet25/1,26/1,35/1,36/1
-   no switchport
-   mtu {{ hec.fabric.interlink_mtu }}
-!
 interface Ethernet25/1
-   description ->sw-hec{{ hec.hec_nr }}-spine-11
    ip address 10.11.0.13/31
 interface Ethernet26/1
-   description ->sw-hec{{ hec.hec_nr }}-spine-12
    ip address 10.12.0.13/31
 interface Ethernet35/1
-   description ->sw-hec{{ hec.hec_nr }}-spine-13
    ip address 10.13.0.13/31
 interface Ethernet36/1
-   description ->sw-hec{{ hec.hec_nr }}-spine-14
    ip address 10.14.0.13/31
 !
 interface Ethernet30/1
@@ -44,12 +35,12 @@ interface Management1
    vrf forwarding OOB
    ip address {{ hec.oob_prefix }}.51/{{ hec.oob_mask }}
 !
-router bgp 641{{ hec.hec_nr }}.10004
-   router-id 10.100.1.4
+router bgp {{ asn_local }}
+   router-id {{ Lo1 }}
    neighbor 10.11.0.12 peer-group SPINE-PG
    neighbor 10.12.0.12 peer-group SPINE-PG
    neighbor 10.13.0.12 peer-group SPINE-PG
    neighbor 10.14.0.12 peer-group SPINE-PG
    neighbor 198.19.224.2 peer-group MLPEER-PG
-   network 10.100.1.4/32
+   network {{ Lo1 }}/32
    network {{ hec.lo900_prefix }}.21/32

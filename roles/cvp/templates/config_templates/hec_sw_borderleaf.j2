@@ -8,7 +8,7 @@
 !leafid {{ leafid }}
 {% for allbrdrs in hec.brdr %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number == id %}
+  {% if allbrdrs.number|string == id %}
     {% for item in allbrdrs.ports %}
       {% if item.type is defined %}
         {% if item.type != "Ethernet" %}
@@ -41,30 +41,29 @@
       {% endif %}
     {% endfor %}
     {% if allbrdrs.port_channels is defined %}
-    {% for item in allbrdrs.port_channels %}
-      {% for po in item %}
-        interface Port-Channel{{ po.id }}
-        {% if po.id == 42 %}
-          description {{ po.description }}
+    {% for po in allbrdrs.port_channels %}
+      interface Port-Channel{{ po.id }}
+      {% if po.id == 42 %}
+        description {{ po.description }}
+        switchport mode trunk
+        switchport trunk group MLAG-Peer
+      {% else %}
+        description {{ po.description }}
+        mlag {{ po.id }}
+        {% if po.trunk is defined %}
           switchport mode trunk
-          switchport trunk group MLAG-Peer
-        {% else %}
-          description {{ po.description }}
-          mlag {{ po.id }}
-          {% if po.trunk is defined %}
-            switchport mode trunk
-            {% if po.trunk != "all" %}
-              switchport trunk allowed vlan {{ po.trunk }}
-            {% endif %}
-          {% endif %}
-          {% if po.access_vlan is defined %}
-            switchport access vlan {{ po.access_vlan }}
+          {% if po.trunk != "all" %}
+            switchport trunk allowed vlan {{ po.trunk }}
           {% endif %}
         {% endif %}
-      {% endfor %}
+        {% if po.access_vlan is defined %}
+          switchport access vlan {{ po.access_vlan }}
+        {% endif %}
+      {% endif %}
     {% endfor %}
     {% endif %}
   {% endif %}
 {% endfor %}
 ip routing
 !
+{% include "templates/config_templates/hec_sw_leaf_routing_configuration.j2" %}

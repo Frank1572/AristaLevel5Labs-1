@@ -5,10 +5,10 @@
 {% if brdrtype == '2' %}
 {% set lo2 = '10.100.1.2/32' %}
 {% endif %}
-leafid {{ leafid }}
+!leafid {{ leafid }}
 {% for allbrdrs in hec.brdr %}
-allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number == leafid %}
+!allbrdrs.number {{allbrdrs.number}}
+  {% if allbrdrs.number == id %}
     {% for item in allbrdrs.ports %}
       {% if item.type is defined %}
         {% if item.type != "Ethernet" %}

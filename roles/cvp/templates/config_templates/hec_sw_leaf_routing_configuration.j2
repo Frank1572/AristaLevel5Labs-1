@@ -32,9 +32,9 @@
     {% endif %}
 
     {% set asn_part = cell_id + 11000 %}
-    {% if type == 'borderleaf' or type == 'storageleaf' %}
+    {# if type == 'borderleaf' or type == 'storageleaf' #}
     {% set asn_part = cell_id + 10000 %}
-    {% endif %}
+    {# endif #}
     {% set asn_generated = "641" + location_id|string + "." + asn_part|string %}
     !
     {% if leafid == 'b' %}

@@ -244,9 +244,63 @@ hec:
     - number: 2b
       spine_port_towards_leaf: Et3/4/1
     - number: 3a
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et3/7/1
+      ports:
+        - id: 1/1
+          description: rt-hec01-core-01c, Fo0/2/0
+          po: 1101
+        - id: 2/1
+          description: rt-hec01-core-01d, Fo0/2/0
+          po: 1102
+        - id: 27/1
+          description: sw-hec01-brdr-03b, Et27/1
+          po: 42
+        - id: 28/1
+          description: sw-hec01-brdr-03b, Et28/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
     - number: 3b
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et3/8/1
+      ports:
+        - id: 1/1
+          description: rt-hec01-core-01c, Fo0/2/1
+          po: 1101
+        - id: 2/1
+          description: rt-hec01-core-01d, Fo0/2/1
+          po: 1102
+        - id: 27/1
+          description: sw-hec01-brdr-03a, Et27/1
+          po: 42
+        - id: 28/1
+          description: sw-hec01-brdr-03a, Et28/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
   str:
     - number: 1a
       spine_port_towards_leaf: Et3/5/1

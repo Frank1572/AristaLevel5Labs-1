@@ -768,30 +768,6 @@
   tags:
     - configlets
 
-- name: Render sw-hecxx-brdr-03
-  delegate_to: 127.0.0.1
-  template:
-    src: "templates/config_templates/sw-hecxx-brdr-03.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-brdr-03"
-  tags:
-    - configlets
-
-- name: Render sw-hecxx-brdr-03a
-  delegate_to: 127.0.0.1
-  template:
-    src: "templates/config_templates/sw-hecxx-brdr-03a.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-brdr-03a"
-  tags:
-    - configlets
-
-- name: Render sw-hecxx-brdr-03b
-  delegate_to: 127.0.0.1
-  template:
-    src: "templates/config_templates/sw-hecxx-brdr-03b.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-brdr-03b"
-  tags:
-    - configlets
-
 - name: Render sw-hecxx-oob-01
   delegate_to: 127.0.0.1
   template:
@@ -874,6 +850,36 @@
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-brdr-01b"
+  tags:
+    - configlets
+    - borderleafs
+
+- set_fact:
+    id: '3a'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-03a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-03a"
+  tags:
+    - configlets
+    - borderleafs
+
+- set_fact:
+    id: '3b'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-03b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-03b"
   tags:
     - configlets
     - borderleafs

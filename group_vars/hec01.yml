@@ -182,6 +182,11 @@ hec:
       ip_last_octett: 8
   brdr:
     - number: 1a
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et3/1/1
       ports:
         - id: 1/1
@@ -206,6 +211,11 @@ hec:
           description: rt-hec01-core-01b
           trunk: all
     - number: 1b
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et3/2/1
       ports:
         - id: 1/1

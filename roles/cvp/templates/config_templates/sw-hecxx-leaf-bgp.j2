@@ -1,5 +1,5 @@
 !
-{% set asn_spine = '641' + hec.hec_nr + '10000' %}
+{% set asn_spine = '641' + hec.hec_nr + '.10000' %}
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
    {% if hec.fabric.vtep_distribution_mode == "evpn" %}

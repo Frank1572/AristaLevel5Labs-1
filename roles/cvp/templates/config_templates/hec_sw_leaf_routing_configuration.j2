@@ -101,7 +101,7 @@
        neighbor MLPEER-PG next-hop-self
        neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
        neighbor SPINE-PG peer-group
-       neighbor SPINE-PG remote-as 641{{ hec.hec_nrid }}.10000
+       neighbor SPINE-PG remote-as 641{{ hec.hec_nr }}.10000
        neighbor SPINE-PG soft-reconfiguration inbound all
        neighbor SPINE-PG fall-over bfd
        neighbor SPINE-PG route-map MLPEER-RM out

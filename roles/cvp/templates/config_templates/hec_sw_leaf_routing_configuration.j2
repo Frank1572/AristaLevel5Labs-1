@@ -70,14 +70,8 @@
     {# set link_ip = (spine_po|int * 2 - 1)|int #}
     {% set link_ip = ip %}
 
-    {% for intf in range(29,33) %}
-    {# for intf in intf_list #}
-    interface Ethernet{{ intf }}/1
-       mtu {{ hec.fabric.interlink_mtu }}
-    {# if type != "borderleaf" #}
-       speed forced 40gfull
-    {# endif #}
-       no switchport
+    {% for intf in allbrdrs.uplinks %}
+    interface Ethernet{{ intf }}
        ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
     {% endfor %}
     !

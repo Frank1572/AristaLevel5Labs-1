@@ -2,6 +2,7 @@
 {# hec_sw_borderleaf.j2 #}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
+{% set speed = 40gfull %}
 {% if brdrtype == 2 %}
 vlan 914
    name FW-CORE-TRANS
@@ -29,9 +30,10 @@ interface Vxlan1
     {% for item in allbrdrs.uplinks %}
     ! ===== Spine Uplinks =====
     interface Ethernet{{ item }}
-       no switchport
-       description SPINE UPLINK
-       mtu {{ hec.fabric.interlink_mtu }}
+      no switchport
+      description SPINE UPLINK
+      mtu {{ hec.fabric.interlink_mtu }}
+      !speed forced {{ speed }}
     !
     {% endfor %}
     {% for item in allbrdrs.ports %}

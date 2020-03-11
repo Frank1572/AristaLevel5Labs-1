@@ -855,6 +855,36 @@
     - borderleafs
 
 - set_fact:
+    id: '2a'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-02a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-02a"
+  tags:
+    - configlets
+    - borderleafs
+
+- set_fact:
+    id: '2b'
+  tags:
+    - configlets
+    - borderleafs
+
+- name: Render sw-hecxx-brdr-02b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-brdr-02b"
+  tags:
+    - configlets
+    - borderleafs
+
+- set_fact:
     id: '3a'
   tags:
     - configlets

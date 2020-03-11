@@ -3,7 +3,7 @@
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
 {% set speed = '40gfull' %}
-{% if brdrtype == 2 %}
+{% if brdrtype == '2' %}
 vlan 914
    name FW-CORE-TRANS
 vlan 915
@@ -13,8 +13,7 @@ vlan 916
 interface Vxlan1
   vxlan vlan 914 vni 10914
   vxlan vlan 916 vni 10916
-{% endif %}
-{% if brdrtype == 3 %}
+{% else %}
 vlan 900
    name NW-MGMT
 vlan 920

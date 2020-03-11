@@ -147,6 +147,7 @@ hec:
     # valid models are: 7504, 7508, 7280
     model: 7504
     # number of linecards if spine is modular switch
+    # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 4
   fabric:
     # valid modes are: manual, cvx, evpn
@@ -183,10 +184,10 @@ hec:
   brdr:
     - number: 1a
       uplinks:
-        - 25/1
-        - 26/1
-        - 35/1
-        - 36/1
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/1/1
       ports:
         - id: 1/1
@@ -196,10 +197,10 @@ hec:
           description: rt-hec01-core-01b, Fo0/2/0
           po: 1102
         - id: 27/1
-          description: sw-hec01-brdr-01b, Et27/1
+          description: sw-hec01-brdr-01b, Et27
           po: 42
         - id: 28/1
-          description: sw-hec01-brdr-01b, Et28/1
+          description: sw-hec01-brdr-01b, Et28
           po: 42
       port_channels:
         - id: 42
@@ -212,23 +213,23 @@ hec:
           trunk: all
     - number: 1b
       uplinks:
-        - 25/1
-        - 26/1
-        - 35/1
-        - 36/1
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/2/1
       ports:
-        - id: 1/1
+        - id: 1
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101
-        - id: 2/1
+        - id: 2
           description: rt-hec01-core-01b, Fo0/2/1
           po: 1102
-        - id: 27/1
-          description: sw-hec01-brdr-01a, Et27/1
+        - id: 27
+          description: sw-hec01-brdr-01a, Et27
           po: 42
-        - id: 28/1
-          description: sw-hec01-brdr-01a, Et28/1
+        - id: 28
+          description: sw-hec01-brdr-01a, Et28
           po: 42
       port_channels:
         - id: 42
@@ -240,28 +241,70 @@ hec:
           description: rt-hec01-core-01b
           trunk: all
     - number: 2a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/3/1
+      ports:
+        - id: 27
+          description: sw-hec01-brdr-02b, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-02b, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01a
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01b
+          trunk: all
     - number: 2b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/4/1
+      ports:
+        - id: 27
+          description: sw-hec01-brdr-02a, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-02a, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01a
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01b
+          trunk: all
     - number: 3a
       uplinks:
-        - 25/1
-        - 26/1
-        - 35/1
-        - 36/1
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/7/1
       ports:
-        - id: 1/1
+        - id: 1
           description: rt-hec01-core-01c, Fo0/2/0
           po: 1101
-        - id: 2/1
+        - id: 2
           description: rt-hec01-core-01d, Fo0/2/0
           po: 1102
-        - id: 27/1
-          description: sw-hec01-brdr-03b, Et27/1
+        - id: 27
+          description: sw-hec01-brdr-03b, Et27
           po: 42
-        - id: 28/1
-          description: sw-hec01-brdr-03b, Et28/1
+        - id: 28
+          description: sw-hec01-brdr-03b, Et28
           po: 42
       port_channels:
         - id: 42
@@ -274,23 +317,23 @@ hec:
           trunk: all
     - number: 3b
       uplinks:
-        - 25/1
-        - 26/1
-        - 35/1
-        - 36/1
+        - 25
+        - 26
+        - 35
+        - 36
       spine_port_towards_leaf: Et3/8/1
       ports:
-        - id: 1/1
+        - id: 1
           description: rt-hec01-core-01c, Fo0/2/1
           po: 1101
-        - id: 2/1
+        - id: 2
           description: rt-hec01-core-01d, Fo0/2/1
           po: 1102
-        - id: 27/1
-          description: sw-hec01-brdr-03a, Et27/1
+        - id: 27
+          description: sw-hec01-brdr-03a, Et27
           po: 42
-        - id: 28/1
-          description: sw-hec01-brdr-03a, Et28/1
+        - id: 28
+          description: sw-hec01-brdr-03a, Et28
           po: 42
       port_channels:
         - id: 42

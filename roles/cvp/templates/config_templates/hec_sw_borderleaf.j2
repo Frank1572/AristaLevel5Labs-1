@@ -35,6 +35,7 @@ interface Vxlan1
       !speed forced {{ speed }}
     !
     {% endfor %}
+    ! ===== End device ports =====
     {% for item in allbrdrs.ports %}
       {% if item.type is defined %}
         {% if item.type != "Ethernet" %}
@@ -54,6 +55,18 @@ interface Vxlan1
       {% if item.po is defined %}
         channel-group {{ item.po }} mode active
       {% endif %}
+      {% if item.trunk is defined %} {# BEGIN port is vlan trunk #}
+        switchport mode trunk
+        {% if item.trunk != "all" %}
+          switchport trunk allowed vlan {{ item.trunk }}
+        {% endif %}
+      {% endif %} {# END port is vlan trunk #}
+      {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
+        switchport access vlan {{ item.access_vlan }}
+      {% endif %} {# END port is access_vlan #}
+      {% if item.speed is defined %} {# BEGIN port is access_vlan #}
+        speed forced {{ item.speed }}
+      {% endif %} {# END port is access_vlan #}
       {% if item.ip is defined %}
         {% if item.type is defined %}
           {% if item.type != "vlan" %}
@@ -66,6 +79,7 @@ interface Vxlan1
         ip address {{ item.ip }}
       {% endif %}
     {% endfor %}
+    ! ===== Port-channels =====
     {% if allbrdrs.port_channels is defined %}
     {% for po in allbrdrs.port_channels %}
       interface Port-Channel{{ po.id }}
@@ -91,4 +105,22 @@ interface Vxlan1
   {% endif %}
 {% endfor %}
 
+{##### VARP specific configuration for brdr-02 #####}
+{% if brdrtype == '2' %}
+! ==============================================
+!   Inband management - transfer to firewall
+! ==============================================
+interface Vlan916
+   description ->Transfer network for inband management
+   ip virtual-router address {{ hec.inband_trans_brdr }}
+!
+ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}
+!
+{% if hec.inband_trans_gw_vlan is defined %}
+ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
+{% else %}
+ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
+{% endif %}
+ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
+{% endif %}
 {% include "templates/config_templates/hec_sw_leaf_routing_configuration.j2" %}

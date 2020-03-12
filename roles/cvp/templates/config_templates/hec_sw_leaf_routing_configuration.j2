@@ -1,10 +1,17 @@
 {# hec_sw_leaf_routing_configuration.j2 #}
+{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
+{% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bs])[123][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
-{% set brdrtype = id | regex_replace('^(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
+{% set brdrtype = id | regex_replace('^(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 !leafid {{ leafid }}
-{% for allbrdrs in hec.brdr %}
+{% set loop_items = hec.brdr %}
+{% if leafpurpose == 's' %}
+  {% set loop_items = hec.str %}
+{% endif %}
+{% for allbrdrs in loop_items %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number == id %}
+  {% if allbrdrs.number == id_short %}
     {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
     {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
     {# Chassis based devices #}

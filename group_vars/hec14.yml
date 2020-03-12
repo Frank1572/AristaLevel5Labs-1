@@ -33,7 +33,7 @@ oob01:
 
  
 cvp: 
-  version: "cvp-2019.1.2-kvm.tgz" 
+  version: "cvp-2019.1.2-kvm.tar" 
   path_to_cvp_file: "/ens/bin/images/arista/" 
   # out of band ip for cvp : 
   ip_eth0: "10.9.247.253" 
@@ -41,7 +41,7 @@ cvp:
   ip_eth1: "10.255.186.69" 
   mask_eth0: "255.255.254.0" 
   mask_eth1: "255.255.255.240" 
-  gw: "10.9.240.1" 
+  gw: "10.9.246.1" 
   name: "naa-hec14-cvp-01.net.sap.corp" 
   # nsq-dns-01 and dns-02 : 
   dns1: "10.4.202.200" 
@@ -58,7 +58,7 @@ cvp:
   backupuser: "cvpbkp" 
   eth1_routes: 
       # IPMI NW Mgmt Range (HEC14-NW-MGMT01) 
-    - prefix: "198.19.233.0
+    - prefix: "198.19.233.0"
       mask: "25" 
       nexthop: "10.255.186.78" 
       # Leaf and Spine NW Mgmt Range (Lo900) 

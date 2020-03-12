@@ -22,12 +22,12 @@ container:
             - name: sw-hec-switch-snmp
             - name: sw-hec-switch-ntp
             - name: sw-hec-switch-logging
-        - name: HEC-Out of band
+        - name: "HEC-Out of band"
           configlets:
             - name: mgmt-default
             - name: sw-hec-oob-common
             - name: sw-hec-tele-default
-        - name: HEC-External Connectivity
+        - name: "HEC-External Connectivity"
         - name: HEC-CWAN
         - name: HEC-FWT
         - name: HEC-InterDC
@@ -37,8 +37,8 @@ container:
             - name: sw-hec-switch-snmp
             - name: sw-hec-switch-ntp
             - name: sw-hec-switch-logging
-        - name: HEC-Backup Routers
-        - name: HEC-Switched Fabric
+        - name: "HEC-Backup Routers"
+        - name: "HEC-Switched Fabric"
           configlets:
             - name: HEC-VLANs
             - name: sw-hec-switch-snmp
@@ -46,8 +46,8 @@ container:
             - name: sw-hec-switch-logging
           subcontainer:
             - name: HEC-Core
-            - name: HEC-Top of rack
-        - name: HEC-Routed Fabric
+            - name: "HEC-Top of rack"
+        - name: "HEC-Routed Fabric"
           configlets:
             - name: CVP-Arista
             - name: sw-hec-fab-L900
@@ -68,24 +68,24 @@ container:
                 - name: sw-mlag-b
                 - name: HEC-VLANs
               subcontainer:
-                - name: HEC-Service leaf
-                - name: HEC-Border leaf
-                - name: HEC-Storage leaf
-                - name: HEC-Special leaf
-                - name: HEC-HANA leaf
+                - name: "HEC-Service leaf"
+                - name: "HEC-Border leaf"
+                - name: "HEC-Storage leaf"
+                - name: "HEC-Special leaf"
+                - name: "HEC-HANA leaf"
                   configlets:
                     - name: hec-hana
                     - name: sw-hec-autoconf
                     - name: sw-hec-descriptions
-                - name: HEC-HV leaf
+                - name: "HEC-HV leaf"
                   configlets:
                     - name: sw-hec-autoconf
                   subcontainer:
-                    - name: HEC-VMWare leaf
+                    - name: "HEC-VMWare leaf"
                       configlets:
                         - name: hec-vmware
                         - name: sw-hec-descriptions-hvv
-                    - name: HEC-Xen leaf
+                    - name: "HEC-Xen leaf"
                       configlets:
                         - name: hec-xen
                         - name: sw-hec-descriptions

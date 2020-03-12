@@ -5,7 +5,7 @@
    mask: "255.255.254.0" 
    gw: "10.9.246.1" 
    name: "naa-hec14-01-idrac" 
-   # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:  
+   # dns not required but set to the landscape dns1 and dns2 reserved in TIC HEC14-CIS01-DNS01:  
    dns1: "100.127.45.1" 
    dns2: "100.127.45.2" 
    domain: "net.sap.corp" 

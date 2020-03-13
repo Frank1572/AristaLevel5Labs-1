@@ -1,3 +1,4 @@
+---
 # file: group_vars/hec13
 idrac:
   # IDRAC IP reserved in IPAM :
@@ -35,7 +36,7 @@ oob01:
     cva_ip: "10.9.245.249"
 
 cvp:
-  version: "cvp-2019.1.2-kvm.tgz"
+  version: "cvp-2019.1.2-kvm.tar"
   path_to_cvp_file: "/ens/bin/images/arista/"
   ip_eth0: "10.9.245.253"
   # inband transport ip for cvp (for configuration purpose) reserved in TIC

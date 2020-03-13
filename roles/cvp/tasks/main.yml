@@ -949,9 +949,6 @@
   copy:
     src: "{{role_path}}/files/configlet_builders"
     dest: /tmp
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - upload_configlets
 
@@ -960,9 +957,6 @@
   copy:
     src: "{{role_path}}/files/configs"
     dest: /tmp
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - upload_configlets
 
@@ -971,9 +965,6 @@
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
     dest: /tmp/configlet_builder.py
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - upload_configlets
 
@@ -982,9 +973,6 @@
   copy:
     src: "{{role_path}}/files/configlets.py"
     dest: /tmp/configlets.py
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - upload_configlets
 
@@ -993,9 +981,6 @@
   copy:
     src: "{{role_path}}/files/cvprac"
     dest: /tmp
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - reload_TerminAttr
     - upload_configlets
@@ -1017,9 +1002,6 @@
   copy:
     src: "{{role_path}}/files/container_and_mapping.py"
     dest: /tmp/container_and_mapping.py
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - create_containers
 
@@ -1034,9 +1016,6 @@
   copy:
     src: "{{role_path}}/files/aaa_configuration.py"
     dest: /tmp/aaa_configuration.py
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - configure_aaa
 
@@ -1051,9 +1030,6 @@
   copy:
     src: "{{role_path}}/files/restore_reload_TerminAttr.py"
     dest: /tmp/restore_reload_TerminAttr.py
-    owner: root
-    group: root
-    mode: 0755
   tags:
     - reload_TerminAttr
 

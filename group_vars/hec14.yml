@@ -47,8 +47,8 @@ cvp:
   dns1: "10.4.202.200" 
   dns2: "10.4.12.200" 
   domain: "net.sap.corp" 
-  ntp1: "10.127.45.36" 
-  ntp2: "10.127.45.37" 
+  ntp1: "10.4.12.100" 
+  ntp2: "10.4.12.102" 
   device_int: eth0 
   cluster_int: eth1 
   ingest_key: "SecureKey14" 

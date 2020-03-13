@@ -31,7 +31,7 @@ interface Vxlan1
 {% endif %}
 {% for allbrdrs in loop_items %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number|string == id %}
+  {% if allbrdrs.number|string == id_short %}
 
     {% for item in allbrdrs.uplinks %}
     ! ===== Spine Uplinks =====

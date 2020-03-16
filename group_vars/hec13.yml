@@ -51,7 +51,7 @@ cvp:
   domain: "net.sap.corp"
   # ntp as used for hec16 - Ashburn
   ntp1: "10.4.12.100"
-  ntp2: "10.4.12.128"
+  ntp2: "10.4.12.102"
   device_int: eth0
   cluster_int: eth1
   ingest_key: "SecureKey13"

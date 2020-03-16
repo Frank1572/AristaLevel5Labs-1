@@ -52,10 +52,10 @@
       HEC-Switched Fabric:
         parent_container: HEC
         configlets:
-        - HEC-VLANs
-        - sw-hec-switch-snmp
-        - sw-hec-switch-ntp
-        - sw-hec-switch-logging
+          - HEC-VLANs
+          - sw-hec-switch-snmp
+          - sw-hec-switch-ntp
+          - sw-hec-switch-logging
       HEC-Routed Fabric:
         parent_container: HEC
         configlets:

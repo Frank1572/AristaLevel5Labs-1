@@ -1,5 +1,11 @@
----
 # file: roles/cvp/tasks/main.yml
+---
+- hosts: all
+  gather_facts: no
+  # Not sure if the collection needs to be here or can be given
+  # in the cvp role itself.
+  collections:
+    - arista.cvp
 
 - name: "Gather CVP facts from {{inventory_hostname}}"
   cv_facts:

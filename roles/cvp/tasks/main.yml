@@ -1,6 +1,12 @@
 ---
 # file: roles/cvp/tasks/main.yml
 
+- name: "Gather CVP facts from {{inventory_hostname}}"
+  cv_facts:
+  register: cvp_facts
+  tags:
+    - always
+
 - name: Get status of CVP VM
   virt:
     command: "status"
@@ -1005,11 +1011,19 @@
   tags:
     - create_containers
 
-- name: Create the container structure in CVP and add configlets to containers
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+#- name: Create the container structure in CVP and add configlets to containers
+#  delegate_to: "{{ cvp.ip_eth0 }}"
+#  command: python /tmp/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+#  tags:
+#    - create_containers
+- name: "Build Container topology on {{inventory_hostname}} and assign configlets"
+  arista.cvp.cv_container:
+    topology: "{{container}}"
+    cvp_facts: "{{cvp_facts.ansible_facts}}"
+    mode: merge
   tags:
     - create_containers
+    - configlets_assign
 
 - name: Copy aaa server creation script to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"

@@ -3,6 +3,10 @@
 
 - hosts: all
   gather_facts: no
+  # Not sure if the collection needs to be here or can be given
+  # in the cvp role itself.
+  collections:
+    - arista.cvp
   roles:
     - role: cvp
       vars:

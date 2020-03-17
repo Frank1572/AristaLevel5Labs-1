@@ -1,4 +1,110 @@
 container:
+  HEC:
+    parent_container: Fabric
+    configlets:
+      - sw-hec
+      - sw-hec-aaa
+      - CVP-Arista
+      - sw-hec-oob-vrf
+      - sw-hec-snmp
+      - sw-hec-ntp
+      - sw-hec-logging
+  HEC-IPMI:
+    parent_container: HEC
+    configlets:
+      - HEC-IPMI
+      - mgmt-oob
+      - sw-hec-tele-oob
+      - sw-hec-autoconf-ipmi
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+  HEC-Out of band:
+    parent_container: HEC
+    configlets:
+      - mgmt-default
+      - sw-hec-oob-common
+      - sw-hec-tele-default
+  HEC-External Connectivity:
+    parent_container: HEC
+  HEC-CWAN:
+    parent_container: HEC
+  HEC-FWT:
+    parent_container: HEC
+  HEC-InterDC:
+    parent_container: HEC
+    configlets:
+      - sw-mlag-a
+      - sw-mlag-b
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+  HEC-Backup Routers:
+    parent_container: HEC
+  HEC-Switched Fabric:
+    parent_container: HEC
+    configlets:
+      - HEC-VLANs
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+  HEC-Routed Fabric:
+    parent_container: HEC
+    configlets:
+      - CVP-Arista
+      - sw-hec-fab-L900
+      - sw-hec-fab-ntp
+      - sw-hec-fab-snmp
+      - sw-hec-fab-logging
+      - sw-hec-oob-vrf
+      - sw-hec-tele-oob
+      - mgmt-default
+  HEC-Core:
+    parent_container: HEC-Switched Fabric
+  HEC-Top of rack:
+    parent_container: HEC-Switched Fabric
+  HEC-Spine:
+    parent_container: HEC-Routed Fabric
+    configlets:
+      - sw-hec-spine
+  HEC-NGDR:
+    parent_container: HEC-Routed Fabric
+  HEC-Leaf:
+    parent_container: HEC-Routed Fabric
+    configlets:
+      - sw-mlag-a
+      - sw-mlag-b
+      - HEC-VLANs
+  HEC-Service leaf:
+    parent_container: HEC-Leaf
+  HEC-Border leaf:
+    parent_container: HEC-Leaf
+  HEC-Storage leaf:
+    parent_container: HEC-Leaf
+  HEC-Special leaf:
+    parent_container: HEC-Leaf
+  HEC-HANA leaf:
+    parent_container: HEC-Leaf
+    configlets:
+      - hec-hana
+      - sw-hec-autoconf
+      - sw-hec-descriptions
+  HEC-HV leaf:
+    parent_container: HEC-Leaf
+    configlets:
+      - sw-hec-autoconf
+  HEC-VMWare leaf:
+    parent_container: HEC-HV leaf
+    configlets:
+      - hec-vmware
+      - sw-hec-descriptions-hvv
+  HEC-Xen leaf:
+    parent_container: HEC-HV leaf
+    configlets:
+      - hec-xen
+      - sw-hec-descriptions
+
+old_container:
   - name: Fabric
     is_root: yes
     subcontainer:

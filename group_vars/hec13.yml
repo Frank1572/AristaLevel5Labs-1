@@ -1,0 +1,94 @@
+---
+# file: group_vars/hec13
+idrac:
+  # IDRAC IP reserved in IPAM :
+  ip: "10.9.245.254"
+  mask: "255.255.254.0"
+  gw: "10.9.244.1"
+  # IDRAC Hostname reserved in IPAM :
+  name: "naa-hec13-01-idrac"
+  # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:
+  dns1: "100.127.37.1"
+  dns2: "100.127.37.2"
+  domain: "net.sap.corp"
+  password: "arista"
+
+cva:
+  # CVA IP reserved in IPAM :
+  ip: "10.9.244.11"
+  mask: "255.255.254.0"
+  gw: "10.9.244.1"
+  # CVA Hostname reserved in IPAM :
+  name: "naa-hec13-01"
+  # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:
+  dns1: "100.127.37.1"
+  dns2: "100.127.37.2"
+  domain: "net.sap.corp"
+  password: "arista"
+
+oob01:
+  dhcp:
+    prefix: "10.9.244.0"
+    mask: "255.255.254.0"
+    router: "10.9.244.1"
+    # .248 and .249 reserved in IPAM as for installation or server replacement purpose:
+    idrac_ip: "10.9.245.248"
+    cva_ip: "10.9.245.249"
+
+cvp:
+  version: "cvp-2019.1.2-kvm.tar"
+  path_to_cvp_file: "/ens/bin/images/arista/"
+  ip_eth0: "10.9.245.253"
+  # inband transport ip for cvp (for configuration purpose) reserved in TIC
+  ip_eth1: "10.255.185.69"
+  mask_eth0: "255.255.254.0"
+  mask_eth1: "255.255.255.240"
+  gw: "10.9.244.1"
+  name: "naa-hec13-cvp-01.net.sap.corp"
+  # nsq-dns-01 and dns-02 :
+  dns1: "10.4.202.200"
+  dns2: "10.4.12.200"
+  domain: "net.sap.corp"
+  # ntp as used for hec16 - Ashburn
+  ntp1: "10.4.12.100"
+  ntp2: "10.4.12.102"
+  device_int: eth0
+  cluster_int: eth1
+  ingest_key: "SecureKey13"
+  vmname: "cvp-hec13"
+  KvmDomain: "cvp"
+  password: "arista"
+  backupuser: "cvpbkp"
+  eth1_routes:
+      # HEC1x-NW-MGMT01 (VLAN900)
+    - prefix: "198.19.232.0"
+      mask: "24"
+      # This IP is the Firewall but for the begining we bypass the firewall
+      nexthop: "10.255.185.78"
+      # HEC1x-NW-MGMT05 (Lo900)
+    - prefix: "198.19.180.0"
+      mask: "24"
+      # This IP is the Firewall but for the begining we bypass the firewall
+      nexthop: "10.255.185.78"
+  dhcp:
+    prefix: "10.9.244.0"
+    mask: "255.255.254.0"
+    range_low: "10.9.245.224"
+    range_high: "10.9.245.247"
+  aaa_config:
+    aaa_type: "RADIUS"
+    servers:
+    # Below IP is the same as for Ashburn
+      - ip: "10.4.201.55"
+        secret: ""
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
+        # Below IP is the same as for Ashburn
+      - ip: "169.145.33.70"
+        secret: ""
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"

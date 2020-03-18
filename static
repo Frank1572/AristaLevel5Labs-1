@@ -1,20 +1,29 @@
 # static hosts only - after CVA already received an IP and
 # was configured initially
 
-[hec19]
+[HEC19]
 #10.178.146.43
 
-[hec10]
+[HEC10]
 #10.178.142.43
 
-[hec18]
+[HEC18]
 #10.9.236.43
 
-[hec17]
+[HEC17]
 #10.9.232.43
 
-[hec01]
-10.178.137.253
+[HEC01]
+#10.9.236.41
 
-[hec03]
+[HEC03]
 #10.9.240.41
+
+[HEC04]
+#10.9.242.39
+
+[HEC13]
+#10.9.244.11
+
+[HEC14]
+#10.9.246.20

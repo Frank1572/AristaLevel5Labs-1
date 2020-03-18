@@ -8,25 +8,31 @@
     - idrac
 
 - name: Disable all iDRAC related DHCP configuration
-  command: racadm set iDRAC.IPv4.DHCPEnable 0
-  command: racadm set iDRAC.IPv4.DNSFromDHCP 0
-  command: racadm set iDRAC.NIC.DNSDomainFromDHCP 0
+  command: "{{item}}"
+  with_items:
+    - racadm set iDRAC.IPv4.DHCPEnable 0
+    - racadm set iDRAC.IPv4.DNSFromDHCP 0
+    - racadm set iDRAC.NIC.DNSDomainFromDHCP 0
   tags:
     - idrac
 
 - name: Configure IP network settings for the iDRAC interface
-  command: racadm set iDRAC.NIC.Enable 1
-  command: racadm set iDRAC.IPv4.Address {{ idrac.ip }}
-  command: racadm set iDRAC.IPv4.Netmask {{ idrac.mask }}
-  command: racadm set iDRAC.IPv4.Gateway {{ idrac.gw }}
+  command: "{{item}}"
+  with_items:
+    - racadm set iDRAC.NIC.Enable 1
+    - racadm set iDRAC.IPv4.Address {{ idrac.ip }}
+    - racadm set iDRAC.IPv4.Netmask {{ idrac.mask }}
+    - racadm set iDRAC.IPv4.Gateway {{ idrac.gw }}
   tags:
     - idrac
 
 - name: Configure DNS settings for the iDRAC interface
-  command: racadm set iDRAC.IPv4.DNS1 {{ idrac.dns1 }}
-  command: racadm set iDRAC.IPv4.DNS2 {{ idrac.dns2 }}
-  command: racadm set iDRAC.NIC.DNSRacName {{ idrac.name }}
-  command: racadm set iDRAC.NIC.DNSDomainName {{ idrac.domain }}
+  command: "{{item}}"
+  with_items:
+    - racadm set iDRAC.IPv4.DNS1 {{ idrac.dns1 }}
+    - racadm set iDRAC.IPv4.DNS2 {{ idrac.dns2 }}
+    - racadm set iDRAC.NIC.DNSRacName {{ idrac.name }}
+    - racadm set iDRAC.NIC.DNSDomainName {{ idrac.domain }}
   tags:
     - idrac
 
@@ -47,11 +53,13 @@
     - idrac
 
 - name: Enable Serial console
-  command: racadm config -g cfgSerial -o cfgSerialBaudRate 9600
-  command: racadm config -g cfgSerial -o cfgSerialCom2RedirEnable 1
-  command: racadm config -g cfgSerial -o cfgSerialSshEnable 1
-  command: racadm config -g cfgIpmiSol -o cfgIpmiSolEnable 1
-  command: racadm config -g cfgIpmiSol -o cfgIpmiSolBaudRate 9600
+  command: "{{item}}"
+  with_items:
+    - racadm config -g cfgSerial -o cfgSerialBaudRate 9600
+    - racadm config -g cfgSerial -o cfgSerialCom2RedirEnable 1
+    - racadm config -g cfgSerial -o cfgSerialSshEnable 1
+    - racadm config -g cfgIpmiSol -o cfgIpmiSolEnable 1
+    - racadm config -g cfgIpmiSol -o cfgIpmiSolBaudRate 9600
   tags:
     - idrac
 

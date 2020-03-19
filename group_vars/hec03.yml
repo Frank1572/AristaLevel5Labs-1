@@ -1,92 +1,87 @@
- 
- ---
- # file: group_vars/hec03.yml
- idrac: 
-   ip: "10.9.241.254" 
-   mask: "255.255.254.0" 
-   gw: "10.9.240.1" 
-   name: "naa-hec03-01-idrac" 
-   # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:  
-   dns1: "169.145.84.8" 
-   dns2: "169.145.84.9" 
-   domain: "net.sap.corp" 
-   password: "arista" 
- 
+---
+# file: group_vars/hec03.yml
+idrac:
+ ip: 10.9.241.254
+ mask: 255.255.254.0
+ gw: 10.9.240.1
+ name: naa-hec03-01-idrac
+ # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:
+ dns1: 169.145.84.8
+ dns2: 169.145.84.9
+ domain: net.sap.corp
+ password: arista
 
- cva: 
-   ip: "10.9.240.41" 
-   mask: "255.255.254.0" 
-   gw: "10.9.240.1" 
-   name: "naa-hec03-01" 
-   dns1: "169.145.84.8" 
-   dns2: "169.145.84.9" 
-   domain: "net.sap.corp" 
-   password: "arista" 
- 
- 
-oob01: 
-  dhcp: 
-    prefix: "10.9.240.0" 
-    mask: "255.255.254.0" 
-    router: "10.9.240.1" 
-    idrac_ip: "10.9.241.248" 
-    cva_ip: "10.9.241.249" 
 
- 
-cvp: 
-  version: "cvp-2019.1.2-kvm.tgz" 
-  path_to_cvp_file: "/ens/bin/images/arista/" 
-  # out of band ip for cvp : 
-  ip_eth0: "10.9.241.253" 
-  # inband transport ip for cvp (for configuration purpose) 
-  ip_eth1: "10.255.176.69" 
-  mask_eth0: "255.255.254.0" 
-  mask_eth1: "255.255.255.240" 
-  gw: "10.9.240.1" 
-  name: "naa-hec03-cvp-01.net.sap.corp" 
-  # nsq-dns-01 and dns-02 : 
-  dns1: "10.4.202.200" 
-  dns2: "10.4.12.200" 
-  domain: "net.sap.corp" 
-  ntp1: "10.4.12.100" 
-  ntp2: "10.4.12.102" 
-  device_int: eth0 
-  cluster_int: eth1 
-  ingest_key: "SecureKey03" 
-  vmname: "cvp-hec03" 
-  KvmDomain: "cvp" 
-  password: "arista" 
-  backupuser: "cvpbkp" 
-  eth1_routes: 
-      # IPMI NW Mgmt Range (HEC03-NW-MGMT06) 
-    - prefix: "198.19.236.0
-      mask: "23" 
-      nexthop: "10.255.176.78" 
-      # Leaf and Spine NW Mgmt Range (Lo900) 
-    - prefix: "198.19.156.0" 
-      mask: "23" 
-      nexthop: "10.255.176.78" 
-     
-  dhcp: 
-    prefix: "10.9.240.0" 
-    mask: "255.255.254.0" 
-    range_low: "10.9.241.224" 
-    range_high: "10.9.241.247" 
-  aaa_config: 
-    aaa_type: "RADIUS" 
-    servers: 
-      - ip: "10.4.201.55" 
-        secret: "" 
-        authMode: "PAP" 
-        authPort: 1645 
-        accPort: 1646 
-        status: "Enabled" 
-      - ip: "169.145.33.70" 
-        secret: "" 
-        authMode: "PAP" 
-        authPort: 1645 
-        accPort: 1646 
-        status: "Enabled" 
+cva:
+ ip: 10.9.240.41
+ mask: 255.255.254.0
+ gw: 10.9.240.1
+ name: naa-hec03-01
+ dns1: 169.145.84.8
+ dns2: 169.145.84.9
+ domain: net.sap.corp
+ password: arista
 
- 
-=======================================================================================================
+
+oob01:
+  dhcp:
+    prefix: 10.9.240.0
+    mask: 255.255.254.0
+    router: 10.9.240.1
+    idrac_ip: 10.9.241.248
+    cva_ip: 10.9.241.249
+
+
+cvp:
+  version: cvp-2019.1.2-kvm.tgz
+  path_to_cvp_file: /ens/bin/images/arista/
+  # out of band ip for cvp :
+  ip_eth0: 10.9.241.253
+  # inband transport ip for cvp (for configuration purpose)
+  ip_eth1: 10.255.176.69
+  mask_eth0: 255.255.254.0
+  mask_eth1: 255.255.255.240
+  gw: 10.9.240.1
+  name: naa-hec03-cvp-01.net.sap.corp
+  # nsq-dns-01 and dns-02 :
+  dns1: 10.4.202.200
+  dns2: 10.4.12.200
+  domain: net.sap.corp
+  ntp1: 10.4.12.100
+  ntp2: 10.4.12.102
+  device_int: eth0
+  cluster_int: eth1
+  ingest_key: SecureKey03
+  vmname: cvp-hec03
+  KvmDomain: cvp
+  password: arista
+  backupuser: cvpbkp
+  eth1_routes:
+      # IPMI NW Mgmt Range (HEC03-NW-MGMT06)
+    - prefix: 198.19.236.0
+      mask: 23
+      nexthop: 10.255.176.78
+      # Leaf and Spine NW Mgmt Range (Lo900)
+    - prefix: 198.19.156.0
+      mask: 23
+      nexthop: 10.255.176.78
+  dhcp:
+    prefix: 10.9.240.0
+    mask: 255.255.254.0
+    range_low: 10.9.241.224
+    range_high: 10.9.241.247
+  aaa_config:
+    aaa_type: RADIUS
+    servers:
+      - ip: 10.4.201.55
+        secret: secretRadPw
+        authMode: PAP
+        authPort: 1645
+        accPort: 1646
+        status: Enabled
+      - ip: 169.145.33.70
+        secret: secretRadPw
+        authMode: PAP
+        authPort: 1645
+        accPort: 1646
+        status: Enabled

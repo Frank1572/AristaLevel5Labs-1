@@ -1,83 +1,83 @@
 ---
 # file: group_vars/hec01.yml
 idrac:
-  ip: "10.178.136.254"
-  mask: "255.255.254.0"
-  gw: "10.178.136.1"
-  name: "naa-hec10-idrac-01"
-  dns1: "147.204.148.110"
-  dns2: "147.204.148.111"
-  domain: "net.sap.corp"
-  password: "arista"
+  ip: 10.178.136.254
+  mask: 255.255.254.0
+  gw: 10.178.136.1
+  name: naa-hec10-idrac-01
+  dns1: 147.204.148.110
+  dns2: 147.204.148.111
+  domain: net.sap.corp
+  password: arista
 
 cva:
 # attention not .43 :
-  ip: "10.178.136.41"
-  mask: "255.255.254.0"
-  gw: "10.178.136.1"
-  name: "naa-hec01-01"
-  dns1: "147.204.148.110"
-  dns2: "147.204.148.111"
-  domain: "net.sap.corp"
-  password: "arista"
+  ip: 10.178.136.41
+  mask: 255.255.254.0
+  gw: 10.178.136.1
+  name: naa-hec01-01
+  dns1: 147.204.148.110
+  dns2: 147.204.148.111
+  domain: net.sap.corp
+  password: arista
 
 oob2 and oob3:
   dhcp:
-    prefix: "10.178.136.0"
-    mask: "255.255.254.0"
-    router: "10.178.136.1"
-    idrac_ip: "10.178.137.248"
-    cva_ip: "10.178.137.249"
+    prefix: 10.178.136.0
+    mask: 255.255.254.0
+    router: 10.178.136.1
+    idrac_ip: 10.178.137.248
+    cva_ip: 10.178.137.249
 
 cvp:
   # there is already 1.3 on arista web page
-  version: "cvp-2019.1.2-kvm.tgz"
+  version: cvp-2019.1.2-kvm.tgz
   # path to be checked
-  path_to_cvp_file: "/ens/bin/images/arista/"
-  ip_eth0: "10.178.137.253"
-  ip_eth1: "10.255.241.69"
-  mask_eth0: "255.255.254.0"
-  mask_eth1: "255.255.240.0"
-  gw: "10.178.136.1"
-  name: "naa-hec01-cvp-01.net.sap.corp"
-  dns1: "10.17.121.30"
-  dns2: "10.17.122.10"
-  domain: "net.sap.corp"
-  ntp1: "10.17.122.185"
-  ntp2: "10.33.142.104"
+  path_to_cvp_file: /ens/bin/images/arista/
+  ip_eth0: 10.178.137.253
+  ip_eth1: 10.255.241.69
+  mask_eth0: 255.255.254.0
+  mask_eth1: 255.255.240.0
+  gw: 10.178.136.1
+  name: naa-hec01-cvp-01.net.sap.corp
+  dns1: 10.17.121.30
+  dns2: 10.17.122.10
+  domain: net.sap.corp
+  ntp1: 10.17.122.185
+  ntp2: 10.33.142.104
   device_int: eth0
   cluster_int: eth1
-  ingest_key: "SecureKey01"
-  vmname: "cvp-hec01"
-  KvmDomain: "cvp"
-  password: "arista"
-  backupuser: "cvpbkp"
+  ingest_key: SecureKey01
+  vmname: cvp-hec01
+  KvmDomain: cvp
+  password: arista
+  backupuser: cvpbkp
   eth1_routes:
   # HEC01-NW-MGMT-04 (all router and ipmis)
-    - prefix: "198.19.234.0"
-      mask: "24"
-      nexthop: "10.255.241.78"
+    - prefix: 198.19.234.0
+      mask: 24
+      nexthop: 10.255.241.78
   # HEC01-NW-MGMT05 (all fab)
-    - prefix: "198.19.190.0"
-      mask: "24"
-      nexthop: "10.255.241.78"
+    - prefix: 198.19.190.0
+      mask: 24
+      nexthop: 10.255.241.78
   dhcp:
-    prefix: "10.178.140.0"
-    mask: "255.255.254.0"
-    range_low: "10.178.137.224"
-    range_high: "10.178.137.247"
+    prefix: 10.178.140.0
+    mask: 255.255.254.0
+    range_low: 10.178.137.224
+    range_high: 10.178.137.247
   aaa_config:
-    aaa_type: "RADIUS"
+    aaa_type: RADIUS
     servers:
-      - ip: "10.17.121.35"
-        secret: "secretRadPw"
-        authMode: "PAP"
+      - ip: 10.17.121.35
+        secret: secretRadPw
+        authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: "Enabled"
-      - ip: "10.17.122.21"
-        secret: "secretRadPw"
-        authMode: "PAP"
+        status: Enabled
+      - ip: 10.17.122.21
+        secret: secretRadPw
+        authMode: PAP
         authPort: 1645
         accPort: 1646
         status: "Enabled"

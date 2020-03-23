@@ -996,19 +996,29 @@
   tags:
     - upload_configlets
 
-- name: Upload all generated configlets
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/configlets.py "/tmp/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+#- name: Upload all generated configlets
+#  delegate_to: "{{ cvp.ip_eth0 }}"
+  #command: python /tmp/configlets.py "/tmp/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  #tags:
+  #  - upload_configlets
+
+#- name: Copy container creation script to CVP
+  #delegate_to: "{{ cvp.ip_eth0 }}"
+  #copy:
+  #  src: "{{role_path}}/files/container_and_mapping.py"
+  #  dest: /tmp/container_and_mapping.py
+  #tags:
+  #  - create_containers
+
+# The list of configlets is been taken from the roles vars/main.yml
+- name: "Upload configlets to {{inventory_hostname}} instance"
+  arista.cvp.cv_configlet:
+    cvp_facts: "{{ cvp_facts.ansible_facts }}"
+    configlets: "{{ configlet_list }}"
+    state: present
+  register: cvp_configlet
   tags:
     - upload_configlets
-
-- name: Copy container creation script to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  copy:
-    src: "{{role_path}}/files/container_and_mapping.py"
-    dest: /tmp/container_and_mapping.py
-  tags:
-    - create_containers
 
 #- name: Create the container structure in CVP and add configlets to containers
 #  delegate_to: "{{ cvp.ip_eth0 }}"

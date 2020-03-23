@@ -104,6 +104,10 @@ container:
       - hec-xen
       - sw-hec-descriptions
 
+configlet_list:
+  sw-hec: "{{ lookup('file', 'files/configs/sw-hec') }}"
+  sw-hec-aaa: "{{ lookup('file', 'files/configs/sw-hec-aaa') }}"
+
 old_container:
   - name: Fabric
     is_root: yes

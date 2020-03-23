@@ -1,5 +1,13 @@
 # static hosts only - after CVA already received an IP and
 # was configured initially
+[all:vars]
+ansible_connection=httpapi
+ansible_httpapi_use_ssl=True
+ansible_httpapi_validate_certs=False
+ansible_network_os=eos
+ansible_httpapi_port=443
+ansible_user=cvpadmin
+ansible_password=arista
 
 [hec19]
 #10.178.146.43

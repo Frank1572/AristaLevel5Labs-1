@@ -2,7 +2,3 @@
 snmp-server community r0c4s ro ACL_SNMP_VTY
 snmp-server host {{ hec.snmp1 }} version 2c r0c4s
 snmp-server host {{ hec.snmp2 }} version 2c r0c4s
-snmp-server enable traps bgp
-snmp-server enable traps entity
-snmp-server enable traps snmp
-snmp-server enable traps snmpConfigManEvent

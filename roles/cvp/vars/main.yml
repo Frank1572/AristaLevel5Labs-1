@@ -15,7 +15,7 @@ container:
       - HEC-IPMI
       - mgmt-oob
       - sw-hec-tele-oob
-      - sw-hec-autoconf-ipmi
+      #- sw-hec-autoconf-ipmi
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
@@ -87,22 +87,22 @@ container:
     parent_container: HEC-Leaf
     configlets:
       - hec-hana
-      - sw-hec-autoconf
-      - sw-hec-descriptions
+      #- sw-hec-autoconf
+      #- sw-hec-descriptions
   HEC-HV leaf:
     parent_container: HEC-Leaf
-    configlets:
-      - sw-hec-autoconf
+    #configlets:
+      #- sw-hec-autoconf
   HEC-VMWare leaf:
     parent_container: HEC-HV leaf
     configlets:
       - hec-vmware
-      - sw-hec-descriptions-hvv
+      #- sw-hec-descriptions-hvv
   HEC-Xen leaf:
     parent_container: HEC-HV leaf
     configlets:
       - hec-xen
-      - sw-hec-descriptions
+      #- sw-hec-descriptions
 
 configlet_list:
   sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"

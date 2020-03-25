@@ -14,11 +14,11 @@ banner login
       Device: $(hostname)
 EOF
 !
-{% include "templates/config_templates/sw-hecxx-ntp.j2" %}
+{% include "templates/config_templates/sw-hec-ntp.j2" %}
 !
-{% include "templates/config_templates/sw-hecxx-snmp.j2" %}
+{% include "templates/config_templates/sw-hec-snmp.j2" %}
 !
-{% include "templates/config_templates/sw-hecxx-logging.j2" %}
+{% include "templates/config_templates/sw-hec-logging.j2" %}
 !
 alias ic show interface counter | nz
 alias ie show interface counter errors | nz

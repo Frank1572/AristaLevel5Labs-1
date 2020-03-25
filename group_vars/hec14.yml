@@ -24,47 +24,46 @@ cva:
 
 
 oob01:
-dhcp:
-  prefix: "10.9.246.0"
-  mask: "255.255.254.0"
-  router: "10.9.246.1"
-  idrac_ip: "10.9.247.248"
-  cva_ip: "10.9.247.249"
-
+  dhcp:
+    prefix: "10.9.246.0"
+    mask: "255.255.254.0"
+    router: "10.9.246.1"
+    idrac_ip: "10.9.247.248"
+    cva_ip: "10.9.247.249"
 
 cvp:
-version: "cvp-2019.1.2-kvm.tar"
-path_to_cvp_file: "/ens/bin/images/arista/"
-# out of band ip for cvp :
-ip_eth0: "10.9.247.253"
-# inband transport ip for cvp (for configuration purpose)
-ip_eth1: "10.255.186.69"
-mask_eth0: "255.255.254.0"
-mask_eth1: "255.255.255.240"
-gw: "10.9.246.1"
-name: "naa-hec14-cvp-01.net.sap.corp"
-# nsq-dns-01 and dns-02 :
-dns1: "10.4.202.200"
-dns2: "10.4.12.200"
-domain: "net.sap.corp"
-ntp1: "10.4.12.100"
-ntp2: "10.4.12.102"
-device_int: eth0
-cluster_int: eth1
-ingest_key: "SecureKey14"
-vmname: "cvp-hec14"
-KvmDomain: "cvp"
-password: "arista"
-backupuser: "cvpbkp"
-eth1_routes:
-    # IPMI NW Mgmt Range (HEC14-NW-MGMT01)
-  - prefix: "198.19.233.0"
-    mask: "25"
-    nexthop: "10.255.186.78"
-    # Leaf and Spine NW Mgmt Range (Lo900)
-  - prefix: "198.19.198.0"
-    mask: "24"
-    nexthop: "10.255.186.78"
+  version: "cvp-2019.1.2-kvm.tar"
+  path_to_cvp_file: "/ens/bin/images/arista/"
+  # out of band ip for cvp :
+  ip_eth0: "10.9.247.253"
+  # inband transport ip for cvp (for configuration purpose)
+  ip_eth1: "10.255.186.69"
+  mask_eth0: "255.255.254.0"
+  mask_eth1: "255.255.255.240"
+  gw: "10.9.246.1"
+  name: "naa-hec14-cvp-01.net.sap.corp"
+  # nsq-dns-01 and dns-02 :
+  dns1: "10.4.202.200"
+  dns2: "10.4.12.200"
+  domain: "net.sap.corp"
+  ntp1: "10.4.12.100"
+  ntp2: "10.4.12.102"
+  device_int: eth0
+  cluster_int: eth1
+  ingest_key: "SecureKey14"
+  vmname: "cvp-hec14"
+  KvmDomain: "cvp"
+  password: "arista"
+  backupuser: "cvpbkp"
+  eth1_routes:
+      # IPMI NW Mgmt Range (HEC14-NW-MGMT01)
+    - prefix: "198.19.233.0"
+      mask: "25"
+      nexthop: "10.255.186.78"
+      # Leaf and Spine NW Mgmt Range (Lo900)
+    - prefix: "198.19.198.0"
+      mask: "24"
+      nexthop: "10.255.186.78"
 
 dhcp:
   prefix: "10.9.246.0"

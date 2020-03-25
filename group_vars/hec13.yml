@@ -94,7 +94,7 @@ cvp:
         status: "Enabled"
 
 hec:
-  hec_nr: 13
+  hec_nr: "13"
   hana_hvx_descriptions_PO_MIN: 101
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24

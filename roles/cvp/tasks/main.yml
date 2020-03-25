@@ -403,46 +403,6 @@
   tags:
     - configlets
 
-- name: Copy CVP-Arista to config directory
-  delegate_to: 127.0.0.1
-  copy:
-    src: "{{role_path}}/templates/config_templates/CVP-Arista"
-    dest: "{{role_path}}/files/configs/CVP-Arista"
-  tags:
-    - configlets
-
-- name: Copy mgmt-default to config directory
-  delegate_to: 127.0.0.1
-  copy:
-    src: "{{role_path}}/templates/config_templates/mgmt-default"
-    dest: "{{role_path}}/files/configs/mgmt-default"
-  tags:
-    - configlets
-
-- name: Copy mgmt-oob to config directory
-  delegate_to: 127.0.0.1
-  copy:
-    src: "{{role_path}}/templates/config_templates/mgmt-oob"
-    dest: "{{role_path}}/files/configs/mgmt-oob"
-  tags:
-    - configlets
-
-- name: Copy sw-mlag-a to config directory
-  delegate_to: 127.0.0.1
-  copy:
-    src: "{{role_path}}/templates/config_templates/sw-mlag-a"
-    dest: "{{role_path}}/files/configs/sw-mlag-a"
-  tags:
-    - configlets
-
-- name: Copy sw-mlag-b to config directory
-  delegate_to: 127.0.0.1
-  copy:
-    src: "{{role_path}}/templates/config_templates/sw-mlag-b"
-    dest: "{{role_path}}/files/configs/sw-mlag-b"
-  tags:
-    - configlets
-
 - name: Render all templates
   delegate_to: 127.0.0.1
   template:
@@ -479,6 +439,11 @@
     - sw-hec-oob-01
     - sw-hec-oob-01a
     - sw-hec-oob-01b
+    - sw-mlag-a
+    - sw-mlag-b
+    - mgmt-oob
+    - mgmt-default
+    - CVP-Arista
   tags:
     - configlets
 
@@ -519,7 +484,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-01a
+- name: Render sw-hec-brdr-01a
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -534,7 +499,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-01b
+- name: Render sw-hec-brdr-01b
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -549,7 +514,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-02a
+- name: Render sw-hec-brdr-02a
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -564,7 +529,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-02b
+- name: Render sw-hec-brdr-02b
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -579,7 +544,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-03a
+- name: Render sw-hec-brdr-03a
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -594,7 +559,7 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hecxx-brdr-03b
+- name: Render sw-hec-brdr-03b
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -609,7 +574,7 @@
     - configlets
     - storageleafs
 
-- name: Render sw-hecxx-str-01a
+- name: Render sw-hec-str-01a
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -624,7 +589,7 @@
     - configlets
     - storageleafs
 
-- name: Render sw-hecxx-str-01b
+- name: Render sw-hec-str-01b
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/hec_sw_borderleaf.j2
@@ -680,21 +645,6 @@
   tags:
     - upload_configlets
 
-#- name: Upload all generated configlets
-#  delegate_to: "{{ cvp.ip_eth0 }}"
-  #command: python /tmp/configlets.py "/tmp/configs/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
-  #tags:
-  #  - upload_configlets
-
-#- name: Copy container creation script to CVP
-  #delegate_to: "{{ cvp.ip_eth0 }}"
-  #copy:
-  #  src: "{{role_path}}/files/container_and_mapping.py"
-  #  dest: /tmp/container_and_mapping.py
-  #tags:
-  #  - create_containers
-
-# The list of configlets is been taken from the roles vars/main.yml
 - name: "Upload configlets to {{inventory_hostname}} instance"
   arista.cvp.cv_configlet:
     cvp_facts: "{{ cvp_facts.ansible_facts }}"
@@ -704,11 +654,6 @@
   tags:
     - upload_configlets
 
-#- name: Create the container structure in CVP and add configlets to containers
-#  delegate_to: "{{ cvp.ip_eth0 }}"
-#  command: python /tmp/container_and_mapping.py "{{ container }}" "{{ hec.hec_nr }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
-#  tags:
-#    - create_containers
 - name: "Build Container topology on {{inventory_hostname}} and assign configlets"
   arista.cvp.cv_container:
     topology: "{{container}}"

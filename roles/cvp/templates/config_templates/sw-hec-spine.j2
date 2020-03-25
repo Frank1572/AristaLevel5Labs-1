@@ -8,7 +8,7 @@
 {% set lc_end   = 4 %}
 {% endif %}
 {% set create_ip_on_interface = "no" %}
-{% include "templates/config_templates/sw-hecxx-spine-ips.j2" %}
+{% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 {########## BGP CONFIGURATION ##########}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####

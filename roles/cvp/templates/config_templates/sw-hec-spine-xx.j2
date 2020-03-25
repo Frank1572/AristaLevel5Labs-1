@@ -9,7 +9,7 @@ hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 {% set lc_end   = 4 %}
 {% endif %}
 {% set create_ip_on_interface = "yes" %}
-{% include "templates/config_templates/sw-hecxx-spine-ips.j2" %}
+{% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 !
 interface Loopback1
    description Router-ID

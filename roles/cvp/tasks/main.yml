@@ -498,7 +498,7 @@
 - name: Render sw-hecxx-spine-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hecxx-spine-xx.j2"
+    src: "templates/config_templates/sw-hec-spine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item }}"
   with_items: "{{ hec.spine_nr }}"
   tags:
@@ -507,7 +507,7 @@
 - name: Render sw-hecxx-oob-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hecxx-oob-xx.j2"
+    src: "templates/config_templates/sw-hec-oob-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-oob-0{{ item.number }}"
   with_items: "{{ hec.oobs_2_7 }}"
   tags:

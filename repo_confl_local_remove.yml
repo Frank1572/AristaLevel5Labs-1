@@ -1,16 +1,15 @@
 ---
 - hosts: all
+  connection: local
   gather_facts: no
   tasks:
-  - name: Check if {{role_path}}/files/builder_generated_configs exists
-    delegate_to: 127.0.0.1
+  - name: Check if roles/cvp/files/builder_generated_configs exists
     stat:
-      path: '{{role_path}}/files/builder_generated_configs'
+      path: 'roles/cvp/files/builder_generated_configs'
     register: dir_to_delete
 
-  - name: Delete {{role_path}}/files/builder_generated_configs if exists
-    delegate_to: 127.0.0.1
+  - name: Delete roles/cvp/files/builder_generated_configs if exists
     file:
       state: absent
-      path: '{{role_path}}/files/builder_generated_configs'
+      path: 'roles/cvp/files/builder_generated_configs'
     when: dir_to_delete.stat.exists and dir_to_delete.stat.isdir

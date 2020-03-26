@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Pull Cell switch configurations repository
+      delegate_to: 127.0.0.1
+      git:
+        repo: 'https://github.wdf.sap.corp/thecoolkids/cv_dev_conf_stored.git'
+        dest: {{role_path}}/files/builder_generated_configs

@@ -1,0 +1,49 @@
+# file: roles/cvp/tasks/cvp_ops.yml
+---
+- name: Get status of CVP VM
+  virt:
+    command: "status"
+    name: "{{ cvp.KvmDomain }}"
+  register: vm_status
+  tags:
+    - cvp_stop
+
+- name: Stop CVP VM if running
+  virt:
+    state: "shutdown"
+    name: "{{ cvp.KvmDomain }}"
+  when: vm_status.status == "running" or vm_status.status == "paused"
+  tags:
+    - cvp_stop
+
+- name: Wait for VW to be shutdown
+  virt:
+    command: "status"
+    name: "{{ cvp.KvmDomain }}"
+  register: new_vm_status
+  until: new_vm_status.status == "shutdown"
+  retries: 10
+  delay: 15
+  tags:
+    - cvp_stop
+
+- name: Check if directory /data/cvp_old exists
+  stat:
+    path: '/data/cvp_old'
+  register: cvp_old_dir
+  tags:
+    - cvp_stop
+
+- name: Delete /data/cvp_old if exists
+  file:
+    state: absent
+    path: '/data/cvp_old'
+  when: cvp_old_dir.stat.exists and cvp_old_dir.stat.isdir
+  tags:
+    - cvp_stop
+
+- name: Move current CVP to another directory (/data/cvp_old/)
+  command: "mv /data/cvp /data/cvp_old"
+  when: new_vm_status.status == "shutdown"
+  tags:
+    - cvp_stop

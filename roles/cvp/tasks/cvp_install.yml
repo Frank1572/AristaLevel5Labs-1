@@ -1,0 +1,107 @@
+# file: roles/cvp/tasks/cvp_install.yml
+---
+- name: Check that the cvp kvm file exists in {{ cvp.path_to_cvp_file }}
+  delegate_to: 127.0.0.1
+  stat:
+    path: "{{ cvp.path_to_cvp_file }}{{ cvp.version }}"
+  register: cvp_exists
+  tags:
+    - cvp_install
+
+- name: CVP KVM file exists?
+  debug:
+    msg: "File exists: {{ cvp_exists.stat.exists }}"
+  tags:
+    - cvp_install
+
+- name: Create directory for new CVP (/data/cvp/)
+  command: "mkdir /data/cvp"
+  args:
+    warn: no
+  when: cvp_exists.stat.exists == True
+  tags:
+    - cvp_install
+
+- name: Copy CVP KVM file to CVA (this might take some time)
+  copy:
+    src: "{{ cvp.path_to_cvp_file }}{{ cvp.version }}"
+    dest: "/data/cvp/{{ cvp.version }}"
+    owner: root
+    group: root
+    mode: 0755
+  when: cvp_exists.stat.exists == True
+  tags:
+    - cvp_install
+
+- name: Unzip the CVP KVM file on the CVA
+  command: "tar -zxvf /data/cvp/{{ cvp.version }} -C /data/cvp"
+  args:
+    warn: no
+  tags:
+    - cvp_install
+
+- name: Find name of old disk 1
+  find:
+    paths: /data/cvp_old
+    file_type: file
+    patterns: '*disk1*'
+  register: disk1_old
+  tags:
+    - cvp_install
+
+- name: Find name of old disk 2
+  find:
+    paths: /data/cvp_old
+    file_type: file
+    patterns: '*disk2*'
+  register: disk2_old
+  tags:
+    - cvp_install
+
+- name: Find name of new disk 1
+  find:
+    paths: /data/cvp
+    file_type: file
+    patterns: '*disk1*'
+  register: disk1_new
+  tags:
+    - cvp_install
+
+- name: Find name of new disk 2
+  find:
+    paths: /data/cvp
+    file_type: file
+    patterns: '*disk2*'
+  register: disk2_new
+  tags:
+    - cvp_install
+
+- name: Rename the new disk 1 the same as the old disk 1 was named
+  command: "mv /data/cvp/{{ disk1_new.files[0].path | regex_replace('.*cvp/(.*)', '\\1') }} /data/cvp/{{ disk1_old.files[0].path | regex_replace('.*cvp_old/(.*)', '\\1') }}"
+  ignore_errors: yes
+  args:
+    warn: no
+  tags:
+    - cvp_install
+
+- name: Rename the new disk 2 the same as the old disk 2 was named
+  command: "mv /data/cvp/{{ disk2_new.files[0].path | regex_replace('.*cvp/(.*)', '\\1') }} /data/cvp/{{ disk2_old.files[0].path | regex_replace('.*cvp_old/(.*)', '\\1') }}"
+  ignore_errors: yes
+  args:
+    warn: no
+  tags:
+    - cvp_install
+
+- name: Copy old cvp.xml VM definition file to /data/cvp folder
+  command: "cp /data/cvp_old/cvp.xml /data/cvp/cvp.xml"
+  args:
+    warn: no
+  tags:
+    - cvp_install
+
+- name: Start new CVP VM
+  virt:
+    state: "running"
+    name: "{{ cvp.KvmDomain }}"
+  tags:
+    - cvp_install

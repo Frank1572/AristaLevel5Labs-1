@@ -310,6 +310,7 @@
   arista.cvp.cv_configlet:
     cvp_facts: "{{ cvp_facts.ansible_facts }}"
     configlets: "{{ configlet_list }}"
+    configlet_filter: "{{ configlet_filter_list_generic }}"
     state: present
   register: cvp_configlet
   tags:

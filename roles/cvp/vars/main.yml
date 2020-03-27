@@ -127,3 +127,32 @@ configlet_list:
   hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
+
+configlet_filter_list_generic:
+  - sw-hec
+  - sw-hec-aaa
+  - CVP-Arista
+  - sw-hec-oob-vrf
+  - sw-hec-snmp
+  - sw-hec-ntp
+  - sw-hec-logging
+  - HEC-IPMI
+  - mgmt-oob
+  - sw-hec-tele-oob
+  - sw-hec-switch-snmp
+  - sw-hec-switch-ntp
+  - sw-hec-switch-logging
+  - mgmt-default
+  - sw-hec-oob-common
+  - sw-hec-tele-default
+  - sw-mlag-a
+  - sw-mlag-b
+  - HEC-VLANs
+  - sw-hec-fab-L900
+  - sw-hec-fab-ntp
+  - sw-hec-fab-snmp
+  - sw-hec-fab-logging
+  - sw-hec-spine
+  - hec-hana
+  - hec-vmware
+  - hec-xen

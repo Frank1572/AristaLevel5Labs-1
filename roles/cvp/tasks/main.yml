@@ -352,3 +352,9 @@
   command: "python /tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
   tags:
     - reload_TerminAttr
+
+- name: dummy task to test dependencies
+  debug:
+    var: "{{ mapping }}"
+  tags:
+    - test_deps

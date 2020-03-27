@@ -355,6 +355,6 @@
 
 - name: dummy task to test dependencies
   debug:
-    var: "{{ mapping }}"
+    msg: "{{ mapping }}" # this should come from repo_hec_globals default variables
   tags:
     - test_deps

@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload configlets to git repo
+      shell: LOGMESS="$HOST/$USER at $(echo `date`)" && cd roles/cvp/files/builder_generated_configs && git add . && git commit -m "$LOGMESS" -a && git push

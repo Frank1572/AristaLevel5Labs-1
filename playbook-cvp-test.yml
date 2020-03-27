@@ -1,5 +1,5 @@
 ---
-- name: Playbook to demonstrate cv_container module.
+- name: Retrieve the cell switch configrations from configlet builders
   hosts: all
   connection: local
   gather_facts: no
@@ -13,12 +13,11 @@
           configlets
       register: cvp_facts
 
-    - name: print gathered facts
-      debug:
-        msg: '{{ cvp_facts }}'
+    #- name: print gathered facts
+    #  debug:
+    #    msg: '{{ cvp_facts }}'
 
-    - name: try to print only names
-      debug:
-        msg: "{{ item['name'] }}\n{{ item['config'] }}\n"
+    - name: "Save each configlet to local file in roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/"
+      copy: content='{{item.config}}' dest="roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/{{item.name}}"
       loop: '{{ cvp_facts.ansible_facts.configlets }}'
-      when: item.name is search('sw-hec.*-(hana|hvv|hvx).*')
+      when: item.name is search('sw-hec..-(hana|hvv|hvx).*')

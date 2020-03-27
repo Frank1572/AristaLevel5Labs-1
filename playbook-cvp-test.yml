@@ -21,4 +21,4 @@
       debug:
         msg: "{{ item['name'] }}\n{{ item['config'] }}\n"
       loop: '{{ cvp_facts.ansible_facts.configlets }}'
-      when: item.name is search('sw-mlag-b')
+      when: item.name is search('sw-hec.*-(hana|hvv|hvx).*')

@@ -44,7 +44,7 @@ ip access-list standard ACL_SNMP_VTY
 {% for i in ACL_SNMP_VTY %}
  {{ loop.index * 10 }} permit {{ i }}
  {% if loop.last %}
- {{ loop.index + 10 }} deny any
+ {{ loop.index * 10 + 10 }} deny any
  {% endif %}
 {% endfor %}
 !

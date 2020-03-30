@@ -9,6 +9,18 @@ ansible_httpapi_port=443
 ansible_user=cvpadmin
 ansible_password=arista
 
+[live:children]
+hec10
+hec17
+hec18
+hec19
+
+[build:children]
+hec01
+hec03
+hec13
+hec14
+
 [hec19]
 #10.178.146.43
 

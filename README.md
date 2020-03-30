@@ -71,15 +71,15 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
  - Setup local directory to store configlets to
 
-   ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
+       ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
 
  - Download cell switch configgurations from CVP
 
 
  - Upload the stored configlets into remote repository
 
-    ansible-playbook pb_custom_configlets.yml --tags "configlets_upload_to_repo"
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_upload_to_repo"
 
  - Clean up local directory
 
-    ansible-playbook pb_custom_configlets.yml --tags "env_local_clean"
+       ansible-playbook pb_custom_configlets.yml --tags "env_local_clean"

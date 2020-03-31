@@ -38,6 +38,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-interdc
   HEC-Backup Routers:
     parent_container: HEC
   HEC-Switched Fabric:
@@ -127,6 +128,7 @@ configlet_list:
   sw-hec-switch-snmp: "{{ lookup('file', 'configs/sw-hec-switch-snmp') }}"
   sw-hec-switch-ntp: "{{ lookup('file', 'configs/sw-hec-switch-ntp') }}"
   sw-hec-switch-logging: "{{ lookup('file', 'configs/sw-hec-switch-logging') }}"
+  sw-hec-interdc: "{{ lookup('file', 'configs/sw-hec-interdc') }}"
   mgmt-default: "{{ lookup('file', 'configs/mgmt-default') }}"
   sw-hec-oob-common: "{{ lookup('file', 'configs/sw-hec-oob-common') }}"
   sw-hec-tele-default: "{{ lookup('file', 'configs/sw-hec-tele-default') }}"
@@ -170,3 +172,4 @@ configlet_filter_list_generic:
   - hec-hana
   - hec-vmware
   - hec-xen
+  - sw-hec-interdc

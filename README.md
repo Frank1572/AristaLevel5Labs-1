@@ -75,6 +75,7 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
  - Download cell switch configgurations from CVP
 
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecxx
 
  - Upload the stored configlets into remote repository
 

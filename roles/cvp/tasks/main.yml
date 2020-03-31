@@ -105,6 +105,7 @@
     - mgmt-oob
     - mgmt-default
     - CVP-Arista
+    - sw-hec-interdc
   tags:
     - configlets
 

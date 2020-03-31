@@ -62,6 +62,20 @@ container:
     parent_container: HEC-Switched Fabric
   HEC-Top of rack:
     parent_container: HEC-Switched Fabric
+  HEC-HANA Top of rack:
+    parent_container: HEC-Top of rack
+    configlets:
+      - hec-hana
+  HEC-HV Top of rack:
+    parent_container: HEC-Top of rack
+  HEC-VMWare Top of rack:
+    parent_container: HEC-HV Top of rack
+    configlets:
+      - hec-vmware
+  HEC-Xen Top of rack:
+    parent_container: HEC-HV Top of rack
+    configlets:
+      - hec-xen
   HEC-Spine:
     parent_container: HEC-Routed Fabric
     configlets:

@@ -1,9 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-    - name: Pull Cell switch configurations repository
-      git:
-        repo: 'https://github.wdf.sap.corp/thecoolkids/cv_dev_conf_stored.git'
-        dest: roles/cvp/files/builder_generated_configs

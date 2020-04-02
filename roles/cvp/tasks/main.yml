@@ -106,6 +106,7 @@
     - mgmt-default
     - CVP-Arista
     - sw-hec-interdc
+    - sw-hec-vtep-static
   tags:
     - configlets
 

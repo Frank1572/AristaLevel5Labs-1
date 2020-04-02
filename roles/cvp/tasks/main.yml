@@ -326,6 +326,24 @@
     - create_containers
     - configlets_assign
 
+- name: "Delete all defined configlets from {{inventory_hostname}} instance"
+  arista.cvp.cv_configlet:
+    cvp_facts: "{{ cvp_facts.ansible_facts }}"
+    configlets: "{{ configlet_list }}"
+    configlet_filter: "{{ configlet_filter_list_generic }}"
+    state: absent
+  register: cvp_configlet
+  tags:
+    - delete_configlets
+
+- name: "Delete all defined containers from {{inventory_hostname}}"
+  arista.cvp.cv_container:
+    topology: "{{container}}"
+    cvp_facts: "{{cvp_facts.ansible_facts}}"
+    mode: delete
+  tags:
+    - delete_containers
+
 - name: Copy aaa server creation script to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:

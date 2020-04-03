@@ -26,7 +26,7 @@
     - name: "Save each configlet to local file in roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/"
       copy: content='{{item.config}}' dest="roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/{{item.name}}"
       loop: '{{ cvp_facts.ansible_facts.configlets }}'
-      when: item.name is search('sw-hec..-(hana|hvv|hvx).*')
+      when: item.name is search('sw-hec..-(hana|hvv|hvx|ipmi).*')
       tags:
         - configlets_download_from_cvp
 

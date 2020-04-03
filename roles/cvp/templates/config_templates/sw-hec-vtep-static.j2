@@ -1,6 +1,6 @@
 {% if vtep_distribution_mode is defined and vtep_distribution_mode == 'manual' and vtep_ips is defined %}
 interface Vxlan1
   vxlan vtep flood add {{vtep_ips|join(' ')}}
-{% elif %}
+{% else %}
 ! # either Fabric is not in manual mode or you did forget to set vtep_distribution_mode and/or vtep_ips correctly
 {% endif %}

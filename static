@@ -14,6 +14,7 @@ hec10
 hec17
 hec18
 hec19
+hec02
 
 [build:children]
 hec01
@@ -47,3 +48,6 @@ hec14
 
 [hec14]
 10.9.247.253
+
+[hec02]
+#10.178.141.253

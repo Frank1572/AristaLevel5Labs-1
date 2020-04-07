@@ -144,6 +144,7 @@ configlet_list:
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static') }}"
+  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
 
 configlet_filter_list_generic:
   - sw-hec
@@ -175,3 +176,4 @@ configlet_filter_list_generic:
   - hec-xen
   - sw-hec-interdc
   - sw-hec-vtep-static
+  - sw-hec-hana-pwr

@@ -1,0 +1,6 @@
+Variable destination (\S+)
+Variable securekey (\S+)
+Variable vrf (\S+)
+
+Start
+   ^.*ingestvrf\s${vrf}.*-ingestgrpcurl=${destination}:9910.*-ingestauth=key,${securekey}.*

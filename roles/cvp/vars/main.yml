@@ -1,0 +1,179 @@
+container:
+  HEC:
+    parent_container: Fabric
+    configlets:
+      - sw-hec
+      - sw-hec-aaa
+      - CVP-Arista
+      - sw-hec-oob-vrf
+      - sw-hec-snmp
+      - sw-hec-ntp
+      - sw-hec-logging
+  HEC-IPMI:
+    parent_container: HEC
+    configlets:
+      - HEC-IPMI
+      - mgmt-oob
+      - sw-hec-tele-oob
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+  HEC-Out of band:
+    parent_container: HEC
+    configlets:
+      - mgmt-default
+      - sw-hec-oob-common
+      - sw-hec-tele-default
+  HEC-External Connectivity:
+    parent_container: HEC
+  HEC-CWAN:
+    parent_container: HEC
+  HEC-FWT:
+    parent_container: HEC
+  HEC-InterDC:
+    parent_container: HEC
+    configlets:
+      - sw-mlag-a
+      - sw-mlag-b
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+      - sw-hec-interdc
+  HEC-Backup Routers:
+    parent_container: HEC
+  HEC-Switched Fabric:
+    parent_container: HEC
+    configlets:
+      - HEC-VLANs
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+  HEC-Routed Fabric:
+    parent_container: HEC
+    configlets:
+      - CVP-Arista
+      - sw-hec-fab-L900
+      - sw-hec-fab-ntp
+      - sw-hec-fab-snmp
+      - sw-hec-fab-logging
+      - sw-hec-oob-vrf
+      - sw-hec-tele-oob
+      - mgmt-default
+  HEC-Core:
+    parent_container: HEC-Switched Fabric
+  HEC-Top of rack:
+    parent_container: HEC-Switched Fabric
+  HEC-HANA Top of rack:
+    parent_container: HEC-Top of rack
+    configlets:
+      - hec-hana
+  HEC-HV Top of rack:
+    parent_container: HEC-Top of rack
+  HEC-VMWare Top of rack:
+    parent_container: HEC-HV Top of rack
+    configlets:
+      - hec-vmware
+  HEC-Xen Top of rack:
+    parent_container: HEC-HV Top of rack
+    configlets:
+      - hec-xen
+  HEC-Spine:
+    parent_container: HEC-Routed Fabric
+    configlets:
+      - sw-hec-spine
+  HEC-Superspine:
+    parent_container: HEC-Routed Fabric
+  HEC-NGDR:
+    parent_container: HEC-Routed Fabric
+  HEC-Leaf:
+    parent_container: HEC-Routed Fabric
+    configlets:
+      - sw-mlag-a
+      - sw-mlag-b
+      - HEC-VLANs
+  HEC-Service leaf:
+    parent_container: HEC-Leaf
+  HEC-Border leaf:
+    parent_container: HEC-Leaf
+  HEC-Storage leaf:
+    parent_container: HEC-Leaf
+  HEC-Special leaf:
+    parent_container: HEC-Leaf
+  HEC-HANA leaf:
+    parent_container: HEC-Leaf
+    configlets:
+      - hec-hana
+  HEC-HV leaf:
+    parent_container: HEC-Leaf
+  HEC-VMWare leaf:
+    parent_container: HEC-HV leaf
+    configlets:
+      - hec-vmware
+  HEC-Xen leaf:
+    parent_container: HEC-HV leaf
+    configlets:
+      - hec-xen
+
+configlet_list:
+  sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"
+  sw-hec-aaa: "{{ lookup('file', 'configs/sw-hec-aaa') }}"
+  CVP-Arista: "{{ lookup('file', 'configs/CVP-Arista') }}"
+  sw-hec-oob-vrf: "{{ lookup('file', 'configs/sw-hec-oob-vrf') }}"
+  sw-hec-snmp: "{{ lookup('file', 'configs/sw-hec-snmp') }}"
+  sw-hec-ntp: "{{ lookup('file', 'configs/sw-hec-ntp') }}"
+  sw-hec-logging: "{{ lookup('file', 'configs/sw-hec-logging') }}"
+  HEC-IPMI: "{{ lookup('file', 'configs/HEC-IPMI') }}"
+  mgmt-oob: "{{ lookup('file', 'configs/mgmt-oob') }}"
+  sw-hec-tele-oob: "{{ lookup('file', 'configs/sw-hec-tele-oob') }}"
+  sw-hec-switch-snmp: "{{ lookup('file', 'configs/sw-hec-switch-snmp') }}"
+  sw-hec-switch-ntp: "{{ lookup('file', 'configs/sw-hec-switch-ntp') }}"
+  sw-hec-switch-logging: "{{ lookup('file', 'configs/sw-hec-switch-logging') }}"
+  sw-hec-interdc: "{{ lookup('file', 'configs/sw-hec-interdc') }}"
+  mgmt-default: "{{ lookup('file', 'configs/mgmt-default') }}"
+  sw-hec-oob-common: "{{ lookup('file', 'configs/sw-hec-oob-common') }}"
+  sw-hec-tele-default: "{{ lookup('file', 'configs/sw-hec-tele-default') }}"
+  sw-mlag-a: "{{ lookup('file', 'configs/sw-mlag-a') }}"
+  sw-mlag-b: "{{ lookup('file', 'configs/sw-mlag-b') }}"
+  HEC-VLANs: "{{ lookup('file', 'configs/HEC-VLANs') }}"
+  sw-hec-fab-L900: "{{ lookup('file', 'configs/sw-hec-fab-L900') }}"
+  sw-hec-fab-ntp: "{{ lookup('file', 'configs/sw-hec-fab-ntp') }}"
+  sw-hec-fab-snmp: "{{ lookup('file', 'configs/sw-hec-fab-snmp') }}"
+  sw-hec-fab-logging: "{{ lookup('file', 'configs/sw-hec-fab-logging') }}"
+  sw-hec-spine: "{{ lookup('file', 'configs/sw-hec-spine') }}"
+  hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
+  hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
+  hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
+  sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static') }}"
+  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
+
+configlet_filter_list_generic:
+  - sw-hec
+  - sw-hec-aaa
+  - CVP-Arista
+  - sw-hec-oob-vrf
+  - sw-hec-snmp
+  - sw-hec-ntp
+  - sw-hec-logging
+  - HEC-IPMI
+  - mgmt-oob
+  - sw-hec-tele-oob
+  - sw-hec-switch-snmp
+  - sw-hec-switch-ntp
+  - sw-hec-switch-logging
+  - mgmt-default
+  - sw-hec-oob-common
+  - sw-hec-tele-default
+  - sw-mlag-a
+  - sw-mlag-b
+  - HEC-VLANs
+  - sw-hec-fab-L900
+  - sw-hec-fab-ntp
+  - sw-hec-fab-snmp
+  - sw-hec-fab-logging
+  - sw-hec-spine
+  - hec-hana
+  - hec-vmware
+  - hec-xen
+  - sw-hec-interdc
+  - sw-hec-vtep-static
+  - sw-hec-hana-pwr

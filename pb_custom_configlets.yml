@@ -1,0 +1,57 @@
+---
+- name: Retrieve the cell switch configrations created by configlet builders
+  hosts: all
+  gather_facts: no
+  collections:
+    - arista.cvp
+
+  tasks:
+    - name: Pull Cell switch configurations repository
+      delegate_to: localhost
+      run_once: True
+      git:
+        repo: 'https://github.wdf.sap.corp/thecoolkids/cv_dev_conf_stored.git'
+        dest: roles/cvp/files/builder_generated_configs
+      tags:
+        - env_local_setup
+
+    - name: "Gather CVP facts from {{inventory_hostname}}"
+      cv_facts:
+        facts:
+          configlets
+      register: cvp_facts
+      tags:
+        - configlets_download_from_cvp
+
+    - name: "Save each configlet to local file in roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/"
+      copy: content='{{item.config}}' dest="roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/{{item.name}}"
+      loop: '{{ cvp_facts.ansible_facts.configlets }}'
+      when: item.name is search('sw-hec..-(hana|hvv|hvx|ipmi).*')
+      tags:
+        - configlets_download_from_cvp
+
+    - name: Check if roles/cvp/files/builder_generated_configs exists
+      delegate_to: localhost
+      run_once: True
+      stat:
+        path: 'roles/cvp/files/builder_generated_configs'
+      register: dir_to_delete
+      tags:
+        - env_local_clean
+
+    - name: Delete roles/cvp/files/builder_generated_configs if exists
+      delegate_to: localhost
+      run_once: True
+      file:
+        state: absent
+        path: 'roles/cvp/files/builder_generated_configs'
+      when: dir_to_delete.stat.exists and dir_to_delete.stat.isdir
+      tags:
+        - env_local_clean
+
+    - name: upload configlets to git repo
+      delegate_to: localhost
+      run_once: True
+      shell: LOGMESS="$HOST/$USER at $(echo `date`)" && cd roles/cvp/files/builder_generated_configs && git add . && git commit -m "$LOGMESS" -a && git push
+      tags:
+        - configlets_upload_to_repo

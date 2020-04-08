@@ -80,4 +80,448 @@ cvp:
         authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: Enabled
+        status: "Enabled"
+hec:
+  hec_nr: "01"
+  hana_hvx_descriptions_PO_MIN: 101
+  hana_hvx_descriptions_PO_MAX: 124
+  hvv_descriptions_PO_MAX: 24
+  hvv_descriptions_PO_RANGE: "{101,151}"
+  ma_domain: "net.sap.corp"
+  lo900_domain: "rot.hec.sap.biz"
+  vl900_domain: "rot.hec.sap.biz"
+  vl900_mask: 24
+  vl900_def_gw: 198.19.241.1
+  vl900_net: 198.19.241.0/24
+  lo900_net: 198.19.195.0/24
+  lo900_prefix: 198.19.195
+  inband_trans_brdr: 10.255.252.78
+  inband_trans_brdr_mac: 00:1c:73:00:00:99
+  inband_trans_net: 10.255.252.64/28
+  inband_trans_prefix: 10.255.252
+  inband_trans_mask: 28
+  inband_trans_gw_vlan: Vlan916
+  inband_trans_gw: 10.255.252.65
+  inband_trans_cvx: 10.255.252.68
+  inband_trans_cvp: 10.255.252.69
+  oob_def_gw: 10.178.140.1
+  oob_prefix: 10.178.140
+  oob_mask: 23
+  oob_cvx: 10.178.141.252
+  oob_cvp: 10.178.141.253
+  as_low: 4200998673
+  as_high: 4200999871
+  cvp_ingest_key: SecureKey02
+  dns1: 10.127.141.1
+  dns2: 10.127.141.2
+  ntp1: 147.204.148.93
+  ntp2: 147.204.148.92
+  snmp1: 147.204.148.100
+  snmp2: 147.204.148.87
+  syslog1: 147.204.132.91
+  syslog2: 147.204.133.69
+  syslog3: 147.204.146.42
+  radius1: 10.17.122.21
+  radius2: 10.17.121.35
+  admin_mpls:
+    - prefix_mask: "10.178.140.0/23"
+      sequence: "20"
+  admin_sw_interface: Ethernet49
+  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
+  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"
+  admin_sw_prefix: 10.255.202
+  admin_sw_mask: 29
+  admin_sw_ip_oob1a: 10.255.202.9
+  admin_sw_ip_oob1b: 10.255.202.10
+  admin_sw_neig_ip_oob1a: 10.255.202.11
+  admin_sw_neig_as_oob1a: 1.463
+  admin_sw_neig_ip_oob1b: 10.255.202.12
+  admin_sw_neig_as_oob1b: 1.463
+  oob01_lo0_prefix: 198.19.249
+  oob01_as: 64531.2
+  spine_nr:
+    - 11
+    - 12
+    - 13
+    - 14
+  spine:
+    # valid models are: 7504, 7508, 7280
+    model: 7504
+    # number of linecards if spine is modular switch
+    # if spine model is fixed chassis then linecards needs to have value of '1'
+    linecards: 4
+  fabric:
+    # valid modes are: manual, cvx, evpn, manual
+    vtep_distribution_mode: evpn
+    interlink_mtu: 9214
+    # valid speeds are 40gfull, 100gfull
+    interlink_speed: 100gfull
+    bgp_maximum_routes: 12000
+  oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
+  oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
+  oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015
+  oob01b_snmp_location: NL-AMS-AM7-Z1C-03-01-39
+  oobs_2_7:
+    - number: 02
+      snmp_contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+      ip_last_octett: 4
+    - number: 03
+      snmp_contact: 34340566:ncons-hec02-07.net.sap.corp:1017
+      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-03-01-38
+      ip_last_octett: 5
+    - number: 04
+      snmp_contact: 34340569:ncons-hec02-08.net.sap.corp:1001
+      snmp_location:  EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z3E)-02-07-32
+      ip_last_octett: 6
+    - number: 05
+      snmp_contact: unknown
+      snmp_location: unknown
+      ip_last_octett: 7
+    - number: 06
+      snmp_contact: unknown
+      snmp_location: unknown
+      ip_last_octett: 8
+  brdr:
+    - number: 1a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/1/1
+      ports:
+        - id: 1/1
+          description: rt-hec01-core-01a, Fo0/2/0
+          po: 1101
+        - id: 2/1
+          description: rt-hec01-core-01b, Fo0/2/0
+          po: 1102
+        - id: 27/1
+          description: sw-hec01-brdr-01b, Et27
+          po: 42
+        - id: 28/1
+          description: sw-hec01-brdr-01b, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01a
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01b
+          trunk: all
+    - number: 1b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/2/1
+      ports:
+        - id: 1
+          description: rt-hec01-core-01a, Fo0/2/1
+          po: 1101
+        - id: 2
+          description: rt-hec01-core-01b, Fo0/2/1
+          po: 1102
+        - id: 27
+          description: sw-hec01-brdr-01a, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-01a, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01a
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01b
+          trunk: all
+    - number: 2a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/3/1
+      ports:
+        - id: 1
+          description: rt-hec01-vpn-01a
+          po: 1503
+        - id: 2
+          description: rt-hec01-vpn-01b
+          po: 1504
+        - id: 3
+          description: ->lb-hec01-0[12], e1.1
+          trunk: 940
+        - id: 4
+          description: ->lb-hec01-0[12], e1.2
+          trunk: 940
+        - id: 5
+          description: ->lb-hec01-0[12], e1.3
+          trunk: 940
+        - id: 6
+          description: ->fw-hec01-01, et1-0[12]
+          po: 10
+        - id: 7
+          description: ->fw-hec01-02, et1-0[12]
+          po: 20
+        - id: 29
+          description: ->hec01f000[3r4],BMC
+          access_vlan: 110
+          speed: 100full
+        - id: 27
+          description: sw-hec01-brdr-02b, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-02b, Et28
+          po: 42
+        - id: 47
+          description: ->fwm-hec-emea-01, eth1-0[12]
+          po: 30
+        - id: 48
+          description: ->naa-hec01-01, in-band
+          po: 48
+          access_vlan: 916
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 5
+          description: ->hec01f0005
+          access_vlan: 110
+        - id: 6
+          description: ->hec01f0006
+          access_vlan: 110
+        - id: 10
+          description: ->fw-hec01-01
+          trunk: all
+        - id: 20
+          description: ->fw-hec01-02
+          trunk: all
+        - id: 30
+          description: ->fwm-hec-emea-09
+          access_vlan: 90
+        - id: 48
+          description: ->naa-hec01-01, in-band
+          access_vlan: 916
+        - id: 1503
+          description: rt-hec01-vpn-01a
+          trunk: 900,920,940
+        - id: 1504
+          description: rt-hec01-vpn-01b
+          trunk: 900,920,940
+    - number: 2b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/4/1
+      ports:
+        - id: 1
+          description: rt-hec01-vpn-01a
+          po: 1503
+        - id: 2
+          description: rt-hec01-vpn-01b
+          po: 1504
+        - id: 3
+          description: ->lb-hec01-0[12], e1.1
+          trunk: 940
+        - id: 4
+          description: ->lb-hec01-0[12], e1.2
+          trunk: 940
+        - id: 5
+          description: ->lb-hec01-0[12], e1.3
+          trunk: 940
+        - id: 6
+          description: ->fw-hec01-01, et1-0[12]
+          po: 10
+        - id: 7
+          description: ->fw-hec01-02, et1-0[12]
+          po: 20
+        - id: 29
+          description: ->hec01f000[3r4],BMC
+          access_vlan: 110
+          speed: 100full
+        - id: 27
+          description: sw-hec01-brdr-02a, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-02a, Et28
+          po: 42
+        - id: 47
+          description: ->fwm-hec-emea-01, eth1-0[12]
+          po: 30
+        - id: 48
+          description: ->naa-hec01-01, in-band
+          po: 48
+          access_vlan: 916
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 5
+          description: ->hec01f0005
+          access_vlan: 110
+        - id: 6
+          description: ->hec01f0006
+          access_vlan: 110
+        - id: 10
+          description: ->fw-hec01-01
+          trunk: all
+        - id: 20
+          description: ->fw-hec01-02
+          trunk: all
+        - id: 30
+          description: ->fwm-hec-emea-09
+          access_vlan: 90
+        - id: 48
+          description: ->naa-hec01-01, in-band
+          access_vlan: 916
+        - id: 1503
+          description: rt-hec01-vpn-01a
+          trunk: 900,920,940
+        - id: 1504
+          description: rt-hec01-vpn-01b
+          trunk: 900,920,940
+    - number: 3a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/7/1
+      ports:
+        - id: 1
+          description: rt-hec01-core-01c, Fo0/2/0
+          po: 1101
+        - id: 2
+          description: rt-hec01-core-01d, Fo0/2/0
+          po: 1102
+        - id: 27
+          description: sw-hec01-brdr-03b, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-03b, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
+    - number: 3b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et3/8/1
+      ports:
+        - id: 1
+          description: rt-hec01-core-01c, Fo0/2/1
+          po: 1101
+        - id: 2
+          description: rt-hec01-core-01d, Fo0/2/1
+          po: 1102
+        - id: 27
+          description: sw-hec01-brdr-03a, Et27
+          po: 42
+        - id: 28
+          description: sw-hec01-brdr-03a, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
+  str:
+    - number: 1a
+      spine_port_towards_leaf: Et3/5/1
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      ports:
+        - id: 27/1
+          description: sw-hec01-str-01b, Et27
+          po: 42
+        - id: 28/1
+          description: sw-hec01-str-01b, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 1b
+      spine_port_towards_leaf: Et3/6/1
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      ports:
+        - id: 27/1
+          description: sw-hec01-str-01a, Et27
+          po: 42
+        - id: 28/1
+          description: sw-hec01-str-01a, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+  hvv_hvx_acl_rules: |
+      10 permit vlan 50 0x000 icmp any any
+      20 permit vlan 50 0x000 pim any any
+      30 permit vlan 50 0x000 92 any any
+      40 permit vlan 50 0x000 vrrp any any
+      50 permit vlan 50 0x000 ip any 224.0.0.0/5
+      60 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.51.255
+      70 permit vlan 50 0x000 ip 198.18.48.0/22 198.18.51.0/24
+      80 permit vlan 50 0x000 ip 198.18.51.0/24 198.18.48.0/22
+      90 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.48.1
+      100 deny vlan 50 0x000 ip 198.18.48.0/22 198.18.48.0/22 log
+      110 permit vlan 50 0x000 ip 198.18.48.0/22 any
+      120 permit vlan 50 0x000 ip any any log
+      130 permit vlan 60 0x000 icmp any any
+      140 permit vlan 60 0x000 pim any any
+      150 permit vlan 60 0x000 92 any any
+      160 permit vlan 60 0x000 vrrp any any
+      170 permit vlan 60 0x000 ip any 224.0.0.0/5
+      180 permit vlan 60 0x000 ip 198.18.52.0/22 host 198.18.52.1
+      190 permit vlan 60 0x000 ip 198.18.52.0/22 host 198.18.55.255
+      200 deny vlan 60 0x000 ip 198.18.52.0/22 198.18.52.0/22 log
+      210 permit vlan 60 0x000 ip 198.18.52.0/22 any
+      220 permit vlan 60 0x000 ip 198.18.56.0/22 host 198.18.59.255
+      230 permit vlan 60 0x000 ip 198.18.56.0/22 host 198.18.56.1
+      240 deny vlan 60 0x000 ip 198.18.56.0/22 198.18.56.0/22 log
+      250 permit vlan 60 0x000 ip 198.18.56.0/22 any
+      260 permit vlan 60 0x000 ip any any log
+      270 permit ip any any
+  hana_acl_rules: |
+      10 permit icmp any any
+      20 permit pim any any
+      30 permit 92 any any
+      40 permit vrrp any any
+      50 permit ip any 224.0.0.0/5
+      60 permit ip 198.18.40.0/23 host 198.18.41.255
+      70 permit ip 198.18.40.0/23 host 198.18.40.4
+      80 permit ip host 198.18.40.4 198.18.40.0/23
+      90 permit ip 198.18.40.0/23 host 198.18.40.6
+      100 permit ip host 198.18.40.6 198.18.40.0/23
+      110 permit ip 198.18.40.0/23 198.18.41.192/26
+      120 permit ip 198.18.41.192/26 198.18.40.0/23
+      130 permit ip 198.18.40.0/23 host 198.18.40.1
+      140 deny ip 198.18.40.0/23 198.18.40.0/23
+      150 permit ip 198.18.40.0/23 any
+      160 permit ip any any

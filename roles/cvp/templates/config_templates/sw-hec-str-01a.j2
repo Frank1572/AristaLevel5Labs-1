@@ -14,7 +14,7 @@ interface Ethernet4/1
 !
 interface Ethernet13/1
    description ->hec{{ hec.hec_nr }}f0005,e0e via splitter cable
-!   
+!
 interface Ethernet13/2
    description ->hec{{ hec.hec_nr }}f0006,e0e via splitter cable
 !
@@ -90,4 +90,3 @@ router bgp 641{{ hec.hec_nr }}.10003
    network 10.100.1.3/32
    network {{ hec.lo900_prefix }}.19/32
 !
-

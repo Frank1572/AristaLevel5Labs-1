@@ -2,9 +2,13 @@
 
 These ansible playbooks are used to configure the cloud vision appliance (CVA), iDRAC of the appliance and cloud vision portal (CVP).
 
+It is required to install data from repository "repo_hec_globals". Run the following after cloning this repository:
+
+ - ansible-galaxy install -r roles/requirements.yml
+
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 
-Always consider the use of "--limit HECxx" (with 'xx' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
+Always consider the use of "--limit hecxx" (with 'xx' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
 
 - Create OOB01 a/b configuration with the ansible scripts
 
@@ -46,13 +50,13 @@ Always consider the use of "--limit HECxx" (with 'xx' being the location number)
 
  - Run the ansible playbooks to setup the environment
 
-       ansible-playbook dhcp.yml -i dhcp --tags "idrac" --timeout 60  --limit HECxx
+       ansible-playbook dhcp.yml -i dhcp --tags "idrac" --timeout 60  --limit hecxx
 
-       ansible-playbook dhcp.yml -i dhcp --tags "cva" --timeout 60  --limit HECxx
+       ansible-playbook dhcp.yml -i dhcp --tags "cva" --timeout 60  --limit hecxx
 
-       ansible-playbook static.yml -i static --tags "cvp_init" --timeout 60  --limit HECxx
+       ansible-playbook static.yml -i static --tags "cvp_init" --timeout 60  --limit hecxx
 
-       ansible-playbook static.yml -i static --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit HECxx
+       ansible-playbook static.yml -i static --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecxx
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 
@@ -60,3 +64,23 @@ Always consider the use of "--limit HECxx" (with 'xx' being the location number)
 
 
 After all of these steps were successful you can start with ZTP and moving the devices into the containers they belong to.
+
+# Backup and Restore cell switch configlets from CVP
+
+To manage configlets that have been created via the dynamic onfiglet builders on a CVP server itself, it is required to backup them.
+
+ - Setup local directory to store configlets to
+
+       ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
+
+ - Download cell switch configgurations from CVP
+
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecxx
+
+ - Upload the stored configlets into remote repository
+
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_upload_to_repo"
+
+ - Clean up local directory
+
+       ansible-playbook pb_custom_configlets.yml --tags "env_local_clean"

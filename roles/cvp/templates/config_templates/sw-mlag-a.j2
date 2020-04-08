@@ -4,7 +4,7 @@ vlan 4094
    trunk group MLAG-PEER
 !
 interface Vlan4094
-   mtu 9100
+   mtu {{ hec.fabric.interlink_mtu }}
    no autostate
    ip address 198.19.224.1/30
 !
@@ -17,4 +17,3 @@ mlag configuration
    local-interface Vlan4094
    peer-link Port-Channel42
    peer-address 198.19.224.2
-

@@ -1,14 +1,3 @@
-vlan 900
-   name NW-MGMT
-vlan 920
-   name RT-TRANS
-vlan 2001
-   name TEST-CUSTOMER
-vlan 2002-2499
-!
-interface Vxlan1
-   vxlan vlan 920 vni 10920
-!
 interface Port-Channel5
    description hec{{ hec.hec_nr }}f0005
    switchport access vlan 110
@@ -16,7 +5,7 @@ interface Port-Channel5
 !
 interface Port-Channel6
    description hec{{ hec.hec_nr }}f0006
-   switchport access vlan 110 
+   switchport access vlan 110
    mlag 6
 !
 interface Ethernet27
@@ -43,12 +32,12 @@ interface Ethernet31
 !
 interface Ethernet32
    description -> hec{{ hec.hec_nr }}f0005, e0[cd]
-   channel-group 5 mode active  
+   channel-group 5 mode active
 !
 interface Ethernet33
    description -> hec{{ hec.hec_nr }}f0006, e0[cd]
    channel-group 6 mode active
-!   
+!
 interface Ethernet34
    description hec{{ hec.hec_nr }}f000[56],e0M
    switchport access vlan 10
@@ -80,7 +69,7 @@ interface Ethernet54/1
 !
 interface Ethernet51/1-54/1
    no switchport
-   mtu 9100
+   mtu {{ hec.fabric.interlink_mtu }}
 !
 interface Loopback2
    ip address 10.200.1.5/32

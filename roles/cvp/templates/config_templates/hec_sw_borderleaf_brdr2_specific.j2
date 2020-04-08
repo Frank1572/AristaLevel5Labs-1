@@ -1,0 +1,62 @@
+{% set leafid   = inventory_hostname | regex_replace('^sw-.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
+{% if spines_model|string == '7504' or spines_model|string == '7508'  %}
+{# if spine_port_towards_leaf is search('^Et\d{1,2}/\d{1,2}/1$') #}
+{# Chassis based devices #}
+{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
+{% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
+{% endif %}
+{% if spines_model|string == '7280' %}
+{# Non-modular switches like 7280 #}
+{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
+{% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
+{% endif %}
+
+{% if leafid == 'a' %}
+{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
+{% endif %}
+
+{% if leafid == 'b' %}
+{% set cell_id  = (( spine_po|int ) / 2 )|int %}
+{% endif %}
+
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% set cell_id = cell_id + (offset * 18) %}
+{% endif %}
+
+{% set asn_part = cell_id + 11000 %}
+{% if type == 'borderleaf' or type == 'storageleaf' %}
+{% set asn_part = cell_id + 10000 %}
+{% endif %}
+{% set asn_generated = "641" + location_id|string + "." + asn_part|string %}
+!
+{% if leafid == 'b' %}
+{% set Lo1 = cell_id + 100 %}
+{% else %}
+{% set Lo1 = cell_id %}
+{% endif %}
+
+{% set brdrtype = inventory_hostname | regex_replace('^sw-.*brdr-0(?P<one_or_two>[12])[ab]$', '\\g<one_or_two>') %}
+{% if brdrtype == '2' %}
+{% set brdr2_vrrp = intf.brdr2.nw | ipaddr('net') | ipaddr('-2') %}
+vlan {{ intf.brdr2.vlan }}
+   name {{ intf.brdr2.name }}
+!
+ip virtual-router mac-address {{ varp.brdr02.916 }}
+interface Vlan{{ intf.brdr2.vlan }}
+ description ->Transfer network for inband management
+ ip address ip {{ brdr2_vrrp.split('/')[0] }}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} preempt delay minimum 180 #}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} preempt delay reload 180 #}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} authentication text {{ intf.brdr2.hsrp_auth }} #}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} ip {{ brdr2_vrrp.split('/')[0] }} #}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} track 494 decrement 10 #}
+{# {% if hsrp == 'master' %} #}
+{#   vrrp {{ intf.brdr2.hsrp_grp }} priority 105 #}
+{# {% endif %} #}
+!
+router bgp {{ asn_generated }}
+   network {{ intf.brdr2.nw }}
+   neighbor SPINE default-originate
+!
+{% endif %}

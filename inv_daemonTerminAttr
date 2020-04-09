@@ -1,3 +1,6 @@
+# The version number given in variable teledaemonversion needs to correspond the exact one in the filename of
+# the swix binary. It is used to check if device is already running target version.
+
 [all:vars]
 ansible_network_os=eos
 
@@ -5,9 +8,37 @@ ansible_network_os=eos
 teleipv4=10.9.247.253
 televrf=OOB
 teleskey=SecureKey14
+teledaemonversion=1.7.7-1
+
+[hec01:vars]
+teleipv4=10.178.137.253
+televrf=OOB
+teleskey=SecureKey01
+teledaemonversion=1.7.7-1
 
 [hec14]
 10.9.246.2
 10.9.246.3
 10.9.246.4
 10.9.246.5
+
+[hec01]
+10.178.136.2
+10.178.136.3
+10.178.137.202
+10.178.137.203
+10.178.137.204
+10.178.137.205
+10.178.137.206
+10.178.137.207
+10.178.137.208
+10.178.137.209
+10.178.137.210
+10.178.137.211
+10.178.137.212
+10.178.137.213
+10.178.137.214
+10.178.137.215
+10.178.137.216
+10.178.137.217
+10.178.137.218

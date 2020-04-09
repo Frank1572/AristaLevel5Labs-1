@@ -13,23 +13,26 @@
   vars:
     incorrect: False
     ispresent: False
-    cmd: "exec /usr/bin/TerminAttr -ingestvrf {{televrf}} -ingestgrpcurl={{teleipv4}}:9910 -taillogs -ingestauth=key,{{teleskey}} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
+    install_newer: False
+    cmd: "exec /usr/bin/TerminAttr -ingestvrf {{ televrf }} -ingestgrpcurl={{ teleipv4 }}:9910 -taillogs -ingestauth=key,{{ teleskey }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
 
   tasks:
     - name: record configration of TerminAttr daemon if present
       set_fact:
-        daemon_data: "{{ansible_net_config|parse_cli_textfsm('telemetry.fsm')}}"
+        daemon_data: "{{ ansible_net_config|parse_cli_textfsm('telemetry.fsm') }}"
     - name: output gathered config if it was present
       set_fact:
         ispresent: True
-      loop: "{{daemon_data}}"
+      loop: "{{ daemon_data }}"
       when: item['destination'] != "" or item['securekey'] != "" or item['vrf'] != ""
     - name: Validating configuration if it was present
       set_fact:
         incorrect: True
-      loop: "{{daemon_data}}"
+      loop: "{{ daemon_data }}"
       when: ispresent and
             ( item['destination'] != teleipv4 or item['securekey'] != teleskey or item['vrf'] != televrf )
+    - name: gather eos_facts
+      eos_facts:
     - name: removing daemon configuration
       eos_config:
         lines:
@@ -43,7 +46,7 @@
     - name: Applying configuration on device
       eos_config:
         lines:
-          - "{{cmd}}"
+          - "{{ cmd }}"
           - "no shutdown"
         parents: daemon TerminAttr
         save_when: changed
@@ -72,3 +75,32 @@
       tags:
         - never
         - daemon_stop
+    - name: Read installed daemon version
+      eos_command:
+        commands: "sho ver deta | grep -i terminattr-core | awk -F'v' '{print $2}' | awk '{print $1}'"
+      register: installed_version
+      tags:
+        - never
+        - daemon_install
+    - name: Preparing installation commands
+      set_fact:
+        install_newer: True
+        binary_name: "TerminAttr-{{ teledaemonversion }}.swix"
+      when: installed_version.stdout_lines[0][0] != teledaemonversion
+      tags:
+        - never
+        - daemon_install
+    - debug:
+        msg: 'Looks like we should updated as we have {{ installed_version.stdout_lines[0][0] }} installed but want {{ teledaemonversion }}'
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: "Copy {{ binary_name }} to {{ inventory_hostname }}"
+      copy:
+        src: roles/cvp/files/{{ binary_name }}
+        dest: /mnt/flash
+      when: install_newer
+      tags:
+        - never
+        - daemon_install

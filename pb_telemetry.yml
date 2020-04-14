@@ -3,13 +3,6 @@
   hosts: all
   gather_facts: yes
   connection: network_cli
-  vars_prompt:
-    - name: "ansible_user"
-      prompt: "Username"
-      private: no
-    - name: "ansible_password"
-      prompt: "Password"
-      private: yes
   vars:
     incorrect: False
     ispresent: False
@@ -33,6 +26,8 @@
             ( item['destination'] != teleipv4 or item['securekey'] != teleskey or item['vrf'] != televrf )
     - name: gather eos_facts
       eos_facts:
+      tags:
+        - always
     - name: removing daemon configuration
       eos_config:
         lines:
@@ -96,11 +91,26 @@
       tags:
         - never
         - daemon_install
+    - name: Get checksum of source binary
+      delegate_to: localhost
+      run_once: True
+      command: "cat roles/cvp/files/{{ binary_name }}.md5sum | awk '{print $1}'"
+      register: binary_local_md5
+      tags:
+        - never
+        - daemon_install
     - name: "Copy {{ binary_name }} to {{ inventory_hostname }}"
-      copy:
-        src: roles/cvp/files/{{ binary_name }}
-        dest: /mnt/flash
+      net_put:
+        src: 'roles/cvp/files/{{ binary_name }}'
+        dest: '/mnt/flash/{{ binary_name }}'
       when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Verify checksum of copied binary
+      eos_command:
+        commands: "verify /md5 flash:{{ binary_name }}"
+      register: binary_remote_md5
       tags:
         - never
         - daemon_install

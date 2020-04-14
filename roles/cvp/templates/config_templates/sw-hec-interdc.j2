@@ -73,6 +73,6 @@ spanning-tree mst 0-1 priority 61440
 {% endfor %}
 {% endif %}
 ! END ===== Port-channels =====
-{% endfi %} {## if switches.number == id ##}
+{% endif %} {## if switches.number == id ##}
 {% endfor %} {## switches in hec.interdc ##}
 {% endif %} {## if hec.interdc is defined ##}

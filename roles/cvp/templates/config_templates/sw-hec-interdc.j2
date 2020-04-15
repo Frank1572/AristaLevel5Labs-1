@@ -50,8 +50,8 @@ spanning-tree mst 0-1 priority 61440
 {% endfor %}
 ! END  ===== End device ports =====
 ! ===== Port-channels =====
-{% if allbrdrs.port_channels is defined %}
-{% for po in allbrdrs.port_channels %}
+{% if switches.port_channels is defined %}
+{% for po in switches.port_channels %}
   interface Port-Channel{{ po.id }}
   {% if po.id == 42 %}
     description {{ po.description }}

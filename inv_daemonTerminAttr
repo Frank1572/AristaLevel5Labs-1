@@ -16,6 +16,8 @@ teledaemonbinary=TerminAttr-1.7.7-1.swix
 teleipv4=10.178.137.253
 televrf=OOB
 teleskey=SecureKey01
+teledaemonversion=1.6.1
+teledaemonbinary=TerminAttr-1.6.1-1.swix
 
 [hec14]
 10.9.246.2

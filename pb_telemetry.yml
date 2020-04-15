@@ -7,6 +7,7 @@
     incorrect: False
     ispresent: False
     install_newer: False
+    checksumIsVerified: False
     cmd: "exec /usr/bin/TerminAttr -ingestvrf {{ televrf }} -ingestgrpcurl={{ teleipv4 }}:9910 -taillogs -ingestauth=key,{{ teleskey }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
 
   tasks:
@@ -107,10 +108,16 @@
       tags:
         - never
         - daemon_install
-    - name: Verify checksum of copied binary
+    - name: Verify checksum of copied binary[1]
       eos_command:
         commands: "verify /md5 flash:{{ binary_name }}"
       register: binary_remote_md5
+      tags:
+        - never
+        - daemon_install
+    - name: Verify checksum of copied binary[2]
+      debug:
+        var: binary_remote_md5
       tags:
         - never
         - daemon_install

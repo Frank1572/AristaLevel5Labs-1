@@ -255,7 +255,7 @@
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_interdc.j2
+    src: templates/config_templates/hec-sw-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc01"
   tags:
     - configlets
@@ -270,7 +270,7 @@
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_interdc.j2
+    src: templates/config_templates/hec-sw-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc02"
   tags:
     - configlets

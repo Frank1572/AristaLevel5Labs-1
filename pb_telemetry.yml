@@ -163,6 +163,9 @@
         - install_newer
         - checksumIsVerified
         - installed_version_after_upgrade.stdout_lines[0][0] == teledaemonversion
+      tags:
+        - never
+        - daemon_install
     - name: stopping daemon
       eos_config:
         lines:

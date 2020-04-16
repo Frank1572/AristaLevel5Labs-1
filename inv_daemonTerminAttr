@@ -3,45 +3,72 @@
 
 [all:vars]
 ansible_network_os=eos
+televrf=OOB
 teledaemonversion=1.7.7
 teledaemonbinary=TerminAttr-1.7.7-1.swix
 
 [hec14:vars]
 teleipv4=10.9.247.253
-televrf=OOB
 teleskey=SecureKey14
 teledaemonbinary=TerminAttr-1.7.7-1.swix
 
 [hec01:vars]
 teleipv4=10.178.137.253
-televrf=OOB
 teleskey=SecureKey01
 teledaemonversion=1.6.1
 teledaemonbinary=TerminAttr-1.6.1-1.swix
 
+[hec03:vars]
+teleipv4=10.9.241.253
+teleskey=SecureKey03
+
+[hec04:vars]
+#teleipv4=10.9.241.253
+teleskey=SecureKey04
+
+[hec13:vars]
+teleipv4=10.9.245.253
+teleskey=SecureKey13
+
+[hec14:vars]
+teleipv4=10.9.247.253
+teleskey=SecureKey14
+
 [hec14]
-10.9.246.2
-10.9.246.3
-10.9.246.4
-10.9.246.5
+sw-hec14-oob-01a.net.sap.corp. ansible_host=10.9.246.2
+sw-hec14-oob-01b.net.sap.corp. ansible_host=10.9.246.3
+sw-hec14-oob-02.net.sap.corp. ansible_host=10.9.246.4
+sw-hec14-oob-03.net.sap.corp. ansible_host=10.9.246.5
+
+[hec13]
+sw-hec13-oob-01a.net.sap.corp. ansible_host=10.9.244.2
+sw-hec13-oob-01b.net.sap.corp. ansible_host=10.9.244.3
+sw-hec13-oob-02.net.sap.corp. ansible_host=10.9.244.4
+sw-hec13-oob-03.net.sap.corp. ansible_host=10.9.244.5
+
+[hec04]
+sw-hec04-oob-01a.net.sap.corp. ansible_host=10.9.242.2
+sw-hec04-oob-01b.net.sap.corp. ansible_host=10.9.242.3
+sw-hec04-oob-02.net.sap.corp. ansible_host=10.9.242.22
+sw-hec04-oob-03.net.sap.corp. ansible_host=10.9.242.40
 
 [hec01]
-10.178.136.2
-10.178.136.3
-10.178.137.202
-10.178.137.203
-10.178.137.204
-10.178.137.205
-10.178.137.206
-10.178.137.207
-10.178.137.208
-10.178.137.209
-10.178.137.210
-10.178.137.211
-10.178.137.212
-10.178.137.213
-10.178.137.214
-10.178.137.215
-10.178.137.216
-10.178.137.217
-10.178.137.218
+sw-hec01-oob-01a.net.sap.corp. ansible_host=10.178.136.2
+sw-hec01-oob-01b.net.sap.corp. ansible_host=10.178.136.3
+sw-hec01-oob-02.net.sap.corp. ansible_host=10.178.137.202
+sw-hec01-oob-03.net.sap.corp. ansible_host=10.178.137.203
+sw-hec01-oob-04.net.sap.corp. ansible_host=10.178.137.204
+sw-hec01-oob-05.net.sap.corp. ansible_host=10.178.137.205
+sw-hec01-oob-06.net.sap.corp. ansible_host=10.178.137.206
+sw-hec01-oob-07.net.sap.corp. ansible_host=10.178.137.207
+sw-hec01-oob-08.net.sap.corp. ansible_host=10.178.137.208
+sw-hec01-oob-09.net.sap.corp. ansible_host=10.178.137.209
+sw-hec01-oob-10.net.sap.corp. ansible_host=10.178.137.210
+sw-hec01-oob-11.net.sap.corp. ansible_host=10.178.137.211
+sw-hec01-oob-12.net.sap.corp. ansible_host=10.178.137.212
+sw-hec01-oob-13.net.sap.corp. ansible_host=10.178.137.213
+sw-hec01-oob-14.net.sap.corp. ansible_host=10.178.137.214
+sw-hec01-oob-15.net.sap.corp. ansible_host=10.178.137.215
+sw-hec01-oob-16.net.sap.corp. ansible_host=10.178.137.216
+sw-hec01-oob-17.net.sap.corp. ansible_host=10.178.137.217
+sw-hec01-oob-18.net.sap.corp. ansible_host=10.178.137.218

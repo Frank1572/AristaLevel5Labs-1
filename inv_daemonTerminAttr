@@ -46,6 +46,8 @@ sw-hec13-oob-01b.net.sap.corp. ansible_host=10.9.244.3
 sw-hec13-oob-02.net.sap.corp. ansible_host=10.9.244.4
 sw-hec13-oob-03.net.sap.corp. ansible_host=10.9.244.5
 
+[hec03]
+
 [hec04]
 sw-hec04-oob-01a.net.sap.corp. ansible_host=10.9.242.2
 sw-hec04-oob-01b.net.sap.corp. ansible_host=10.9.242.3

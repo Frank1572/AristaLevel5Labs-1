@@ -29,7 +29,7 @@ To remove the daemon configuration, run
 
   ansible-playbook -i inv_daemonTerminAttr pb_telemetry.yml --limit hecXX --limit daemon_remove
 
-To install the damon in the version given in both values in "inv_daemonTerminAttr", ensure the *swix-binary is existent in ./roles/cvp/files/ and then run
+To install the damon in the version given in both values in "inv_daemonTerminAttr", ensure the swix-binary is existent in ./roles/cvp/files/ and then run
 
   ansible-playbook -i inv_daemonTerminAttr pb_telemetry.yml --limit hecXX --limit daemon_install
 

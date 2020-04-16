@@ -87,20 +87,4 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
 # Deploy/ Maintain TerminAttr (telemetry streaming configuration)
 
-To deploy or correct configuration for TerminAttr agent on switches (if considered incorrect), run the following:
-
-       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecxx
-
-Maintain the correct parameters for the daemon configuration in file inv_daemonTerminAttr.
-
-To stop daemon on device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecxx
-
-To restart daemon service on device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecxx
-
-To remove daemon configration from device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecxx
+Read docs/pb_telemetry.md

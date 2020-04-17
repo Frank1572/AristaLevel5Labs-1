@@ -563,6 +563,7 @@ hec:
       spine_port_towards_leaf: Et4/3/1
       ports:
         - id: 32
+          description: CIS-iSCSI
           type: vlan
           ip: 172.19.96.100/23
         - id: 1/1
@@ -590,6 +591,7 @@ hec:
       spine_port_towards_leaf: Et4/4/1
       ports:
         - id: 32
+          description: CIS-iSCSI
           type: vlan
           ip: 172.19.96.101/23
         - id: 1/1

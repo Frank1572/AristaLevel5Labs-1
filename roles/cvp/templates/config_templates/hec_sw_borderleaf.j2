@@ -6,24 +6,33 @@
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 {% set speed = '40gfull' %}
+!id {{id}}
+!id_short {{ id_short }}
+!leafpurpose {{ leafpurpose}}
+!leafid {{leafid}}
+!brdrtype {{brdrtype}}
+!
 {% if brdrtype == '2' and leafpurpose == 'b' %}
-vlan 914
-   name FW-CORE-TRANS
-vlan 915
-   name FWT-CORE-TRANS
-vlan 916
-   name FW-BRDR-TRANS
-interface Vxlan1
-  vxlan vlan 914 vni 10914
-  vxlan vlan 916 vni 10916
+  vlan 914
+     name FW-CORE-TRANS
+  vlan 915
+     name FWT-CORE-TRANS
+  vlan 916
+     name FW-BRDR-TRANS
+  interface Vxlan1
+    vxlan vlan 914 vni 10914
+    vxlan vlan 916 vni 10916
 {% else %}
-vlan 900
-   name NW-MGMT
-vlan 920
-   name RT-TRANS
-interface Vxlan1
-  vxlan vlan 920 vni 10920
+  vlan 900
+     name NW-MGMT
+  {% if leafpurpose != 'h' %}
+    vlan 920
+       name RT-TRANS
+    interface Vxlan1
+       vxlan vlan 920 vni 10920
+  {% endif %}
 {% endif %}
+
 !leafid {{ leafid }}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}

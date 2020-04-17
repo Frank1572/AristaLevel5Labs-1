@@ -553,6 +553,60 @@ hec:
         - id: 999
           description: ->sw-hec01 Po999
           trunk: 961,962
+  shs:
+    - number: 1a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et4/3/1
+      ports:
+        - id: 32
+          type: vlan
+          ip: 172.19.96.100/23
+        - id: 1/1
+          description: ->hec15f00501,e4a via MPO
+          po: 10
+        - id: 25/1
+          description: sw-hec01-shs-01b, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec01-shs-01b, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 10
+          description: hec15f00501
+          trunk: 30,32,40,50,55,130,2001-2499
+  shs:
+    - number: 1b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et4/4/1
+      ports:
+        - id: 32
+          type: vlan
+          ip: 172.19.96.101/23
+        - id: 1/1
+          description: ->hec15f00501,e4a via MPO
+          po: 10
+        - id: 25/1
+          description: sw-hec01-shs-01a, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec01-shs-01a, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 10
+          description: hec15f00501
+          trunk: 30,32,40,50,55,130,2001-2499
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

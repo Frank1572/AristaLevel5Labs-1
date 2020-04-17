@@ -113,6 +113,10 @@ container:
     parent_container: HEC-HV leaf
     configlets:
       - hec-xen
+  HEC-Shared HANA Storage leaf:
+    parent_container: HEC-Storage leaf
+    configlets:
+      - hec-shs
 
 configlet_list:
   sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"
@@ -143,6 +147,7 @@ configlet_list:
   hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
+  hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
   sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
 
@@ -177,3 +182,4 @@ configlet_filter_list_generic:
   - sw-hec-interdc
   - sw-hec-vtep-static
   - sw-hec-hana-pwr
+  - hec-shs

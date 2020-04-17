@@ -107,6 +107,7 @@
     - CVP-Arista
     - sw-hec-interdc
     - sw-hec-vtep-static
+    - hec-shs
   tags:
     - configlets
 

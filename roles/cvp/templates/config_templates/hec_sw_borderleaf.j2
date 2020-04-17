@@ -2,11 +2,11 @@
 {# hec_sw_borderleaf.j2 #}
 {##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
 {% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
-{% set leafpurpose = id | regex_replace('^(?P<purpose>[bs])[123][ab]$', '\\g<purpose>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 {% set speed = '40gfull' %}
-{% if brdrtype == '2' %}
+{% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
    name FW-CORE-TRANS
 vlan 915
@@ -28,6 +28,9 @@ interface Vxlan1
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}
   {% set loop_items = hec.str %}
+{% endif %}
+{% if leafpurpose == 'h' %}
+  {% set loop_items = hec.shs %}
 {% endif %}
 {% for allbrdrs in loop_items %}
 !allbrdrs.number {{allbrdrs.number}}
@@ -113,7 +116,7 @@ interface Vxlan1
 {% endfor %}
 
 {##### VARP specific configuration for brdr-02 #####}
-{% if brdrtype == '2' %}
+{% if brdrtype == '2' and leafpurpose == 'b' %}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================

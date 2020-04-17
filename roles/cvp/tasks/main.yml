@@ -105,7 +105,6 @@
     - mgmt-oob
     - mgmt-default
     - CVP-Arista
-    - sw-hec-interdc
     - sw-hec-vtep-static
     - hec-shs
   tags:
@@ -248,6 +247,52 @@
     - storageleafs
 
 - set_fact:
+    id: 's1b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-01b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-01b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 'h1a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-shs-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-shs-01a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 'h1b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-shs-01a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-shs-01b"
+  tags:
+    - configlets
+    - storageleafs
+
+
+- set_fact:
     id: '01'
   tags:
     - configlets
@@ -276,21 +321,6 @@
   tags:
     - configlets
     - interdc
-
-- set_fact:
-    id: 's1b'
-  tags:
-    - configlets
-    - storageleafs
-
-- name: Render sw-hec-str-01b
-  delegate_to: 127.0.0.1
-  template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
-    dest: "{{role_path}}/files/configs/sw-hec-str-01b"
-  tags:
-    - configlets
-    - storageleafs
 
 - name: Copy configlet builders to the CVP
   delegate_to: "{{ cvp.ip_eth0 }}"

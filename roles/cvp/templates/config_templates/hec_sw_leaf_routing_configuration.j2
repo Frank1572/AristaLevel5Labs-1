@@ -1,9 +1,10 @@
+#jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes'
 {# hec_sw_leaf_routing_configuration.j2 #}
 {##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
 {% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
-{% set leafpurpose = id | regex_replace('^(?P<purpose>[bs])[123][ab]$', '\\g<purpose>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
-{% set brdrtype = id | regex_replace('^(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
+{% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 !leafid {{ leafid }}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}

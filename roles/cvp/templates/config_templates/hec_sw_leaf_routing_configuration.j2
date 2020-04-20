@@ -10,9 +10,11 @@
 {% if leafpurpose == 's' %}
   {% set loop_items = hec.str %}
 {% endif %}
-{% for allbrdrs in loop_items %}
+{% if leafpurpose == 'h' %}
+  {% set loop_items = hec.shs %}
+{% endif %}
+{% for allbrdrs in loop_items if allbrdrs.number == id_short %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number == id_short %}
     {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
     {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
     {# Chassis based devices #}
@@ -149,5 +151,4 @@
           vlan 5-2999
        {% endif %}
     !
-  {% endif %}
 {% endfor %}

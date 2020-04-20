@@ -581,7 +581,6 @@ hec:
         - id: 10
           description: hec15f00501
           trunk: 30,32,40,50,55,130,2001-2499
-  shs:
     - number: 1b
       uplinks:
         - 25

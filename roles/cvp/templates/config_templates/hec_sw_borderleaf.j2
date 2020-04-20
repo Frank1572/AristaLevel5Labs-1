@@ -41,10 +41,8 @@
 {% if leafpurpose == 'h' %}
   {% set loop_items = hec.shs %}
 {% endif %}
-{% for allbrdrs in loop_items %}
+{% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number|string == id_short %}
-
     {% for item in allbrdrs.uplinks %}
     ! ===== Spine Uplinks =====
     interface Ethernet{{ item }}
@@ -100,7 +98,7 @@
     {% endfor %}
     ! ===== Port-channels =====
     {% if allbrdrs.port_channels is defined %}
-    {% for po in allbrdrs.port_channels %}
+      {% for po in allbrdrs.port_channels %}
       interface Port-Channel{{ po.id }}
       {% if po.id == 42 %}
         description {{ po.description }}
@@ -119,9 +117,8 @@
           switchport access vlan {{ po.access_vlan }}
         {% endif %}
       {% endif %}
-    {% endfor %}
+      {% endfor %}
     {% endif %}
-  {% endif %}
 {% endfor %}
 
 {##### VARP specific configuration for brdr-02 #####}

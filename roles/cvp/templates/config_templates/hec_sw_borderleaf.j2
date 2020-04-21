@@ -2,37 +2,47 @@
 {# hec_sw_borderleaf.j2 #}
 {##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
 {% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
-{% set leafpurpose = id | regex_replace('^(?P<purpose>[bs])[123][ab]$', '\\g<purpose>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 {% set speed = '40gfull' %}
-{% if brdrtype == '2' %}
-vlan 914
-   name FW-CORE-TRANS
-vlan 915
-   name FWT-CORE-TRANS
-vlan 916
-   name FW-BRDR-TRANS
-interface Vxlan1
-  vxlan vlan 914 vni 10914
-  vxlan vlan 916 vni 10916
+!id {{id}}
+!id_short {{ id_short }}
+!leafpurpose {{ leafpurpose}}
+!leafid {{leafid}}
+!brdrtype {{brdrtype}}
+!
+{% if brdrtype == '2' and leafpurpose == 'b' %}
+  vlan 914
+     name FW-CORE-TRANS
+  vlan 915
+     name FWT-CORE-TRANS
+  vlan 916
+     name FW-BRDR-TRANS
+  interface Vxlan1
+    vxlan vlan 914 vni 10914
+    vxlan vlan 916 vni 10916
 {% else %}
-vlan 900
-   name NW-MGMT
-vlan 920
-   name RT-TRANS
-interface Vxlan1
-  vxlan vlan 920 vni 10920
+  vlan 900
+     name NW-MGMT
+  {% if leafpurpose != 'h' %}
+    vlan 920
+       name RT-TRANS
+    interface Vxlan1
+       vxlan vlan 920 vni 10920
+  {% endif %}
 {% endif %}
+
 !leafid {{ leafid }}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}
   {% set loop_items = hec.str %}
 {% endif %}
-{% for allbrdrs in loop_items %}
+{% if leafpurpose == 'h' %}
+  {% set loop_items = hec.shs %}
+{% endif %}
+{% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number|string == id_short %}
-
     {% for item in allbrdrs.uplinks %}
     ! ===== Spine Uplinks =====
     interface Ethernet{{ item }}
@@ -88,7 +98,7 @@ interface Vxlan1
     {% endfor %}
     ! ===== Port-channels =====
     {% if allbrdrs.port_channels is defined %}
-    {% for po in allbrdrs.port_channels %}
+      {% for po in allbrdrs.port_channels %}
       interface Port-Channel{{ po.id }}
       {% if po.id == 42 %}
         description {{ po.description }}
@@ -107,13 +117,12 @@ interface Vxlan1
           switchport access vlan {{ po.access_vlan }}
         {% endif %}
       {% endif %}
-    {% endfor %}
+      {% endfor %}
     {% endif %}
-  {% endif %}
 {% endfor %}
 
 {##### VARP specific configuration for brdr-02 #####}
-{% if brdrtype == '2' %}
+{% if brdrtype == '2' and leafpurpose == 'b' %}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================

@@ -3,33 +3,32 @@
   hosts: all
   gather_facts: yes
   connection: network_cli
-  vars_prompt:
-    - name: "ansible_user"
-      prompt: "Username"
-      private: no
-    - name: "ansible_password"
-      prompt: "Password"
-      private: yes
   vars:
     incorrect: False
     ispresent: False
-    cmd: "exec /usr/bin/TerminAttr -ingestvrf {{televrf}} -ingestgrpcurl={{teleipv4}}:9910 -taillogs -ingestauth=key,{{teleskey}} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
+    install_newer: False
+    checksumIsVerified: False
+    cmd: "exec /usr/bin/TerminAttr -ingestvrf {{ televrf }} -ingestgrpcurl={{ teleipv4 }}:9910 -taillogs -ingestauth=key,{{ teleskey }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
 
   tasks:
     - name: record configration of TerminAttr daemon if present
       set_fact:
-        daemon_data: "{{ansible_net_config|parse_cli_textfsm('telemetry.fsm')}}"
+        daemon_data: "{{ ansible_net_config|parse_cli_textfsm('telemetry.fsm') }}"
     - name: output gathered config if it was present
       set_fact:
         ispresent: True
-      loop: "{{daemon_data}}"
+      loop: "{{ daemon_data }}"
       when: item['destination'] != "" or item['securekey'] != "" or item['vrf'] != ""
     - name: Validating configuration if it was present
       set_fact:
         incorrect: True
-      loop: "{{daemon_data}}"
+      loop: "{{ daemon_data }}"
       when: ispresent and
             ( item['destination'] != teleipv4 or item['securekey'] != teleskey or item['vrf'] != televrf )
+    - name: gather eos_facts
+      eos_facts:
+      tags:
+        - always
     - name: removing daemon configuration
       eos_config:
         lines:
@@ -43,7 +42,7 @@
     - name: Applying configuration on device
       eos_config:
         lines:
-          - "{{cmd}}"
+          - "{{ cmd }}"
           - "no shutdown"
         parents: daemon TerminAttr
         save_when: changed
@@ -72,3 +71,120 @@
       tags:
         - never
         - daemon_stop
+    - name: Read installed daemon version
+      eos_command:
+        commands: "sho ver deta | grep -i terminattr-core | awk -F'v' '{print $2}' | awk '{print $1}'"
+      register: installed_version
+      tags:
+        - never
+        - daemon_install
+    - name: Preparing installation commands
+      set_fact:
+        install_newer: True
+        binary_name: "{{ teledaemonbinary }}"
+      when: installed_version.stdout_lines[0][0] != teledaemonversion
+      tags:
+        - never
+        - daemon_install
+    - debug:
+        msg: 'Looks like we should updated as we have {{ installed_version.stdout_lines[0][0] }} installed but want {{ teledaemonversion }}'
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Get checksum of source binary
+      delegate_to: localhost
+      run_once: True
+      shell: "cat roles/cvp/files/{{ binary_name }}.md5sum | awk '{print $1}'"
+      register: binary_local_md5
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Copy {{ binary_name }} to {{ inventory_hostname }}
+      net_put:
+        src: 'roles/cvp/files/{{ binary_name }}'
+        dest: '/mnt/flash/{{ binary_name }}'
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Verify checksum of copied binary[1]
+      eos_command:
+        commands: "bash md5sum /mnt/flash/{{ binary_name }}  | awk '{print $1}'"
+      register: binary_remote_md5
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Verify checksum of copied binary[2]
+      debug:
+        var: binary_remote_md5
+      when: install_newer
+      tags:
+        - never
+        - daemon_install
+    - name: Verify checksum of copied binary[3]
+      set_fact:
+        checksumIsVerified: True
+      when:
+        - install_newer
+        - binary_local_md5.stdout_lines[0] == binary_remote_md5.stdout_lines[0][0]
+      tags:
+        - never
+        - daemon_install
+    - name: Send install commands to {{ inventory_hostname }}
+      eos_command:
+        commands:
+          - "copy flash:{{ binary_name }} extension:"
+          - "extension {{ binary_name }}"
+          - "copy installed-extensions boot-extensions"
+      register: install_output
+      when:
+        - install_newer
+        - checksumIsVerified
+      tags:
+        - never
+        - daemon_install
+    - name: Read installed daemon version
+      eos_command:
+        commands: "sho ver deta | grep -i terminattr-core | awk -F'v' '{print $2}' | awk '{print $1}'"
+      register: installed_version_after_upgrade
+      when:
+        - install_newer
+        - checksumIsVerified
+      tags:
+        - never
+        - daemon_install
+    - name: Check if installation was successfull
+      debug:
+        msg: 'Success.'
+      when:
+        - install_newer
+        - checksumIsVerified
+        - installed_version_after_upgrade.stdout_lines[0][0] == teledaemonversion
+      tags:
+        - never
+        - daemon_install
+    - name: stopping daemon
+      eos_config:
+        lines:
+          - shutdown
+        parents: daemon TerminAttr
+      when:
+        - install_newer
+        - installed_version_after_upgrade.stdout_lines[0][0] == teledaemonversion
+      tags:
+        - never
+        - daemon_install
+    - name: starting daemon
+      eos_config:
+        lines:
+          - no shutdown
+        parents: daemon TerminAttr
+      when:
+        - install_newer
+        - installed_version_after_upgrade.stdout_lines[0][0] == teledaemonversion
+      tags:
+        - never
+        - daemon_install

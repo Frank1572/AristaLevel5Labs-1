@@ -23,7 +23,7 @@ teleipv4=10.9.241.253
 teleskey=SecureKey03
 
 [hec04:vars]
-#teleipv4=10.9.241.253
+teleipv4=10.9.243.253
 teleskey=SecureKey04
 
 [hec13:vars]

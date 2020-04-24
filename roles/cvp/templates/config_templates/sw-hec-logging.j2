@@ -1,6 +1,11 @@
+{# https://wiki.wdf.sap.corp/wiki/x/VD57fg #}
 logging host {{ hec.syslog1 }}
 logging host {{ hec.syslog2 }}
 {% if hec.syslog3 is defined %}
 logging host {{ hec.syslog3 }}
 {% endif %}
+logging trap debugging
+no logging console
+logging buffered 1043741829
+logging facility local5
 !

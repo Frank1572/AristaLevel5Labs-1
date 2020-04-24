@@ -3,12 +3,12 @@
 
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 # * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-# * Redistributions in binary form must reproduce the above copyright notice,  this list of conditions and the following disclaimer in the documentation 
+# * Redistributions in binary form must reproduce the above copyright notice,  this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
-# * Neither the name of the Arista nor the names of its contributors may be used to endorse or promote products derived from this software without 
+# * Neither the name of the Arista nor the names of its contributors may be used to endorse or promote products derived from this software without
 #   specific prior written permission.
-# 
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
 # THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
 # BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
@@ -53,9 +53,9 @@ for configletBuilder in configletBuilder_list:
  try:
   file = open(param1+configletBuilder, "r")
   config_string = file.read()
-  
+
   print "Try adding a configlet builder " + configletBuilder
- 
+
   # Check if configlet builder already exists
   exists = True
   try:
@@ -65,7 +65,7 @@ for configletBuilder in configletBuilder_list:
     exists = False
     pass
    else:
-    print e 
+    print e
 
   if not exists:
    note_url = "https://%s/cvpservice/configlet/addConfigletBuilder.do?isDraft=false" % CVP_HOST
@@ -77,10 +77,10 @@ for configletBuilder in configletBuilder_list:
     print "Could not create configlet builder"
 
   else:
-   print " Configlet builder exists already, udating it."
+   print " Configlet builder exists already, updating it."
    note_url = "https://%s/cvpservice/configlet/updateConfigletBuilder.do?isDraft=false&id=%s&action=save" % (CVP_HOST, result["key"])
    note_response = requests.post(note_url, cookies=cookies, data=config_string, verify=False)
-   
+
    if json.loads(note_response.text)["data"] == "success":
     print " Configlet builder updated successfully."
    else:
@@ -89,7 +89,3 @@ for configletBuilder in configletBuilder_list:
  except Exception as e:
   print " Could not create/update configlet builder."
   print e
-
- 
-
-

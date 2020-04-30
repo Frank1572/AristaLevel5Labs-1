@@ -108,6 +108,9 @@
     - sw-hec-vtep-static
     - hec-shs
     - sw-hec-hana-pwr
+    - autoconf.ini.j2
+    - sw-hec-leaf-individual.j2
+    - sw-hec-leaf-pair.j2
   tags:
     - configlets
 

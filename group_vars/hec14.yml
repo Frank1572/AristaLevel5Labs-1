@@ -202,6 +202,12 @@ hec:
         - id: 2
           description: rt-hec14-core-01b, Fo0/2/0
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01a, Fo0/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01a, Fo0/0/0
+          po: 1104            
         - id: 27
           description: sw-hec14-brdr-01b, Et27
           po: 42
@@ -210,7 +216,10 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1105 
+          po: 1106 
+        - id: 6
+          description: rt-hec14-inet-01a
+          po: 1105           
       port_channels:
         - id: 42
           description: mlag peer link
@@ -220,7 +229,16 @@ hec:
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01a
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01a
+          trunk: all         
         - id: 1105
+          description: rt-hec14-inet-01a
+          trunk: all  
+        - id: 1106
           description: rt-hec14-vpn-01a
           trunk: all       
     - number: 1b
@@ -237,6 +255,12 @@ hec:
         - id: 2
           description: rt-hec14-core-01b, Fo0/2/1
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01a, Fo1/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01a, Fo1/0/0
+          po: 1104            
         - id: 27
           description: sw-hec14-brdr-01a, Et27
           po: 42
@@ -245,7 +269,10 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1105 
+          po: 1106 
+        - id: 6
+          description: rt-hec14-inet-01a
+          po: 1105  
       port_channels:
         - id: 42
           description: mlag peer link
@@ -255,45 +282,32 @@ hec:
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01a
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01a
+          trunk: all         
         - id: 1105
+          description: rt-hec14-inet-01a
+          trunk: all  
+        - id: 1106
           description: rt-hec14-vpn-01a
           trunk: all    
     - number: 2a
       uplinks:
         - 51
         - 52
-        - 33
+        - 53
         - 54
       spine_port_towards_leaf: Et3/5/1
       ports:
-        - id: 3
-          description: ->lb-hec14-0[12], e1.1
-          trunk: 940
-        - id: 4
-          description: ->lb-hec14-0[12], e1.2
-          trunk: 940
-        - id: 5
-          description: ->lb-hec14-0[12], e1.3
-          trunk: 940
-        - id: 6
-          description: ->fw-hec14-01, et1-0[12]
-          po: 10
-        - id: 7
-          description: ->fw-hec14-02, et1-0[12]
-          po: 20
-        - id: 29
-          description: ->hec14f000[3r4],BMC
-          access_vlan: 110
-          speed: 100full
-        - id: 27
-          description: sw-hec14-brdr-02b, Et27
+        - id: 49
+          description: sw-hec14-brdr-02b, Et49
           po: 42
-        - id: 28
-          description: sw-hec14-brdr-02b, Et28
+        - id: 50
+          description: sw-hec14-brdr-02b, Et50
           po: 42
-        - id: 47
-          description: ->fwm-hec-emea-01, eth1-0[12]
-          po: 30
         - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
@@ -301,72 +315,23 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-        - id: 5
-          description: ->hec14f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec14f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec14-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec14-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
-        - id: 1503
-          description: rt-hec14-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec14-vpn-01b
-          trunk: 900,920,940
     - number: 2b
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
-      spine_port_towards_leaf: Et3/4/1
+        - 51
+        - 52
+        - 53
+        - 54
+      spine_port_towards_leaf: Et3/6/1
       ports:
-        - id: 1
-          description: rt-hec14-vpn-01a
-          po: 1503
-        - id: 2
-          description: rt-hec14-vpn-01b
-          po: 1504
-        - id: 3
-          description: ->lb-hec14-0[12], e1.1
-          trunk: 940
-        - id: 4
-          description: ->lb-hec14-0[12], e1.2
-          trunk: 940
-        - id: 5
-          description: ->lb-hec14-0[12], e1.3
-          trunk: 940
-        - id: 6
-          description: ->fw-hec14-01, et1-0[12]
-          po: 10
-        - id: 7
-          description: ->fw-hec14-02, et1-0[12]
-          po: 20
-        - id: 29
-          description: ->hec14f000[3r4],BMC
-          access_vlan: 110
-          speed: 100full
-        - id: 27
-          description: sw-hec14-brdr-02a, Et27
+        - id: 49
+          description: sw-hec14-brdr-02a, Et49
           po: 42
-        - id: 28
-          description: sw-hec14-brdr-02a, Et28
+        - id: 50
+          description: sw-hec14-brdr-02a, Et50
           po: 42
-        - id: 47
-          description: ->fwm-hec-emea-01, eth1-0[12]
-          po: 30
         - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
@@ -374,36 +339,15 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-        - id: 5
-          description: ->hec14f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec14f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec14-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec14-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
-        - id: 1503
-          description: rt-hec14-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec14-vpn-01b
-          trunk: 900,920,940
     - number: 3a
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 29
+        - 30
+        - 31
+        - 32
       spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 1
@@ -412,6 +356,18 @@ hec:
         - id: 2
           description: rt-hec14-core-01d, Fo0/2/0
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01b, Fo0/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01b, Fo0/0/0
+          po: 1104            
+        - id: 5
+          description: rt-hec14-vpn-01b
+          po: 1106
+        - id: 6
+          description: rt-hec14-inet-01b
+          po: 1105  
         - id: 27
           description: sw-hec14-brdr-03b, Et27
           po: 42
@@ -427,6 +383,18 @@ hec:
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01b
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01b
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01b
+          trunk: all 
+        - id: 1106
+          description: rt-hec14-vpn-01b
+          trunk: all    
     - number: 3b
       uplinks:
         - 25
@@ -441,6 +409,18 @@ hec:
         - id: 2
           description: rt-hec14-core-01d, Fo0/2/1
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01b, Fo1/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01b, Fo1/0/0
+          po: 1104  
+        - id: 5
+          description: rt-hec14-vpn-01b
+          po: 1106
+        - id: 6
+          description: rt-hec14-inet-01b
+          po: 1105  
         - id: 27
           description: sw-hec14-brdr-03a, Et27
           po: 42
@@ -456,6 +436,18 @@ hec:
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+         - id: 1103
+          description: rt-hec14-cwan-01b
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01b
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01b
+          trunk: all 
+        - id: 1106
+          description: rt-hec14-vpn-01b
+          trunk: all   
   str:
     - number: 1a
       spine_port_towards_leaf: Et3/5/1

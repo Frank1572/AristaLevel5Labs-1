@@ -44,6 +44,45 @@ teleskey=SecureKey14
 teleipv4=10.9.247.253
 teleskey=SecureKey14
 
+[hec01-a-1:vars]
+teleipv4=10.178.137.253
+teleskey=SecureKey01
+
+[hec01-a-2:vars]
+teleipv4=10.178.137.253
+teleskey=SecureKey01
+
+[hec01-b-1:vars]
+teleipv4=10.178.137.253
+teleskey=SecureKey01
+
+[hec01-b-2:vars]
+teleipv4=10.178.137.253
+teleskey=SecureKey01
+
+[hec02-a-1:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
+
+[hec02-a-2:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
+
+[hec02-a-3:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
+
+[hec02-b-1:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
+
+[hec02-b-2:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
+
+[hec02-b-3:vars]
+teleipv4=10.178.141.253
+teleskey=SecureKey02
 
 [hec03-a-1]
 sw-hec03-brdr-01a.net.sap.corp. ansible_host=10.9.240.4

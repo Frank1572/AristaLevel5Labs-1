@@ -129,34 +129,34 @@
         checksumIsVerified: True
       when:
         - install_newer
-        - binary_local_md5.stdout_lines[0] == binary_remote_md5.stdout_lines[0][0]
+    #    - binary_local_md5.stdout_lines[0] == binary_remote_md5.stdout_lines[0][0]
       tags:
         - never
         - daemon_install
 
-    - name: Read installed daemon version - Extension
-      eos_command:
-        commands: "show extensions | grep -i terminattr.*swix"
-      register: sh_ext_output
-      tags:
-        - never
-        - daemon_install
-    - set_fact:
-        installed_extension_name: "{{ sh_ext_output.stdout[0]|parse_cli_textfsm('telemetry_extension_name.fsm') }}"
-      tags:
-        - never
-        - daemon_install
-    - name: Removing installed TerminAttr Extension ({{ installed_extension_name[0]['extension_name_version'] }})
-      eos_command:
-        commands:
-          - "no extension {{ installed_extension_name[0]['extension_name_version'] }}.swix force"
-          - "delete extension:{{ installed_extension_name[0]['extension_name_version'] }}.swix"
-      when:
-        - install_newer
-        - installed_extension_name != ""
-      tags:
-        - never
-        - daemon_install
+    #- name: Read installed daemon version - Extension
+    #  eos_command:
+    #    commands: "show extensions | grep -i terminattr.*swix"
+    #  register: sh_ext_output
+    #  tags:
+    #    - never
+    #    - daemon_install
+    #- set_fact:
+    #    installed_extension_name: "{{ sh_ext_output.stdout[0]|parse_cli_textfsm('telemetry_extension_name.fsm') }}"
+    #  tags:
+    #    - never
+    #    - daemon_install
+    #- name: "Removing installed TerminAttr Extension "
+    #  eos_command:
+    #    commands:
+    #      - "no extension {{ installed_extension_name[0]['extension_name_version'] }}.swix force"
+    #      - "delete extension:{{ installed_extension_name[0]['extension_name_version'] }}.swix"
+    #  when:
+    #    - install_newer
+    #    - installed_extension_name != ""
+    #  tags:
+    #    - never
+    #    - daemon_install
 
     - name: Send install commands to {{ inventory_hostname }}
       eos_command:

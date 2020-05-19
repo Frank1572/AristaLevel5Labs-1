@@ -108,9 +108,10 @@
     - sw-hec-vtep-static
     - hec-shs
     - sw-hec-hana-pwr
-    - autoconf.ini.j2
-    - sw-hec-leaf-individual.j2
-    - sw-hec-leaf-pair.j2
+    - autoconf.ini
+    - sw-hec-leaf-individual
+    - sw-hec-leaf-pair
+    - 7160-profile-tcam-acl
   tags:
     - configlets
 

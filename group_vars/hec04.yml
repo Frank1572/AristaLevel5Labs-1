@@ -29,53 +29,58 @@ oob01:
     cva_ip: "10.9.242.39"
 
 cvp:
-  version: "cvp-2018.2.5-kvm.tgz"
-  path_to_cvp_file: "/ens/bin/images/arista/"
-  ip_eth0: "10.178.141.253"
-  ip_eth1: "10.255.252.69"
-  mask_eth0: "255.255.254.0"
-  mask_eth1: "255.255.240.0"
-  gw: "10.178.140.1"
-  name: "naa-hec04-cvp-01.net.sap.corp"
-  dns1: "10.17.121.30"
-  dns2: "10.17.122.10"
-  domain: "net.sap.corp"
-  ntp1: "10.17.122.185"
-  ntp2: "10.4.12.100"
+  version: cvp-2019.1.2-kvm.tgz
+  path_to_cvp_file: /ens/bin/images/arista/
+  # out of band ip for cvp :
+  ip_eth0: 10.9.243.253
+  mask_eth0: 255.255.254.0
+  gw: 10.9.242.1
+  # inband transport ip for cvp (for configuration purpose) VLAN920
+  ip_eth1: 10.255.177.69
+  mask_eth1: 255.255.255.240
+  name: naa-hec04-cvp-01.net.sap.corp
+  # nsq-dns-01 and dns-02 :
+  dns1: 10.4.202.200
+  dns2: 10.4.12.200
+  domain: net.sap.corp
+  ntp1: 10.4.12.100
+  ntp2: 10.4.12.102
   device_int: eth0
   cluster_int: eth1
-  ingest_key: "SecureKey02"
-  vmname: "cvp-hec02"
-  KvmDomain: "cvp"
-  password: "arista"
-  backupuser: "cvpbkp"
+  ingest_key: SecureKey04
+  vmname: cvp-hec04
+  KvmDomain: cvp
+  password: arista
+  backupuser: cvpbkp
   eth1_routes:
-    - prefix: "198.19.241.0"
-      mask: "24"
-      nexthop: "10.255.252.78"
-    - prefix: "198.19.195.0"
-      mask: "24"
-      nexthop: "10.255.252.78"
+      # IPMI NW Mgmt Range (HEC03-NW-MGMT06)
+    - prefix: 198.19.236.0
+      mask: 23
+      nexthop: 10.255.176.78
+      # Leaf and Spine NW Mgmt Range (Lo900)
+    - prefix: 198.19.158.0
+      mask: 23
+      nexthop: 10.255.176.78
   dhcp:
-    prefix: "10.178.140.0"
-    mask: "255.255.254.0"
-    range_low: "10.178.141.224"
-    range_high: "10.178.141.247"
+    prefix: 10.9.242.0
+    mask: 255.255.254.0
+    range_low: 10.9.243.224
+    range_high: 10.9.243.247
   aaa_config:
-    aaa_type: "RADIUS"
+    aaa_type: RADIUS
     servers:
-      - ip: "10.17.121.35"
-        secret: "secretRadPw"
-        authMode: "PAP"
+      - ip: 10.4.201.55
+        secret: secretRadPw
+        authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: "Enabled"
-      - ip: "10.17.122.21"
-        secret: "secretRadPw"
-        authMode: "PAP"
+        status: Enabled
+      - ip: 169.145.33.70
+        secret: secretRadPw
+        authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: "Enabled"
+        status: Enabled
 
 hec:
   hec_nr: "04"

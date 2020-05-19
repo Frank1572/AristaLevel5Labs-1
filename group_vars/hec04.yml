@@ -83,6 +83,7 @@ cvp:
         status: Enabled
 
 hec:
+  # left mostly unchanged. 
   hec_nr: "04"
   hana_hvx_descriptions_PO_MIN: 101
   hana_hvx_descriptions_PO_MAX: 124

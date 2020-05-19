@@ -53,14 +53,14 @@ cvp:
   password: arista
   backupuser: cvpbkp
   eth1_routes:
-      # IPMI NW Mgmt Range (HEC03-NW-MGMT06)
-    - prefix: 198.19.236.0
+      # IPMI NW Mgmt Range (HEC04-NW-MGMT07)
+    - prefix: 198.19.202.0
       mask: 23
-      nexthop: 10.255.176.78
-      # Leaf and Spine NW Mgmt Range (Lo900)
+      nexthop: 10.255.177.78
+      # Leaf and Spine NW Mgmt Range (HEC04-NW-MGMT08)
     - prefix: 198.19.158.0
       mask: 23
-      nexthop: 10.255.176.78
+      nexthop: 10.255.177.78  
   dhcp:
     prefix: 10.9.242.0
     mask: 255.255.254.0

@@ -197,12 +197,30 @@ hec:
         - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/0
           po: 1102
+        - id: 4/1
+          description: rt-hec01-cwan-01a, Fo0/0/0
+          po: 1501
+        - id: 5/1
+          description: rt-hec01-vpn-01a, Fo0/2/0
+          po: 1503
+        - id: 6/1
+          description: rt-hec01-inet-01a, Fo0/2/0
         - id: 27/1
           description: sw-hec01-brdr-01b, Et27
           po: 42
         - id: 28/1
           description: sw-hec01-brdr-01b, Et28
           po: 42
+        - id: 9/1
+          description: fw-hec01-01-new
+        - id: 961
+          description: ->Transfer to rt-hec01-cwan-01a
+          type: vlan
+          ip: 10.254.253.1/31
+        - id: 965
+          description: ->Transfer to rt-hec01-vpn-01a
+          type: vlan
+          ip: 10.254.253.9/31
       port_channels:
         - id: 42
           description: mlag peer link
@@ -211,6 +229,12 @@ hec:
           trunk: all
         - id: 1102
           description: rt-hec01-core-01b
+          trunk: all
+        - id: 1501
+          description: rt-hec01-cwan-01a
+          trunk: all
+        - id: 1503
+          description: rt-hec01-vpn-01a
           trunk: all
     - number: 1b
       uplinks:

@@ -504,6 +504,40 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+    - number: 2a
+      spine_port_towards_leaf: Et3/5/1
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      ports:
+        - id: 27/1
+          description: sw-hec01-str-02b, Et27
+          po: 42
+        - id: 28/1
+          description: sw-hec01-str-02b, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 2b
+      spine_port_towards_leaf: Et3/5/1
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      ports:
+        - id: 27/1
+          description: sw-hec01-str-02a, Et27
+          po: 42
+        - id: 28/1
+          description: sw-hec01-str-02a, Et28
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
   interdc:
     - number: "01"
       ports:

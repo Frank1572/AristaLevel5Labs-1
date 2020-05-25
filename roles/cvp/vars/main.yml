@@ -33,8 +33,6 @@ container:
   HEC-InterDC:
     parent_container: HEC
     configlets:
-      - sw-mlag-a
-      - sw-mlag-b
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
@@ -88,8 +86,6 @@ container:
   HEC-Leaf:
     parent_container: HEC-Routed Fabric
     configlets:
-      - sw-mlag-a
-      - sw-mlag-b
       - HEC-VLANs
   HEC-Service leaf:
     parent_container: HEC-Leaf
@@ -149,6 +145,16 @@ configlet_list:
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
   sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
+  sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
+  sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"
+  sw-hec-brdr-02a: "{{ lookup('file', 'configs/sw-hec-brdr-02a') }}"
+  sw-hec-brdr-02b: "{{ lookup('file', 'configs/sw-hec-brdr-02b') }}"
+  sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a') }}"
+  sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b') }}"
+  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
+  sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
+  sw-hec-str-02a: "{{ lookup('file', 'configs/sw-hec-str-02a') }}"
+  sw-hec-str-02b: "{{ lookup('file', 'configs/sw-hec-str-02b') }}"
 
 configlet_filter_list_generic:
   - sw-hec
@@ -182,3 +188,13 @@ configlet_filter_list_generic:
   - sw-hec-vtep-static
   - sw-hec-hana-pwr
   - hec-shs
+  - sw-hec-brdr-01a
+  - sw-hec-brdr-01b
+  - sw-hec-brdr-02a
+  - sw-hec-brdr-02b
+  - sw-hec-brdr-03a
+  - sw-hec-brdr-03b
+  - sw-hec-str-01a
+  - sw-hec-str-01b
+  - sw-hec-str-02a
+  - sw-hec-str-02b

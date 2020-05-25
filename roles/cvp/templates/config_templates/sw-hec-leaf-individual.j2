@@ -7,18 +7,22 @@ interface $SPINE1_INTERFACE
    description LLDP:$SPINE1_NAME:$SPINE1_PORT
    ip address $SPINE1_IP/31
    mtu $MTU
+   $SPEED
 interface $SPINE2_INTERFACE
    description LLDP:$SPINE2_NAME:$SPINE2_PORT
    ip address $SPINE2_IP/31
    mtu $MTU
+   $SPEED
 interface $SPINE3_INTERFACE
    description LLDP:$SPINE3_NAME:$SPINE3_PORT
    ip address $SPINE3_IP/31
    mtu $MTU
+   $SPEED
 interface $SPINE4_INTERFACE
    description LLDP:$SPINE4_NAME:$SPINE4_PORT
    ip address $SPINE4_IP/31
    mtu $MTU
+   $SPEED
 
 ! ========== Hostname ==========  
 hostname $HOSTNAME

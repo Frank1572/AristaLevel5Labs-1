@@ -345,7 +345,7 @@ hec:
           description: rt-hec03-cwan-01a
           trunk: all
         - id: 1502
-	  description: rt-hec03-cwan-01b
+          description: rt-hec03-cwan-01b
           trunk: all
         - id: 1503
           description: rt-hec03-vpn-01a
@@ -353,11 +353,11 @@ hec:
         - id: 1504
           description: rt-hec03-vpn-01b
           trunk: all
-	- id: 1601
+        - id: 1601
           description: rt-hec03-idc-01a
           trunk: all
         - id: 1602
-	  description: rt-hec03-idc-01b
+          description: rt-hec03-idc-01b
           trunk: all
         - id: 1901
           description: rt-hec03-px-01a
@@ -428,7 +428,7 @@ hec:
           description: rt-hec03-cwan-01a
           trunk: all
         - id: 1502
-	  description: rt-hec03-cwan-01b
+          description: rt-hec03-cwan-01b
           trunk: all
         - id: 1503
           description: rt-hec03-vpn-01a
@@ -436,11 +436,11 @@ hec:
         - id: 1504
           description: rt-hec03-vpn-01b
           trunk: all
-	- id: 1601
+        - id: 1601
           description: rt-hec03-idc-01a
           trunk: all
         - id: 1602
-	  description: rt-hec03-idc-01b
+          description: rt-hec03-idc-01b
           trunk: all
         - id: 1901
           description: rt-hec03-px-01a

@@ -143,7 +143,7 @@ hec:
   admin_sw_neig_ip_oob1b: 10.255.224.9
   admin_sw_neig_as_oob1b: 1.463
   oob01_lo0_prefix: 198.19.?.?
-  oob01_as: ??????
+  oob01_as: 64531.3
   spine_nr:
     - 11
     - 12

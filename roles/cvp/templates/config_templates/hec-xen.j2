@@ -1,83 +1,17 @@
-vlan 900
-!
-interface Port-Channel101
-   mlag 101
-!
-interface Port-Channel102
-   mlag 102
-!
-interface Port-Channel103
-   mlag 103
-!
-interface Port-Channel104
-   mlag 104
-!
-interface Port-Channel105
-   mlag 105
-!
-interface Port-Channel106
-   mlag 106
-!
-interface Port-Channel107
-   mlag 107
-!
-interface Port-Channel108
-   mlag 108
-!
-interface Port-Channel109
-   mlag 109
-!
-interface Port-Channel110
-   mlag 110
-!
-interface Port-Channel111
-   mlag 111
-!
-interface Port-Channel112
-   mlag 112
-!
-interface Port-Channel113
-   mlag 113
-!
-interface Port-Channel114
-   mlag 114
-!
-interface Port-Channel115
-   mlag 115
-!
-interface Port-Channel116
-   mlag 116
-!
-interface Port-Channel117
-   mlag 117
-!
-interface Port-Channel118
-   mlag 118
-!
-interface Port-Channel119
-   mlag 119
-!
-interface Port-Channel120
-   mlag 120
-!
-interface Port-Channel121
-   mlag 121
-!
-interface Port-Channel122
-   mlag 122
-!
-interface Port-Channel900
-   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
-   switchport mode trunk
-   mlag 900
-!
-interface Port-Channel101-122
+{% for i in range(1, 22) %}
+interface Port-Channel{{ 100 + i }}
+   mlag {{ 100 + i }}
    switchport trunk native vlan 5
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    port-channel lacp fallback individual
    spanning-tree portfast
 !
+{% endfor %}
+interface Port-Channel900
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   switchport mode trunk
+   mlag 900
+!
 ip access-list HEC{{ hec.hec_nr }}-L2-APP
 {{ hec.hvv_hvx_acl_rules }}
-

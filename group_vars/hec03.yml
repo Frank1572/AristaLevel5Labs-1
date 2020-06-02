@@ -257,9 +257,9 @@ hec:
         - id: 48
           description: ->naa-hec03-01, in-band
           access_vlan: 916
-     port_channels:
-        -id: 42
-         description: mlag peer link
+      port_channels:
+        - id: 42
+          description: mlag peer link
 	- id: 48
           description: ->naa-hec03-01, in-band
           po: 48
@@ -275,9 +275,9 @@ hec:
         - id: 48
           description: ->naa-hec03-01, in-band
           access_vlan: 916
-     port_channels:
-        -id: 42
-         description: mlag peer link
+      port_channels:
+        - id: 42
+          description: mlag peer link
 	- id: 48
           description: ->naa-hec03-01, in-band
           po: 48
@@ -295,7 +295,7 @@ hec:
           po: 1103
         - id: 2
           description: rt-hec03-core-01d, Fo0/0/0
-          po: 1104, 
+          po: 1104
         - id: 3
           description: rt-hec03-inet-01a, Fo0/2/0
           po: 1401
@@ -316,7 +316,7 @@ hec:
           po: 1902
         - id: 9
           description: rt-hec03-cwan-01a, Fo0/0/0
-          po:1501
+          po: 1501
         - id: 10
           description: rt-hec03-cwan-01b, Fo0/0/0
           po: 1502
@@ -326,7 +326,7 @@ hec:
         - id: 28
           description: sw-hec03-brdr-02b, Et28
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
         - id: 1103
@@ -399,7 +399,7 @@ hec:
           po: 1902
         - id: 9
           description: rt-hec03-cwan-01a, Fo0/0/1
-          po:1501
+          po: 1501
         - id: 10
           description: rt-hec03-cwan-01b, Fo0/0/1
           po: 1502
@@ -409,7 +409,7 @@ hec:
         - id: 28
           description: sw-hec03-brdr-02b, Et28
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
         - id: 1103
@@ -448,33 +448,6 @@ hec:
         - id: 1902
           description: rt-hec03-px-01b
           trunk: all 		 
-	  port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 5
-          description: ->hec03f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec03f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec03-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec03-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
-        - id: 48
-          description: ->naa-hec03-01, in-band
-          access_vlan: 916
-        - id: 1503
-          description: rt-hec03-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec03-vpn-01b
-          trunk: 900,920,940
     str:
     - number: 1a
       spine_port_towards_leaf: Et9/1

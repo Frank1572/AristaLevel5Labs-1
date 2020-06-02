@@ -15,8 +15,8 @@
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number == id_short %}
 !allbrdrs.number {{allbrdrs.number}}
-    {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
     {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
+    {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
     {# Chassis based devices #}
     {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
     {% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}

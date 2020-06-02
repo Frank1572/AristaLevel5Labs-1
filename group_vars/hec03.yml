@@ -260,7 +260,7 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-	- id: 48
+        - id: 48
           description: ->naa-hec03-01, in-band
           po: 48
           access_vlan: 916
@@ -278,7 +278,7 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-	- id: 48
+        - id: 48
           description: ->naa-hec03-01, in-band
           po: 48
           access_vlan: 916		  

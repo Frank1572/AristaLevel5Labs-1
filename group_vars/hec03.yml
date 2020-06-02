@@ -585,7 +585,7 @@ str:
         370 permit vlan 60 0x000 ip 198.19.128.0/20 any
         380 permit vlan 60 0x000 ip any any log
         390 permit ip any any log
-	
+
   hana_acl_rules: |
         10 permit icmp any any
         20 permit pim any any

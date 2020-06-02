@@ -143,7 +143,7 @@ hec:
   admin_sw_neig_ip_oob1b: 10.255.224.9
   admin_sw_neig_as_oob1b: 1.463
   oob01_lo0_prefix: 198.19.?.?
-  oob01_as: ??????
+  oob01_as: 64531.3
   spine_nr:
     - 11
     - 12
@@ -257,10 +257,10 @@ hec:
         - id: 48
           description: ->naa-hec03-01, in-band
           access_vlan: 916
-     port_channels:
-        -id: 42
-         description: mlag peer link
-	- id: 48
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 48
           description: ->naa-hec03-01, in-band
           po: 48
           access_vlan: 916
@@ -275,10 +275,10 @@ hec:
         - id: 48
           description: ->naa-hec03-01, in-band
           access_vlan: 916
-     port_channels:
-        -id: 42
-         description: mlag peer link
-	- id: 48
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 48
           description: ->naa-hec03-01, in-band
           po: 48
           access_vlan: 916		  
@@ -295,7 +295,7 @@ hec:
           po: 1103
         - id: 2
           description: rt-hec03-core-01d, Fo0/0/0
-          po: 1104, 
+          po: 1104
         - id: 3
           description: rt-hec03-inet-01a, Fo0/2/0
           po: 1401
@@ -316,7 +316,7 @@ hec:
           po: 1902
         - id: 9
           description: rt-hec03-cwan-01a, Fo0/0/0
-          po:1501
+          po: 1501
         - id: 10
           description: rt-hec03-cwan-01b, Fo0/0/0
           po: 1502
@@ -326,7 +326,7 @@ hec:
         - id: 28
           description: sw-hec03-brdr-02b, Et28
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
         - id: 1103
@@ -345,7 +345,7 @@ hec:
           description: rt-hec03-cwan-01a
           trunk: all
         - id: 1502
-	  description: rt-hec03-cwan-01b
+          description: rt-hec03-cwan-01b
           trunk: all
         - id: 1503
           description: rt-hec03-vpn-01a
@@ -353,11 +353,11 @@ hec:
         - id: 1504
           description: rt-hec03-vpn-01b
           trunk: all
-	- id: 1601
+        - id: 1601
           description: rt-hec03-idc-01a
           trunk: all
         - id: 1602
-	  description: rt-hec03-idc-01b
+          description: rt-hec03-idc-01b
           trunk: all
         - id: 1901
           description: rt-hec03-px-01a
@@ -399,7 +399,7 @@ hec:
           po: 1902
         - id: 9
           description: rt-hec03-cwan-01a, Fo0/0/1
-          po:1501
+          po: 1501
         - id: 10
           description: rt-hec03-cwan-01b, Fo0/0/1
           po: 1502
@@ -409,7 +409,7 @@ hec:
         - id: 28
           description: sw-hec03-brdr-02b, Et28
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
         - id: 1103
@@ -428,7 +428,7 @@ hec:
           description: rt-hec03-cwan-01a
           trunk: all
         - id: 1502
-	  description: rt-hec03-cwan-01b
+          description: rt-hec03-cwan-01b
           trunk: all
         - id: 1503
           description: rt-hec03-vpn-01a
@@ -436,11 +436,11 @@ hec:
         - id: 1504
           description: rt-hec03-vpn-01b
           trunk: all
-	- id: 1601
+        - id: 1601
           description: rt-hec03-idc-01a
           trunk: all
         - id: 1602
-	  description: rt-hec03-idc-01b
+          description: rt-hec03-idc-01b
           trunk: all
         - id: 1901
           description: rt-hec03-px-01a
@@ -448,33 +448,6 @@ hec:
         - id: 1902
           description: rt-hec03-px-01b
           trunk: all 		 
-	  port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 5
-          description: ->hec03f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec03f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec03-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec03-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
-        - id: 48
-          description: ->naa-hec03-01, in-band
-          access_vlan: 916
-        - id: 1503
-          description: rt-hec03-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec03-vpn-01b
-          trunk: 900,920,940
     str:
     - number: 1a
       spine_port_towards_leaf: Et9/1
@@ -547,45 +520,45 @@ str:
           description: mlag peer link		   
   hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
-		20 permit vlan 50 0x000 pim any any
-		30 permit vlan 50 0x000 92 any any
-		40 permit vlan 50 0x000 vrrp any any
-		50 permit vlan 50 0x000 ip any 224.0.0.0/5
-		60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
-		70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
-		80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
-		90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
-		100 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22 log
-		110 permit vlan 50 0x000 ip 198.18.80.0/22 any
-		120 permit vlan 50 0x000 ip any any log
-		130 permit vlan 55 0x000 icmp any any
-		140 permit vlan 55 0x000 pim any any
-		150 permit vlan 55 0x000 92 any any
-		160 permit vlan 55 0x000 vrrp any any
-		170 permit vlan 55 0x000 ip any 224.0.0.0/5
-		180 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.25
-		190 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
-		200 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
-		210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
-		220 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16 log
-		230 permit vlan 55 0x000 ip 100.125.0.0/16 any
-		240 permit vlan 55 0x000 ip any any log
-		250 permit vlan 60 0x000 icmp any any
-		260 permit vlan 60 0x000 pim any any
-		270 permit vlan 60 0x000 92 any any
-		280 permit vlan 60 0x000 vrrp any any
-		290 permit vlan 60 0x000 ip any 224.0.0.0/5
-		300 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
-		310 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
-		320 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21 log
-		330 permit vlan 60 0x000 ip 198.18.88.0/21 any log
-		340 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.25
-		350 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
-		360 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20 log
-		370 permit vlan 60 0x000 ip 198.19.128.0/20 any
-		380 permit vlan 60 0x000 ip any any log
-		390 permit ip any any log
-	
+        20 permit vlan 50 0x000 pim any any  
+        30 permit vlan 50 0x000 92 any any
+        40 permit vlan 50 0x000 vrrp any any
+        50 permit vlan 50 0x000 ip any 224.0.0.0/5
+        60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
+        70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
+        80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
+        90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
+        100 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22 log
+        110 permit vlan 50 0x000 ip 198.18.80.0/22 any
+        120 permit vlan 50 0x000 ip any any log
+        130 permit vlan 55 0x000 icmp any any
+        140 permit vlan 55 0x000 pim any any
+        150 permit vlan 55 0x000 92 any any
+        160 permit vlan 55 0x000 vrrp any any
+        170 permit vlan 55 0x000 ip any 224.0.0.0/5
+        180 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.25
+        190 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
+        200 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
+        210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
+        220 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16 log
+        230 permit vlan 55 0x000 ip 100.125.0.0/16 any
+        240 permit vlan 55 0x000 ip any any log
+        250 permit vlan 60 0x000 icmp any any
+        260 permit vlan 60 0x000 pim any any
+        270 permit vlan 60 0x000 92 any any
+        280 permit vlan 60 0x000 vrrp any any
+        290 permit vlan 60 0x000 ip any 224.0.0.0/5
+        300 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
+        310 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
+        320 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21 log
+        330 permit vlan 60 0x000 ip 198.18.88.0/21 any log
+        340 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.25
+        350 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
+        360 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20 log
+        370 permit vlan 60 0x000 ip 198.19.128.0/20 any
+        380 permit vlan 60 0x000 ip any any log
+        390 permit ip any any log
+
   hana_acl_rules: |
         10 permit icmp any any
         20 permit pim any any

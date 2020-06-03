@@ -10,8 +10,7 @@ ansible_user=cvpadmin
 ansible_password=arista
 
 [install:vars]
-ansible_connection=network_cli
-ansible_network_os=eos
+ansible_connection=paramiko
 ansible_user=root
 ansible_password=arista
 
@@ -29,9 +28,9 @@ hec03
 hec04
 hec13
 hec14
+hec04
 
 [install:children]
-hec04
 
 [hec19]
 #10.178.146.43

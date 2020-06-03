@@ -8,13 +8,6 @@ interface Loopback2
 router bgp $BGP_AS
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
-   neighbor EVPN-PG peer-group
-   neighbor EVPN-PG remote-as $SPINE_AS
-   neighbor EVPN-PG update-source Loopback1
-   neighbor EVPN-PG send-community standard extended
-   neighbor EVPN-PG ebgp-multihop 2
-   neighbor EVPN-PG maximum-routes $EVPN_RTMAX
-   neighbor EVPN-PG fall-over bfd
    !
    neighbor SPINE-PG peer-group
    neighbor SPINE-PG remote-as $SPINE_AS
@@ -30,6 +23,15 @@ router bgp $BGP_AS
    neighbor MLPEER-PG maximum-routes $IBGP_RTMAX
    neighbor MLPEER-PG fall-over bfd
    network $LOOPBACK2_IP/32
+   !
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG remote-as $SPINE_AS
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG maximum-routes $EVPN_RTMAX
+   neighbor EVPN-PG fall-over bfd
    !
    neighbor 10.100.0.11 peer-group EVPN-PG
    neighbor 10.100.0.12 peer-group EVPN-PG
@@ -51,3 +53,4 @@ router bgp $BGP_AS
       redistribute learned
       vlan 5-2999
    !
+{% endif %}

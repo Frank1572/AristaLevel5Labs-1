@@ -1,4 +1,4 @@
 ## we need some external data which is having more global values
 - name: repo_hec_globals
-  src: https://github.wdf.sap.corp/thecoolkids/repo_hec_globals
+  src: git+https://github.wdf.sap.corp/thecoolkids/repo_hec_globals
   version: master

@@ -29,7 +29,7 @@ oob01:
     cva_ip: "10.9.242.39"
 
 cvp:
-  version: cvp-2019.1.2-kvm.tgz
+  version: cvp-2019.1.2-kvm.tar
   path_to_cvp_file: /ens/bin/images/arista/
   # out of band ip for cvp :
   ip_eth0: 10.9.243.253

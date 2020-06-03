@@ -61,7 +61,7 @@ cvp:
       mask: "25"
       nexthop: "10.255.186.78"
       # Leaf and Spine NW Mgmt Range (Lo900)
-    - prefix: "198.19.198.0"
+    - prefix: "198.19.182.0"
       mask: "24"
       nexthop: "10.255.186.78"
 
@@ -95,56 +95,56 @@ hec:
   ma_domain: "net.sap.corp"
   lo900_domain: "tor2.hec.sap.biz"
   vl900_domain: "tor2.hec.sap.biz"
-  vl900_mask: 24
-  vl900_def_gw: 198.19.241.1
-  vl900_net: 198.19.241.0/24
-  lo900_net: 198.19.195.0/24
-  lo900_prefix: 198.19.195
-  inband_trans_brdr: 10.255.252.78
-  inband_trans_brdr_mac: 00:1c:73:00:00:99
-  inband_trans_net: 10.255.252.64/28
-  inband_trans_prefix: 10.255.252
+  vl900_mask: 25
+  vl900_def_gw: 198.19.233.1
+  vl900_net: 198.19.233.0/25
+  lo900_net: 198.19.182.0/24
+  lo900_prefix: 198.19.182
+  inband_trans_brdr: 10.255.186.78
+  inband_trans_brdr_mac: 00:1c:73:00:00:96
+  inband_trans_net: 10.255.186.64/28
+  inband_trans_prefix: 10.255.186
   inband_trans_mask: 28
   inband_trans_gw_vlan: Vlan916
-  inband_trans_gw: 10.255.252.65
-  inband_trans_cvx: 10.255.252.68
-  inband_trans_cvp: 10.255.252.69
-  oob_def_gw: 10.178.140.1
-  oob_prefix: 10.178.140
+  inband_trans_gw: 10.255.186.65
+  inband_trans_cvx: 10.255.186.68
+  inband_trans_cvp: 10.255.186.69
+  oob_def_gw: 10.9.246.1
+  oob_prefix: 10.9.246
   oob_mask: 23
   oob_vrf: OOB
-  oob_cvx: 10.178.141.252
-  oob_cvp: 10.178.141.253
+  oob_cvx: 10.9.246.252
+  oob_cvp: 10.9.246.253
   as_low: 4200998673
   as_high: 4200999871
   cvp_ingest_key: SecureKey02
-  dns1: 10.127.141.1
-  dns2: 10.127.141.2
-  ntp1: 147.204.148.93
-  ntp2: 147.204.148.92
+  dns1: 100.127.45.1
+  dns2: 100.127.45.2
+  ntp1: 169.145.84.7
+  ntp2: 169.145.84.11
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 147.204.132.91
-  syslog2: 147.204.133.69
-  syslog3: 147.204.146.42
-  radius1: 10.17.122.21
-  radius2: 10.17.121.35
+  syslog1: 169.145.33.24
+  syslog2: 169.145.84.91
+  syslog3: 100.127.45.6
+  radius1: 10.4.201.55
+  radius2: 169.145.33.70
   admin_mpls:
-    - prefix_mask: "10.178.140.0/23"
+    - prefix_mask: "10.9.246.0/23"
       sequence: "20"
-  admin_sw_interface: Ethernet49
-  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
-  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"
-  admin_sw_prefix: 10.255.202
-  admin_sw_mask: 29
-  admin_sw_ip_oob1a: 10.255.202.9
-  admin_sw_ip_oob1b: 10.255.202.10
-  admin_sw_neig_ip_oob1a: 10.255.202.11
+  admin_sw_interface: Ethernet1
+  admin_sw_description_oob1a: "tordc02-adm-03-co Ethernet1/13"
+  admin_sw_description_oob1b: "tordc02-adm-04-co Ethernet1/13"
+  admin_sw_prefix: 10.255.195
+  admin_sw_mask: 31
+  admin_sw_ip_oob1a: 10.255.195.8
+  admin_sw_ip_oob1b: 10.255.195.10
+  admin_sw_neig_ip_oob1a: 10.255.195.9 
   admin_sw_neig_as_oob1a: 1.463
-  admin_sw_neig_ip_oob1b: 10.255.202.12
-  admin_sw_neig_as_oob1b: 1.463
+  admin_sw_neig_ip_oob1b: 10.255.195.11
+  admin_sw_neig_as_oob1b: 64536
   oob01_lo0_prefix: 198.19.249
-  oob01_as: 64531.2
+  oob01_as: 64531.14
   spine_nr:
     - 11
     - 12
@@ -175,22 +175,22 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
-  oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
-  oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
-  oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015
-  oob01b_snmp_location: NL-AMS-AM7-Z1C-03-01-39
+  oob01a_snmp_contact: ncons-hec14-oob-02.net.sap.corp:1005
+  oob01a_snmp_location: CA-TOR2-CAGE3-CAB40-U43
+  oob01b_snmp_contact: ncons-hec14-oob-02.net.sap.corp:1006
+  oob01b_snmp_location: CA-TOR2-CAGE3-CAB40-U43
   oobs_2_7:
     - number: 02
-      snmp_contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+      snmp_contact: ncons-hec14-oob-01:1001
+      snmp_location: CA-TOR2-CAGE3-CAB40-U44
       ip_last_octett: 4
     - number: 03
-      snmp_contact: 34340566:ncons-hec02-07.net.sap.corp:1017
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-03-01-38
+      snmp_contact: ncons-hec14-oob-03:1009
+      snmp_location: CA-TOR2-CAGE3-CAB44-U41
       ip_last_octett: 5
     - number: 04
-      snmp_contact: 34340569:ncons-hec02-08.net.sap.corp:1001
-      snmp_location:  EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z3E)-02-07-32
+      snmp_contact: unknown
+      snmp_location:  unknown
       ip_last_octett: 6
     - number: 05
       snmp_contact: unknown
@@ -203,24 +203,36 @@ hec:
   brdr:
     - number: 1a
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
-      spine_port_towards_leaf: Et3/1/1
+        - 29
+        - 30
+        - 31
+        - 32
+      spine_port_towards_leaf: Et3/3/1
       ports:
-        - id: 1/1
+        - id: 1
           description: rt-hec14-core-01a, Fo0/2/0
           po: 1101
-        - id: 2/1
+        - id: 2
           description: rt-hec14-core-01b, Fo0/2/0
           po: 1102
-        - id: 27/1
+        - id: 3
+          description: rt-hec14-cwan-01a, Fo0/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01a, Fo0/0/0
+          po: 1104            
+        - id: 27
           description: sw-hec14-brdr-01b, Et27
           po: 42
-        - id: 28/1
+        - id: 28
           description: sw-hec14-brdr-01b, Et28
           po: 42
+        - id: 5
+          description: rt-hec14-vpn-01a
+          po: 1106 
+        - id: 6
+          description: rt-hec14-inet-01a
+          po: 1105           
       port_channels:
         - id: 42
           description: mlag peer link
@@ -230,13 +242,25 @@ hec:
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01a
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01a
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01a
+          trunk: all  
+        - id: 1106
+          description: rt-hec14-vpn-01a
+          trunk: all       
     - number: 1b
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
-      spine_port_towards_leaf: Et3/2/1
+        - 29
+        - 30
+        - 31
+        - 32
+      spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 1
           description: rt-hec14-core-01a, Fo0/2/1
@@ -244,12 +268,24 @@ hec:
         - id: 2
           description: rt-hec14-core-01b, Fo0/2/1
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01a, Fo1/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01a, Fo1/0/0
+          po: 1104            
         - id: 27
           description: sw-hec14-brdr-01a, Et27
           po: 42
         - id: 28
           description: sw-hec14-brdr-01a, Et28
           po: 42
+        - id: 5
+          description: rt-hec14-vpn-01a
+          po: 1106 
+        - id: 6
+          description: rt-hec14-inet-01a
+          po: 1105  
       port_channels:
         - id: 42
           description: mlag peer link
@@ -259,48 +295,32 @@ hec:
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01a
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01a
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01a
+          trunk: all  
+        - id: 1106
+          description: rt-hec14-vpn-01a
+          trunk: all    
     - number: 2a
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
-      spine_port_towards_leaf: Et3/3/1
+        - 51
+        - 52
+        - 53
+        - 54
+      spine_port_towards_leaf: Et3/5/1
       ports:
-        - id: 1
-          description: rt-hec14-vpn-01a
-          po: 1503
-        - id: 2
-          description: rt-hec14-vpn-01b
-          po: 1504
-        - id: 3
-          description: ->lb-hec14-0[12], e1.1
-          trunk: 940
-        - id: 4
-          description: ->lb-hec14-0[12], e1.2
-          trunk: 940
-        - id: 5
-          description: ->lb-hec14-0[12], e1.3
-          trunk: 940
-        - id: 6
-          description: ->fw-hec14-01, et1-0[12]
-          po: 10
-        - id: 7
-          description: ->fw-hec14-02, et1-0[12]
-          po: 20
-        - id: 29
-          description: ->hec14f000[3r4],BMC
-          access_vlan: 110
-          speed: 100full
-        - id: 27
-          description: sw-hec14-brdr-02b, Et27
+        - id: 49
+          description: sw-hec14-brdr-02b, Et49
           po: 42
-        - id: 28
-          description: sw-hec14-brdr-02b, Et28
+        - id: 50
+          description: sw-hec14-brdr-02b, Et50
           po: 42
-        - id: 47
-          description: ->fwm-hec-emea-01, eth1-0[12]
-          po: 30
         - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
@@ -308,72 +328,23 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-        - id: 5
-          description: ->hec14f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec14f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec14-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec14-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
-        - id: 1503
-          description: rt-hec14-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec14-vpn-01b
-          trunk: 900,920,940
     - number: 2b
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
-      spine_port_towards_leaf: Et3/4/1
+        - 51
+        - 52
+        - 53
+        - 54
+      spine_port_towards_leaf: Et3/6/1
       ports:
-        - id: 1
-          description: rt-hec14-vpn-01a
-          po: 1503
-        - id: 2
-          description: rt-hec14-vpn-01b
-          po: 1504
-        - id: 3
-          description: ->lb-hec14-0[12], e1.1
-          trunk: 940
-        - id: 4
-          description: ->lb-hec14-0[12], e1.2
-          trunk: 940
-        - id: 5
-          description: ->lb-hec14-0[12], e1.3
-          trunk: 940
-        - id: 6
-          description: ->fw-hec14-01, et1-0[12]
-          po: 10
-        - id: 7
-          description: ->fw-hec14-02, et1-0[12]
-          po: 20
-        - id: 29
-          description: ->hec14f000[3r4],BMC
-          access_vlan: 110
-          speed: 100full
-        - id: 27
-          description: sw-hec14-brdr-02a, Et27
+        - id: 49
+          description: sw-hec14-brdr-02a, Et49
           po: 42
-        - id: 28
-          description: sw-hec14-brdr-02a, Et28
+        - id: 50
+          description: sw-hec14-brdr-02a, Et50
           po: 42
-        - id: 47
-          description: ->fwm-hec-emea-01, eth1-0[12]
-          po: 30
         - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
@@ -381,36 +352,15 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-        - id: 5
-          description: ->hec14f0005
-          access_vlan: 110
-        - id: 6
-          description: ->hec14f0006
-          access_vlan: 110
-        - id: 10
-          description: ->fw-hec14-01
-          trunk: all
-        - id: 20
-          description: ->fw-hec14-02
-          trunk: all
-        - id: 30
-          description: ->fwm-hec-emea-09
-          access_vlan: 90
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
-        - id: 1503
-          description: rt-hec14-vpn-01a
-          trunk: 900,920,940
-        - id: 1504
-          description: rt-hec14-vpn-01b
-          trunk: 900,920,940
     - number: 3a
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 29
+        - 30
+        - 31
+        - 32
       spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 1
@@ -419,6 +369,18 @@ hec:
         - id: 2
           description: rt-hec14-core-01d, Fo0/2/0
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01b, Fo0/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01b, Fo0/0/0
+          po: 1104            
+        - id: 5
+          description: rt-hec14-vpn-01b
+          po: 1106
+        - id: 6
+          description: rt-hec14-inet-01b
+          po: 1105  
         - id: 27
           description: sw-hec14-brdr-03b, Et27
           po: 42
@@ -434,6 +396,18 @@ hec:
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+        - id: 1103
+          description: rt-hec14-cwan-01b
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01b
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01b
+          trunk: all 
+        - id: 1106
+          description: rt-hec14-vpn-01b
+          trunk: all    
     - number: 3b
       uplinks:
         - 25
@@ -448,6 +422,18 @@ hec:
         - id: 2
           description: rt-hec14-core-01d, Fo0/2/1
           po: 1102
+        - id: 3
+          description: rt-hec14-cwan-01b, Fo1/0/0
+          po: 1103
+        - id: 4
+          description: rt-hec14-idc-01b, Fo1/0/0
+          po: 1104  
+        - id: 5
+          description: rt-hec14-vpn-01b
+          po: 1106
+        - id: 6
+          description: rt-hec14-inet-01b
+          po: 1105  
         - id: 27
           description: sw-hec14-brdr-03a, Et27
           po: 42
@@ -463,6 +449,18 @@ hec:
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+         - id: 1103
+          description: rt-hec14-cwan-01b
+          trunk: all
+        - id: 1104
+          description: rt-hec14-idc-01b
+          trunk: all         
+        - id: 1105
+          description: rt-hec14-inet-01b
+          trunk: all 
+        - id: 1106
+          description: rt-hec14-vpn-01b
+          trunk: all   
   str:
     - number: 1a
       spine_port_towards_leaf: Et3/5/1

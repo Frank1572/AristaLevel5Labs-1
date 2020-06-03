@@ -94,6 +94,7 @@
     - hec-xen
     - sw-hec-spine
     - sw-hec-hana-7160-32CQ
+    - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
     - sw-hec-hvx-7160-32CQ
     - sw-hec-hvx-7160-48YC6
@@ -267,6 +268,36 @@
     - storageleafs
 
 - set_fact:
+    id: 's2a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-02a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-02a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's2b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-02b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-02b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
     id: 'h1a'
   tags:
     - configlets
@@ -330,7 +361,7 @@
 - name: Copy configlet builders to the CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
-    src: "{{role_path}}/files/configlet_builders"
+    src: "{{role_path}}/files/configlet_builders/"
     dest: /tmp
   tags:
     - upload_configlets

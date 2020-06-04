@@ -33,13 +33,18 @@
   tags:
     - cva
 
-# include installation and initialization tasks
-- name: Include cvp_install
-  include_tasks: cvp_install.yml
+# include operation, installation and initialization tasks
+- name: Include cva_install
+  include_tasks: cva_install.yml
   tags:
     - cva_install
 
-- name: Include cvp_init
-  include_tasks: cvp_init.yml
+- name: Include cva_init
+  include_tasks: cva_init.yml
   tags:
     - cva_init
+
+- name: Include cvp_ops
+  include_tasks: cvp_ops.yml
+  tags:
+    - cvp_stop

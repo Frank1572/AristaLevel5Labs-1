@@ -11,12 +11,6 @@
     - configure_aaa
     - reload_TerminAttr
 
-# import cvp operation
-- name: Include cvp_ops
-  include_tasks: cvp_ops.yml
-  tags:
-    - cvp_stop
-
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself
 - name: Check if directory for configlet builders exists

@@ -58,5 +58,5 @@ ansible_network_os=eos
 ansible_httpapi_port=443
 # 'cvpadmin' user should not be used after cvp has been intially configured and is
 #  able to authenticate against radius
-#ansible_user=cvpadmin
-#ansible_password=arista
+ansible_user=cvpadmin
+ansible_password=arista

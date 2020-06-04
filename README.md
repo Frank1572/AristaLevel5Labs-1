@@ -8,11 +8,11 @@ It is required to install data from repository "repo_hec_globals". Run the follo
 
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 
-Always consider the use of "--limit hecxx" (with 'xx' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
+Always consider the use of "--limit hecXX" (with 'XX' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
 
 - Create OOB01 a/b configuration with the ansible scripts
 
-		ansible-playbook dhcp.yml -i dhcp --tags "oob01" --limit HECxx
+		ansible-playbook cva.yml -i dhcp --tags "oob01" --limit hecXX
 
  - Copy the generated configs onto the OOB01 a/b switches. File location is from main ansible folder in "roles/oob01/files/configs/"
 
@@ -50,13 +50,15 @@ Always consider the use of "--limit hecxx" (with 'xx' being the location number)
 
  - Run the ansible playbooks to setup the environment
 
-       ansible-playbook dhcp.yml -i dhcp --tags "idrac" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 60  --limit hecXX
 
-       ansible-playbook dhcp.yml -i dhcp --tags "cva" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 60  --limit hecXX
 
-       ansible-playbook static.yml -i static --tags "cvp_init" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i cva --tags "cva_init" --timeout 60  --limit hecXX
 
-       ansible-playbook static.yml -i static --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i cva --tags "cva_install" --timeout 60  --limit hecXX
+
+       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 
@@ -75,7 +77,7 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
  - Download cell switch configgurations from CVP
 
-       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecxx
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecXX
 
  - Upload the stored configlets into remote repository
 
@@ -89,18 +91,18 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
 To deploy or correct configuration for TerminAttr agent on switches (if considered incorrect), run the following:
 
-       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecxx
+       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecXX
 
 Maintain the correct parameters for the daemon configuration in file inv_daemonTerminAttr.
 
 To stop daemon on device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecXX
 
 To restart daemon service on device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecXX
 
 To remove daemon configration from device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecXX

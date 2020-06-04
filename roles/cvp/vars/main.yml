@@ -163,6 +163,7 @@ configlet_list:
   hec_sw_leaf_pair: "{{ lookup('file', 'configs/hec_sw_leaf_pair') }}"
   hec_sw_leaf_individual: "{{ lookup('file', 'configs/hec_sw_leaf_individual') }}"
   autoconf.ini: "{{ lookup('file', 'configs/autoconf.ini') }}"
+  7160-profile-tcam-acl: "{{ lookup('file', 'configs/7160-profile-tcam-acl') }}"
 
 configlet_filter_list_generic:
   - sw-hec
@@ -214,3 +215,4 @@ configlet_filter_list_generic:
   - hec_sw_leaf_pair
   - hec_sw_leaf_individual
   - autoconf.ini
+  - 7160-profile-tcam-acl

@@ -1,0 +1,9 @@
+# cva
+
+[hec04]
+10.9.242.39
+
+[all:vars]
+ansible_connection=paramiko
+ansible_user=root
+ansible_password=arista

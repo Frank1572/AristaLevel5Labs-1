@@ -5,10 +5,22 @@
   register: cvp_facts
   tags:
     - always
+
 # import cvp operation, installation and initialization tasks
-- include_tasks: cvp_ops.yml
-- include_tasks: cvp_install.yml
-- include_tasks: cvp_init.yml
+- name: "Inclue cvp_ops"
+  include_tasks: cvp_ops.yml
+  tags:
+    - cvp_stop
+
+- name: "Inclue cvp_install"
+  include_tasks: cvp_install.yml
+  tags:
+    - cvp_install
+
+- name: "Inclue cvp_init"
+  include_tasks: cvp_init.yml
+  tags:
+    - cvp_init
 
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself

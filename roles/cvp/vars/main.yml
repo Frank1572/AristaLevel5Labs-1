@@ -143,7 +143,7 @@ configlet_list:
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs', errors='warn') }}"
-  sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static') }}"
+  sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static', errors='warn') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr', errors='warn') }}"
   sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a', errors='warn') }}"
   sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b', errors='warn') }}"
@@ -160,6 +160,9 @@ configlet_list:
   sw-hec-hvv-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvv-7160-32CQ') }}"
   sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ') }}"
   sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6') }}"
+  hec_sw_leaf_pair: "{{ lookup('file', 'configs/hec_sw_leaf_pair') }}"
+  hec_sw_leaf_individual: "{{ lookup('file', 'configs/hec_sw_leaf_individual') }}"
+  autoconf.ini: "{{ lookup('file', 'configs/autoconf.ini') }}"
 
 configlet_filter_list_generic:
   - sw-hec
@@ -208,3 +211,6 @@ configlet_filter_list_generic:
   - sw-hec-hvv-7160-32CQ
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
+  - hec_sw_leaf_pair
+  - hec_sw_leaf_individual
+  - autoconf.ini

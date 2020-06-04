@@ -122,8 +122,8 @@
     - hec-shs
     - sw-hec-hana-pwr
     - autoconf.ini
-    - sw-hec-leaf-individual
-    - sw-hec-leaf-pair
+    - hec_sw_leaf_individual
+    - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
   tags:
     - configlets

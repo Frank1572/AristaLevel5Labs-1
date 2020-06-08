@@ -142,24 +142,36 @@ configlet_list:
   hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
-  hec-shs: "{{ lookup('file', 'configs/hec-shs', errors='warn') }}"
+  hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
   sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static', errors='warn') }}"
-  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr', errors='warn') }}"
-  sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a', errors='warn') }}"
-  sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b', errors='warn') }}"
-  sw-hec-brdr-02a: "{{ lookup('file', 'configs/sw-hec-brdr-02a', errors='warn') }}"
-  sw-hec-brdr-02b: "{{ lookup('file', 'configs/sw-hec-brdr-02b', errors='warn') }}"
-  sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a', errors='warn') }}"
-  sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b', errors='warn') }}"
-  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01b', errors='warn') }}"
-  sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b', errors='warn') }}"
+  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
+  sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
+  sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"
+  sw-hec-brdr-02a: "{{ lookup('file', 'configs/sw-hec-brdr-02a') }}"
+  sw-hec-brdr-02b: "{{ lookup('file', 'configs/sw-hec-brdr-02b') }}"
+  sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a') }}"
+  sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b') }}"
+  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
+  sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
   sw-hec-str-02a: "{{ lookup('file', 'configs/sw-hec-str-02a', errors='warn') }}"
   sw-hec-str-02b: "{{ lookup('file', 'configs/sw-hec-str-02b', errors='warn') }}"
-  sw-hec-hana-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-7160-32CQ') }}"
-  sw-hec-hana-pwr-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-pwr-7160-32CQ') }}"
-  sw-hec-hvv-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvv-7160-32CQ') }}"
-  sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ') }}"
-  sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6') }}"
+  sw-hec-hana-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-7160-32CQ', errors='warn') }}"
+  sw-hec-hana-pwr-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-pwr-7160-32CQ', errors='warn') }}"
+  sw-hec-hvv-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvv-7160-32CQ', errors='warn') }}"
+  sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ', errors='warn') }}"
+  sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6', errors='warn') }}"
+  sw-hec-spine-11: "{{ lookup('file', 'configs/sw-hec-spine-11') }}"
+  sw-hec-spine-12: "{{ lookup('file', 'configs/sw-hec-spine-12') }}"
+  sw-hec-spine-13: "{{ lookup('file', 'configs/sw-hec-spine-13') }}"
+  sw-hec-spine-14: "{{ lookup('file', 'configs/sw-hec-spine-14') }}"
+  sw-hec-oob-01: "{{ lookup('file', 'configs/sw-hec-oob-01') }}"
+  sw-hec-oob-01a: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
+  sw-hec-oob-01b: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
+  sw-hec-oob-02: "{{ lookup('file', 'configs/sw-hec-oob-02') }}"
+  sw-hec-oob-03: "{{ lookup('file', 'configs/sw-hec-oob-03', errors='warn') }}"
+  sw-hec-oob-04: "{{ lookup('file', 'configs/sw-hec-oob-04', errors='warn') }}"
+  sw-hec-oob-05: "{{ lookup('file', 'configs/sw-hec-oob-05', errors='warn') }}"
+  sw-hec-oob-06: "{{ lookup('file', 'configs/sw-hec-oob-06', errors='warn') }}"
   hec_sw_leaf_pair: "{{ lookup('file', 'configs/hec_sw_leaf_pair') }}"
   hec_sw_leaf_individual: "{{ lookup('file', 'configs/hec_sw_leaf_individual') }}"
   autoconf.ini: "{{ lookup('file', 'configs/autoconf.ini') }}"
@@ -212,6 +224,18 @@ configlet_filter_list_generic:
   - sw-hec-hvv-7160-32CQ
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
+  - sw-hec-spine-11
+  - sw-hec-spine-12
+  - sw-hec-spine-13
+  - sw-hec-spine-14
+  - sw-hec-oob-01
+  - sw-hec-oob-01a
+  - sw-hec-oob-01b
+  - sw-hec-oob-02
+  - sw-hec-oob-03
+  - sw-hec-oob-04
+  - sw-hec-oob-05
+  - sw-hec-oob-06
   - hec_sw_leaf_pair
   - hec_sw_leaf_individual
   - autoconf.ini

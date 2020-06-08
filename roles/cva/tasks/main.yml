@@ -29,6 +29,22 @@
 
 - name: Restart network service
   command: "systemctl restart network"
-  ignore_errors: yes 
+  ignore_errors: yes
   tags:
     - cva
+
+# include operation, installation and initialization tasks
+- name: Include cvp_install
+  include_tasks: cvp_install.yml
+  tags:
+    - cvp_install
+
+- name: Include cvp_init
+  include_tasks: cvp_init.yml
+  tags:
+    - cvp_init
+
+- name: Include cvp_ops
+  include_tasks: cvp_ops.yml
+  tags:
+    - cvp_stop

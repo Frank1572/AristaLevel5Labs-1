@@ -4,23 +4,12 @@
   arista.cvp.cv_facts:
   register: cvp_facts
   tags:
-    - always
-
-# import cvp operation, installation and initialization tasks
-- name: "Inclue cvp_ops"
-  include_tasks: cvp_ops.yml
-  tags:
-    - cvp_stop
-
-- name: "Inclue cvp_install"
-  include_tasks: cvp_install.yml
-  tags:
-    - cvp_install
-
-- name: "Inclue cvp_init"
-  include_tasks: cvp_init.yml
-  tags:
-    - cvp_init
+    - upload_configlets
+    - create_containers
+    - configlets_assign
+    - delete_configlets
+    - configure_aaa
+    - reload_TerminAttr
 
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself

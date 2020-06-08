@@ -31,6 +31,10 @@ alias es show bgp evpn summary
 alias os show ip ospf neighbor
 alias po show port-channel summary
 alias ru show running section %1
+alias pa sh int stat | grep Et | wc -l
+alias pu sh int stat | grep Et | grep conn | grep -v not |wc -l
+!
+no schedule tech-support
 !
 event-handler CONFIG_VERSIONING
    trigger on-startup-config

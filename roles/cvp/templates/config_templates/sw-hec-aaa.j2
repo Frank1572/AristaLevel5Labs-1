@@ -1,13 +1,18 @@
-radius-server timeout 3
-radius-server deadtime 1
+radius-server timeout 2
+radius-server retransmit 1
+radius-server deadtime 2
 radius-server key 7 11061A161E115E5951
 !
 radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
 radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 !
-aaa authentication login default local group radius
+{% set order = 'group radius local' %}
+{% if (aaa-purpose is defined) and (aaa-purpose != '*hana*') %}
+{% set order = 'local group radius' %}
+{% endif %}
+aaa authentication login default {{order}}
 aaa authorization console
-aaa authorization exec default local group radius
+aaa authorization exec default {{order}}
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
 !
@@ -16,4 +21,3 @@ management telnet
 !
 management ssh
    idle-timeout 30
-

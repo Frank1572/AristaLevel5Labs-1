@@ -117,6 +117,21 @@
   tags:
     - configlets
 
+- set_fact:
+    aaa-purpose: 'hana'
+  tags:
+    - configlets
+
+- name: Render hana aaa configlet template
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-aaa.j2"
+    dest: "{{role_path}}/files/configs/{{item}}"
+  loop:
+    - sw-hec-aaa-hana
+  tags:
+    - configlets
+
 - name: Render all configlet_builder templates
   delegate_to: 127.0.0.1
   template:

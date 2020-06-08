@@ -112,18 +112,18 @@ hec:
   oob_cvp: 10.178.141.253
   as_low: 4200998673
   as_high: 4200999871
-  cvp_ingest_key: SecureKey02
+  cvp_ingest_key: SecureKey01
   dns1: 10.127.141.1
   dns2: 10.127.141.2
   ntp1: 147.204.148.93
   ntp2: 147.204.148.92
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 147.204.132.91
-  syslog2: 147.204.133.69
+  syslog1: 147.204.148.91
+  syslog2: 147.204.149.69
   syslog3: 147.204.146.42
-  radius1: 10.17.122.21
-  radius2: 10.17.121.35
+  radius1: 147.204.146.74
+  radius2: 10.17.122.21
   admin_mpls:
     - prefix_mask: "10.178.140.0/23"
       sequence: "20"

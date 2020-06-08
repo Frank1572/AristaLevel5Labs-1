@@ -126,6 +126,7 @@ hec:
   oob_def_gw: 10.9.232.1
   oob_prefix: 10.9.232
   oob_mask: 23
+  oob_vrf: OOB
   oob_cvx: 10.9.233.252
   oob_cvp: 10.9.233.253
   as_low: 4201981713
@@ -185,6 +186,25 @@ hec:
     - 12
     - 13
     - 14
+  fabric:
+    # valid modes are: manual, cvx, evpn, manual
+    vtep_distribution_mode: evpn
+    interlink_mtu: 9214
+    # valid speeds are 40gfull, 100gfull
+    interlink_speed: 100gfull
+    bgp_maximum_routes: 12000
+    evpn_maximum_routes: 0
+    mlag_a_ip: 198.19.224.1
+    mlag_b_ip: 198.19.224.2
+    leaf_models:
+      - model: 7160-32CQ
+        uplink_ports: 29/1,30/1,31/1,32/1
+      - model: 7160-48YC6
+        uplink_ports: 51/1,52/1,53/1,54/1
+      - model: 7280QR-C36
+        uplink_ports: 25/1,26/1,35/1,36/1
+      - model: 7280SR-48C6
+        uplink_ports: 51/1,52/1,53/1,54/1
   oob01a_snmp_contact: 636126:ncons-hec17-01:1010
   oob01a_snmp_location: AMER-USA-COS01-NT-PV01(DH01)-R2-10-40
   oob01b_snmp_contact: 636127:ncons-hec17-02:1001

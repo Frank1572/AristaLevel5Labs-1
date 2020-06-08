@@ -4,11 +4,12 @@
   arista.cvp.cv_facts:
   register: cvp_facts
   tags:
-    - always
-# import cvp operation, installation and initialization tasks
-- include_tasks: cvp_ops.yml
-- include_tasks: cvp_install.yml
-- include_tasks: cvp_init.yml
+    - upload_configlets
+    - create_containers
+    - configlets_assign
+    - delete_configlets
+    - configure_aaa
+    - reload_TerminAttr
 
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself
@@ -109,6 +110,10 @@
     - sw-hec-vtep-static
     - hec-shs
     - sw-hec-hana-pwr
+    - autoconf.ini
+    - hec_sw_leaf_individual
+    - hec_sw_leaf_pair
+    - 7160-profile-tcam-acl
   tags:
     - configlets
 

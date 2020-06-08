@@ -172,6 +172,10 @@ configlet_list:
   sw-hec-oob-04: "{{ lookup('file', 'configs/sw-hec-oob-04', errors='warn') }}"
   sw-hec-oob-05: "{{ lookup('file', 'configs/sw-hec-oob-05', errors='warn') }}"
   sw-hec-oob-06: "{{ lookup('file', 'configs/sw-hec-oob-06', errors='warn') }}"
+  hec_sw_leaf_pair: "{{ lookup('file', 'configs/hec_sw_leaf_pair') }}"
+  hec_sw_leaf_individual: "{{ lookup('file', 'configs/hec_sw_leaf_individual') }}"
+  autoconf.ini: "{{ lookup('file', 'configs/autoconf.ini') }}"
+  7160-profile-tcam-acl: "{{ lookup('file', 'configs/7160-profile-tcam-acl') }}"
 
 configlet_filter_list_generic:
   - sw-hec
@@ -232,3 +236,8 @@ configlet_filter_list_generic:
   - sw-hec-oob-04
   - sw-hec-oob-05
   - sw-hec-oob-06 
+  - hec_sw_leaf_pair
+  - hec_sw_leaf_individual
+  - autoconf.ini
+  - 7160-profile-tcam-acl
+

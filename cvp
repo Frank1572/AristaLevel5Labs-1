@@ -1,19 +1,5 @@
 # static hosts only - after CVA already received an IP and
 # was configured initially
-[all:vars]
-ansible_connection=httpapi
-ansible_httpapi_use_ssl=True
-ansible_httpapi_validate_certs=False
-ansible_network_os=eos
-ansible_httpapi_port=443
-ansible_user=cvpadmin
-ansible_password=arista
-
-[install:vars]
-ansible_connection=network_cli
-ansible_network_os=eos
-ansible_user=root
-ansible_password=arista
 
 [live:children]
 hec10
@@ -29,8 +15,6 @@ hec03
 hec04
 hec13
 hec14
-
-[install:children]
 hec04
 
 [hec19]
@@ -65,3 +49,14 @@ hec04
 
 [hec15]
 10.178.145.253
+
+[all:vars]
+ansible_connection=httpapi
+ansible_httpapi_use_ssl=True
+ansible_httpapi_validate_certs=False
+ansible_network_os=eos
+ansible_httpapi_port=443
+# 'cvpadmin' user should not be used after cvp has been intially configured and is
+#  able to authenticate against radius
+ansible_user=cvpadmin
+ansible_password=arista

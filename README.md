@@ -4,7 +4,7 @@ These ansible playbooks are used to configure the cloud vision appliance (CVA), 
 
 It is required to install data from repository "repo_hec_globals". Run the following after cloning this repository:
 
- - ansible-galaxy install -r roles/requirements.yml
+ - ansible-galaxy install -r roles/requirements.yml -c --force
 
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 

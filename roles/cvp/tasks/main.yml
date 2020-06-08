@@ -402,7 +402,7 @@
 
 - name: Upload generated configlet builders
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/configlet_builder.py "/tmp/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  command: python /tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - upload_configlets
 

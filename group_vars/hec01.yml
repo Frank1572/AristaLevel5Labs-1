@@ -123,7 +123,7 @@ hec:
   syslog2: 147.204.149.69
   syslog3: 147.204.146.42
   radius1: 147.204.146.74
-  radius2: 10.17.122.21
+  radius2: 147.204.146.75
   admin_mpls:
     - prefix_mask: "10.178.140.0/23"
       sequence: "20"

@@ -75,9 +75,9 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
        ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
 
- - Download cell switch configgurations from CVP
+ - Download cell switch configurations from CVP
 
-       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecXX
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i cvp --limit hecXX
 
  - Upload the stored configlets into remote repository
 

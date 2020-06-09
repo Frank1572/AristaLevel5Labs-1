@@ -117,8 +117,9 @@
   tags:
     - configlets
 
+# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific radius strings.
 - set_fact:
-    aaa-purpose: 'hana'
+    aaa_purpose: 'hana'
   tags:
     - configlets
 
@@ -142,6 +143,7 @@
     - sw-hec-autoconf-ipmi
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
+    - sw-hec-autoconf-generate-only
   tags:
     - configlets
 

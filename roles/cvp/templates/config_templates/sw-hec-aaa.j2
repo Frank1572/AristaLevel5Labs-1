@@ -7,7 +7,7 @@ radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
 radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 !
 {% set order = 'group radius local' %}
-{% if (aaa-purpose is defined) and (aaa-purpose != '*hana*') %}
+{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
 {% set order = 'local group radius' %}
 {% endif %}
 aaa authentication login default {{order}}

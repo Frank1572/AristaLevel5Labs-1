@@ -14,6 +14,9 @@ aaa authentication login default {{order}}
 aaa authorization console
 aaa authorization exec default {{order}}
 !
+enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+no aaa root
+!
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
 !
 management telnet

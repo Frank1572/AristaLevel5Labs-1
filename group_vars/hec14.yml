@@ -449,7 +449,7 @@ hec:
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
-         - id: 1103
+        - id: 1103
           description: rt-hec14-cwan-01b
           trunk: all
         - id: 1104
@@ -496,38 +496,38 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-     - number: 2a
-       spine_port_towards_leaf: Et3/11/1
-       uplinks:
+    - number: 2a
+      spine_port_towards_leaf: Et3/11/1
+      uplinks:
         - 51
         - 52
         - 53
         - 54
-        ports:
+      ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
-      - number: 2b
-        spine_port_towards_leaf: Et3/12/1
-        uplinks:
+    - number: 2b
+      spine_port_towards_leaf: Et3/12/1
+      uplinks:
         - 51
         - 52
         - 53
         - 54
-        ports:
+      ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
           po: 42
-        port_channels:
+      port_channels:
         - id: 42
           description: mlag peer link
  

@@ -5,8 +5,11 @@ vlan 31
 vlan 32
    name HEC{{ hec.hec_nr }}-IBM-PWR-ISCSI
 !
+vlan 33
+   name HEC{{ hec.hec_nr }}-IBM-PWR-RMC01
+   !
 interface Port-Channel900
-   description ->sw-hec02-ipmi-xx
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    switchport mode trunk
    mlag 900
 !

@@ -108,11 +108,12 @@ hec:
   oob_def_gw: 10.178.140.1
   oob_prefix: 10.178.140
   oob_mask: 23
+  oob_vrf: OOB
   oob_cvx: 10.178.141.252
   oob_cvp: 10.178.141.253
   as_low: 4200998673
   as_high: 4200999871
-  cvp_ingest_key: SecureKey02
+  cvp_ingest_key: SecureKey04
   dns1: 10.127.141.1
   dns2: 10.127.141.2
   ntp1: 147.204.148.93

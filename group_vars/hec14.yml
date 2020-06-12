@@ -530,4 +530,44 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
- 
+  hvv_hvx_acl_rules: |
+      10 permit vlan 50 0x000 icmp any any
+      20 permit vlan 50 0x000 pim any any
+      30 permit vlan 50 0x000 92 any any
+      40 permit vlan 50 0x000 vrrp any any
+      50 permit vlan 50 0x000 ip any 224.0.0.0/5
+      60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
+      70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
+      80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
+      90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
+      99 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22
+      110 permit vlan 50 0x000 ip 198.18.80.0/22 any
+      119 permit vlan 50 0x000 ip any any
+      130 permit vlan 55 0x000 icmp any any
+      140 permit vlan 55 0x000 pim any any
+      150 permit vlan 55 0x000 92 any any
+      160 permit vlan 55 0x000 vrrp any any
+      170 permit vlan 55 0x000 ip any 224.0.0.0/5
+      180 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.255
+      190 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
+      200 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
+      210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
+      219 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16
+      230 permit vlan 55 0x000 ip 100.125.0.0/16 any
+      239 permit vlan 55 0x000 ip any any
+      250 permit vlan 60 0x000 icmp any any
+      260 permit vlan 60 0x000 pim any any
+      270 permit vlan 60 0x000 92 any any
+      280 permit vlan 60 0x000 vrrp any any
+      290 permit vlan 60 0x000 ip any 224.0.0.0/5
+      300 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
+      310 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
+      319 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21
+      329 permit vlan 60 0x000 ip 198.18.88.0/21 any
+      340 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.255
+      350 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
+      359 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20
+      370 permit vlan 60 0x000 ip 198.19.128.0/20 any
+      379 permit vlan 60 0x000 ip any any
+      389 permit ip any any
+  hana_acl_rules: |

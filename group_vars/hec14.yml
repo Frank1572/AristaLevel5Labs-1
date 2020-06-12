@@ -571,3 +571,4 @@ hec:
       379 permit vlan 60 0x000 ip any any
       389 permit ip any any
   hana_acl_rules: |
+      10 permit ip any any

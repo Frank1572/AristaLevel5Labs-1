@@ -124,6 +124,11 @@ hec:
   syslog3: 147.204.146.42
   radius1: 147.204.146.74
   radius2: 147.204.146.75
+  sflow:
+    destination:
+      - ipv4: 147.204.148.160
+        port: 9995
+    source: Loopback900
   admin_mpls:
     - prefix_mask: "10.178.140.0/23"
       sequence: "20"

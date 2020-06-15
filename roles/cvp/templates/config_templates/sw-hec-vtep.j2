@@ -7,7 +7,7 @@ interface Vxlan1
   vxlan vlan {{ i }} vni {{ i + 10000 }}
 {% endfor %}
 {% for i in range(1,499) %}
-  vxlan vlan {{ i + 2000 }} vni {{ i + 2001000 }}
+  vxlan vlan {{ i + 2000 }} vni {{ i + 2000 }}000
 {% endfor %}
 {% else %}
 ! # either you did forget to set vtep_distribution_mode or vtep_ips correctly

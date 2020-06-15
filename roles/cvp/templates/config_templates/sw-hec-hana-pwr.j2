@@ -9,6 +9,7 @@ vlan 33
    name HEC{{ hec.hec_nr }}-IBM-PWR-RMC01
 !
 {% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
+
 !
 {% for i in range(1, 9) %}
 interface Port-Channel{{ 1100 + i }}

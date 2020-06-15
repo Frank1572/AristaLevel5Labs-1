@@ -8,10 +8,7 @@ interface Port-Channel{{ 100 + i }}
    spanning-tree portfast
 !
 {% endfor %}
-interface Port-Channel900
-   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
-   switchport mode trunk
-   mlag 900
+{% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
 !
 ip access-list HEC{{ hec.hec_nr }}-L2-APP
 {{ hec.hvv_hvx_acl_rules }}

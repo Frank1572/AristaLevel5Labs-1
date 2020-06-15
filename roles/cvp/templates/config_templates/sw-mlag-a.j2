@@ -1,19 +1,6 @@
-no spanning-tree vlan 4094
-!
-vlan 4094
-   trunk group MLAG-PEER
-!
+{% include "templates/config_templates/hec_sw_mlag.j2" %}
 interface Vlan4094
-   mtu {{ hec.fabric.interlink_mtu }}
-   no autostate
-   ip address 198.19.224.1/30
-!
-interface Port-Channel42
-   description MLAG-PEER
-   switchport mode trunk
-   switchport trunk group MLAG-PEER
+   ip address {{hec.mlag_a_ip}}/30
 !
 mlag configuration
-   local-interface Vlan4094
-   peer-link Port-Channel42
-   peer-address 198.19.224.2
+   peer-address {{hec.mlag_b_ip}}

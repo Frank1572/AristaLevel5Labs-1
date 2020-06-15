@@ -146,7 +146,7 @@ configlet_list:
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
-  sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static', errors='warn') }}"
+  sw-hec-vtep: "{{ lookup('file', 'configs/sw-hec-vtep', errors='warn') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
   sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
   sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"

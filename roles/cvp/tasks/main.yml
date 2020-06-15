@@ -107,7 +107,7 @@
     - mgmt-oob
     - mgmt-default
     - CVP-Arista
-    - sw-hec-vtep-static
+    - sw-hec-vtep
     - hec-shs
     - sw-hec-hana-pwr
     - autoconf.ini

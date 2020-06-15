@@ -157,8 +157,8 @@ hec:
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 4
   fabric:
-    # valid modes are: manual, cvx, evpn, manual
-    vtep_distribution_mode: evpn
+    # valid modes are: manual, cvx, evpn
+    vtep_distribution_mode: manual
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull

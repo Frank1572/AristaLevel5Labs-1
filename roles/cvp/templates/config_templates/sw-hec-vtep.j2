@@ -15,6 +15,10 @@ interface Vxlan1
 {% if hec.fabric.vtep_distribution_mode == "cvx" %}
   vxlan controller-client
 {% endif %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{#
+  well, nothing to do here
+#}
 {% else %}
-! # it looks like you did not define vtep_distribution_mode!
+! # it looks like you did not define vtep_distribution_mode correctly
 {% endif %}

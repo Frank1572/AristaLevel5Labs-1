@@ -6,6 +6,7 @@ interface Ethernet 1-48
 !
 ! === MLAG Peer Link: ===
 interface Ethernet49/1,50/1
+   mtu {{hec.fabric.interlink_mtu}}
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===

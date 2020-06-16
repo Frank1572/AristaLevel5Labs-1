@@ -757,7 +757,7 @@ hec:
       500 deny vlan 60 0x000 ip 100.124.0.0/19 100.124.0.0/19
       510 permit vlan 60 0x000 ip 100.124.0.0/19 any
       520 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.31.255
-      530 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.24.0.1
+      530 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.24.1
       540 deny vlan 60 0x000 ip 198.18.24.0/21 198.18.24.0/21
       550 permit vlan 60 0x000 ip 198.18.24.0/21 any
       560 permit vlan 60 0x000 ip 198.19.208.0/20 host 198.19.223.255

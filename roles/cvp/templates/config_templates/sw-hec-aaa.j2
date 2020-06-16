@@ -19,8 +19,12 @@ no aaa root
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
 !
+management console
+   idle-timeout 30
+!
 management telnet
    shutdown
 !
 management ssh
+   ip access-group ACL_SNMP_VTY in
    idle-timeout 30

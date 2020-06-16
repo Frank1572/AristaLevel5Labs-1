@@ -1,8 +1,8 @@
-! ========== SNMP Individual ==========  
+! ========== SNMP Individual ==========
 snmp-server contact $SNMP_CONTACT
 snmp-server location $SNMP_LOCATION
 
-! ========== SPINE Uplinks ==========  
+! ========== SPINE Uplinks ==========
 interface $SPINE1_INTERFACE
    description LLDP:$SPINE1_NAME:$SPINE1_PORT
    ip address $SPINE1_IP/31
@@ -24,9 +24,9 @@ interface $SPINE4_INTERFACE
    mtu $MTU
    $SPEED
 
-! ========== Hostname ==========  
+! ========== Hostname ==========
 hostname $HOSTNAME
-  
+
 ! ========== Lo1 config ==========
 interface Loopback1
    description Router-ID
@@ -40,7 +40,7 @@ interface Management1
 ! ========== Lo900 config ==========
 interface Loopback900
    ip address $LOOPBACK900_IP/32
-   
+
 ! ========== BGP Individual ==========
 router bgp $BGP_AS
    router-id $LOOPBACK1_IP
@@ -51,4 +51,3 @@ router bgp $BGP_AS
    neighbor $SPINE3_NEIGHBOR_IP peer-group SPINE-PG
    neighbor $SPINE4_NEIGHBOR_IP peer-group SPINE-PG
    neighbor $MLAG_NEIGHBOR_IP peer-group MLPEER-PG
-

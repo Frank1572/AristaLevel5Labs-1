@@ -100,10 +100,7 @@
        bgp asn notation asdot
        router-id 10.100.1.{{ Lo1 }}
        maximum-paths 8 ecmp 16
-       neighbor MLPEER-PG peer-group
-       neighbor MLPEER-PG remote-as {{ asn_generated }}
-       neighbor MLPEER-PG next-hop-self
-       neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+       !
        neighbor SPINE-PG peer-group
        neighbor SPINE-PG remote-as {{ asn_spine }}
        neighbor SPINE-PG soft-reconfiguration inbound all
@@ -111,6 +108,12 @@
        neighbor SPINE-PG route-map MLPEER-RM out
        neighbor SPINE-PG send-community
        neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+       !
+       neighbor MLPEER-PG peer-group
+       neighbor MLPEER-PG remote-as {{ asn_generated }}
+       neighbor MLPEER-PG next-hop-self
+       neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+       !
        {% for i in range(1,5) %}
        neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
        {% endfor %}
@@ -126,7 +129,12 @@
        network {{ hec.inband_trans_net }}
        {% endif %}
 
-       {% if hec.fabric.vtep_distribution_mode == "evpn" %}
+       {#
+         Let's create evpn peerings even though the fabric is not
+         doing mac-learing via evpn yet.
+         We will move each existing location from cvx or manual
+         mac-learning to evpn.
+       #}
        neighbor EVPN-PG peer-group
        neighbor EVPN-PG remote-as {{ asn_spine }}
        neighbor EVPN-PG update-source Loopback1
@@ -134,6 +142,10 @@
        neighbor EVPN-PG ebgp-multihop 2
        neighbor EVPN-PG maximum-routes 0
        neighbor EVPN-PG fall-over bfd
+       !
+       {% for i in range(11,14) %}
+          neighbor 10.100.0.{{i}} peer-group EVPN-PG
+       {% endfor %}
        !
        address-family evpn
           neighbor EVPN-PG activate
@@ -145,10 +157,9 @@
           no neighbor EVPN-PG activate
        !
        vlan-aware-bundle all-vlans
-          rd 10.200.1.3:1
+          rd 10.100.1.{{ Lo1 }}:1
           route-target both 1:1
           redistribute learned
           vlan 5-2999
-       {% endif %}
     !
 {% endfor %}

@@ -104,8 +104,8 @@ hec:
   inband_trans_gw: 10.255.252.65
   inband_trans_cvx: 10.255.252.68
   inband_trans_cvp: 10.255.252.69
-  oob_def_gw: 10.178.140.1
-  oob_prefix: 10.178.140
+  oob_def_gw: 10.178.136.1
+  oob_prefix: 10.178.136
   oob_mask: 23
   oob_vrf: OOB
   oob_cvx: 10.178.141.252

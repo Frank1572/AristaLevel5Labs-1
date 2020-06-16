@@ -342,7 +342,7 @@ hec:
           description: sw-hec13-brdr-02b,  Et49/1
           po: 42
         - id: 50/1
-          description: sw-hec13-brdr-02b,  Et49/1
+          description: sw-hec13-brdr-02b,  Et50/1
           po: 42
         - id: 48
           description: naa-hec13-01, Port11
@@ -366,7 +366,7 @@ hec:
           description: sw-hec13-brdr-02a,  Et49/1
           po: 42
         - id: 50/1
-          description: sw-hec13-brdr-02a,  Et49/1
+          description: sw-hec13-brdr-02a,  Et50/1
           po: 42
         - id: 48
           description: naa-hec13-01, Port12

@@ -498,6 +498,7 @@ hec:
           description: mlag peer link
     - number: 2a
       spine_port_towards_leaf: Et3/11/1
+      uplinks_speed: 100gfull
       uplinks:
         - 51/1
         - 52/1
@@ -517,6 +518,7 @@ hec:
           description: mlag peer link
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
+      uplinks_speed: 100gfull
       uplinks:
         - 51/1
         - 52/1

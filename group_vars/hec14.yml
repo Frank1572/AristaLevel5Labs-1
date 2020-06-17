@@ -499,10 +499,10 @@ hec:
     - number: 2a
       spine_port_towards_leaf: Et3/11/1
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
@@ -516,10 +516,10 @@ hec:
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49

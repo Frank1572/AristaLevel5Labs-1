@@ -49,7 +49,10 @@
       no switchport
       description SPINE UPLINK
       mtu {{ hec.fabric.interlink_mtu }}
-      !speed forced {{ speed }}
+      {% if uplinks_speed is defined %}
+      {% set speed = uplinks_speed %}
+      {% endif %}
+      speed forced {{ speed }}
     !
     {% endfor %}
     ! ===== End device ports =====

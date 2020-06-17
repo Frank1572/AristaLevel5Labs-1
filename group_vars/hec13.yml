@@ -569,3 +569,84 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+  shs:
+    - number: 1a
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et4/3/1
+      ports:
+        - id: 25/1
+          description: sw-hec13-shs-01b, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec13-shs-01b, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 1b
+      uplinks:
+        - 25
+        - 26
+        - 35
+        - 36
+      spine_port_towards_leaf: Et4/4/1
+      ports:
+        - id: 25/1
+          description: sw-hec13-shs-01a, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec13-shs-01a, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+  hvv_hvx_acl_rules: |
+      10 permit vlan 50 0x000 icmp any any
+      20 permit vlan 50 0x000 pim any any
+      30 permit vlan 50 0x000 92 any any
+      40 permit vlan 50 0x000 vrrp any any
+      50 permit vlan 50 0x000 ip any 224.0.0.0/5
+      60 permit vlan 50 0x000 ip 100.96.16.0/22 host 100.96.19.255
+      70 permit vlan 50 0x000 ip 100.96.16.0/22 100.96.19.0/24
+      80 permit vlan 50 0x000 ip 100.96.19.0/24 100.96.16.0/22
+      90 permit vlan 50 0x000 ip 100.96.16.0/22 host 100.96.16.1
+      100 deny vlan 50 0x000 ip 100.96.16.0/22 100.96.16.0/22 log
+      110 permit vlan 50 0x000 ip 100.96.16.0/22 any
+      120 permit vlan 50 0x000 ip any any log
+      130 permit vlan 60 0x000 icmp any any
+      140 permit vlan 60 0x000 pim any any
+      150 permit vlan 60 0x000 92 any any
+      160 permit vlan 60 0x000 vrrp any any
+      170 permit vlan 60 0x000 ip any 224.0.0.0/5
+      180 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.27.255
+      190 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.31.255
+      200 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.24.1
+      210 deny vlan 60 0x000 ip 100.96.24.0/21 100.96.24.0/21 log
+      220 permit vlan 60 0x000 ip 100.96.24.0/21 any
+      230 permit vlan 60 0x000 ip any any log
+      240 permit ip any any
+  hana_acl_rules: |
+      10 permit icmp any any
+      20 permit pim any any
+      30 permit 92 any any
+      40 permit vrrp any any
+      50 permit ip any 224.0.0.0/5
+      60 permit ip 100.96.8.0/23 host 100.96.9.255
+      70 permit ip 100.96.8.0/23 host 100.96.8.4
+      80 permit ip host 100.96.8.4 100.96.8.0/23
+      90 permit ip 100.96.8.0/23 host 100.96.8.5
+      100 permit ip host 100.96.8.5 100.96.8.0/23
+      110 permit ip 100.96.8.0/23 host 100.96.8.6
+      120 permit ip 100.96.8.0/23 host 100.96.8.5
+      130 permit ip host 100.96.8.6 100.96.8.0/23
+      140 permit ip 100.96.8.0/23 100.96.9.224/27
+      150 permit ip 100.96.9.224/27 100.96.8.0/23
+      160 permit ip 100.96.8.0/23 host 100.96.8.1
+      170 deny ip 100.96.8.0/23 100.96.8.0/23
+      180 permit ip 100.96.8.0/23 any
+      190 permit ip any any
+

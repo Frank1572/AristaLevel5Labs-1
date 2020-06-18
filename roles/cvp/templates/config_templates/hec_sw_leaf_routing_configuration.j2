@@ -104,7 +104,6 @@
        neighbor SPINE-PG peer-group
        neighbor SPINE-PG remote-as {{ asn_spine }}
        neighbor SPINE-PG soft-reconfiguration inbound all
-       neighbor SPINE-PG fall-over bfd
        neighbor SPINE-PG route-map MLPEER-RM out
        neighbor SPINE-PG send-community
        neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
@@ -129,12 +128,7 @@
        network {{ hec.inband_trans_net }}
        {% endif %}
 
-       {#
-         Let's create evpn peerings even though the fabric is not
-         doing mac-learing via evpn yet.
-         We will move each existing location from cvx or manual
-         mac-learning to evpn.
-       #}
+       {% if hec.fabric.vtep_distribution_mode == "evpn" %}
        neighbor EVPN-PG peer-group
        neighbor EVPN-PG remote-as {{ asn_spine }}
        neighbor EVPN-PG update-source Loopback1
@@ -161,5 +155,6 @@
           route-target both 1:1
           redistribute learned
           vlan 5-2999
+       {% endif %}
     !
 {% endfor %}

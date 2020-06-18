@@ -24,12 +24,7 @@ router bgp $BGP_AS
    neighbor MLPEER-PG fall-over bfd
    network $LOOPBACK2_IP/32
    !
-{#
-  Let's create evpn peerings even though the fabric is not
-  doing mac-learing via evpn yet.
-  We will move each existing location from cvx or manual
-  mac-learning to evpn.
-#}
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
    neighbor EVPN-PG peer-group
    neighbor EVPN-PG remote-as $SPINE_AS
    neighbor EVPN-PG update-source Loopback1
@@ -57,3 +52,4 @@ router bgp $BGP_AS
       redistribute learned
       vlan 5-2999
    !
+{% endif %}

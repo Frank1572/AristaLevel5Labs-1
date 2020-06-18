@@ -124,8 +124,12 @@
     {% endif %}
 {% endfor %}
 
-{##### VARP specific configuration for brdr-02 #####}
-{% if brdrtype == '2' and leafpurpose == 'b' %}
+{#
+  let's do some more borderleaf specific stuff below here
+#}
+{% if leafpurpose == 'b' %}
+{##### VARP specific configuration for BRDR-02 #####}
+{% if brdrtype == '2' %}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================
@@ -142,4 +146,25 @@ ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
 {% endif %}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
 {% endif %}
+
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{#
+  we need to have vlans and the vni mapping for 3000-3499
+  if the core routers and wan/vpn routers are still doing
+  static transfer networks for wan/vpn connections
+#}
+{% if hec.fabric.vtep_distribution_mode == 'manual' %}
+vlan 3000-3499
+!
+interface Vxlan1
+{% for i in range(1,500) %}
+  vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% endif %}
+{#
+  Above this is the END for borderleaf specific stuff
+#}
 {% include "templates/config_templates/hec_sw_leaf_routing_configuration.j2" %}

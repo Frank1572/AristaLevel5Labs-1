@@ -1,5 +1,21 @@
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 !
+{% if hec.spine.snmp is defined %}
+{% if {{ item }} == 11 %}
+snmp-server contact {{ hec.spine.snmp.spine11.contact }} 
+snmp-server location {{ hec.spine.snmp.spine11.location }} 
+{% elif {{ item }} == 12 %}
+snmp-server contact {{ hec.spine.snmp.spine12.contact }} 
+snmp-server location {{ hec.spine.snmp.spine12.location }} 
+{% elif {{ item }} == 13 %}
+snmp-server contact {{ hec.spine.snmp.spine13.contact }} 
+snmp-server location {{ hec.spine.snmp.spine13.location }} 
+{% elif {{ item }} == 14 %}
+snmp-server contact {{ hec.spine.snmp.spine14.contact }} 
+snmp-server location {{ hec.spine.snmp.spine14.location }} 
+{% endif %}
+{% endif %}
+!
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}

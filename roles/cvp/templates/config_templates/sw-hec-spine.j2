@@ -68,5 +68,10 @@ maintenance
 !
 ! ============= to enable a port, add it to the list of interfaces below =============
 !
-interface Ethernet3/1/1, Ethernet3/2/1, Ethernet3/3/1, Ethernet3/4/1, Ethernet3/5/1, Ethernet3/6/1, Ethernet3/7/1, Ethernet3/8/1
+! ============= to enable a port, add it to the list of interfaces below =============
+
+!
+
+interface {% if hec.l2l3_leaf is defined %}{% for l2l3 in hec.l2l3_leaf %}{{ l2l3.spine_port_towards_leaf }}{% if not loop.last %}, {% else %}{% if hec.brdr is defined %}, {% endif %}{% endif %}{% endfor %}{% endif %}{% if hec.brdr is defined %}{% for brdr in hec.brdr %}{{ brdr.spine_port_towards_leaf }}{% if not loop.last %}, {% else %}{% if hec.str is defined %}, {% endif %}{% endif %}{% endfor %}{% endif %}{% if hec.str is defined %}{% for str in hec.str %}{{ str.spine_port_towards_leaf }}{% if not loop.last %}, {% else %}{% if hec.shs is defined %}, {% endif %}{% endif %}{% endfor %}{% endif %}{% if hec.shs is defined %}{% for shs in hec.shs %}{{ shs.spine_port_towards_leaf }}{% if not loop.last %}, {% else %}{% if hec.ngdr is defined %}, {% endif %}{% endif %}{% endfor %}{% endif %}{% if hec.ngdr is defined %}{% for ngdr in hec.ngdr %}{{ ngdr.spine_port_towards_leaf }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+
  no shutdown

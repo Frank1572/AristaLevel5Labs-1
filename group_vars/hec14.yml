@@ -115,8 +115,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.9.247.252
   oob_cvp: 10.9.247.253
-  as_low: 4200998673
-  as_high: 4200999871
+  as_low: 4201775104
+  as_high: 4201840639
   cvp_ingest_key: SecureKey02
   dns1: 100.127.45.1
   dns2: 100.127.45.2

@@ -160,16 +160,16 @@ hec:
     # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
     snmp:
       spine11:
-        - contact: 34672206:ncons-hec14-oob-01.net 1010
+          contact: 34672206:ncons-hec14-oob-01.net 1010
           location: CA-TOR2-CAGE3-CAB40-U3
       spine12:
-        - contact: 34672207:ncons-hec14-oob-01.net 1014
+          contact: 34672207:ncons-hec14-oob-01.net 1014
           location: CA-TOR2-CAGE3-CAB41-U3
       spine13:
-        - contact: 34672208:ncons-hec14-oob-01.net 1023
+          contact: 34672208:ncons-hec14-oob-01.net 1023
           location: CA-TOR2-CAGE3-CAB42-U3
       spine14:
-        - contact: 34672209:ncons-hec14-oob-02.net 1010
+          contact: 34672209:ncons-hec14-oob-02.net 1010
           location: CA-TOR2-CAGE3-CAB43-U3
   fabric:
     # valid modes are: manual, cvx, evpn, manual

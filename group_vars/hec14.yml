@@ -179,7 +179,10 @@ hec:
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
+    # Spine BGP Listen range for underlay
     bgp_listen_range: 10.100.0.0/16
+    # Is NGDR available and if yes is it EVPN enabled (yes/no)
+    ngdr_evpn_available: yes
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
@@ -614,6 +617,15 @@ hec:
       spine_port_towards_leaf: Et3/1/1
     - number: 102
       spine_port_towards_leaf: Et3/1/2
+  ngdr:
+    - number: 1a
+      spine_port_towards_leaf: Et4/33/1
+    - number: 1b
+      spine_port_towards_leaf: Et4/34/1
+    - number: 1c
+      spine_port_towards_leaf: Et4/35/1
+    - number: 1d
+      spine_port_towards_leaf: Et4/36/1
 
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any

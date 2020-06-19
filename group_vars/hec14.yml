@@ -157,6 +157,8 @@ hec:
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 2
+    # Enable or disable Bfd for underlay (normally disable)
+    underlay_bfd: enable
     # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
     snmp:
       spine11:

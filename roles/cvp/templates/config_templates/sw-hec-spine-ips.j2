@@ -16,9 +16,11 @@
 {% endif %}
 {% if hec.spine.model|string == '7280' %}
 interface Ethernet{{ subintf }}/1
+{% set port = "Et" + subintf|string + "/1" %}
 {% endif %}
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
 interface Ethernet{{ lc }}/{{ subintf }}/1
+{% set port = "Et" + lc|string + "/" + subintf|string + "/1" %}
 {% endif %}
 {% if create_ip_on_interface == 'yes' %}
  ip address 10.{{ item }}.{{ nextsubnet }}.{{ ip }}/31
@@ -26,7 +28,18 @@ interface Ethernet{{ lc }}/{{ subintf }}/1
  shutdown
  no switchport
  mtu {{ hec.fabric.interlink_mtu }}
+{% set ns = namespace(found=false) %}
+{% if hec.spine.ports_with_non_default_speed is defined %}
+{% for intf in hec.spine.ports_with_non_default_speed %}
+{% if port == intf.port %}
+ speed forced {{ intf.speed }}
+{% set ns.found = true %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ns.found == false %}
  speed forced {{ hec.fabric.interlink_speed }}
+{% endif %}
 {% endif %}
 !
 {% endfor %}

@@ -26,23 +26,23 @@
 {# interface Ethernet{{ lc }}/{{ subintf }}/1 #}
 {% endif %}
 interface Ethernet {{intf_name}}
+ no switchport
 {% if create_ip_on_interface == 'yes' %}
  ip address 10.{{ item }}.{{ nextsubnet }}.{{ ip }}/31
 {% endif %}
- shutdown
- no switchport
+{# shutdown #}
  mtu {{ hec.fabric.interlink_mtu }}
- {#
+{#
    let's see if we are in need to configure some links with different speed settings
- #}
-{% if hec.spine.fortygig[intf_name] is defined %}
+#}
+{% if hec.spine.fortygig is defined and intf_name in hec.spine.fortygig %}
  speed forced 40gfull
 {#
    otherwise we take the default speed.
 #}
 {% else %}
  speed forced {{ hec.fabric.interlink_speed }}
-!
 {% endif %}
+!
 {% endfor %}
 {% endfor %}

@@ -52,7 +52,7 @@ router bgp 641{{ hec.hec_nr }}.10000
 {########## SPINE MAINTENANCE CONFIGURATION ##########}
 group interface FABRIC
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-   interface Et{% for lc in range(lc_start, lc_end) %}{% for subintf in range(1,37) %}{{ lc }}/{{ subintf }}/1{% if not ( lc == lc_end  and  subintf == 36 ) %},{% endif %}{% endfor %}{% endfor %}
+   interface Et{% for lc in range(lc_start, lc_end) %}{% for subintf in range(1,37) %}{{ lc }}/{{ subintf }}/1{% if not ( lc == lc_end-1 and subintf == 36 ) %},{% endif %}{% endfor %}{% endfor %}
 
 {% endif %}
 {% if hec.spine.model|string == '7280'  %}

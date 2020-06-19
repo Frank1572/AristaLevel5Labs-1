@@ -14,20 +14,36 @@
 {% set ip = ip - 256 %}
 {% set nextsubnet = 2 %}
 {% endif %}
+{#
+  determine the correct interface name based on the spine model
+#}
 {% if hec.spine.model|string == '7280' %}
-interface Ethernet{{ subintf }}/1
+{% set intf_name = 'Ethernet'+subintf+'/1' %}
+{# interface Ethernet{{ subintf }}/1 #}
 {% endif %}
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-interface Ethernet{{ lc }}/{{ subintf }}/1
+{% set intf_name = 'Ethernet'+lc+'/'+subintf+'/1' %}
+{# interface Ethernet{{ lc }}/{{ subintf }}/1 #}
 {% endif %}
+interface {{intf_name}}
 {% if create_ip_on_interface == 'yes' %}
  ip address 10.{{ item }}.{{ nextsubnet }}.{{ ip }}/31
-{% else %}
+{% endif %}
  shutdown
  no switchport
  mtu {{ hec.fabric.interlink_mtu }}
  speed forced {{ hec.fabric.interlink_speed }}
-{% endif %}
 !
 {% endfor %}
 {% endfor %}
+{#
+  let's see if we are in need to configure some links with different speed settings
+#}
+{% if hec.spine.port is defined %}
+{% for item in hec.spine.port %}
+interface {{item.id}}
+ no speed forced {{ hec.fabric.interlink_speed }}
+ speed forced {{item.speed}}
+!
+{% endfor %}
+{% endif %}

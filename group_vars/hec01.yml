@@ -156,6 +156,99 @@ hec:
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 4
+    # the following list 'port' is a workaround for mixed port speeds in existing
+    # Fabric builds.
+    # list every port and it's speed if it is different from the value
+    # provided in dictionary 'hec.fabric.interlink_speed'!!
+    port:
+      - id: Et3/11/1
+        speed: 40gfull
+      - id: Et3/12/1
+        speed: 40gfull
+      - id: Et3/13/1
+        speed: 40gfull
+      - id: Et3/14/1
+        speed: 40gfull
+      - id: Et3/15/1
+        speed: 40gfull
+      - id: Et3/16/1
+        speed: 40gfull
+      - id: Et3/17/1
+        speed: 40gfull
+      - id: Et3/18/1
+        speed: 40gfull
+      - id: Et3/19/1
+        speed: 40gfull
+      - id: Et3/20/1
+        speed: 40gfull
+      - id: Et3/21/1
+        speed: 40gfull
+      - id: Et3/22/1
+        speed: 40gfull
+      - id: Et3/25/1
+        speed: 40gfull
+      - id: Et3/26/1
+        speed: 40gfull
+      - id: Et3/27/1
+        speed: 40gfull
+      - id: Et3/28/1
+        speed: 40gfull
+      - id: Et3/29/1
+        speed: 40gfull
+      - id: Et3/30/1
+        speed: 40gfull
+      - id: Et3/31/1
+        speed: 40gfull
+      - id: Et3/32/1
+        speed: 40gfull
+      - id: Et3/33/1
+        speed: 40gfull
+      - id: Et3/34/1
+        speed: 40gfull
+      - id: Et3/35/1
+        speed: 40gfull
+      - id: Et3/36/1
+        speed: 40gfull
+      - id: Et4/1/1
+        speed: 40gfull
+      - id: Et4/2/1
+        speed: 40gfull
+      - id: Et4/3/1
+        speed: 40gfull
+      - id: Et4/4/1
+        speed: 40gfull
+      - id: Et4/5/1
+        speed: 40gfull
+      - id: Et4/6/1
+        speed: 40gfull
+      - id: Et4/7/1
+        speed: 40gfull
+      - id: Et4/8/1
+        speed: 40gfull
+      - id: Et4/9/1
+        speed: 40gfull
+      - id: Et4/10/1
+        speed: 40gfull
+      - id: Et4/11/1
+        speed: 40gfull
+      - id: Et4/12/1
+        speed: 40gfull
+      - id: Et4/13/1
+        speed: 40gfull
+      - id: Et4/14/1
+        speed: 40gfull
+      - id: Et4/15/1
+        speed: 40gfull
+      - id: Et4/16/1
+        speed: 40gfull
+      - id: Et4/17/1
+        speed: 40gfull
+      - id: Et4/18/1
+        speed: 40gfull
+      - id: Et4/19/1
+        speed: 40gfull
+      - id: Et4/20/1
+        speed: 40gfull    
   fabric:
     # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: manual

@@ -608,9 +608,9 @@ hec:
           trunk: 30,32,40,50,55,130,2001-2499
   l2l3_leaf:
     - number: 101
-      spine_port_towards_leaf: Et3/3/1
+      spine_port_towards_leaf: Et3/1/1
     - number: 102
-      spine_port_towards_leaf: Et3/3/2
+      spine_port_towards_leaf: Et3/1/2
 
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any

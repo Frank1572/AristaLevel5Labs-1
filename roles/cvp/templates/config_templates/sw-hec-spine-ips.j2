@@ -35,7 +35,7 @@ interface Ethernet {{intf_name}}
  {#
    let's see if we are in need to configure some links with different speed settings
  #}
-{% if hec.spine.40gfull[intf_name] is defined %}
+{% if hec.spine.fortygig[intf_name] is defined %}
  speed forced 40gfull
 {#
    otherwise we take the default speed.

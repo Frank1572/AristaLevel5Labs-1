@@ -113,8 +113,8 @@ hec:
   oob_prefix: 10.9.246
   oob_mask: 23
   oob_vrf: OOB
-  oob_cvx: 10.9.246.252
-  oob_cvp: 10.9.246.253
+  oob_cvx: 10.9.247.252
+  oob_cvp: 10.9.247.253
   as_low: 4200998673
   as_high: 4200999871
   cvp_ingest_key: SecureKey02
@@ -129,6 +129,7 @@ hec:
   syslog3: 100.127.45.6
   radius1: 10.4.201.55
   radius2: 169.145.33.70
+  radius_key: 07037265610E0D170E54333D547F3D
   admin_mpls:
     - prefix_mask: "10.9.246.0/23"
       sequence: "20"
@@ -155,7 +156,7 @@ hec:
     model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 4
+    linecards: 2
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: evpn

@@ -1,5 +1,12 @@
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 !
+{% for id in hec.spine.number %}
+{% if id == item %}
+snmp-server contact {{id.snmp.contact}}
+snmp-server location {{id.snmp.location}}
+!
+{% endif %}
+{% endfor %}
 {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}

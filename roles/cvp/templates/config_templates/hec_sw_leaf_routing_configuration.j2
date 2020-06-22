@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes'
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
 {# hec_sw_leaf_routing_configuration.j2 #}
 {##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
 {% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}

@@ -10,10 +10,12 @@
 {% set create_ip_on_interface = "no" %}
 {% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 {########## BGP CONFIGURATION ##########}
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
    10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
 !
+{% endif %}
 peer-filter LEAF-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
    10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept

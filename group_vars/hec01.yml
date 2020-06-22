@@ -93,8 +93,8 @@ hec:
   vl900_mask: 24
   vl900_def_gw: 198.19.241.1
   vl900_net: 198.19.241.0/24
-  lo900_net: 198.19.195.0/24
-  lo900_prefix: 198.19.195
+  lo900_net: 198.19.190.0/24
+  lo900_prefix: 198.19.190
   inband_trans_brdr: 10.255.252.78
   inband_trans_brdr_mac: 00:1c:73:00:00:99
   inband_trans_net: 10.255.252.64/28
@@ -110,8 +110,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.178.137.252
   oob_cvp: 10.178.137.253
-  as_low: 4200998673
-  as_high: 4200999871
+  as_low: 4200933137
+  as_high: 4200934335
   cvp_ingest_key: SecureKey01
   dns1: 10.127.141.1
   dns2: 10.127.141.2

@@ -114,6 +114,7 @@
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
+    - sw-hec-brdr-01
   tags:
     - configlets
 

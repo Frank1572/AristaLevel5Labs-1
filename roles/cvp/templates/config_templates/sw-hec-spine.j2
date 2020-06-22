@@ -61,12 +61,16 @@ group interface FABRIC
 {% endif %}
    exit
 !
+group bgp ALL-LEAF
+  neighbor LEAF-PG
+  exit
+!
 maintenance
    unit QUAY
       group interface FABRIC
       group bgp ALL-LEAF
-!
+{# !
 ! ============= to enable a port, add it to the list of interfaces below =============
 !
 interface Ethernet3/1/1, Ethernet3/2/1, Ethernet3/3/1, Ethernet3/4/1, Ethernet3/5/1, Ethernet3/6/1, Ethernet3/7/1, Ethernet3/8/1
- no shutdown
+ no shutdown #}

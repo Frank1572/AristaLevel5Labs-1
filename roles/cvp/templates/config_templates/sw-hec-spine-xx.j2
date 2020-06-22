@@ -1,7 +1,7 @@
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
 !
-{% for id in hec.spine.number %}
-{% if id == item %}
+{% for a in hec.spine.number %}
+{% if a.id == item %}
 snmp-server contact {{id.snmp.contact}}
 snmp-server location {{id.snmp.location}}
 !

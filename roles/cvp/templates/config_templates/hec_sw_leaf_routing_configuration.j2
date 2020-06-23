@@ -116,9 +116,9 @@
        {% for i in range(1,5) %}
        neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
        {% endfor %}
-       {% set mlag_ip_peer  = '198.19.224.1' %}
+       {% set mlag_ip_peer  = hec.fabric.mlag_a_ip %}
        {% if leafid == 'a' %}
-        {% set mlag_ip_peer  = '198.19.224.2' %}
+        {% set mlag_ip_peer  = hec.fabric.mlag_b_ip %}
       {% endif %}
        neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
        network 10.100.1.{{ Lo1 }}/32

@@ -155,7 +155,8 @@ hec:
     model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 4
+    linecards: 2
+    underlay_bfd: True
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: evpn
@@ -207,8 +208,39 @@ hec:
         - 30
         - 31
         - 32
+      uplinks_speed: 100gfull
+      snmp:
+        contact: 34672182:ncons-hec14-oob-01.net 1002
+        location: CA-TOR2-CAGE3-CAB40-U41
       spine_port_towards_leaf: Et3/3/1
+      lo900_suffix: 41
+      mgmt1_suffix: 21
+      ngdr:
+        edge_as: 65194
+        vlans:
+         - id: 961
+           name: rt-hec14-cwan-01a-brdr01a-TRANS
+         - id: 962
+           name: rt-hec14-cwan-01a-brdr01b-TRANS
+         - id: 965
+           name: rt-hec14-vpn-01a-brdr01a-TRANS
+         - id: 966
+           name: rt-hec14-vpn-01a-brdr01b-TRANS
       ports:
+        - id: 961
+          type: vlan
+          purpose: ngdr
+          description: Transfer to rt-hec14-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.1
+          mask: 31
+        - id: 965
+          type: vlan
+          purpose: ngdr
+          description: Transfer to rt-hec14-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.9
+          mask: 31
         - id: 1
           description: rt-hec14-core-01a, Fo0/2/0
           po: 1101
@@ -260,8 +292,39 @@ hec:
         - 30
         - 31
         - 32
-      spine_port_towards_leaf: Et3/4/1
+      uplinks_speed: 100gfull
+      snmp:
+        contact: 34672183:ncons-hec14-oob-01.net 1003
+        location: CA-TOR2-CAGE3-CAB40-U39
+      spine_port_towards_leaf: Et3/3/1
+      lo900_suffix: 42
+      mgmt1_suffix: 22
+      ngdr:
+        edge_as: 65194
+        vlans:
+         - id: 961
+           name: rt-hec14-cwan-01a-brdr01a-TRANS
+         - id: 962
+           name: rt-hec14-cwan-01a-brdr01b-TRANS
+         - id: 965
+           name: rt-hec14-vpn-01a-brdr01a-TRANS
+         - id: 966
+           name: rt-hec14-vpn-01a-brdr01b-TRANS
       ports:
+        - id: 962
+          type: vlan
+          purpose: ngdr
+          description: Transfer to rt-hec14-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.3
+          mask: 31
+        - id: 966
+          type: vlan
+          purpose: ngdr
+          description: Transfer to rt-hec14-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.11
+          mask: 31
         - id: 1
           description: rt-hec14-core-01a, Fo0/2/1
           po: 1101
@@ -306,7 +369,7 @@ hec:
           trunk: all  
         - id: 1106
           description: rt-hec14-vpn-01a
-          trunk: all    
+          trunk: all        
     - number: 2a
       uplinks:
         - 51

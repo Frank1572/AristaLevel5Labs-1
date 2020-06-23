@@ -23,7 +23,7 @@ interface Ethernet{{ lc }}/{{ subintf }}/1
 {% set port = "Et" + lc|string + "/" + subintf|string + "/1" %}
 {% endif %}
 {% if create_ip_on_interface == 'yes' %}
- ip address 10.{{ item }}.{{ nextsubnet }}.{{ ip }}/31
+ ip address 10.{{ item.id }}.{{ nextsubnet }}.{{ ip }}/31
 {% else %}
  shutdown
  no switchport

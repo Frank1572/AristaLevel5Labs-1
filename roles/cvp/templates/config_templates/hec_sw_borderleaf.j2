@@ -5,6 +5,22 @@
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
 {% set speed = '40gfull' %}
+{#
+ Let's generate the hostname base on the id-string that we were called with
+#}
+{% set hname = 'sw-hec' + hec.hec_nr +'-' %}
+{% if leafpurpose == 'b' %}
+{% set hname = hname + 'brdr-' %}
+{% endif %}
+{% if leafpurpose == 'h' %}
+{% set hname = hname + 'shs-' %}
+{% endif %}
+{% if leafpurpose == 's' %}
+{% set hname = hname + 'str-' %}
+{% endif %}
+{% set hname = hname + '0' + brdrtype + leafid %}
+hostname {{hname}}
+!
 {% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
    name FW-CORE-TRANS
@@ -39,6 +55,9 @@ interface Vxlan1
 {% set loop_items = hec.shs %}
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
+!
+snmp-server contact {{allbrdrs.snmp.contact}}
+snmp-server location {{allbrdrs.snmp.location}}
 !
 ! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
@@ -119,6 +138,7 @@ interface Port-Channel{{ po.id }}
 {% endif %}
 {% endif %}
 {% endfor %}
+!
 {% endif %}
 {% endfor %}
 {#

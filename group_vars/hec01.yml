@@ -262,6 +262,9 @@ hec:
       ip_last_octett: 8
   brdr:
     - number: 1a
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -315,6 +318,9 @@ hec:
           description: rt-hec01-vpn-01a
           trunk: all
     - number: 1b
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -344,6 +350,9 @@ hec:
           description: rt-hec01-core-01b
           trunk: all
     - number: 2a
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -417,6 +426,9 @@ hec:
           description: rt-hec01-vpn-01b
           trunk: 900,920,940
     - number: 2b
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -490,6 +502,9 @@ hec:
           description: rt-hec01-vpn-01b
           trunk: 900,920,940
     - number: 3a
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -519,6 +534,9 @@ hec:
           description: rt-hec01-core-01d
           trunk: all
     - number: 3b
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
         - 25
         - 26
@@ -549,6 +567,9 @@ hec:
           trunk: all
   str:
     - number: 1a
+      snmp:
+        location: foo
+        contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
         - 25
@@ -566,6 +587,9 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 1b
+      snmp:
+        location: foo
+        contact: bar
       spine_port_towards_leaf: Et3/6/1
       uplinks:
         - 25
@@ -583,6 +607,9 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2a
+      snmp:
+        location: foo
+        contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
         - 25
@@ -600,6 +627,9 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2b
+      snmp:
+        location: foo
+        contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
         - 25

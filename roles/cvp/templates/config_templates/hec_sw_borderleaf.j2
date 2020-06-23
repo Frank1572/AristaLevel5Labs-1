@@ -8,19 +8,25 @@
 {% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
    name FW-CORE-TRANS
+!
 vlan 915
    name FWT-CORE-TRANS
+!
 vlan 916
    name FW-BRDR-TRANS
+!
 interface Vxlan1
    vxlan vlan 914 vni 10914
    vxlan vlan 916 vni 10916
 {% else %}
+!
 vlan 900
    name NW-MGMT
 {% if leafpurpose != 'h' %}
+!
 vlan 920
    name RT-TRANS
+!
 interface Vxlan1
    vxlan vlan 920 vni 10920
 {% endif %}
@@ -33,9 +39,9 @@ interface Vxlan1
 {% set loop_items = hec.shs %}
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
-{% for item in allbrdrs.uplinks %}
 !
 ! ===== Spine Uplinks =====
+{% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}
    no switchport
    description SPINE UPLINK
@@ -89,8 +95,8 @@ interface Ethernet{{ item.id }}
 {% endif %}
    ip address {{ item.ip }}
 {% endif %}
-{% endfor %}
 !
+{% endfor %}
 ! ===== Port-channels =====
 {% if allbrdrs.port_channels is defined %}
 {% for po in allbrdrs.port_channels %}

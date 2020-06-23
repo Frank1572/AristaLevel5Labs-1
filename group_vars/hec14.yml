@@ -157,8 +157,8 @@ hec:
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 2
-    # Enable or disable Bfd for underlay (normally disable)
-    underlay_bfd: enable
+    # Enable or disable Bfd for underlay (True or False)
+    underlay_bfd: True
     # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
     snmp:
       spine11:
@@ -184,10 +184,11 @@ hec:
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
-    # Spine BGP Listen range for underlay
-    bgp_listen_range: 10.100.0.0/16
-    # Is NGDR available and if yes is it EVPN enabled (yes/no)
-    ngdr_evpn_available: yes
+    # Spine BGP Listen ranges for EVPN
+    bgp_listen_ranges: 
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1

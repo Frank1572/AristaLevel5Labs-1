@@ -35,10 +35,8 @@ router bgp 641{{ hec.hec_nr }}.10000
 !
    neighbor LEAF-PG peer-group
    neighbor LEAF-PG send-community
-{% if hec.spine.underlay_bfd is defined %}
-{% if hec.spine.underlay_bfd == "enable" %}
+{% if hec.spine.underlay_bfd %}
    neighbor LEAF-PG fall-over bfd
-{% endif %}
 {% endif %}
    neighbor LEAF-PG soft-reconfiguration inbound all
    neighbor LEAF-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}

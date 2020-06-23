@@ -88,6 +88,7 @@ container:
     parent_container: HEC-Routed Fabric
     configlets:
       - HEC-VLANs
+      - sw-hec-leaf
   HEC-Service leaf:
     parent_container: HEC-Leaf
   HEC-Border leaf:

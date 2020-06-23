@@ -146,31 +146,30 @@ hec:
   admin_sw_neig_as_oob1b: 64536
   oob01_lo0_prefix: 198.19.249
   oob01_as: 64531.14
-  spine_nr:
-    - 11
-    - 12
-    - 13
-    - 14
   spine:
     # valid models are: 7504, 7508, 7280
     model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 2
-    # Enable or disable Bfd for underlay (True or False)
+    # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
     # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
-    snmp:
-      spine11:
+    number:
+      - id: 11
+        snmp:
           contact: 34672206:ncons-hec14-oob-01.net 1010
           location: CA-TOR2-CAGE3-CAB40-U3
-      spine12:
+      - id: 12
+        snmp:
           contact: 34672207:ncons-hec14-oob-01.net 1014
           location: CA-TOR2-CAGE3-CAB41-U3
-      spine13:
+      - id: 13
+        snmp:
           contact: 34672208:ncons-hec14-oob-01.net 1023
           location: CA-TOR2-CAGE3-CAB42-U3
-      spine14:
+      - id: 14
+        snmp:
           contact: 34672209:ncons-hec14-oob-02.net 1010
           location: CA-TOR2-CAGE3-CAB43-U3
     ports_with_non_default_speed:

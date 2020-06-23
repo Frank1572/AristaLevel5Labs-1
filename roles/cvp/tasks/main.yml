@@ -134,8 +134,8 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hec-spine-xx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item }}"
-  with_items: "{{ hec.spine_nr }}"
+    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}"
+  with_items: "{{ hec.spine.number }}"
   tags:
     - configlets
 

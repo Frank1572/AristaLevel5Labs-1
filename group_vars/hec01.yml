@@ -351,8 +351,8 @@ hec:
           trunk: all
     - number: 2a
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ44-R1-2-32
+        contact: 34679367:ncons4408.wdf.sap.corp:1008
       uplinks:
         - 53/1
         - 54/1

@@ -572,11 +572,19 @@ hec:
         contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       ports:
+        - id: 1/1
+          description: hec01f0065,Data
+        - id: 2/1
+          description: hec01f0066,Data
+        - id: 3/1
+          description: hec01f0067,Data
+        - id: 4/1
+          description: hec01f0068,Data
         - id: 27/1
           description: sw-hec01-str-01b, Et27
           po: 42
@@ -584,17 +592,37 @@ hec:
           description: sw-hec01-str-01b, Et28
           po: 42
       port_channels:
+        - id: 800
+          description: hec01f0065,Data
+        - id: 805
+          description: hec01f0066,Data
+        - id: 810
+          description: hec01f0067,Data
+        - id: 815
+          description: hec01f0068,Data
+        - id: 1605
+          description: rt-hec01-605, Po10
+        - id: 1606
+          description: rt-hec01-606, Po10
     - number: 1b
       snmp:
         location: foo
         contact: bar
       spine_port_towards_leaf: Et3/6/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       ports:
+        - id: 1/1
+          description: hec01f0065,Data
+        - id: 2/1
+          description: hec01f0066,Data
+        - id: 3/1
+          description: hec01f0067,Data
+        - id: 4/1
+          description: hec01f0068,Data
         - id: 27/1
           description: sw-hec01-str-01a, Et27
           po: 42
@@ -602,42 +630,58 @@ hec:
           description: sw-hec01-str-01a, Et28
           po: 42
       port_channels:
+        - id: 800
+          description: hec01f0065,Data
+        - id: 805
+          description: hec01f0066,Data
+        - id: 810
+          description: hec01f0067,Data
+        - id: 815
+          description: hec01f0068,Data
+        - id: 1605
+          description: rt-hec01-605, Po10
+        - id: 1606
+          description: rt-hec01-606, Po10
     - number: 2a
       snmp:
         location: foo
         contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       ports:
-        - id: 27/1
-          description: sw-hec01-str-02b, Et27
+        - id: 49/1
+          description: sw-hec01-str-02b, Et49/1
           po: 42
-        - id: 28/1
-          description: sw-hec01-str-02b, Et28
+        - id: 50/1
+          description: sw-hec01-str-02b, Et50/1
           po: 42
       port_channels:
+        - id: 800
+          description: hec01f
     - number: 2b
       snmp:
         location: foo
         contact: bar
       spine_port_towards_leaf: Et3/5/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       ports:
-        - id: 27/1
-          description: sw-hec01-str-02a, Et27
+        - id: 49/1
+          description: sw-hec01-str-02a, Et49/1
           po: 42
-        - id: 28/1
-          description: sw-hec01-str-02a, Et28
+        - id: 50/1
+          description: sw-hec01-str-02a, Et50/1
           po: 42
       port_channels:
+        - id: 800
+          description: hec01f
   interdc:
     - number: "01"
       ports:

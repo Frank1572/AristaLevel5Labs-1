@@ -98,7 +98,7 @@ interface Management1
 {% endif %}
 {% set link_ip = ip %}
 {% for intf in allbrdrs.uplinks %}
-interface Ethernet{{ intf }}
+interface Ethernet{{ intf }}/1
    ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
 !
 {% endfor %}

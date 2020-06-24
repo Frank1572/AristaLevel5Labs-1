@@ -358,16 +358,16 @@ hec:
         - 54/1
         - 55/1
         - 56/1
-      spine_port_towards_leaf: Et3/3/1
+      spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 6
           description: ->fw-hec01-01, eth1
           po: 10
-          speed: 1g
+          speed: 1000full
         - id: 7
           description: ->fw-hec01-01, eth2
           po: 20
-          speed: 1g
+          speed: 1000full
         - id: 48
           description: ->naa-hec01-01, in-band
           po: 48
@@ -383,10 +383,10 @@ hec:
           description: mlag peer link
         - id: 10
           description: ->fw-hec01-01
-          trunk: all
+          trunk: 916
         - id: 20
           description: ->fw-hec01-02
-          trunk: all
+          trunk: 916
         - id: 48
           description: ->naa-hec01-01, in-band
           access_vlan: 916
@@ -399,16 +399,16 @@ hec:
         - 54/1
         - 55/1
         - 56/1
-      spine_port_towards_leaf: Et3/4/1
+      spine_port_towards_leaf: Et3/8/1
       ports:
         - id: 6
           description: ->fw-hec01-01, eth2
           po: 10
-          speed: 1g
+          speed: 1000full
         - id: 7
           description: ->fw-hec01-02, eth2
           po: 20
-          speed: 1g
+          speed: 1000full
         - id: 48
           description: ->naa-hec01-01, in-band
           po: 48
@@ -424,10 +424,10 @@ hec:
           description: mlag peer link
         - id: 10
           description: ->fw-hec01-01
-          trunk: all
+          trunk: 916
         - id: 20
           description: ->fw-hec01-02
-          trunk: all
+          trunk: 916
         - id: 48
           description: ->naa-hec01-01, in-band
           access_vlan: 916

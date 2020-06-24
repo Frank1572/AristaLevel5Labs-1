@@ -59,11 +59,10 @@ interface Vxlan1
 {% if leafpurpose == 'h' %}
 {% set loop_items = hec.shs %}
 {% endif %}
-{% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !
-{% if fabric.ngdr is defined %}
+{% if hec.fabric.ngdr is defined %}
 {% if leafpurpose == 'b' %}
-! ===== NGDR Transfer VLANs =====
+! ===== EDGE Transfer VLANs =====
 vlan 961
    name rt-hec14-cwan-01a-TRANS
 vlan 962
@@ -82,18 +81,11 @@ vlan 968
    name rt-hec14-vpn-01b-TRANS
 {% endif %}
 {% endif %}
+{% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
 !
-{% if allbrdrs.ngdr is defined %}
-! ===== NGDR Transfer VLANs =====
-{% for vlan in allbrdrs.ngdr.vlans %}
-vlan {{ vlan.id }}
-   name {{ vlan.name }}
-{% endfor %}
-!
-{% endif %}
 ! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}

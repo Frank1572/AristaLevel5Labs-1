@@ -120,11 +120,16 @@ interface Ethernet{{ item.id }}
 {% if allbrdrs.port_channels is defined %}
 {% for po in allbrdrs.port_channels %}
 interface Port-Channel{{ po.id }}
-{% if po.id == 42 %}
+{#
+  As we do assign the configlet sw-mlag-a/b
+  to all leafs, the creation of Po42 is not required here.
+  Also it's not required to define it under hec.brdr/str/shs.port-channels
+#}
+{# {% if po.id == 42 %}
    description {{ po.description }}
    switchport mode trunk
    switchport trunk group MLAG-Peer
-{% else %}
+{% else %} #}
    description {{ po.description }}
    mlag {{ po.id }}
 {% if po.trunk is defined %}
@@ -136,7 +141,7 @@ interface Port-Channel{{ po.id }}
 {% if po.access_vlan is defined %}
    switchport access vlan {{ po.access_vlan }}
 {% endif %}
-{% endif %}
+{# {% endif %} #}
 {% endfor %}
 !
 {% endif %}

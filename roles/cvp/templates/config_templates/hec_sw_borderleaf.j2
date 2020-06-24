@@ -31,10 +31,8 @@ mlag configuration
 {% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
    name FW-CORE-TRANS
-!
 vlan 915
    name FWT-CORE-TRANS
-!
 vlan 916
    name FW-BRDR-TRANS
 !
@@ -62,6 +60,28 @@ interface Vxlan1
 {% set loop_items = hec.shs %}
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
+!
+{% if fabric.ngdr is defined %}
+{% if leafpurpose == 'b' %}
+! ===== NGDR Transfer VLANs =====
+vlan 961
+   name rt-hec14-cwan-01a-TRANS
+vlan 962
+   name rt-hec14-cwan-01a-TRANS
+vlan 963
+   name rt-hec14-cwan-01b-TRANS
+vlan 964
+   name rt-hec14-cwan-01b-TRANS
+vlan 965
+   name rt-hec14-vpn-01a-TRANS
+vlan 966
+   name rt-hec14-vpn-01a-TRANS
+vlan 967
+   name rt-hec14-vpn-01b-TRANS
+vlan 968
+   name rt-hec14-vpn-01b-TRANS
+{% endif %}
+{% endif %}
 !
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
@@ -133,7 +153,7 @@ interface Ethernet{{ item.id }}
    mtu {{ hec.fabric.interlink_mtu }}
 {% endif %}
 {% endif %}
-   ip address {{ item.ip }}/{{ item.mask }}
+   ip address {{ item.ip }}
 {% endif %}
 !
 {% endfor %}

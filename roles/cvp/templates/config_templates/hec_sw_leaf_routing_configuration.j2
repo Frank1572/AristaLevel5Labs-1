@@ -106,7 +106,7 @@ ip routing
 no ip routing vrf OOB
 !
 ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
-{% if allbrdrs.ngdr is defined %}
+{% if fabric.ngdr is defined %}
 ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
 ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
 ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
@@ -144,9 +144,9 @@ router bgp {{ asn_generated }}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
-{% if allbrdrs.ngdr is defined %}
+{% if fabric.ngdr is defined %}
    neighbor EDGE-PG peer-group
-   neighbor EDGE-PG remote-as {{ allbrdrs.ngdr.edge_as }}
+   neighbor EDGE-PG remote-as {{ fabric.ngdr.edge_as }}
    neighbor EDGE-PG fall-over bfd
    neighbor EDGE-PG soft-reconfiguration inbound all
    neighbor EDGE-PG route-map RM-EDGE in
@@ -156,10 +156,10 @@ router bgp {{ asn_generated }}
 {% for edge_neighbor in allbrdrs.ports %}
 {% if edge_neighbor.type is defined %}
 {% if edge_neighbor.type == "vlan" %}
-{% if edge_neighbor.purpose is defined %}
-{% if edge_neighbor.purpose == "ngdr" %}
-   neighbor {{ edge_neighbor.ip.split(".")[0] }}.{{ edge_neighbor.ip.split(".")[1] }}.{{ edge_neighbor.ip.split(".")[2] }}.{{ edge_neighbor.ip.split(".")[3]|int -1 }} peer-group EDGE-PG
-   neighbor {{ edge_neighbor.ip.split(".")[0] }}.{{ edge_neighbor.ip.split(".")[1] }}.{{ edge_neighbor.ip.split(".")[2] }}.{{ edge_neighbor.ip.split(".")[3]|int -1 }} update-source Vlan{{ edge_neighbor.id }} 
+{% if edge_neighbor.ngdr_underlay is defined %}
+{% if edge_neighbor.ngdr_underlay %}
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} peer-group EDGE-PG
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }} 
 {% endif %}
 {% endif %}
 {% endif %}

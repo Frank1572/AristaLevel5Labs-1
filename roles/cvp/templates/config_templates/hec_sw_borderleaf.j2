@@ -155,8 +155,7 @@ interface Port-Channel{{ po.id }}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================
-interface Vlan916
-   description ->Transfer network for inband management
+interface {{hec.inband_trans_gw_vlan}}
    ip virtual-router address {{ hec.inband_trans_brdr }}
 !
 ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}

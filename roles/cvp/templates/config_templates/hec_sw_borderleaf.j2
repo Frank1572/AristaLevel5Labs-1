@@ -89,7 +89,7 @@ snmp-server location {{allbrdrs.snmp.location}}
 {% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}/1
    no switchport
-   description SPINE UPLINK
+   description ->sw-hec{{ hec.hec_nr }}-spine-{{ loop.index + 10}}
    mtu {{ hec.fabric.interlink_mtu }}
 {% if allbrdrs.uplinks_speed is defined %}
 {% set speed = allbrdrs.uplinks_speed %}
@@ -126,9 +126,9 @@ interface Ethernet{{ item.id }}/1
 {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
    switchport access vlan {{ item.access_vlan }}
 {% endif %}{# END port is access_vlan #}
-{% if item.speed is defined %} {# BEGIN port is access_vlan #}
+{% if item.speed is defined %} 
    speed forced {{ item.speed }}
-{% endif %}{# END port is access_vlan #}
+{% endif %}
 {% if item.ip is defined %}
 {% if item.type is defined %}
 {% if item.type != "vlan" %}

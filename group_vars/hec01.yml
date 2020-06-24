@@ -96,7 +96,7 @@ hec:
   lo900_net: 198.19.190.0/24
   lo900_prefix: 198.19.190
   inband_trans_brdr: 10.255.241.78
-  inband_trans_brdr_mac: 00:1c:73:00:00:99
+  inband_trans_brdr_mac: 00:1c:73:00:00:96
   inband_trans_net: 10.255.241.64/28
   inband_trans_prefix: 10.255.241
   inband_trans_mask: 28

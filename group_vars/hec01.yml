@@ -303,8 +303,6 @@ hec:
           type: vlan
           ip: 10.254.253.9/31
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 1101
           description: rt-hec01-core-01a
           trunk: all
@@ -341,8 +339,6 @@ hec:
           description: sw-hec01-brdr-01a, Et28
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 1101
           description: rt-hec01-core-01a
           trunk: all
@@ -384,8 +380,6 @@ hec:
           type: vlan
           ip: 10.255.241.76/28
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 10
           description: ->fw-hec01-01
           trunk: 916
@@ -430,8 +424,6 @@ hec:
           type: vlan
           ip: 10.255.241.77/28
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 10
           description: ->fw-hec01-01
           trunk: 916
@@ -486,8 +478,6 @@ hec:
         - id: 20
           description: fw-hec01-02
           trunk: all
-        - id: 42
-          description: mlag peer link
         - id: 1101
           description: rt-hec01-core-01c
           trunk: all
@@ -554,8 +544,6 @@ hec:
         - id: 20
           description: fw-hec01-02
           trunk: all
-        - id: 42
-          description: mlag peer link
         - id: 1101
           description: rt-hec01-core-01c
           trunk: all
@@ -596,8 +584,6 @@ hec:
           description: sw-hec01-str-01b, Et28
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
     - number: 1b
       snmp:
         location: foo
@@ -616,8 +602,6 @@ hec:
           description: sw-hec01-str-01a, Et28
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
     - number: 2a
       snmp:
         location: foo
@@ -636,8 +620,6 @@ hec:
           description: sw-hec01-str-02b, Et28
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
     - number: 2b
       snmp:
         location: foo
@@ -656,8 +638,6 @@ hec:
           description: sw-hec01-str-02a, Et28
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
   interdc:
     - number: "01"
       ports:
@@ -691,8 +671,6 @@ hec:
           description: sw-hec02-interdc02, Et48
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 999
           description: ->sw-hec01 Po999
           trunk: 961,962
@@ -726,8 +704,6 @@ hec:
           description: sw-hec02-interdc01, Et48
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 999
           description: ->sw-hec01 Po999
           trunk: 961,962
@@ -757,8 +733,6 @@ hec:
           description: sw-hec01-shs-01b, Et26
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 10
           description: hec01f00501
           trunk: 30,32,40,50,55,130,2001-2499
@@ -787,8 +761,6 @@ hec:
           description: sw-hec01-shs-01a, Et26
           po: 42
       port_channels:
-        - id: 42
-          description: mlag peer link
         - id: 10
           description: hec01f00501
           trunk: 30,32,40,50,55,130,2001-2499

@@ -88,7 +88,7 @@ snmp-server location {{allbrdrs.snmp.location}}
 !
 ! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
-interface Ethernet{{ item }}
+interface Ethernet{{ item }}/1
    no switchport
    description SPINE UPLINK
    mtu {{ hec.fabric.interlink_mtu }}
@@ -112,7 +112,7 @@ interface {{ inttype }}{{ item.id }}
 {% endif %}
 {% endif %}
 {% if item.type is not defined %}
-interface Ethernet{{ item.id }}
+interface Ethernet{{ item.id }}/1
 {% endif %}
    description ->{{ item.description }}
 {% if item.po is defined %}

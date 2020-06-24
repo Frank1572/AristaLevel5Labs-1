@@ -165,6 +165,8 @@ hec:
     interlink_speed: 100gfull
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
+    #Are the core vlans 3000 to 3599 needed 
+    evpn_core_vlan: true
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:

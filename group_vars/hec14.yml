@@ -266,7 +266,7 @@ hec:
           speed: 40gfull
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
@@ -345,7 +345,7 @@ hec:
           speed: 40gfull
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
@@ -390,7 +390,7 @@ hec:
           access_vlan: 916
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -420,7 +420,7 @@ hec:
           access_vlan: 916
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -464,7 +464,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
@@ -523,7 +523,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
@@ -559,7 +559,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
     - number: 1b
       spine_port_towards_leaf: Et3/10/1
       uplinks:
@@ -576,7 +576,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
     - number: 2a
       spine_port_towards_leaf: Et3/11/1
       uplinks_speed: 100gfull
@@ -596,7 +596,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
       uplinks_speed: 100gfull
@@ -616,7 +616,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
   shs:
     - number: 1a
       uplinks:
@@ -641,7 +641,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 10
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499
@@ -668,7 +668,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 10
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499

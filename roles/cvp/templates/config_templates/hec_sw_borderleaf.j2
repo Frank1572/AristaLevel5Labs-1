@@ -86,7 +86,6 @@ vlan 968
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
 !
-! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}/1
    no switchport

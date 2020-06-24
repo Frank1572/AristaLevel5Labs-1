@@ -214,9 +214,9 @@ hec:
       snmp:
         contact: 34672182:ncons-hec14-oob-01.net 1002
         location: CA-TOR2-CAGE3-CAB40-U41
-      spine_port_towards_leaf: Et3/3/1
       lo900_suffix: 41
       mgmt1_suffix: 21
+      spine_port_towards_leaf: Et3/3/1
       ports:
         - id: 961
           type: vlan
@@ -287,9 +287,9 @@ hec:
       snmp:
         contact: 34672183:ncons-hec14-oob-01.net 1003
         location: CA-TOR2-CAGE3-CAB40-U39
-      spine_port_towards_leaf: Et3/3/1
       lo900_suffix: 42
       mgmt1_suffix: 22
+      spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 962
           type: vlan

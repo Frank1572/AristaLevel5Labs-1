@@ -237,15 +237,19 @@ hec:
         - id: 1
           description: rt-hec14-core-01a, Fo0/2/0
           po: 1101
+          speed: 40gfull
         - id: 2
           description: rt-hec14-core-01b, Fo0/2/0
           po: 1102
+          speed: 40gfull
         - id: 3
           description: rt-hec14-cwan-01a, Fo0/0/0
           po: 1103
+          speed: 40gfull
         - id: 4
           description: rt-hec14-idc-01a, Fo0/0/0
-          po: 1104            
+          po: 1104 
+          speed: 40gfull
         - id: 27
           description: sw-hec14-brdr-01b, Et27
           po: 42
@@ -254,10 +258,12 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1106 
+          po: 1106
+          speed: 40gfull
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105           
+          po: 1105
+          speed: 40gfull
       port_channels:
         - id: 42
           description: mlag peer link
@@ -310,15 +316,19 @@ hec:
         - id: 1
           description: rt-hec14-core-01a, Fo0/2/1
           po: 1101
+          speed: 40gfull
         - id: 2
           description: rt-hec14-core-01b, Fo0/2/1
           po: 1102
+          speed: 40gfull
         - id: 3
           description: rt-hec14-cwan-01a, Fo1/0/0
           po: 1103
+          speed: 40gfull
         - id: 4
           description: rt-hec14-idc-01a, Fo1/0/0
-          po: 1104            
+          po: 1104
+          speed: 40gfull
         - id: 27
           description: sw-hec14-brdr-01a, Et27
           po: 42
@@ -327,10 +337,12 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1106 
+          po: 1106
+          speed: 40gfull
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105  
+          po: 1105
+          speed: 40gfull
       port_channels:
         - id: 42
           description: mlag peer link

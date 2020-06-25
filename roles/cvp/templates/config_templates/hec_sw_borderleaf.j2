@@ -135,9 +135,20 @@ interface Ethernet{{ item.id }}/1
    no switchport
 {% endif %}
 {% if item.type == "vlan" %}
+{% if item.vrrp is not defined %}
    no autostate
+{% endif %}
 {% if item.mtu is defined %}
    mtu {{ item.mtu }}
+{% endif %}
+{% if item.vrrp is defined %}
+   vrrp 250 priority {{ item.vrrp.priority }}
+   vrrp 250 preempt delay minimum 180
+   vrrp 250 preempt delay reload 180
+{% if item.vrrp.auth is defined %}
+   vrrp 250 authentication text {{ item.vrrp.auth }}
+{% endif %}
+   vrrp 250 ip {{ item.vrrp.ip }}
 {% endif %}
 {% endif %}
 {% if item.type == "spine_link" %}

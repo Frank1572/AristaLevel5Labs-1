@@ -93,8 +93,8 @@ hec:
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
   ma_domain: "net.sap.corp"
-  lo900_domain: "tor2.hec.sap.biz"
-  vl900_domain: "tor2.hec.sap.biz"
+  lo900_domain: "yyz2.hec.sap.biz"
+  vl900_domain: "yyz2.hec.sap.biz"
   vl900_mask: 25
   vl900_def_gw: 198.19.233.1
   vl900_net: 198.19.233.0/25

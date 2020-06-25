@@ -24,7 +24,6 @@
 {% set hname = hname + '0' + brdrtype + leafid %}
 hostname {{hname}}
 !
-! ===== MLAG Peer Link =====
 mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
@@ -60,7 +59,7 @@ interface Vxlan1
 {% set loop_items = hec.shs %}
 {% endif %}
 !
-{% if hec.fabric.ngdr is defined %}
+{% if hec.ngdr_underlay is defined %}
 {% if leafpurpose == 'b' %}
 ! ===== EDGE Transfer VLANs =====
 vlan 961
@@ -86,6 +85,7 @@ vlan 968
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
 !
+! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}/1
    no switchport
@@ -126,7 +126,7 @@ interface Ethernet{{ item.id }}/1
 {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
    switchport access vlan {{ item.access_vlan }}
 {% endif %}{# END port is access_vlan #}
-{% if item.speed is defined %} 
+{% if item.speed is defined %}
    speed forced {{ item.speed }}
 {% endif %}
 {% if item.ip is defined %}
@@ -163,9 +163,7 @@ interface Ethernet{{ item.id }}/1
 {% if allbrdrs.port_channels is defined %}
 {% for po in allbrdrs.port_channels %}
 interface Port-Channel{{ po.id }}
-{% if po.id == 42 %}
-   description {{ po.description }}
-{% else %}
+{% if po.id != 42 %}
    description {{ po.description }}
    mlag {{ po.id }}
 {% if po.trunk is defined %}
@@ -203,21 +201,6 @@ ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
 ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
 {% endif %}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
-{% endif %}
-{% if (brdrtype == '1') or (brdrtype == '3') %}
-{#
-  we need to have vlans and the vni mapping for 3000-3499
-  if the core routers and wan/vpn routers are still doing
-  static transfer networks for wan/vpn connections
-#}
-{% if hec.fabric.vtep_distribution_mode == 'manual' %}
-vlan 3000-3499
-!
-interface Vxlan1
-{% for i in range(1,500) %}
-   vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
-{% endfor %}
-{% endif %}
 {% endif %}
 {% endif %}
 {#

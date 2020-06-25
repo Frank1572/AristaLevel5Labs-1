@@ -89,7 +89,7 @@ snmp-server location {{allbrdrs.snmp.location}}
 !
 interface Loopback900
    description NW-MGMT
-   ip address {{allbrdrs.nwmgmt_ip}}/{{hec.lo900_net|ipaddr('prefix')}}
+   ip address {{allbrdrs.nwmgmt_ip}}/32
 !
 {% include "templates/config_templates/sw-hec-oob-vrf.j2" %}
 

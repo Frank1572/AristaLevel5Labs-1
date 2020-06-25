@@ -714,6 +714,9 @@ hec:
         - 35/1
         - 36/1
       spine_port_towards_leaf: Et4/3/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: dummy
+      oob_ip: dummy
       ports:
         - id: 32
           description: CIS-iSCSI
@@ -744,6 +747,9 @@ hec:
         - 35/1
         - 36/1
       spine_port_towards_leaf: Et4/4/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: dummy
+      oob_ip: dummy
       ports:
         - id: 32
           description: CIS-iSCSI

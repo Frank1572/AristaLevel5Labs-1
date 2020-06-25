@@ -64,6 +64,7 @@ container:
   HEC-HANA Top of rack:
     parent_container: HEC-Top of rack
     configlets:
+      - sw-hec-aaa-hana
       - hec-hana
   HEC-HV Top of rack:
     parent_container: HEC-Top of rack
@@ -87,6 +88,7 @@ container:
     parent_container: HEC-Routed Fabric
     configlets:
       - HEC-VLANs
+      - sw-hec-leaf
   HEC-Service leaf:
     parent_container: HEC-Leaf
   HEC-Border leaf:
@@ -98,6 +100,7 @@ container:
   HEC-HANA leaf:
     parent_container: HEC-Leaf
     configlets:
+      - sw-hec-aaa-hana
       - hec-hana
   HEC-HV leaf:
     parent_container: HEC-Leaf
@@ -117,6 +120,7 @@ container:
 configlet_list:
   sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"
   sw-hec-aaa: "{{ lookup('file', 'configs/sw-hec-aaa') }}"
+  sw-hec-aaa-hana: "{{ lookup('file', 'configs/sw-hec-aaa-hana') }}"
   CVP-Arista: "{{ lookup('file', 'configs/CVP-Arista') }}"
   sw-hec-oob-vrf: "{{ lookup('file', 'configs/sw-hec-oob-vrf') }}"
   sw-hec-snmp: "{{ lookup('file', 'configs/sw-hec-snmp') }}"
@@ -143,7 +147,7 @@ configlet_list:
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
-  sw-hec-vtep-static: "{{ lookup('file', 'configs/sw-hec-vtep-static', errors='warn') }}"
+  sw-hec-leaf: "{{ lookup('file', 'configs/sw-hec-leaf', errors='warn') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
   sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
   sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"
@@ -180,6 +184,7 @@ configlet_list:
 configlet_filter_list_generic:
   - sw-hec
   - sw-hec-aaa
+  - sw-hec-aaa-hana
   - CVP-Arista
   - sw-hec-oob-vrf
   - sw-hec-snmp

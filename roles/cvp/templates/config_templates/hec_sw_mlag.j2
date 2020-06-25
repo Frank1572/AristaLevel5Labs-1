@@ -1,20 +1,22 @@
+spanning-tree mst configuration
+  instance 1 vlan  2-4093
+!
 no spanning-tree vlan 4094
 !
 vlan 4094
    trunk group MLAG-PEER
 !
 interface Vlan4094
-   mtu 9100
+   mtu {{ hec.fabric.interlink_mtu }}
    no autostate
-   ip address 198.19.224.1/30
 !
 interface Port-Channel42
    description MLAG-PEER
+   mtu {{hec.fabric.interlink_mtu}}
    switchport mode trunk
    switchport trunk group MLAG-PEER
 !
 mlag configuration
    local-interface Vlan4094
    peer-link Port-Channel42
-   peer-address 198.19.224.2
-
+!

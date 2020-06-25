@@ -69,19 +69,6 @@ interface Loopback2
    description VTEP 
    ip address 10.200.1.{{ cell_id }}/32
 !
-interface Loopback900
-   description NW-MGMT
-{% if allbrdrs.lo900_suffix is defined %}
-   ip address {{ hec.lo900_prefix }}.{{ allbrdrs.lo900_suffix }}/32
-{% endif %}
-!
-interface Management1
-   description OOB MGMT
-   vrf forwarding OOB
-{% if allbrdrs.mgmt1_suffix is defined %}
-   ip address {{ hec.oob_prefix }}.{{ allbrdrs.mgmt1_suffix }}/{{ hec.oob_mask }}
-{% endif %}
-!
 {% if spine_lc|int > 0 %}
 {% set offset = spine_lc|int - 3 %}
 {% else %}
@@ -100,7 +87,7 @@ interface Management1
 {% endif %}
 {% set link_ip = ip %}
 {% for intf in allbrdrs.uplinks %}
-interface Ethernet{{ intf }}/1
+interface Ethernet{{ intf }}
    ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
 !
 {% endfor %}
@@ -180,9 +167,7 @@ router bgp {{ asn_generated }}
    neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
    network 10.100.1.{{ Lo1 }}/32
    network 10.200.1.{{ cell_id }}/32
-{% if allbrdrs.lo900_suffix is defined %}
-   network {{ hec.lo900_prefix }}.{{ allbrdrs.lo900_suffix }}/32
-{% endif %}  
+   network {{allbrdrs.nwmgmt_ip}}/32
 {% if brdrtype == '2' %}
    network {{ hec.inband_trans_net }}
 {% endif %}

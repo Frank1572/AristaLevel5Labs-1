@@ -30,8 +30,10 @@ mlag configuration
 {% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
    name FW-CORE-TRANS
+!
 vlan 915
    name FWT-CORE-TRANS
+!
 vlan 916
    name FW-BRDR-TRANS
 !
@@ -85,14 +87,26 @@ vlan 968
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
 !
+interface Loopback900
+   description NW-MGMT
+   ip address {{allbrdrs.nwmgmt_ip}}/{{hec.lo900_net|ipaddr('prefix')}}
+!
+{% include "templates/config_templates/sw-hec-oob-vrf.j2" %}
+
+!
+interface Management1
+   description OOB MGMT
+   vrf forwarding OOB
+   ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
+!
 ! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
-interface Ethernet{{ item }}/1
+interface Ethernet{{ item }}
    no switchport
-   description ->sw-hec{{ hec.hec_nr }}-spine-{{ loop.index + 10}}
+   description SPINE UPLINK
    mtu {{ hec.fabric.interlink_mtu }}
-{% if allbrdrs.uplinks_speed is defined %}
-{% set speed = allbrdrs.uplinks_speed %}
+{% if uplinks_speed is defined %}
+{% set speed = uplinks_speed %}
 {% endif %}
    speed forced {{ speed }}
 !
@@ -111,7 +125,7 @@ interface {{ inttype }}{{ item.id }}
 {% endif %}
 {% endif %}
 {% if item.type is not defined %}
-interface Ethernet{{ item.id }}/1
+interface Ethernet{{ item.id }}
 {% endif %}
    description ->{{ item.description }}
 {% if item.po is defined %}
@@ -122,12 +136,14 @@ interface Ethernet{{ item.id }}/1
 {% if item.trunk != "all" %}
    switchport trunk allowed vlan {{ item.trunk }}
 {% endif %}
-{% endif %}{# END port is vlan trunk #}
+{% endif %} {# END port is vlan trunk #}
 {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
    switchport access vlan {{ item.access_vlan }}
-{% endif %}{# END port is access_vlan #}
+{% endif %} {# END port is access_vlan #}
 {% if item.speed is defined %}
    speed forced {{ item.speed }}
+{% elif (if item.po is defined) and (item.po == 42) %}
+   speed forced {{hec.fabric.interlink_speed}}
 {% endif %}
 {% if item.ip is defined %}
 {% if item.type is defined %}
@@ -164,6 +180,11 @@ interface Ethernet{{ item.id }}/1
 {% for po in allbrdrs.port_channels %}
 interface Port-Channel{{ po.id }}
 {% if po.id != 42 %}
+{#
+  As we do assign the configlet sw-mlag-a/b
+  to all leafs, the creation of Po42 is not required here.
+  Also it's not required to define it under hec.brdr/str/shs.port-channels
+#}
    description {{ po.description }}
    mlag {{ po.id }}
 {% if po.trunk is defined %}
@@ -189,8 +210,7 @@ interface Port-Channel{{ po.id }}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================
-interface Vlan916
-   description ->Transfer network for inband management
+interface {{hec.inband_trans_gw_vlan}}
    ip virtual-router address {{ hec.inband_trans_brdr }}
 !
 ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}

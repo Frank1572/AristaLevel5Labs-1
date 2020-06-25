@@ -6,11 +6,18 @@ interface Ethernet 1-48
 !
 ! === MLAG Peer Link: ===
 interface Ethernet49/1,50/1
+   mtu {{hec.fabric.interlink_mtu}}
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
 interface Ethernet51/1,52/1,53/1,54/1
+{#
+  40gfull is not applicable for all cells in all locations
+  as of now there is no way to determine the transceiver speed
+  while rendering this jinja template, we need to leave this out.
+
    speed forced 40gfull
+#}
    no switchport
 !
 interface Ethernet1
@@ -83,6 +90,4 @@ interface Ethernet48
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    switchport mode trunk
    channel-group 900 mode active
-   exit
-
-
+!

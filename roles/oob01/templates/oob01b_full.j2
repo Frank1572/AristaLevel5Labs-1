@@ -24,9 +24,9 @@ alias dhcp-status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
 !
-daemon TerminAttr 
-  exec /usr/bin/TerminAttr -ingestgrpcurl={{ hec.oob_cvp }}:9910 -taillogs -ingestauth=key,{{hec.cvp_ingest_key }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent 
-  no shutdown 
+daemon TerminAttr
+  exec /usr/bin/TerminAttr -ingestgrpcurl={{ hec.oob_cvp }}:9910 -taillogs -ingestauth=key,{{hec.cvp_ingest_key }} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  no shutdown
 !
 load-interval default 5
 !
@@ -66,8 +66,12 @@ enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 no aaa root
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
-username cvpadmin privilege 15 secret sha512 $6$oESaSCeRkmPKB12P$foDOwsz5s8C54jhPkd0iDEUcSoCPfYF57bqVuWpN0DAJXYvqyzsKQKOXdohJDH742sIBTo5pbEiNKtZ.g2Uz./
-username scp privilege 15 secret 5 $1$N8nIuE88$TCC9cVWog9.riMuiVcJOh.
+{#
+ per Arista's statement, cvpadmin is not required anymore since CVP caches the credentials of the
+ logged-in user.
+
+ username cvpadmin privilege 15 secret sha512 $6$oESaSCeRkmPKB12P$foDOwsz5s8C54jhPkd0iDEUcSoCPfYF57bqVuWpN0DAJXYvqyzsKQKOXdohJDH742sIBTo5pbEiNKtZ.g2Uz./
+#}
 !
 vlan 21,100
    name OOB
@@ -77,7 +81,7 @@ vlan 4094
    trunk group MLAG-PEER
 !
 vrf definition OOB
-   description "Out of Band"
+   description Out of Band
 !
 interface Port-Channel42
    description MLAG-PEER

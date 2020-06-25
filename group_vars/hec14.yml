@@ -130,6 +130,11 @@ hec:
   radius1: 10.4.201.55
   radius2: 169.145.33.70
   radius_key: 07037265610E0D170E54333D547F3D
+  sflow:
+    destination:
+      - ipv4: 100.127.44.51
+        port: 9995
+    source: Loopback900
   admin_mpls:
     - prefix_mask: "10.9.246.0/23"
       sequence: "20"
@@ -234,11 +239,14 @@ hec:
       ip_last_octett: 8
   brdr:
     - number: 1a
+      snmp:
+        location: CA-TOR2-CAGE3-CAB40-U41
+        contact: 34672182:ncons-hec14-oob-01.net 1002
       uplinks:
-        - 29
-        - 30
-        - 31
-        - 32
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       uplinks_speed: 100gfull
       snmp:
         contact: 34672182:ncons-hec14-oob-01.net 1002
@@ -321,11 +329,14 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all       
     - number: 1b
+      snmp:
+        location: CA-TOR2-CAGE3-CAB40-U39
+        contact: 34672183:ncons-hec14-oob-01.net 1003
       uplinks:
-        - 29
-        - 30
-        - 31
-        - 32
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       uplinks_speed: 100gfull
       snmp:
         contact: 34672183:ncons-hec14-oob-01.net 1003
@@ -408,14 +419,17 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all    
     - number: 2a
+      snmp:
+        location: CA-TOR2-CAGE3-CAB41-U41
+        contact: 34672186:ncons-hec14-oob-01.net 1011
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       uplinks_speed: 100gfull
       snmp:
-        contact: 34672186:ncons-hec14-oob-01.net 1011
+        contact: 34672186:ncons-hec14-oob-01.net:1011
         location: CA-TOR2-CAGE3-CAB41-U41
       lo900_suffix: 43
       mgmt1_suffix: 23
@@ -438,11 +452,14 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 2b
+      snmp:
+        location: CA-TOR2-CAGE3-CAB41-U39
+        contact: 34672187:ncons-hec14-oob-01.net 1012
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       uplinks_speed: 100gfull
       snmp:
         contact: 34672187:ncons-hec14-oob-01.net 1012
@@ -468,11 +485,14 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 3a
+      snmp:
+        location: CA-TOR2-CAGE3-CAB42-U41
+        contact: 34672184:ncons-hec14-oob-01.net 1015
       uplinks:
-        - 29
-        - 30
-        - 31
-        - 32
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       uplinks_speed: 100gfull
       snmp:
         contact: 34672184:ncons-hec14-oob-01.net 1015
@@ -535,11 +555,14 @@ hec:
           description: rt-hec14-vpn-01b
           trunk: all    
     - number: 3b
+      snmp:
+        location: CA-TOR2-CAGE3-CAB42-U39
+        contact: 34672185:ncons-hec14-oob-01.net 1016
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       uplinks_speed: 100gfull
       snmp:
         contact: 34672185:ncons-hec14-oob-01.net 1016
@@ -604,11 +627,14 @@ hec:
   str:
     - number: 1a
       spine_port_towards_leaf: Et3/9/1
+      snmp:
+        location: CA-TOR2-CAGE3-CAB45-U41
+        contact: 34672192:ncons-hec14-oob-02.net 1001
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       ports:
         - id: 30/1
           description: sw-hec14-str-01b, Et30
@@ -621,11 +647,14 @@ hec:
           description: MLAG-PEER 
     - number: 1b
       spine_port_towards_leaf: Et3/10/1
+      snmp:
+        location: CA-TOR2-CAGE3-CAB45-U39
+        contact: 34672193:ncons-hec14-oob-02.net 1002
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       ports:
         - id: 30/1
           description: sw-hec14-str-01a, Et30
@@ -638,6 +667,9 @@ hec:
           description: MLAG-PEER 
     - number: 2a
       spine_port_towards_leaf: Et3/11/1
+      snmp:
+        location: CA-TOR2-CAGE3-CAB45-U37
+        contact: 34672194:ncons-hec14-oob-02.net 1003
       uplinks_speed: 100gfull
       uplinks:
         - 51/1
@@ -659,6 +691,9 @@ hec:
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
       uplinks_speed: 100gfull
+      snmp:
+        location: CA-TOR2-CAGE3-CAB45-U35
+        contact: 34672195:ncons-hec14-oob-02.net 1004
       uplinks:
         - 51/1
         - 52/1
@@ -678,11 +713,14 @@ hec:
           description: MLAG-PEER 
   shs:
     - number: 1a
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et4/3/1
       ports:
         - id: 32
@@ -705,11 +743,14 @@ hec:
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499
     - number: 1b
+      snmp:
+        location: foo
+        contact: bar
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
       spine_port_towards_leaf: Et4/4/1
       ports:
         - id: 32

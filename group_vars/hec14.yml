@@ -201,11 +201,6 @@ hec:
       - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
-    # Spine BGP Listen ranges for EVPN
-    bgp_listen_ranges: 
-      - 10.100.0.0/16
-      - 198.19.249.0/24
-      - 198.19.251.0/24
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
@@ -253,11 +248,8 @@ hec:
         - 31/1
         - 32/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672182:ncons-hec14-oob-01.net 1002
-        location: CA-TOR2-CAGE3-CAB40-U41
-      lo900_suffix: 41
-      mgmt1_suffix: 21
+      nwmgmt_ip: 198.19.182.41
+      oob_ip: 10.9.246.21
       spine_port_towards_leaf: Et3/3/1
       ports:
         - id: 900
@@ -343,11 +335,8 @@ hec:
         - 31/1
         - 32/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672183:ncons-hec14-oob-01.net 1003
-        location: CA-TOR2-CAGE3-CAB40-U39
-      lo900_suffix: 42
-      mgmt1_suffix: 22
+      nwmgmt_ip: 198.19.182.42
+      oob_ip: 10.9.246.22
       spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 900
@@ -433,11 +422,8 @@ hec:
         - 53/1
         - 54/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672186:ncons-hec14-oob-01.net:1011
-        location: CA-TOR2-CAGE3-CAB41-U41
-      lo900_suffix: 43
-      mgmt1_suffix: 23
+      nwmgmt_ip: 198.19.182.43
+      oob_ip: 10.9.246.23
       spine_port_towards_leaf: Et3/5/1
       ports:
         - id: 49
@@ -466,11 +452,8 @@ hec:
         - 53/1
         - 54/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672187:ncons-hec14-oob-01.net 1012
-        location: CA-TOR2-CAGE3-CAB41-U39
-      lo900_suffix: 44
-      mgmt1_suffix: 24
+      nwmgmt_ip: 198.19.182.44
+      oob_ip: 10.9.246.24
       spine_port_towards_leaf: Et3/6/1
       ports:
         - id: 49
@@ -499,11 +482,8 @@ hec:
         - 31/1
         - 32/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672184:ncons-hec14-oob-01.net 1015
-        location: CA-TOR2-CAGE3-CAB42-U41
-      lo900_suffix: 45
-      mgmt1_suffix: 25
+      nwmgmt_ip: 198.19.182.45
+      oob_ip: 10.9.246.25
       spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 900
@@ -569,11 +549,8 @@ hec:
         - 31/1
         - 32/1
       uplinks_speed: 100gfull
-      snmp:
-        contact: 34672185:ncons-hec14-oob-01.net 1016
-        location: CA-TOR2-CAGE3-CAB42-U39
-      lo900_suffix: 46
-      mgmt1_suffix: 26
+      nwmgmt_ip: 198.19.182.46
+      oob_ip: 10.9.246.26
       spine_port_towards_leaf: Et3/8/1
       ports:
         - id: 900

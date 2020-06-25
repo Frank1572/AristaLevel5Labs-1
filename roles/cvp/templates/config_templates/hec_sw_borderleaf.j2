@@ -11,15 +11,21 @@
 {% set hname = 'sw-hec' + hec.hec_nr +'-' %}
 {% if leafpurpose == 'b' %}
 {% set hname = hname + 'brdr-' %}
+{% set mlagText = "BRDR" %} 
 {% endif %}
 {% if leafpurpose == 'h' %}
 {% set hname = hname + 'shs-' %}
+{% set mlagText = "SHS" %} 
 {% endif %}
 {% if leafpurpose == 's' %}
 {% set hname = hname + 'str-' %}
+{% set mlagText = "STR" %} 
 {% endif %}
 {% set hname = hname + '0' + brdrtype + leafid %}
 hostname {{hname}}
+!
+mlag configuration
+   domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if brdrtype == '2' and leafpurpose == 'b' %}
 vlan 914
@@ -54,6 +60,28 @@ interface Vxlan1
 {% if leafpurpose == 'h' %}
 {% set loop_items = hec.shs %}
 {% endif %}
+!
+{% if hec.ngdr_underlay is defined %}
+{% if leafpurpose == 'b' %}
+! ===== EDGE Transfer VLANs =====
+vlan 961
+   name rt-hec14-cwan-01a-TRANS
+vlan 962
+   name rt-hec14-cwan-01a-TRANS
+vlan 963
+   name rt-hec14-cwan-01b-TRANS
+vlan 964
+   name rt-hec14-cwan-01b-TRANS
+vlan 965
+   name rt-hec14-vpn-01a-TRANS
+vlan 966
+   name rt-hec14-vpn-01a-TRANS
+vlan 967
+   name rt-hec14-vpn-01b-TRANS
+vlan 968
+   name rt-hec14-vpn-01b-TRANS
+{% endif %}
+{% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !
 snmp-server contact {{allbrdrs.snmp.contact}}
@@ -67,6 +95,7 @@ interface Loopback900
 
 !
 interface Management1
+   description OOB MGMT
    vrf forwarding OOB
    ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
 !
@@ -121,6 +150,23 @@ interface Ethernet{{ item.id }}
 {% if item.type != "vlan" %}
    no switchport
 {% endif %}
+{% if item.type == "vlan" %}
+{% if item.vrrp is not defined %}
+   no autostate
+{% endif %}
+{% if item.mtu is defined %}
+   mtu {{ item.mtu }}
+{% endif %}
+{% if item.vrrp is defined %}
+   vrrp 250 priority {{ item.vrrp.priority }}
+   vrrp 250 preempt delay minimum 180
+   vrrp 250 preempt delay reload 180
+{% if item.vrrp.auth is defined %}
+   vrrp 250 authentication text {{ item.vrrp.auth }}
+{% endif %}
+   vrrp 250 ip {{ item.vrrp.ip }}
+{% endif %}
+{% endif %}
 {% if item.type == "spine_link" %}
    mtu {{ hec.fabric.interlink_mtu }}
 {% endif %}
@@ -133,16 +179,12 @@ interface Ethernet{{ item.id }}
 {% if allbrdrs.port_channels is defined %}
 {% for po in allbrdrs.port_channels %}
 interface Port-Channel{{ po.id }}
+{% if po.id != 42 %}
 {#
   As we do assign the configlet sw-mlag-a/b
   to all leafs, the creation of Po42 is not required here.
   Also it's not required to define it under hec.brdr/str/shs.port-channels
 #}
-{# {% if po.id == 42 %}
-   description {{ po.description }}
-   switchport mode trunk
-   switchport trunk group MLAG-Peer
-{% else %} #}
    description {{ po.description }}
    mlag {{ po.id }}
 {% if po.trunk is defined %}
@@ -154,7 +196,7 @@ interface Port-Channel{{ po.id }}
 {% if po.access_vlan is defined %}
    switchport access vlan {{ po.access_vlan }}
 {% endif %}
-{# {% endif %} #}
+{% endif %}
 {% endfor %}
 !
 {% endif %}
@@ -179,21 +221,6 @@ ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
 ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
 {% endif %}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
-{% endif %}
-{% if (brdrtype == '1') or (brdrtype == '3') %}
-{#
-  we need to have vlans and the vni mapping for 3000-3499
-  if the core routers and wan/vpn routers are still doing
-  static transfer networks for wan/vpn connections
-#}
-{% if hec.fabric.vtep_distribution_mode == 'manual' %}
-vlan 3000-3499
-!
-interface Vxlan1
-{% for i in range(1,500) %}
-   vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
-{% endfor %}
-{% endif %}
 {% endif %}
 {% endif %}
 {#

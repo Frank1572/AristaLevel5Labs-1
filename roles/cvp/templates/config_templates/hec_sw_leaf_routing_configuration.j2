@@ -62,11 +62,11 @@
 {% set Lo1 = cell_id %}
 {% endif %}
 interface Loopback1
-   description Router-ID
+   description Router-ID 
    ip address 10.100.1.{{ Lo1 }}/32
 !
 interface Loopback2
-   description VTEP
+   description VTEP 
    ip address 10.200.1.{{ cell_id }}/32
 !
 {% if spine_lc|int > 0 %}
@@ -95,6 +95,16 @@ ip routing
 no ip routing vrf OOB
 !
 ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
+{% if hec.ngdr_underlay is defined %}
+ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
+ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
+ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
+!
+route-map RM-EDGE permit 10
+   match ip address prefix-list PL-EDGE
+!
+route-map RM-EDGE deny 20
+{% endif %}
 !
 route-map MLPEER-RM permit 10
    match interface Vlan4094
@@ -111,6 +121,9 @@ router bgp {{ asn_generated }}
    neighbor SPINE-PG peer-group
    neighbor SPINE-PG remote-as {{ asn_spine }}
    neighbor SPINE-PG soft-reconfiguration inbound all
+{% if hec.spine.underlay_bfd %}
+   neighbor SPINE-PG fall-over bfd
+{% endif %}
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG send-community
    neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
@@ -119,6 +132,30 @@ router bgp {{ asn_generated }}
    neighbor MLPEER-PG remote-as {{ asn_generated }}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+   !
+{% if hec.ngdr_underlay is defined %}
+   neighbor EDGE-PG peer-group
+   neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
+   neighbor EDGE-PG fall-over bfd
+   neighbor EDGE-PG soft-reconfiguration inbound all
+   neighbor EDGE-PG route-map RM-EDGE in
+   neighbor EDGE-PG route-map RM-EDGE out
+   neighbor EDGE-PG send-community
+   neighbor EDGE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+{% for edge_neighbor in allbrdrs.ports %}
+{% if edge_neighbor.type is defined %}
+{% if edge_neighbor.type == "vlan" %}
+{% if edge_neighbor.ngdr_underlay is defined %}
+{% if edge_neighbor.ngdr_underlay %}
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} peer-group EDGE-PG
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }} 
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+   !
+{% endif %}
    !
 {% for i in range(1,5) %}
    neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
@@ -144,8 +181,8 @@ router bgp {{ asn_generated }}
    neighbor EVPN-PG maximum-routes 0
    neighbor EVPN-PG fall-over bfd
    !
-{% for i in range(11,14) %}
-      neighbor 10.100.0.{{i}} peer-group EVPN-PG
+{% for i in range(11,15) %}
+   neighbor 10.100.0.{{i}} peer-group EVPN-PG
 {% endfor %}
    !
    address-family evpn
@@ -158,10 +195,51 @@ router bgp {{ asn_generated }}
       no neighbor EVPN-PG activate
    !
    vlan-aware-bundle all-vlans
-      rd 10.100.1.{{ Lo1 }}:1
+      rd 10.200.1.{{ cell_id }}:1
       route-target both 1:1
       redistribute learned
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{% if hec.core_vlans is defined or hec.cwan_vlans is defined %}
+{% if hec.core_vlans and hec.cwan_vlans%}
+      vlan 5-3599
+{% elif hec.core_vlans and not hec.cwan_vlans%}
+      vlan 5-3499
+{% elif not hec.core_vlans and hec.cwan_vlans%}
+      vlan 5-3599
+{% endif %}
+{% endif %}
+{% else %}
       vlan 5-2999
+{% endif %}
+{% endif %}
+!
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{#
+  we need to have vlans and the vni mapping for 3000-3499
+  if the core routers and wan/vpn routers are still doing
+  static transfer networks for wan/vpn connections
+#}
+{% if hec.core_vlans is defined %}
+{% if hec.cwan_vlans %}
+vlan 3000-3499
+!
+interface Vxlan1
+{% for i in range(0,500) %}
+   vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if hec.cwan_vlans is defined %}
+{% if hec.cwan_vlans %}
+!
+vlan 3500-3599
+!
+interface Vxlan1
+{% for i in range(0,100) %}
+   vxlan vlan {{ i + 3500 }} vni {{ i + 3500 }}000
+{% endfor %}
+{% endif %}
+{% endif %}
 {% endif %}
 !
 {% endfor %}

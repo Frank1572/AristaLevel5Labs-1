@@ -251,7 +251,7 @@ vlan 3500-3599
 !
 interface Vxlan1
 {% for i in range(0,100) %}
-   vxlan vlan {{ i + 3500 }} vni {{ i + 3000 }}000
+   vxlan vlan {{ i + 3500 }} vni {{ i + 3500 }}000
 {% endfor %}
 {% endif %}
 {% endif %}

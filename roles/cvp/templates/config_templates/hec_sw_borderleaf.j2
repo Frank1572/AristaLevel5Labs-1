@@ -113,7 +113,7 @@ interface Ethernet{{ item.id }}
 {% endif %} {# END port is access_vlan #}
 {% if item.speed is defined %}
    speed forced {{ item.speed }}
-{% elif item.po == 42 %}
+{% elif (if item.po is defined) and (item.po == 42) %}
    speed forced {{hec.fabric.interlink_speed}}
 {% endif %}
 {% if item.ip is defined %}

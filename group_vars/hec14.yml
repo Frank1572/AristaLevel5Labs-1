@@ -617,6 +617,9 @@ hec:
         - 26/1
         - 35/1
         - 36/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: 198.19.182.47
+      oob_ip: 10.9.246.29
       ports:
         - id: 30/1
           description: sw-hec14-str-01b, Et30
@@ -637,6 +640,9 @@ hec:
         - 26/1
         - 35/1
         - 36/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: 198.19.182.48
+      oob_ip: 10.9.246.30
       ports:
         - id: 30/1
           description: sw-hec14-str-01a, Et30
@@ -652,12 +658,14 @@ hec:
       snmp:
         location: CA-TOR2-CAGE3-CAB45-U37
         contact: 34672194:ncons-hec14-oob-02.net 1003
-      uplinks_speed: 100gfull
       uplinks:
         - 51/1
         - 52/1
         - 53/1
         - 54/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: 198.19.182.49
+      oob_ip: 10.9.246.31
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
@@ -672,7 +680,6 @@ hec:
           description: MLAG-PEER 
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
-      uplinks_speed: 100gfull
       snmp:
         location: CA-TOR2-CAGE3-CAB45-U35
         contact: 34672195:ncons-hec14-oob-02.net 1004
@@ -681,6 +688,9 @@ hec:
         - 52/1
         - 53/1
         - 54/1
+      uplinks_speed: 100gfull
+      nwmgmt_ip: 198.19.182.50
+      oob_ip: 10.9.246.32
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49

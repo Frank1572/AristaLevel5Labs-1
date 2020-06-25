@@ -113,10 +113,10 @@ hec:
   oob_prefix: 10.9.246
   oob_mask: 23
   oob_vrf: OOB
-  oob_cvx: 10.9.246.252
-  oob_cvp: 10.9.246.253
-  as_low: 4200998673
-  as_high: 4200999871
+  oob_cvx: 10.9.247.252
+  oob_cvp: 10.9.247.253
+  as_low: 4201775104
+  as_high: 4201840639
   cvp_ingest_key: SecureKey02
   dns1: 100.127.45.1
   dns2: 100.127.45.2
@@ -129,6 +129,7 @@ hec:
   syslog3: 100.127.45.6
   radius1: 10.4.201.55
   radius2: 169.145.33.70
+  radius_key: 07037265610E0D170E54333D547F3D
   admin_mpls:
     - prefix_mask: "10.9.246.0/23"
       sequence: "20"
@@ -145,18 +146,43 @@ hec:
   admin_sw_neig_as_oob1b: 64536
   oob01_lo0_prefix: 198.19.249
   oob01_as: 64531.14
-  spine_nr:
-    - 11
-    - 12
-    - 13
-    - 14
   spine:
     # valid models are: 7504, 7508, 7280
     model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 2
+    # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
+    # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
+    number:
+      - id: 11
+        snmp:
+          contact: 34672206:ncons-hec14-oob-01.net 1010
+          location: CA-TOR2-CAGE3-CAB40-U3
+      - id: 12
+        snmp:
+          contact: 34672207:ncons-hec14-oob-01.net 1014
+          location: CA-TOR2-CAGE3-CAB41-U3
+      - id: 13
+        snmp:
+          contact: 34672208:ncons-hec14-oob-01.net 1023
+          location: CA-TOR2-CAGE3-CAB42-U3
+      - id: 14
+        snmp:
+          contact: 34672209:ncons-hec14-oob-02.net 1010
+          location: CA-TOR2-CAGE3-CAB43-U3
+    ports_with_non_default_speed:
+      - port: Et3/1/1
+        speed: 40gfull
+      - port: Et3/2/1
+        speed: 40gfull
+  ngdr_underlay:
+    edge_as: 65194
+  #Are the core vlans 3000 to 3499 needed 
+  core_vlans: true 
+  #Are the cwan vlans 3500 to 3599 needed 
+  cwan_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: evpn
@@ -165,8 +191,11 @@ hec:
     interlink_speed: 100gfull
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
-    #Are the core vlans 3000 to 3599 needed 
-    evpn_core_vlans: true
+    # Spine BGP Listen ranges for EVPN
+    bgp_listen_ranges: 
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
@@ -178,8 +207,6 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
-    ngdr:
-      edge_as: 65194
   oob01a_snmp_contact: ncons-hec14-oob-02.net.sap.corp:1005
   oob01a_snmp_location: CA-TOR2-CAGE3-CAB40-U43
   oob01b_snmp_contact: ncons-hec14-oob-02.net.sap.corp:1006
@@ -225,7 +252,7 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.81/25
           vrrp: 
-            priority: 120
+            priority: 105
             ip: 198.19.233.71
             auth: FWTTRANS
         - id: 961
@@ -256,8 +283,8 @@ hec:
           speed: 40gfull
         - id: 4
           description: rt-hec14-idc-01a, Fo0/0/0
-          po: 1104 
-          speed: 40gfull
+          po: 1104
+          speed: 40gfull 
         - id: 27
           description: sw-hec14-brdr-01b, Et27
           po: 42
@@ -267,14 +294,14 @@ hec:
         - id: 5
           description: rt-hec14-vpn-01a
           po: 1106
-          speed: 40gfull
+          speed: 40gfull 
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105
-          speed: 40gfull
+          po: 1105  
+          speed: 40gfull         
       port_channels:
         - id: 42
-          description: MLAG-PEER
+          description: MLAG-PEER 
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
@@ -343,8 +370,8 @@ hec:
           speed: 40gfull
         - id: 4
           description: rt-hec14-idc-01a, Fo1/0/0
-          po: 1104
-          speed: 40gfull
+          po: 1104  
+          speed: 40gfull      
         - id: 27
           description: sw-hec14-brdr-01a, Et27
           po: 42
@@ -353,11 +380,11 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1106
+          po: 1106 
           speed: 40gfull
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105
+          po: 1105  
           speed: 40gfull
       port_channels:
         - id: 42
@@ -379,7 +406,7 @@ hec:
           trunk: all  
         - id: 1106
           description: rt-hec14-vpn-01a
-          trunk: all        
+          trunk: all    
     - number: 2a
       uplinks:
         - 51
@@ -704,6 +731,21 @@ hec:
         - id: 10
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499
+  l2l3_leaf:
+    - number: 101
+      spine_port_towards_leaf: Et3/1/1
+    - number: 102
+      spine_port_towards_leaf: Et3/2/1
+  ngdr:
+    - number: 1a
+      spine_port_towards_leaf: Et4/33/1
+    - number: 1b
+      spine_port_towards_leaf: Et4/34/1
+    - number: 1c
+      spine_port_towards_leaf: Et4/35/1
+    - number: 1d
+      spine_port_towards_leaf: Et4/36/1
+
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

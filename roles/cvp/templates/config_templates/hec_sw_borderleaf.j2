@@ -4,7 +4,7 @@
 {% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
-{% set speed = '40gfull' %}
+{% set speed = hec.fabric.interlink_speed %}
 {#
  Let's generate the hostname base on the id-string that we were called with
 #}
@@ -64,6 +64,7 @@ interface Loopback900
    ip address {{allbrdrs.nwmgmt_ip}}/{{hec.lo900_net|ipaddr('prefix')}}
 !
 {% include "templates/config_templates/sw-hec-oob-vrf.j2" %}
+
 !
 interface Management1
    vrf forwarding OOB

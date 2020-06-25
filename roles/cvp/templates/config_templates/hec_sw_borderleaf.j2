@@ -111,9 +111,9 @@ interface Ethernet{{ item.id }}
 {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
    switchport access vlan {{ item.access_vlan }}
 {% endif %} {# END port is access_vlan #}
-{% if item.speed is defined %} {# BEGIN port is access_vlan #}
+{% if item.speed is defined %}
    speed forced {{ item.speed }}
-{% endif %} {# END port is access_vlan #}
+{% endif %}
 {% if item.ip is defined %}
 {% if item.type is defined %}
 {% if item.type != "vlan" %}

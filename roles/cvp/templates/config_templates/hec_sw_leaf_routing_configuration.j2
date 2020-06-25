@@ -130,7 +130,7 @@ router bgp {{ asn_generated }}
    neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
    network 10.100.1.{{ Lo1 }}/32
    network 10.200.1.{{ cell_id }}/32
-   !add inband-mgmt address via "network xxx/32" here
+   network {{allbrdrs.nwmgmt_ip}}/32
 {% if brdrtype == '2' %}
    network {{ hec.inband_trans_net }}
 {% endif %}

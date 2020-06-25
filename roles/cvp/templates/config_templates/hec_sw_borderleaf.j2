@@ -59,6 +59,16 @@ interface Vxlan1
 snmp-server contact {{allbrdrs.snmp.contact}}
 snmp-server location {{allbrdrs.snmp.location}}
 !
+interface Loopback900
+   description NW-MGMT
+   ip address {{allbrdrs.nwmgmt_ip}}/{{hec.lo900_net|ipaddr('prefix')}}
+!
+{% include "templates/config_templates/sw-hec-oob-vrf.j2" %}
+!
+interface Management1
+   vrf forwarding OOB
+   ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
+!
 ! ===== Spine Uplinks =====
 {% for item in allbrdrs.uplinks %}
 interface Ethernet{{ item }}

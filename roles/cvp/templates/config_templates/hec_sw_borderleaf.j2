@@ -11,15 +11,15 @@
 {% set hname = 'sw-hec' + hec.hec_nr +'-' %}
 {% if leafpurpose == 'b' %}
 {% set hname = hname + 'brdr-' %}
-{% set mlagText = "BRDR" %} 
+{% set mlagText = "BRDR" %}
 {% endif %}
 {% if leafpurpose == 'h' %}
 {% set hname = hname + 'shs-' %}
-{% set mlagText = "SHS" %} 
+{% set mlagText = "SHS" %}
 {% endif %}
 {% if leafpurpose == 's' %}
 {% set hname = hname + 'str-' %}
-{% set mlagText = "STR" %} 
+{% set mlagText = "STR" %}
 {% endif %}
 {% set hname = hname + '0' + brdrtype + leafid %}
 hostname {{hname}}
@@ -142,7 +142,7 @@ interface Ethernet{{ item.id }}
 {% endif %} {# END port is access_vlan #}
 {% if item.speed is defined %}
    speed forced {{ item.speed }}
-{% elif (if item.po is defined) and (item.po == 42) %}
+{% elif (item.po is defined) and (item.po == 42) %}
    speed forced {{hec.fabric.interlink_speed}}
 {% endif %}
 {% if item.ip is defined %}

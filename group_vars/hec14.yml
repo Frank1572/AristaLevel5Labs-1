@@ -93,8 +93,8 @@ hec:
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
   ma_domain: "net.sap.corp"
-  lo900_domain: "tor2.hec.sap.biz"
-  vl900_domain: "tor2.hec.sap.biz"
+  lo900_domain: "yyz2.hec.sap.biz"
+  vl900_domain: "yyz2.hec.sap.biz"
   vl900_mask: 25
   vl900_def_gw: 198.19.233.1
   vl900_net: 198.19.233.0/25
@@ -117,7 +117,7 @@ hec:
   oob_cvp: 10.9.246.253
   as_low: 4200998673
   as_high: 4200999871
-  cvp_ingest_key: SecureKey02
+  cvp_ingest_key: SecureKey14
   dns1: 100.127.45.1
   dns2: 100.127.45.2
   ntp1: 169.145.84.7

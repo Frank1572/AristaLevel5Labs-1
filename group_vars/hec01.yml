@@ -776,6 +776,8 @@ hec:
       snmp:
         location: foo
         contact: bar
+      oob_ip: 10.178.136.15
+      nwmgmt_ip: 198.19.190.15
       uplinks:
         - 25
         - 26
@@ -804,6 +806,8 @@ hec:
       snmp:
         location: foo
         contact: bar
+      oob_ip: 10.178.136.15
+      nwmgmt_ip: 198.19.190.15
       uplinks:
         - 25
         - 26

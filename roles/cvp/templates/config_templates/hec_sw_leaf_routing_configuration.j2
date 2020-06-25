@@ -108,7 +108,7 @@ ip routing
 no ip routing vrf OOB
 !
 ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
-{% if hec.fabric.ngdr is defined %}
+{% if hec.ngdr_underlay is defined %}
 ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
 ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
 ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
@@ -146,9 +146,9 @@ router bgp {{ asn_generated }}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
-{% if hec.fabric.ngdr is defined %}
+{% if hec.ngdr_underlay is defined %}
    neighbor EDGE-PG peer-group
-   neighbor EDGE-PG remote-as {{ hec.fabric.ngdr.edge_as }}
+   neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
    neighbor EDGE-PG fall-over bfd
    neighbor EDGE-PG soft-reconfiguration inbound all
    neighbor EDGE-PG route-map RM-EDGE in
@@ -213,12 +213,47 @@ router bgp {{ asn_generated }}
       rd 10.200.1.{{ cell_id }}:1
       route-target both 1:1
       redistribute learned
-{% if hec.fabric.evpn_core_vlans is defined %}
-{% if hec.fabric.evpn_core_vlans %}
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{% if hec.core_vlans is defined or hec.cwan_vlans is defined %}
+{% if hec.core_vlans and hec.cwan_vlans%}
       vlan 5-3599
+{% elif hec.core_vlans and not hec.cwan_vlans%}
+      vlan 5-3499
+{% elif not hec.core_vlans and hec.cwan_vlans%}
+      vlan 5-3599
+{% endif %}
 {% endif %}
 {% else %}
       vlan 5-2999
+{% endif %}
+{% endif %}
+!
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{#
+  we need to have vlans and the vni mapping for 3000-3499
+  if the core routers and wan/vpn routers are still doing
+  static transfer networks for wan/vpn connections
+#}
+{% if hec.core_vlans is defined %}
+{% if hec.cwan_vlans %}
+vlan 3000-3499
+!
+interface Vxlan1
+{% for i in range(0,500) %}
+   vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if hec.cwan_vlans is defined %}
+{% if hec.cwan_vlans %}
+!
+vlan 3500-3599
+!
+interface Vxlan1
+{% for i in range(0,100) %}
+   vxlan vlan {{ i + 3500 }} vni {{ i + 3000 }}000
+{% endfor %}
+{% endif %}
 {% endif %}
 {% endif %}
 !

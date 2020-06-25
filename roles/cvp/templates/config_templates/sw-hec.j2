@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes'
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
 banner login
 ****************************  W A R N I N G  *****************************
 *     Access to this system is restricted to authorized users only.      *
@@ -15,11 +15,15 @@ banner login
       Device: $(hostname)
 EOF
 !
-{% include "templates/config_templates/sw-hec-ntp.j2" %}
-!
 {% include "templates/config_templates/sw-hec-snmp.j2" %}
 !
 {% include "templates/config_templates/sw-hec-logging.j2" %}
+!
+ip domain-name {{ hec.lo900_domain}}
+!
+{% include "templates/config_templates/sw-hec-ntp.j2" %}
+!
+{% include "templates/config_templates/hec_sflow.j2" %}
 !
 alias ic show interface counter | nz
 alias ie show interface counter errors | nz
@@ -31,6 +35,10 @@ alias es show bgp evpn summary
 alias os show ip ospf neighbor
 alias po show port-channel summary
 alias ru show running section %1
+alias pa sh int stat | grep Et | wc -l
+alias pu sh int stat | grep Et | grep conn | grep -v not |wc -l
+!
+no schedule tech-support
 !
 event-handler CONFIG_VERSIONING
    trigger on-startup-config

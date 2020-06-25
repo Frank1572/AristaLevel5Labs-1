@@ -107,13 +107,29 @@
     - mgmt-oob
     - mgmt-default
     - CVP-Arista
-    - sw-hec-vtep-static
+    - sw-hec-vtep
     - hec-shs
     - sw-hec-hana-pwr
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
+  tags:
+    - configlets
+
+# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific radius strings.
+- set_fact:
+    aaa_purpose: 'hana'
+  tags:
+    - configlets
+
+- name: Render hana aaa configlet template
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-aaa.j2"
+    dest: "{{role_path}}/files/configs/{{item}}"
+  loop:
+    - sw-hec-aaa-hana
   tags:
     - configlets
 
@@ -127,6 +143,7 @@
     - sw-hec-autoconf-ipmi
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
+    - sw-hec-autoconf-generate-only
   tags:
     - configlets
 

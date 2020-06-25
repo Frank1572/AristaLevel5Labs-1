@@ -1,4 +1,7 @@
-hostname sw-hec{{ hec.hec_nr }}-spine-{{ item }}
+hostname sw-hec{{ hec.hec_nr }}-spine-{{ item.id }}
+!
+snmp-server contact {{ item.snmp.contact }} 
+snmp-server location {{ item.snmp.location }} 
 !
 {% for a in hec.spine.number %}
 {% if a.id == item %}
@@ -20,19 +23,20 @@ snmp-server location {{a.snmp.location}}
 !
 interface Loopback1
    description Router-ID
-   ip address 10.100.0.{{ item }}/32
+   ip address 10.100.0.{{ item.id }}/32
 !
 interface Loopback900
    description NW-MGMT
-   ip address {{ hec.lo900_prefix }}.{{ item }}/32
+   ip address {{ hec.lo900_prefix }}.{{ item.id }}/32
 !
 interface Management0
+   description OOB MGMT
    vrf forwarding OOB
-   ip address {{ hec.oob_prefix }}.{{ item }}/{{ hec.oob_mask }}
+   ip address {{ hec.oob_prefix }}.{{ item.id }}/{{ hec.oob_mask }}
 !
 router bgp 641{{ hec.hec_nr }}.10000
-   router-id 10.100.0.{{ item }}
-   bgp listen range 10.{{ item }}.0.0/16 peer-group LEAF-PG peer-filter LEAF-PF
-   network 10.100.0.{{ item }}/32
-   network {{ hec.lo900_prefix }}.{{ item }}/32
+   router-id 10.100.0.{{ item.id }}
+   bgp listen range 10.{{ item.id }}.0.0/16 peer-group LEAF-PG peer-filter LEAF-PF
+   network 10.100.0.{{ item.id }}/32
+   network {{ hec.lo900_prefix }}.{{ item.id }}/32
 !

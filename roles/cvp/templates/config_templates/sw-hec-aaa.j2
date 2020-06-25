@@ -1,7 +1,10 @@
-radius-server timeout 2
-radius-server retransmit 1
-radius-server deadtime 2
+radius-server timeout 3
+radius-server deadtime 1
+{% if hec.radius_key is defined %}
+radius-server key 7 {{ hec.radius_key }}
+{% else %}
 radius-server key 7 11061A161E115E5951
+{% endif %}
 !
 radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
 radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646

@@ -216,9 +216,9 @@ router bgp {{ asn_generated }}
 {% if hec.fabric.evpn_core_vlans is defined %}
 {% if hec.fabric.evpn_core_vlans %}
       vlan 5-3599
+{% endif %}
 {% else %}
       vlan 5-2999
-{% endif %}
 {% endif %}
 {% endif %}
 !

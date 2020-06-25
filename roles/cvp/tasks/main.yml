@@ -154,15 +154,6 @@
     - configlets
     - borderleafs
 
-- name: Render sw-hec-brdr-01
-  delegate_to: 127.0.0.1
-  template:
-    src: templates/config_templates/hec_sw_borderleaf_pair.j2
-    dest: "{{role_path}}/files/configs/sw-hec-brdr-01"
-  tags:
-    - configlets
-    - borderleafs
-
 - name: Render sw-hec-brdr-01a
   delegate_to: 127.0.0.1
   template:

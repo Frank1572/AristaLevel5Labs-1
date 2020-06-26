@@ -147,7 +147,7 @@ configlet_list:
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
-  sw-hec-leaf: "{{ lookup('file', 'configs/sw-hec-leaf', errors='warn') }}"
+  sw-hec-leaf: "{{ lookup('file', 'configs/sw-hec-leaf') }}"
   sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
   sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
   sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"
@@ -245,3 +245,4 @@ configlet_filter_list_generic:
   - hec_sw_leaf_individual
   - autoconf.ini
   - 7160-profile-tcam-acl
+  - sw-hec-leaf

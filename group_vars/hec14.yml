@@ -145,7 +145,7 @@ hec:
   admin_sw_mask: 31
   admin_sw_ip_oob1a: 10.255.195.8
   admin_sw_ip_oob1b: 10.255.195.10
-  admin_sw_neig_ip_oob1a: 10.255.195.9 
+  admin_sw_neig_ip_oob1a: 10.255.195.9
   admin_sw_neig_as_oob1a: 1.463
   admin_sw_neig_ip_oob1b: 10.255.195.11
   admin_sw_neig_as_oob1b: 64536
@@ -159,7 +159,8 @@ hec:
     linecards: 2
     # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
-    # list the snmp contact and location for spine11, spine12, spine13 and spine14 in this order
+    fortygig: []
+    # list the snmp contact and location for spines in this order
     number:
       - id: 11
         snmp:
@@ -184,9 +185,9 @@ hec:
         speed: 40gfull
   ngdr_underlay:
     edge_as: 65194
-  #Are the core vlans 3000 to 3499 needed 
-  core_vlans: true 
-  #Are the cwan vlans 3500 to 3599 needed 
+  #Are the core vlans 3000 to 3499 needed
+  core_vlans: true
+  #Are the cwan vlans 3500 to 3599 needed
   cwan_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn, manual
@@ -195,14 +196,14 @@ hec:
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
     # Spine BGP Listen ranges for EVPN
-    bgp_listen_ranges: 
+    bgp_listen_ranges:
       - 10.100.0.0/16
       - 198.19.249.0/24
       - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     # Spine BGP Listen ranges for EVPN
-    bgp_listen_ranges: 
+    bgp_listen_ranges:
       - 10.100.0.0/16
       - 198.19.249.0/24
       - 198.19.251.0/24
@@ -264,7 +265,7 @@ hec:
           type: vlan
           description: NW-MGMT
           ip: 198.19.233.81/25
-          vrrp: 
+          vrrp:
             priority: 105
             ip: 198.19.233.71
             auth: FWTTRANS
@@ -297,7 +298,7 @@ hec:
         - id: 4
           description: rt-hec14-idc-01a, Fo0/0/0
           po: 1104
-          speed: 40gfull 
+          speed: 40gfull
         - id: 27
           description: sw-hec14-brdr-01b, Et27
           po: 42
@@ -307,14 +308,14 @@ hec:
         - id: 5
           description: rt-hec14-vpn-01a
           po: 1106
-          speed: 40gfull 
+          speed: 40gfull
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105  
-          speed: 40gfull         
+          po: 1105
+          speed: 40gfull
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
@@ -326,13 +327,13 @@ hec:
           trunk: all
         - id: 1104
           description: rt-hec14-idc-01a
-          trunk: all         
+          trunk: all
         - id: 1105
           description: rt-hec14-inet-01a
-          trunk: all  
+          trunk: all
         - id: 1106
           description: rt-hec14-vpn-01a
-          trunk: all       
+          trunk: all
     - number: 1b
       snmp:
         location: CA-TOR2-CAGE3-CAB40-U39
@@ -354,7 +355,7 @@ hec:
           type: vlan
           description: NW-MGMT
           ip: 198.19.233.82/25
-          vrrp: 
+          vrrp:
             priority: 105
             ip: 198.19.233.71
             auth: FWTTRANS
@@ -386,8 +387,8 @@ hec:
           speed: 40gfull
         - id: 4
           description: rt-hec14-idc-01a, Fo1/0/0
-          po: 1104  
-          speed: 40gfull      
+          po: 1104
+          speed: 40gfull
         - id: 27
           description: sw-hec14-brdr-01a, Et27
           po: 42
@@ -396,15 +397,15 @@ hec:
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
-          po: 1106 
+          po: 1106
           speed: 40gfull
         - id: 6
           description: rt-hec14-inet-01a
-          po: 1105  
+          po: 1105
           speed: 40gfull
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
@@ -416,13 +417,13 @@ hec:
           trunk: all
         - id: 1104
           description: rt-hec14-idc-01a
-          trunk: all         
+          trunk: all
         - id: 1105
           description: rt-hec14-inet-01a
-          trunk: all  
+          trunk: all
         - id: 1106
           description: rt-hec14-vpn-01a
-          trunk: all    
+          trunk: all
     - number: 2a
       snmp:
         location: CA-TOR2-CAGE3-CAB41-U41
@@ -452,7 +453,7 @@ hec:
           access_vlan: 916
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -485,7 +486,7 @@ hec:
           access_vlan: 916
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -510,7 +511,7 @@ hec:
           type: vlan
           description: NW-MGMT
           ip: 198.19.233.83/25
-          vrrp: 
+          vrrp:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
@@ -525,13 +526,13 @@ hec:
           po: 1103
         - id: 4
           description: rt-hec14-idc-01b, Fo0/0/0
-          po: 1104            
+          po: 1104
         - id: 5
           description: rt-hec14-vpn-01b
           po: 1106
         - id: 6
           description: rt-hec14-inet-01b
-          po: 1105  
+          po: 1105
         - id: 27
           description: sw-hec14-brdr-03b, Et27
           po: 42
@@ -540,7 +541,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
@@ -552,13 +553,13 @@ hec:
           trunk: all
         - id: 1104
           description: rt-hec14-idc-01b
-          trunk: all         
+          trunk: all
         - id: 1105
           description: rt-hec14-inet-01b
-          trunk: all 
+          trunk: all
         - id: 1106
           description: rt-hec14-vpn-01b
-          trunk: all    
+          trunk: all
     - number: 3b
       snmp:
         location: CA-TOR2-CAGE3-CAB42-U39
@@ -580,7 +581,7 @@ hec:
           type: vlan
           description: NW-MGMT
           ip: 198.19.233.84/25
-          vrrp: 
+          vrrp:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
@@ -595,13 +596,13 @@ hec:
           po: 1103
         - id: 4
           description: rt-hec14-idc-01b, Fo1/0/0
-          po: 1104  
+          po: 1104
         - id: 5
           description: rt-hec14-vpn-01b
           po: 1106
         - id: 6
           description: rt-hec14-inet-01b
-          po: 1105  
+          po: 1105
         - id: 27
           description: sw-hec14-brdr-03a, Et27
           po: 42
@@ -610,7 +611,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
@@ -622,13 +623,13 @@ hec:
           trunk: all
         - id: 1104
           description: rt-hec14-idc-01b
-          trunk: all         
+          trunk: all
         - id: 1105
           description: rt-hec14-inet-01b
-          trunk: all 
+          trunk: all
         - id: 1106
           description: rt-hec14-vpn-01b
-          trunk: all   
+          trunk: all
   str:
     - number: 1a
       spine_port_towards_leaf: Et3/9/1
@@ -649,7 +650,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
     - number: 1b
       spine_port_towards_leaf: Et3/10/1
       snmp:
@@ -669,7 +670,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
     - number: 2a
       spine_port_towards_leaf: Et3/11/1
       snmp:
@@ -692,7 +693,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
     - number: 2b
       spine_port_towards_leaf: Et3/12/1
       uplinks_speed: 100gfull
@@ -715,7 +716,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
   shs:
     - number: 1a
       snmp:
@@ -731,7 +732,7 @@ hec:
         - id: 32
           description: CIS-iSCSI
           type: vlan
-          ip: 
+          ip:
         - id: 1/1
           description: ->hec14f00501,e4a via MPO
           po: 10
@@ -743,7 +744,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 10
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499
@@ -761,7 +762,7 @@ hec:
         - id: 32
           description: CIS-iSCSI
           type: vlan
-          ip: 
+          ip:
         - id: 1/1
           description: ->hec14f00501,e4a via MPO
           po: 10
@@ -773,7 +774,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: MLAG-PEER 
+          description: MLAG-PEER
         - id: 10
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499

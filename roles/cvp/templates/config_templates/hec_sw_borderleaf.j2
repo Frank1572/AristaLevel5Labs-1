@@ -61,7 +61,7 @@ interface Vxlan1
 !
 {% if hec.ngdr_underlay is defined %}
 {% if leafpurpose == 'b' %}
-{% for item as vlans.evpn_edge_trans %}
+{% for item in vlans.evpn_edge_trans %}
 ! ===== EDGE Transfer VLANs =====
 vlan {{item.vid}}
    name {{item.name|upper}}

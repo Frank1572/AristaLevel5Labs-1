@@ -66,7 +66,6 @@ interface Loopback1
    ip address 10.100.1.{{ Lo1 }}/32
 !
 interface Loopback2
-   description VTEP 
    ip address 10.200.1.{{ cell_id }}/32
 !
 {% if spine_lc|int > 0 %}
@@ -94,7 +93,6 @@ interface Ethernet{{ intf }}
 ip routing
 no ip routing vrf OOB
 !
-ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
 {% if hec.ngdr_underlay is defined %}
 ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
 ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
@@ -105,13 +103,6 @@ route-map RM-EDGE permit 10
 !
 route-map RM-EDGE deny 20
 {% endif %}
-!
-route-map MLPEER-RM permit 10
-   match interface Vlan4094
-   set as-path prepend auto
-!
-route-map MLPEER-RM permit 20
-   match ip address prefix-list ANY-PL
 !
 router bgp {{ asn_generated }}
    bgp asn notation asdot

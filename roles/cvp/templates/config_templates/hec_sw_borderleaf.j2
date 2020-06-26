@@ -131,6 +131,7 @@ interface Ethernet{{ item.id }}
    speed forced {{ item.speed }}
 {% elif (item.po is defined) and (item.po == 42) %}
    speed forced {{hec.fabric.interlink_speed}}
+   mtu {{hec.fabric.interlink_mtu}}
 {% endif %}
 {% if item.ip is defined %}
 {% if item.type is defined %}

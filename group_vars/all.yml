@@ -1,2 +1,31 @@
 ---
 # file: group_vars/all
+vlans:
+  ranges:
+    # customer backend vlan networks
+    - name: cust_backend
+      range: 2000-2999
+    # customer transit networks between core and wan/vpn routers
+    #  only applicable where subinterfaces still used
+    - name: cust_static_trans
+      range: 3000-3499
+    # customer transits on wan switches to route from wan routers to provider edge devices
+    - name: cust_wan_trans
+      range: 3500-3999
+  evpn_edge_trans:
+    - name: RT-HEC-CWAN-01A-TRANS
+      vid: 961
+    - name: RT-HEC-CWAN-01A-TRANS
+      vid: 962
+    - name: RT-HEC-CWAN-01B-TRANS
+      vid: 963
+    - name: RT-HEC-CWAN-01B-TRANS
+      vid: 964
+    - name: RT-HEC-VPN-01A-TRANS
+      vid: 965
+    - name: RT-HEC-VPN-01A-TRANS
+      vid: 966
+    - name: RT-HEC-VPN-01B-TRANS
+      vid: 967
+    - name: RT-HEC-VPN-01B-TRANS
+      vid: 968

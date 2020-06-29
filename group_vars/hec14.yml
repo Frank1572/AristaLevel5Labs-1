@@ -202,6 +202,8 @@ hec:
       ip_last_octett: 8
   brdr:
     - number: 1a
+      oob_ip: 10.9.246.21
+      nwmgmt_ip: 198.19.182.41
       uplinks:
         - 29
         - 30
@@ -255,6 +257,8 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all       
     - number: 1b
+      oob_ip: 10.9.246.22
+      nwmgmt_ip: 198.19.182.42
       uplinks:
         - 29
         - 30
@@ -308,6 +312,8 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all    
     - number: 2a
+      oob_ip: 10.9.246.23
+      nwmgmt_ip: 198.19.182.43
       uplinks:
         - 51
         - 52
@@ -332,6 +338,8 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 2b
+      oob_ip: 10.9.246.24
+      nwmgmt_ip: 198.19.182.44
       uplinks:
         - 51
         - 52
@@ -356,6 +364,8 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 3a
+      oob_ip: 10.9.246.25
+      nwmgmt_ip: 198.19.182.45
       uplinks:
         - 29
         - 30
@@ -409,6 +419,8 @@ hec:
           description: rt-hec14-vpn-01b
           trunk: all    
     - number: 3b
+      oob_ip: 10.9.246.26
+      nwmgmt_ip: 198.19.182.46
       uplinks:
         - 25
         - 26
@@ -463,6 +475,8 @@ hec:
           trunk: all   
   str:
     - number: 1a
+      oob_ip: 10.9.246.29
+      nwmgmt_ip: 198.19.182.47
       spine_port_towards_leaf: Et3/9/1
       uplinks:
         - 25
@@ -480,6 +494,8 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 1b
+      oob_ip: 10.9.246.30
+      nwmgmt_ip: 198.19.182.48
       spine_port_towards_leaf: Et3/10/1
       uplinks:
         - 25
@@ -497,6 +513,8 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2a
+      oob_ip: 10.9.246.31
+      nwmgmt_ip: 198.19.182.49
       spine_port_towards_leaf: Et3/11/1
       uplinks_speed: 100gfull
       uplinks:
@@ -517,6 +535,8 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2b
+      oob_ip: 10.9.246.32
+      nwmgmt_ip: 198.19.182.50
       spine_port_towards_leaf: Et3/12/1
       uplinks_speed: 100gfull
       uplinks:

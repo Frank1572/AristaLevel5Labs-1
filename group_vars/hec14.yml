@@ -282,33 +282,33 @@ hec:
           ip: 10.254.253.9/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.8
-        - id: 1
+        - id: 1/1
           description: rt-hec14-core-01a, Fo0/2/0
           po: 1101
           speed: 40gfull
-        - id: 2
+        - id: 2/1
           description: rt-hec14-core-01b, Fo0/2/0
           po: 1102
           speed: 40gfull
-        - id: 3
+        - id: 3/1
           description: rt-hec14-cwan-01a, Fo0/0/0
           po: 1103
           speed: 40gfull
-        - id: 4
+        - id: 4/1
           description: rt-hec14-idc-01a, Fo0/0/0
           po: 1104
           speed: 40gfull
-        - id: 27
+        - id: 27/1
           description: sw-hec14-brdr-01b, Et27
           po: 42
-        - id: 28
+        - id: 28/1
           description: sw-hec14-brdr-01b, Et28
           po: 42
         - id: 5
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull
-        - id: 6
+        - id: 6/1
           description: rt-hec14-inet-01a
           po: 1105
           speed: 40gfull
@@ -371,33 +371,33 @@ hec:
           ip: 10.254.253.11/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.10
-        - id: 1
+        - id: 1/1
           description: rt-hec14-core-01a, Fo0/2/1
           po: 1101
           speed: 40gfull
-        - id: 2
+        - id: 2/1
           description: rt-hec14-core-01b, Fo0/2/1
           po: 1102
           speed: 40gfull
-        - id: 3
+        - id: 3/1
           description: rt-hec14-cwan-01a, Fo1/0/0
           po: 1103
           speed: 40gfull
-        - id: 4
+        - id: 4/1
           description: rt-hec14-idc-01a, Fo1/0/0
           po: 1104
           speed: 40gfull
-        - id: 27
+        - id: 27/1
           description: sw-hec14-brdr-01a, Et27
           po: 42
-        - id: 28
+        - id: 28/1
           description: sw-hec14-brdr-01a, Et28
           po: 42
-        - id: 5
+        - id: 5/1
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull
-        - id: 6
+        - id: 6/1
           description: rt-hec14-inet-01a
           po: 1105
           speed: 40gfull
@@ -438,13 +438,13 @@ hec:
       mgmt1_suffix: 23
       spine_port_towards_leaf: Et3/5/1
       ports:
-        - id: 49
+        - id: 49/1
           description: sw-hec14-brdr-02b, Et49
           po: 42
-        - id: 50
+        - id: 50/1
           description: sw-hec14-brdr-02b, Et50
           po: 42
-        - id: 48
+        - id: 48/1
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916
@@ -470,13 +470,13 @@ hec:
       mgmt1_suffix: 24
       spine_port_towards_leaf: Et3/6/1
       ports:
-        - id: 49
+        - id: 49/1
           description: sw-hec14-brdr-02a, Et49
           po: 42
-        - id: 50
+        - id: 50/1
           description: sw-hec14-brdr-02a, Et50
           po: 42
-        - id: 48
+        - id: 48/1
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916
@@ -510,28 +510,28 @@ hec:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
-        - id: 1
+        - id: 1/1
           description: rt-hec14-core-01c, Fo0/2/0
           po: 1101
-        - id: 2
+        - id: 2/1
           description: rt-hec14-core-01d, Fo0/2/0
           po: 1102
-        - id: 3
+        - id: 3/1
           description: rt-hec14-cwan-01b, Fo0/0/0
           po: 1103
-        - id: 4
+        - id: 4/1
           description: rt-hec14-idc-01b, Fo0/0/0
           po: 1104
-        - id: 5
+        - id: 5/1
           description: rt-hec14-vpn-01b
           po: 1106
-        - id: 6
+        - id: 6/1
           description: rt-hec14-inet-01b
           po: 1105
-        - id: 27
+        - id: 27/1
           description: sw-hec14-brdr-03b, Et27
           po: 42
-        - id: 28
+        - id: 28/1
           description: sw-hec14-brdr-03b, Et28
           po: 42
       port_channels:
@@ -579,28 +579,28 @@ hec:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
-        - id: 1
+        - id: 1/1
           description: rt-hec14-core-01c, Fo0/2/1
           po: 1101
-        - id: 2
+        - id: 2/1
           description: rt-hec14-core-01d, Fo0/2/1
           po: 1102
-        - id: 3
+        - id: 3/1
           description: rt-hec14-cwan-01b, Fo1/0/0
           po: 1103
-        - id: 4
+        - id: 4/1
           description: rt-hec14-idc-01b, Fo1/0/0
           po: 1104
-        - id: 5
+        - id: 5/1
           description: rt-hec14-vpn-01b
           po: 1106
-        - id: 6
+        - id: 6/1
           description: rt-hec14-inet-01b
           po: 1105
-        - id: 27
+        - id: 27/1
           description: sw-hec14-brdr-03a, Et27
           po: 42
-        - id: 28
+        - id: 28/1
           description: sw-hec14-brdr-03a, Et28
           po: 42
       port_channels:

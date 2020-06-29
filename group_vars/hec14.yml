@@ -245,6 +245,8 @@ hec:
       ip_last_octett: 8
   brdr:
     - number: 1a
+      oob_ip: 10.9.246.21
+      nwmgmt_ip: 198.19.182.41
       snmp:
         location: CA-TOR2-CAGE3-CAB40-U41
         contact: 34672182:ncons-hec14-oob-01.net 1002
@@ -332,6 +334,8 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all
     - number: 1b
+      oob_ip: 10.9.246.22
+      nwmgmt_ip: 198.19.182.42
       snmp:
         location: CA-TOR2-CAGE3-CAB40-U39
         contact: 34672183:ncons-hec14-oob-01.net 1003
@@ -419,6 +423,8 @@ hec:
           description: rt-hec14-vpn-01a
           trunk: all
     - number: 2a
+      oob_ip: 10.9.246.23
+      nwmgmt_ip: 198.19.182.43
       snmp:
         location: CA-TOR2-CAGE3-CAB41-U41
         contact: 34672186:ncons-hec14-oob-01.net 1011
@@ -449,6 +455,8 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 2b
+      oob_ip: 10.9.246.24
+      nwmgmt_ip: 198.19.182.44
       snmp:
         location: CA-TOR2-CAGE3-CAB41-U39
         contact: 34672187:ncons-hec14-oob-01.net 1012
@@ -479,6 +487,8 @@ hec:
           description: ->naa-hec14-01, in-band
           access_vlan: 916
     - number: 3a
+      oob_ip: 10.9.246.25
+      nwmgmt_ip: 198.19.182.45
       snmp:
         location: CA-TOR2-CAGE3-CAB42-U41
         contact: 34672184:ncons-hec14-oob-01.net 1015
@@ -546,6 +556,8 @@ hec:
           description: rt-hec14-vpn-01b
           trunk: all
     - number: 3b
+      oob_ip: 10.9.246.26
+      nwmgmt_ip: 198.19.182.46
       snmp:
         location: CA-TOR2-CAGE3-CAB42-U39
         contact: 34672185:ncons-hec14-oob-01.net 1016
@@ -614,6 +626,8 @@ hec:
           trunk: all
   str:
     - number: 1a
+      oob_ip: 10.9.246.29
+      nwmgmt_ip: 198.19.182.47
       spine_port_towards_leaf: Et3/9/1
       snmp:
         location: CA-TOR2-CAGE3-CAB45-U41
@@ -634,6 +648,8 @@ hec:
         - id: 42
           description: MLAG-PEER
     - number: 1b
+      oob_ip: 10.9.246.30
+      nwmgmt_ip: 198.19.182.48
       spine_port_towards_leaf: Et3/10/1
       snmp:
         location: CA-TOR2-CAGE3-CAB45-U39
@@ -654,6 +670,8 @@ hec:
         - id: 42
           description: MLAG-PEER
     - number: 2a
+      oob_ip: 10.9.246.31
+      nwmgmt_ip: 198.19.182.49
       spine_port_towards_leaf: Et3/11/1
       snmp:
         location: CA-TOR2-CAGE3-CAB45-U37
@@ -677,6 +695,8 @@ hec:
         - id: 42
           description: MLAG-PEER
     - number: 2b
+      oob_ip: 10.9.246.32
+      nwmgmt_ip: 198.19.182.50
       spine_port_towards_leaf: Et3/12/1
       uplinks_speed: 100gfull
       snmp:
@@ -701,6 +721,8 @@ hec:
           description: MLAG-PEER
   shs:
     - number: 1a
+      oob_ip: 10.9.246.32
+      nwmgmt_ip: 198.19.182.50
       snmp:
         location: foo
         contact: bar
@@ -731,6 +753,8 @@ hec:
           description: hec14f00501
           trunk: 30,32,40,50,55,130,2001-2499
     - number: 1b
+      oob_ip: 10.9.246.32
+      nwmgmt_ip: 198.19.182.50
       snmp:
         location: foo
         contact: bar

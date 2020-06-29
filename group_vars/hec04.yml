@@ -83,7 +83,6 @@ cvp:
         status: Enabled
 
 hec:
-  # left mostly unchanged. 
   hec_nr: "04"
   hana_hvx_descriptions_PO_MIN: 101
   hana_hvx_descriptions_PO_MAX: 124
@@ -94,50 +93,50 @@ hec:
   vl900_domain: "sac.hec.sap.biz"
   vl900_mask: 24
   vl900_def_gw: 198.19.241.1
-  vl900_net: 198.19.241.0/24
-  lo900_net: 198.19.195.0/24
-  lo900_prefix: 198.19.195
-  inband_trans_brdr: 10.255.252.78
-  inband_trans_net: 10.255.252.64/28
-  inband_trans_prefix: 10.255.252
+  vl900_net: 198.19.243.0/24
+  lo900_net: 198.19.158.0/ 24
+  lo900_prefix: 198.19.158
+  inband_trans_brdr: 10.255.177.78
+  inband_trans_net: 10.255.177.64/28
+  inband_trans_prefix: 10.255.177
   inband_trans_mask: 28
   inband_trans_gw_vlan: Vlan916
-  inband_trans_gw: 10.255.252.65
-  inband_trans_cvx: 10.255.252.68
-  inband_trans_cvp: 10.255.252.69
-  oob_def_gw: 10.178.140.1
-  oob_prefix: 10.178.140
+  inband_trans_gw: 10.255.177.65
+  inband_trans_cvx: 10.255.177.68
+  inband_trans_cvp: 10.255.177.69
+  oob_def_gw: 10.9.242.1
+  oob_prefix: 10.9.242
   oob_mask: 23
-  oob_cvx: 10.178.141.252
-  oob_cvp: 10.178.141.253
+  oob_cvx: 10.9.243.252
+  oob_cvp: 10.9.243.253
   as_low: 4200998673
   as_high: 4200999871
-  cvp_ingest_key: SecureKey02
-  dns1: 10.127.141.1
-  dns2: 10.127.141.2
-  ntp1: 147.204.148.93
-  ntp2: 147.204.148.92
-  syslog1: 147.204.132.91
-  syslog2: 147.204.133.69
-  syslog3: 147.204.146.42
-  radius1: 10.17.122.21
-  radius2: 10.17.121.35
+  cvp_ingest_key: SecureKey04
+  dns1: 169.145.109.5
+  dns2: 169.145.109.6
+  ntp1: 169.145.108.9
+  ntp2: 169.145.108.10
+  syslog1: 169.145.33.24
+  syslog2: 169.145.109.69
+  syslog3: 169.145.84.91
+  radius1: 10.4.201.55
+  radius2: 169.145.33.70
   admin_mpls:
-    - prefix_mask: "10.178.140.0/23"
+    - prefix_mask: "10.9.242.0/23"
       sequence: "20"
   admin_sw_interface: Ethernet49
-  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
-  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"
-  admin_sw_prefix: 10.255.202
-  admin_sw_mask: 29
-  admin_sw_ip_oob1a: 10.255.202.9
+  admin_sw_description_oob1a: "sjcdc01-adm-03-co eth1/13"
+  admin_sw_description_oob1b: "sjcdc01-adm-04-co eth1/13"
+  admin_sw_prefix: 10.255.192
+  admin_sw_mask: 31
+  admin_sw_ip_oob1a: 10.255.202.8
   admin_sw_ip_oob1b: 10.255.202.10
-  admin_sw_neig_ip_oob1a: 10.255.202.11
-  admin_sw_neig_as_oob1a: 1.463
-  admin_sw_neig_ip_oob1b: 10.255.202.12
-  admin_sw_neig_as_oob1b: 1.463
+  admin_sw_neig_ip_oob1a: 10.255.192.9
+  admin_sw_neig_as_oob1a: 65999
+  admin_sw_neig_ip_oob1b: 10.255.192.11
+  admin_sw_neig_as_oob1b: 64536
   oob01_lo0_prefix: 198.19.249
-  oob01_as: 64531.2
+  oob01_as: 4229103620
   spine_nr:
     - 11
     - 12
@@ -145,10 +144,32 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7280
+    model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 1
+    linecards: 4
+    fortygig:
+      - 3/1/1
+      - 3/2/1
+      - 3/13/1
+      - 3/l4/1
+    number:
+      - id: 11
+        snmp:
+          location: US-CA01-P30-C46-U3
+          contact: 34412895:ncons-hec04-oob-01.net 1007
+      - id: 12
+        snmp:
+          location: US-CA01-P30-C47-U3
+          contact: 34412896:ncons-hec04-oob-01.net 1008
+      - id: 13
+        snmp:
+          location: US-CA01-P30-C48-U3
+          contact: 34412897:ncons-hec04-oob-01.net 1009
+      - id: 14
+        snmp:
+          location: US-CA01-P30-C49-U3
+          contact: 34412898:ncons-hec04-oob-01.net 1010
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual
@@ -161,115 +182,19 @@ hec:
       - 10.200.1.6
       - 10.200.1.7
       - 10.200.1.8
-      - 10.200.1.9
-      - 10.200.1.10
-      - 10.200.1.11
-      - 10.200.1.12
-      - 10.200.1.13
-      - 10.200.1.14
-      - 10.200.1.30
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
     bgp_maximum_routes: 12000
-  oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
-  oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
-  oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015
-  oob01b_snmp_location: NL-AMS-AM7-Z1C-03-01-39
+  oob01a_snmp_contact: xxxxxx:ncons-hec04-oob-01:1002
+  oob01a_snmp_location: CA01-P30-C50-U39
+  oob01b_snmp_contact: xxxxxx:ncons-hec04-oob-01:1003
+  oob01b_snmp_location: CA01-P30-C50-U38
   oobs_2_7:
     - number: 02
-      snmp_contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
-      ip_last_octett: 4
-    - number: 03
-      snmp_contact: 34340566:ncons-hec02-07.net.sap.corp:1017
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-03-01-38
-      ip_last_octett: 5
-    - number: 04
-      snmp_contact: 34340569:ncons-hec02-08.net.sap.corp:1001
-      snmp_location:  EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z3E)-02-07-32
-      ip_last_octett: 6
-    - number: 05
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 7
-    - number: 06
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 8
-  interdc:
-    - number: "01"
-      ports:
-        - id: 1
-          description: DCP2Pb:W1B11596:HEC02:HEC01:sw-hec02-interDC01:Et1
-          po: 999
-        - id: 2
-          description: -> dc2wanrt01, te0/1/0 (SaaS)
-        - id: 21
-          description: sw-hec02-interdc02, Et21
-          po: 42
-        - id: 22
-          description: sw-hec02-interdc02, Et22
-          po: 42
-        - id: 23
-          description: sw-hec02-interdc02, Et23
-          po: 42
-        - id: 24
-          description: sw-hec02-interdc02, Et24
-          po: 42
-        - id: 45
-          description: sw-hec02-interdc02, Et45
-          po: 42
-        - id: 46
-          description: sw-hec02-interdc02, Et46
-          po: 42
-        - id: 47
-          description: sw-hec02-interdc02, Et47
-          po: 42
-        - id: 48
-          description: sw-hec02-interdc02, Et48
-          po: 42
-      port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 999
-          description: ->sw-hec01 Po999
-          trunk: 961,962
-    - number: "02"
-      ports:
-        - id: 1
-          description: DCP2Pb:01-400040-005:HEC02:HEC01:sw-hec02-interDC02:Et1
-          po: 999
-        - id: 21
-          description: sw-hec02-interdc02, Et21
-          po: 42
-        - id: 22
-          description: sw-hec02-interdc02, Et22
-          po: 42
-        - id: 23
-          description: sw-hec02-interdc02, Et23
-          po: 42
-        - id: 24
-          description: sw-hec02-interdc02, Et24
-          po: 42
-        - id: 45
-          description: sw-hec02-interdc01, Et45
-          po: 42
-        - id: 46
-          description: sw-hec02-interdc01, Et46
-          po: 42
-        - id: 47
-          description: sw-hec02-interdc01, Et47
-          po: 42
-        - id: 48
-          description: sw-hec02-interdc01, Et48
-          po: 42
-      port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 999
-          description: ->sw-hec01 Po999
-          trunk: 961,962
+      snmp_contact: xxxxxx:ncons-hec04-oob-01:1001
+      snmp_location: CA01-POD30-C50-RU43
+      ip_last_octett: 22
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

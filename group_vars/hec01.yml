@@ -278,7 +278,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
-      spine_port_towards_leaf: Et3/1/1
+      spine_port_towards_leaf: Et3/3/1
       ports:
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/0
@@ -338,7 +338,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
-      spine_port_towards_leaf: Et3/2/1
+      spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/1
@@ -425,8 +425,8 @@ hec:
           access_vlan: 916
     - number: 2b
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ54-R2-2-25
+        contact: 34679369:ncons5402.wdf.sap.corp:1002
       oob_ip: 10.178.136.18
       nwmgmt_ip: 198.19.190.18
       uplinks:

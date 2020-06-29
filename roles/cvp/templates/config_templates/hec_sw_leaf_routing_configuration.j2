@@ -202,7 +202,9 @@ router bgp {{ asn_generated }}
 {% else %}
       vlan 5-2999
 {% endif %}
+      exit
 {% endif %}
+   exit
 !
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {#

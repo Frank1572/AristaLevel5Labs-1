@@ -181,6 +181,12 @@ hec:
         snmp:
           location: foo
           contact: bar
+  ngdr_underlay:
+    edge_as: 65200
+  #Are the core vlans 3000 to 3499 needed
+  core_vlans: true
+  #Are the cwan vlans 3500 to 3599 needed
+  cwan_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: manual
@@ -228,6 +234,11 @@ hec:
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
+    # Spine BGP Listen ranges for EVPN
+    bgp_listen_ranges:
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
@@ -280,6 +291,29 @@ hec:
         - 32/1
       spine_port_towards_leaf: Et3/3/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.14/25
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.240.43
+              auth: FWTTRANS
+        - id: 961
+          type: vlan
+          description: Transfer to rt-hec01-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.1/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.0
+        - id: 965
+          type: vlan
+          description: Transfer to rt-hec01-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.9/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.8
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/0
           po: 1101

@@ -202,11 +202,6 @@ hec:
       - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
-    # Spine BGP Listen ranges for EVPN
-    bgp_listen_ranges:
-      - 10.100.0.0/16
-      - 198.19.249.0/24
-      - 198.19.251.0/24
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
@@ -265,9 +260,10 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.81/25
           vrrp:
-            priority: 105
-            ip: 198.19.233.71
-            auth: FWTTRANS
+            - id: 250
+              priority: 105
+              ip: 198.19.233.71
+              auth: FWTTRANS
         - id: 961
           type: vlan
           description: Transfer to rt-hec14-cwan-01a

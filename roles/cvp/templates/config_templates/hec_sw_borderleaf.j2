@@ -69,8 +69,8 @@ interface Vxlan1
 !
 {% if hec.ngdr_underlay is defined %}
 {% if leafpurpose == 'b' %}
-{% for item in vlans.evpn_edge_trans %}
 ! ===== EDGE Transfer VLANs =====
+{% for item in vlans.evpn_edge_trans %}
 vlan {{item.vid}}
    name {{item.name|upper}}
 !
@@ -117,22 +117,22 @@ interface Ethernet{{ item.id }}
 {% if item.po is defined %}
    channel-group {{ item.po }} mode active
 {% endif %}
-{% if item.trunk is defined %} {# BEGIN port is vlan trunk #}
+{% if item.trunk is defined %}{# BEGIN port is vlan trunk #}
    switchport mode trunk
 {% if item.trunk != "all" %}
    switchport trunk allowed vlan {{ item.trunk }}
 {% endif %}
-{% endif %} {# END port is vlan trunk #}
-{% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
+{% endif %}{# END port is vlan trunk #}
+{% if item.access_vlan is defined %}{# BEGIN port is access_vlan #}
    switchport access vlan {{ item.access_vlan }}
-{% endif %} {# END port is access_vlan #}
+{% endif %}{# END port is access_vlan #}
 {% if item.speed is defined %}
    speed forced {{ item.speed }}
 {% elif (item.po is defined) and (item.po == 42) %}
    speed forced {{hec.fabric.interlink_speed}}
    mtu {{hec.fabric.interlink_mtu}}
 {% endif %}
-{% if item.ip is defined %} {# START ip is defined #}
+{% if item.ip is defined %}{# START ip is defined #}
 {% if (item.type is defined) and (item.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}
 {% endif %}
@@ -149,7 +149,7 @@ interface Ethernet{{ item.id }}
 {#
  vrrp group, if any defined
 #}
-{% if item.vrrp is defined %}  {# START vrrp is defined #}
+{% if item.vrrp is defined %}{# START vrrp is defined #}
 {% for vrrp_group in item.vrrp %}
    vrrp {{vrrp_group.id}} priority {{ vrrp_group.priority }}
    vrrp {{vrrp_group.id}} preempt delay minimum 180
@@ -161,9 +161,9 @@ interface Ethernet{{ item.id }}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
 {% endfor %}
-{% endif %}  {# END vrrp is defined #}
+{% endif %}{# END vrrp is defined #}
    ip address {{ item.ip }}
-{% endif %}  {# END ip is defined #}
+{% endif %}{# END ip is defined #}
 !
 {% endfor %}
 ! ===== Port-channels =====

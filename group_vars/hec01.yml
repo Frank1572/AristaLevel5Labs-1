@@ -302,7 +302,8 @@ hec:
           description: sw-hec01-brdr-01b, Et28
           po: 42
         - id: 9/1
-          description: fw-hec01-01-new
+          description: fw-hec01-01
+          po: 10
         - id: 961
           description: ->Transfer to rt-hec01-cwan-01a
           type: vlan
@@ -312,6 +313,9 @@ hec:
           type: vlan
           ip: 10.254.253.9/31
       port_channels:
+        - id: 10
+          description: fw-hec01-01
+          trunk: all
         - id: 1101
           description: rt-hec01-core-01a
           trunk: all
@@ -361,7 +365,13 @@ hec:
         - id: 28/1
           description: sw-hec01-brdr-01a, Et28
           po: 42
+        - id: 9/1
+          description: fw-hec01-01
+          po: 10
       port_channels:
+        - id: 10
+          description: fw-hec01-01
+          trunk: all
         - id: 1101
           description: rt-hec01-core-01a
           trunk: all

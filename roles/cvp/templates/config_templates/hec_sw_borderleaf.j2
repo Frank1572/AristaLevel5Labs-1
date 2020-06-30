@@ -97,7 +97,7 @@ interface Ethernet{{ item }}
    no switchport
    description SPINE UPLINK
    mtu {{ hec.fabric.interlink_mtu }}
-{% set speed = uplinks_speed if uplinks_speed is defined %}
+{% if uplinks_speed is defined %}{% set speed = uplinks_speed%}{% endif %}
    speed forced {{ speed }}
 !
 {% endfor %}

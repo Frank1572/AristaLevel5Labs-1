@@ -62,7 +62,7 @@
 {% set Lo1 = cell_id %}
 {% endif %}
 interface Loopback1
-   description Router-ID 
+   description Router-ID
    ip address 10.100.1.{{ Lo1 }}/32
 !
 interface Loopback2
@@ -139,7 +139,7 @@ router bgp {{ asn_generated }}
 {% if edge_neighbor.ngdr_underlay is defined %}
 {% if edge_neighbor.ngdr_underlay %}
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} peer-group EDGE-PG
-   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }} 
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }}
 {% endif %}
 {% endif %}
 {% endif %}
@@ -190,13 +190,8 @@ router bgp {{ asn_generated }}
       route-target both 1:1
       redistribute learned
 {% if (brdrtype == '1') or (brdrtype == '3') %}
-{% if hec.core_vlans is defined or hec.cwan_vlans is defined %}
-{% if hec.core_vlans and hec.cwan_vlans%}
-      vlan 5-3599
-{% elif hec.core_vlans and not hec.cwan_vlans%}
+{% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
-{% elif not hec.core_vlans and hec.cwan_vlans%}
-      vlan 5-3599
 {% endif %}
 {% endif %}
 {% else %}
@@ -212,26 +207,13 @@ router bgp {{ asn_generated }}
   if the core routers and wan/vpn routers are still doing
   static transfer networks for wan/vpn connections
 #}
-{% if hec.core_vlans is defined %}
-{% if hec.cwan_vlans %}
+{% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
 vlan 3000-3499
 !
 interface Vxlan1
 {% for i in range(0,500) %}
    vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
 {% endfor %}
-{% endif %}
-{% endif %}
-{% if hec.cwan_vlans is defined %}
-{% if hec.cwan_vlans %}
-!
-vlan 3500-3599
-!
-interface Vxlan1
-{% for i in range(0,100) %}
-   vxlan vlan {{ i + 3500 }} vni {{ i + 3500 }}000
-{% endfor %}
-{% endif %}
 {% endif %}
 {% endif %}
 !

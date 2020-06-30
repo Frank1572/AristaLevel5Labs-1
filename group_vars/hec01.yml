@@ -183,10 +183,8 @@ hec:
           contact: bar
   ngdr_underlay:
     edge_as: 65200
-  #Are the core vlans 3000 to 3499 needed
+  # Are the core vlans 3000 to 3499 needed
   core_vlans: true
-  #Are the cwan vlans 3500 to 3599 needed
-  cwan_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: manual

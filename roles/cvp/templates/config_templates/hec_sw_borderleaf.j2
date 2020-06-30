@@ -63,9 +63,9 @@ interface Vxlan1
    vxlan vlan 920 vni 10920
 !
 {% endif %}
-{% set loop_items = hec.brdr if leafpurpose == 'b' %}
-{% set loop_items = hec.str if leafpurpose == 's' %}
-{% set loop_items = hec.shs if leafpurpose == 'h' %}
+{% set loop_items = hec.brdr %}
+{% if leafpurpose == 's' %}{% set loop_items = hec.str %}{% endif %}
+{% if leafpurpose == 'h' %}{% set loop_items = hec.shs %}{% endif %}
 !
 {% if hec.ngdr_underlay is defined %}
 {% if leafpurpose == 'b' %}
@@ -105,8 +105,8 @@ interface Ethernet{{ item }}
 {% for item in allbrdrs.ports %}
 {% if item.type is defined %}
 {% if item.type != 'Ethernet' %}
-{% set inttype = 'Vlan' if item.type|lower == 'vlan' %}
-{% set inttype = 'Ethernet' if item.type|lower == 'spine_link' %}
+{% if item.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
+{% if item.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
 interface {{ inttype }}{{ item.id }}
 {% endif %}
 {% endif %}
@@ -158,7 +158,7 @@ interface Ethernet{{ item.id }}
    vrrp {{vrrp_group.id}} authentication text {{ vrrp_group.auth }}
 {% endif %}
 {% set conf_str_ip = 'vrrp ' + vrrp_group.id + ' ip ' + vrrp_group.ip %}
-{% set conf_str_ip = conf_str_ip + ' secondary' if not loop.first %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
 {% endfor %}
 {% endif %}  {# END vrrp is defined #}

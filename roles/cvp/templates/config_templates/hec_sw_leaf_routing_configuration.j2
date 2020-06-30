@@ -192,13 +192,11 @@ router bgp {{ asn_generated }}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
-{% endif %}
-{% endif %}
 {% else %}
       vlan 5-2999
 {% endif %}
-      exit
 {% endif %}
+      exit
    exit
 !
 {% if (brdrtype == '1') or (brdrtype == '3') %}

@@ -168,7 +168,6 @@ interface Ethernet{{ item.id }}
 {% set conf_str_ip = 'vrrp ' + vrrp_group.id + ' ip ' + vrrp_group.ip %}
 {% set conf_str_ip = conf_str_ip + ' secondary' if not loop.first %}
    {{conf_str_ip}}
-{% endif %}
 {% endfor %}
 {% endif %}
 {# #}

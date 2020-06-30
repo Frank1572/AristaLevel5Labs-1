@@ -70,8 +70,6 @@
   connection: network_cli
   eos_facts:
     host: "{{ hec.oob_prefix }}.11"
-    username: "{{ eos_username }}"
-    password: "{{ eos_password }}"
     gather_subset: min
     gather_network_resources: interfaces
   tags:

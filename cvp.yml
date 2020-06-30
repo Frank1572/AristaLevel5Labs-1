@@ -3,12 +3,5 @@
 
 - hosts: all
   gather_facts: no
-  vars_prompt:
-    - name: "eos_username"
-      prompt: "Username for collecting Spine interfaces: "
-      private: no
-    - name: "eos_password"
-      prompt: "Password for collecting Spine interfaces: "
-      private: yes
   roles:
     - role: cvp

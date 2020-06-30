@@ -28,6 +28,10 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
+!
+vlan 900
+   name NW-MGMT
+!
 vlan 914
    name FW-CORE-TRANS
 !
@@ -38,6 +42,7 @@ vlan 916
    name FW-BRDR-TRANS
 !
 interface Vxlan1
+   vxlan vlan 900 vni 10900
    vxlan vlan 914 vni 10914
    vxlan vlan 915 vni 10915
    vxlan vlan 916 vni 10916

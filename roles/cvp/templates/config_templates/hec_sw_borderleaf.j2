@@ -63,7 +63,7 @@ interface Vxlan1
    vxlan vlan 920 vni 10920
 !
 {% endif %}
-{% set loop_items = hec.brdr %}
+{% set loop_items = hec.brdr if leafpurpose == 'b' %}
 {% set loop_items = hec.str if leafpurpose == 's' %}
 {% set loop_items = hec.shs if leafpurpose == 'h' %}
 !

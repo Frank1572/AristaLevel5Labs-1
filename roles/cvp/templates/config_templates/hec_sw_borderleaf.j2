@@ -97,7 +97,7 @@ interface Ethernet{{ item }}
    no switchport
    description SPINE UPLINK
    mtu {{ hec.fabric.interlink_mtu }}
-{% if uplinks_speed is defined %}{% set speed = uplinks_speed%}{% endif %}
+{% if uplinks_speed is defined %}{% set speed = uplinks_speed %}{% endif %}
    speed forced {{ speed }}
 !
 {% endfor %}
@@ -157,7 +157,7 @@ interface Ethernet{{ item.id }}
 {% if vrrp_group.auth is defined %}
    vrrp {{vrrp_group.id}} authentication text {{ vrrp_group.auth }}
 {% endif %}
-{% set conf_str_ip = 'vrrp ' + vrrp_group.id + ' ip ' + vrrp_group.ip %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ip ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
 {% endfor %}

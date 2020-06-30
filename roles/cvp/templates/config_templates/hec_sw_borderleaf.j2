@@ -64,12 +64,8 @@ interface Vxlan1
 !
 {% endif %}
 {% set loop_items = hec.brdr %}
-{% if leafpurpose == 's' %}
-{% set loop_items = hec.str %}
-{% endif %}
-{% if leafpurpose == 'h' %}
-{% set loop_items = hec.shs %}
-{% endif %}
+{% set loop_items = hec.str if leafpurpose == 's' %}
+{% set loop_items = hec.shs if leafpurpose == 'h' %}
 !
 {% if hec.ngdr_underlay is defined %}
 {% if leafpurpose == 'b' %}
@@ -101,22 +97,16 @@ interface Ethernet{{ item }}
    no switchport
    description SPINE UPLINK
    mtu {{ hec.fabric.interlink_mtu }}
-{% if uplinks_speed is defined %}
-{% set speed = uplinks_speed %}
-{% endif %}
+{% set speed = uplinks_speed if uplinks_speed is defined %}
    speed forced {{ speed }}
 !
 {% endfor %}
 ! ===== End device ports =====
 {% for item in allbrdrs.ports %}
 {% if item.type is defined %}
-{% if item.type != "Ethernet" %}
-{% if item.type == 'vlan' %}
-{% set inttype = 'Vlan' %}
-{% endif %}
-{% if item.type == 'spine_link' %}
-{% set inttype = 'Ethernet' %}
-{% endif %}
+{% if item.type != 'Ethernet' %}
+{% set inttype = 'Vlan' if item.type|lower == 'vlan' %}
+{% set inttype = 'Ethernet' if item.type|lower == 'spine_link' %}
 interface {{ inttype }}{{ item.id }}
 {% endif %}
 {% endif %}
@@ -142,14 +132,16 @@ interface Ethernet{{ item.id }}
    speed forced {{hec.fabric.interlink_speed}}
    mtu {{hec.fabric.interlink_mtu}}
 {% endif %}
-{% if item.ip is defined %}
-{% if item.type is defined %}
-{% if item.type != "vlan" %}
-   no switchport
+{% if item.ip is defined %} {# START ip is defined #}
+{% if (item.type is defined) and (item.type == "spine_link") %}
+   mtu {{ hec.fabric.interlink_mtu }}
 {% endif %}
-{% if item.type == "vlan" %}
+{% if (item.type is defined) and (item.type != "vlan") %}
+   no switchport
+{% elif (item.type is defined) and (item.type == "vlan") %}
 {% if item.vrrp is not defined %}
    no autostate
+{% endif %}
 {% endif %}
 {% if item.mtu is defined %}
    mtu {{ item.mtu }}
@@ -157,7 +149,7 @@ interface Ethernet{{ item.id }}
 {#
  vrrp group, if any defined
 #}
-{% if item.vrrp is defined %}
+{% if item.vrrp is defined %}  {# START vrrp is defined #}
 {% for vrrp_group in item.vrrp %}
    vrrp {{vrrp_group.id}} priority {{ vrrp_group.priority }}
    vrrp {{vrrp_group.id}} preempt delay minimum 180
@@ -169,14 +161,9 @@ interface Ethernet{{ item.id }}
 {% set conf_str_ip = conf_str_ip + ' secondary' if not loop.first %}
    {{conf_str_ip}}
 {% endfor %}
-{% endif %}
-{# #}
-{% if item.type == "spine_link" %}
-   mtu {{ hec.fabric.interlink_mtu }}
-{% endif %}
-{% endif %}
+{% endif %}  {# END vrrp is defined #}
    ip address {{ item.ip }}
-{% endif %}
+{% endif %}  {# END ip is defined #}
 !
 {% endfor %}
 ! ===== Port-channels =====

@@ -41,6 +41,9 @@ vlan 915
 vlan 916
    name FW-BRDR-TRANS
 !
+vlan 920
+   name RT-TRANS
+!
 interface Vxlan1
    vxlan vlan 900 vni 10900
    vxlan vlan 914 vni 10914
@@ -58,6 +61,7 @@ vlan 920
 !
 interface Vxlan1
    vxlan vlan 920 vni 10920
+!
 {% endif %}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}

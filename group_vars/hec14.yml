@@ -439,7 +439,7 @@ hec:
         - id: 50/1
           description: sw-hec14-brdr-02b, Et50
           po: 42
-        - id: 48/1
+        - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916
@@ -471,7 +471,7 @@ hec:
         - id: 50/1
           description: sw-hec14-brdr-02a, Et50
           po: 42
-        - id: 48/1
+        - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916

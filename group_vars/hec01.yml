@@ -278,8 +278,8 @@ hec:
   brdr:
     - number: 1a
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ44-R1-3-28
+        contact: 34413785:ncons4408.wdf.sap.corp:1002
       oob_ip: 10.178.136.15
       nwmgmt_ip: 198.19.190.15
       uplinks:
@@ -315,27 +315,39 @@ hec:
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/0
           po: 1101
+          speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/0
           po: 1102
+          speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec01-cwan-01a, Fo0/0/0
           po: 1501
+          speed: 40gfull
+          mtu: 9100
         - id: 5/1
           description: rt-hec01-vpn-01a, Fo0/2/0
           po: 1503
+          speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec01-inet-01a, Fo0/2/0
           po: 1401
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
-          description: sw-hec01-brdr-01b, Et27
+          description: sw-hec01-brdr-01b, Et27/1
           po: 42
         - id: 28/1
-          description: sw-hec01-brdr-01b, Et28
+          description: sw-hec01-brdr-01b, Et28/1
           po: 42
         - id: 9/1
           description: fw-hec01-01
           po: 10
+          speed: 40gfull
+          mtu: 9100
         - id: 961
           description: ->Transfer to rt-hec01-cwan-01a
           type: vlan
@@ -365,8 +377,8 @@ hec:
           trunk: all
     - number: 1b
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ44-R1-2-33
+        contact: 34413784:ncons4408.wdf.sap.corp:1003
       oob_ip: 10.178.136.16
       nwmgmt_ip: 198.19.190.16
       uplinks:
@@ -379,27 +391,39 @@ hec:
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101
+          speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/1
           po: 1102
+          speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec01-cwan-01a, Fo0/0/0
           po: 1501
+          speed: 40gfull
+          mtu: 9100
         - id: 5/1
           description: rt-hec01-vpn-01a, Fo0/2/0
           po: 1503
+          speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec01-inet-01a, Fo0/2/0
           po: 1401
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
-          description: sw-hec01-brdr-01a, Et27
+          description: sw-hec01-brdr-01a, Et27/1
           po: 42
         - id: 28/1
-          description: sw-hec01-brdr-01a, Et28
+          description: sw-hec01-brdr-01a, Et28/1
           po: 42
         - id: 9/1
           description: fw-hec01-01
           po: 10
+          speed: 40gfull
+          mtu: 9100
       port_channels:
         - id: 10
           description: fw-hec01-01

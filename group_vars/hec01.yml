@@ -355,7 +355,7 @@ hec:
           description: rt-hec01-core-01b
           trunk: all
         - id: 1401
-          description: rt-hec01-vpn-01a
+          description: rt-hec01-inet-01a
           trunk: all
         - id: 1501
           description: rt-hec01-cwan-01a
@@ -411,7 +411,7 @@ hec:
           description: rt-hec01-core-01b
           trunk: all
         - id: 1401
-          description: rt-hec01-vpn-01a
+          description: rt-hec01-inet-01a
           trunk: all
         - id: 1501
           description: rt-hec01-cwan-01a

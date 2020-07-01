@@ -189,16 +189,23 @@ router bgp {{ asn_generated }}
       rd 10.200.1.{{ cell_id }}:1
       route-target both 1:1
       redistribute learned
+{% if leafpurpose != 'b' %}
+      vlan 5-2999
+{% else %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
 {% else %}
       vlan 5-2999
 {% endif %}
+{% elif (brdrtype == '2')  %}
+      vlan 5-2999
+{% endif %}
 {% endif %}
       exit
    exit
 !
+{% if leafpurpose == 'b' %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {#
   we need to have vlans and the vni mapping for 3000-3499
@@ -212,6 +219,7 @@ interface Vxlan1
 {% for i in range(0,500) %}
    vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
 {% endfor %}
+{% endif %}
 {% endif %}
 {% endif %}
 !

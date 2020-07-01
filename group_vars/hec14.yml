@@ -298,7 +298,7 @@ hec:
         - id: 28/1
           description: sw-hec14-brdr-01b, Et28
           po: 42
-        - id: 5
+        - id: 5/1
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull

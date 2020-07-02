@@ -236,7 +236,9 @@ interface Vxlan1
 {% set route_statement = route_statement + ' vrf ' + vrf %}
 {% endif %}
 {% set route_statement = route_statement + ' ' + dest %}
+{% if gw != '' %}
 {% set route_statement = route_statement + ' ' + gw %}
+{% endif %}
 {% if intf != '' %}
 {% set route_statement = route_statement + ' ' + intf %}
 {% endif %}
@@ -245,10 +247,42 @@ interface Vxlan1
 {% endif %}
 {{ route_statement }}
 {% endmacro %}
+{#
+  Create empty list first. Only for non-empty route_dictionary
+  the macro will be called.
+#}
 {% set route_dictionary = [] %}
+{#
+  We need to determine what list to iterate through, so let's find out
+  what type of "specical leaf" we are currently working with.
+#}
+{# TODO: make this code to scale! It's now only for  #}
 {% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
 {% set route_dictionary = hec.routes.static.brdr01 %}
 {% endif %}
+{% if (leafpurpose == 'b') and (brdrtype == '2') and (hec.routes.static.brdr02 is defined) %}
+{% set route_dictionary = hec.routes.static.brdr02 %}
+{% endif %}
+{% if (leafpurpose == 'b') and (brdrtype == '3') and (hec.routes.static.brdr03 is defined) %}
+{% set route_dictionary = hec.routes.static.brdr03 %}
+{% endif %}
+{% if (leafpurpose == 's') and (brdrtype == '1') and (hec.routes.static.str01 is defined) %}
+{% set route_dictionary = hec.routes.static.str01 %}
+{% endif %}
+{% if (leafpurpose == 's') and (brdrtype == '2') and (hec.routes.static.str02 is defined) %}
+{% set route_dictionary = hec.routes.static.str02 %}
+{% endif %}
+{% if (leafpurpose == 'h') and (brdrtype == '1') and (hec.routes.static.shs01 is defined) %}
+{% set route_dictionary = hec.routes.static.shs01 %}
+{% endif %}
+{% if (leafpurpose == 'h') and (brdrtype == '2') and (hec.routes.static.shs02 is defined) %}
+{% set route_dictionary = hec.routes.static.shs02 %}
+{% endif %}
+{#
+  The keys 'nexthop', 'interface', 'metric', 'vrf'
+  are optional, so if they have not been set, we set it
+  to emtpy strings befor calling the macro
+#}
 {% for route in route_dictionary %}
 {% if route.vrf is not defined %}
 {% set vrf = '' %}
@@ -268,7 +302,10 @@ interface Vxlan1
 {% if route.metric is not defined %}
 {% set metric = '' %}
 {% else %}
-{% set metric = route.metric %}
+{% set metric = route.metric|string %}
 {% endif %}
+{#
+  call the macro to render the route statement
+#}
 {{ render_route_statement(route.destination, nexthop, vrf, interface, metric) }}
 {% endfor %}

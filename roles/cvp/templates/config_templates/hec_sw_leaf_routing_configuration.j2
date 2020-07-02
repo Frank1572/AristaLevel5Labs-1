@@ -93,7 +93,7 @@ interface Ethernet{{ intf }}
 ip routing
 no ip routing vrf OOB
 !
-{% if hec.ngdr_underlay is defined %}
+{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
 ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
 ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
 ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
@@ -112,7 +112,7 @@ router bgp {{ asn_generated }}
    neighbor SPINE-PG peer-group
    neighbor SPINE-PG remote-as {{ asn_spine }}
    neighbor SPINE-PG soft-reconfiguration inbound all
-{% if hec.spine.underlay_bfd %}
+{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
    neighbor SPINE-PG fall-over bfd
 {% endif %}
    neighbor SPINE-PG route-map MLPEER-RM out
@@ -124,7 +124,7 @@ router bgp {{ asn_generated }}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
-{% if hec.ngdr_underlay is defined %}
+{% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
    neighbor EDGE-PG peer-group
    neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
    neighbor EDGE-PG fall-over bfd
@@ -163,7 +163,7 @@ router bgp {{ asn_generated }}
    network {{ hec.inband_trans_net }}
 {% endif %}
    !
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if (hec.fabric.vtep_distribution_mode == "evpn") and (leafpurpose == 'b') %}
    neighbor EVPN-PG peer-group
    neighbor EVPN-PG remote-as {{ asn_spine }}
    neighbor EVPN-PG update-source Loopback1
@@ -230,7 +230,7 @@ interface Vxlan1
   Depending on the type of leaf we will check for existance of the
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
-{% macro render_route_statement(dest, gw, vrf, intf, met) %}
+{% macro render_route_statement(dest, gw, vrf, intf, met) -%}
 {% set route_statement = 'ip route' %}
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}
@@ -246,7 +246,7 @@ interface Vxlan1
 {% set route_statement = route_statement + ' ' + met %}
 {% endif %}
 {{ route_statement }}
-{% endmacro %}
+{%- endmacro %}
 {#
   Create empty list first. Only for non-empty route_dictionary
   the macro will be called.

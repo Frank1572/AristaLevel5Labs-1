@@ -231,22 +231,21 @@ interface Vxlan1
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
 {% macro render_route_statement(routes) -%}
-{% for item in routes %}
-{% set route_statement = 'ip route' %}
-{% if item.vrf is defined %}
-{% set route_statement = route_statement + ' vrf ' + item.vrf %}
-{% endif %}
-{% set route_statement = route_statement + ' ' + item.destination + ' ' item.nexthop %}
-{% if item.interface is defined %}
-{% set route_statement = route_statement + ' ' + item.interface %}
-{% endif %}
-{% if item.metric is defined %}
-{% set route_statement = route_statement + ' ' + item.metric|string %}
-{% endif %}
-{{ route_statement }}
-{% endfor %}
+  {% for route in routes %}
+    {% set route_statement = 'ip route' %}
+    {% if route.vrf is defined %}
+      {% set route_statement = route_statement + ' vrf ' + route.vrf %}
+    {% endif %}
+    {% set route_statement = route_statement + ' ' + route.destination + ' ' route.nexthop %}
+    {% if route.interface is defined %}
+    {% set route_statement = route_statement + ' ' + route.interface %}
+    {% endif %}
+    {% if route.metric is defined %}
+      {% set route_statement = route_statement + ' ' + route.metric|string %}
+    {% endif %}
+    {{ route_statement }}
+  {% endfor %}
 {%- endmacro %}
-{% if (leafpurpose == 'b') and (id_short == 1) and (hec.routes.static.brdr01 is defined) %}
-{% call render_route_statement(hec.routes.static.brdr01) %}
-{% endcall %}
+{% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
+{{ render_route_statement(hec.routes.static.brdr01) }}
 {% endif %}

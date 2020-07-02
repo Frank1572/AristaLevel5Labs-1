@@ -260,10 +260,15 @@ interface Vxlan1
 {% else %}
 {% set interface = route.interface %}
 {% endif %}
+{% if route.nexthop is not defined %}
+{% set nexthop = '' %}
+{% else %}
+{% set nexthop = route.nexthop %}
+{% endif %}
 {% if route.metric is not defined %}
 {% set metric = '' %}
 {% else %}
 {% set metric = route.metric %}
 {% endif %}
-{{ render_route_statement(route.destination, route.nexthop, vrf, interface, metric) }}
+{{ render_route_statement(route.destination, nexthop, vrf, interface, metric) }}
 {% endfor %}

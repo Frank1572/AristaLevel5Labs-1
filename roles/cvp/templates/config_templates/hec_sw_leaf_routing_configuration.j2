@@ -112,7 +112,7 @@ router bgp {{ asn_generated }}
    neighbor SPINE-PG peer-group
    neighbor SPINE-PG remote-as {{ asn_spine }}
    neighbor SPINE-PG soft-reconfiguration inbound all
-{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
+{% if hec.spine.underlay_bfd %}
    neighbor SPINE-PG fall-over bfd
 {% endif %}
    neighbor SPINE-PG route-map MLPEER-RM out
@@ -163,7 +163,7 @@ router bgp {{ asn_generated }}
    network {{ hec.inband_trans_net }}
 {% endif %}
    !
-{% if (hec.fabric.vtep_distribution_mode == "evpn") and (leafpurpose == 'b') %}
+{% if (hec.fabric.vtep_distribution_mode == "evpn") %}
    neighbor EVPN-PG peer-group
    neighbor EVPN-PG remote-as {{ asn_spine }}
    neighbor EVPN-PG update-source Loopback1

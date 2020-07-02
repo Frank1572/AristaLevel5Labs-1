@@ -265,6 +265,5 @@ interface Vxlan1
 {% else %}
 {% set metric = route.metric %}
 {% endif %}
-{% call render_route_statement(route.destination, route.nexthop, vrf, interface, metric) %}
-{% endcall %}
+{{ render_route_statement(route.destination, route.nexthop, vrf, interface, metric) }}
 {% endfor %}

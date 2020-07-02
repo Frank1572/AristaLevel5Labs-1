@@ -163,7 +163,7 @@ router bgp {{ asn_generated }}
    network {{ hec.inband_trans_net }}
 {% endif %}
    !
-{% if (hec.fabric.vtep_distribution_mode == "evpn") %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
    neighbor EVPN-PG peer-group
    neighbor EVPN-PG remote-as {{ asn_spine }}
    neighbor EVPN-PG update-source Loopback1

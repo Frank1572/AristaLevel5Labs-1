@@ -275,6 +275,27 @@ hec:
       snmp_contact: unknown
       snmp_location: unknown
       ip_last_octett: 8
+  routes:
+    static:
+      brdr01:
+        - destination: 10.200.1.0/24
+          interface: Null0
+          metric: 240
+        - destination: 10.254.200.1/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.110/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.111/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.112/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.113/32
+          interface: Null0
+          metric: 240
   brdr:
     - number: 1a
       snmp:

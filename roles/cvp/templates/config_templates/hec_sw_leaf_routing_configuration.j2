@@ -15,7 +15,7 @@
  this list is what we define under hec.* in hecXX.yml.
 
  say we have been called for a borderleaf, the leaf purpose will make us
- to set the loop_items to hec.brdr an we will then process each entry
+ to set the loop_items to hec.brdr and we will then process each entry
  under hec.brdr
 #}
 {% set loop_items = hec.brdr %}
@@ -225,3 +225,28 @@ interface Vxlan1
 !
 {% endif %}
 {% endfor %}
+{#
+  Let's see if there are any (static) routes to be configured.
+  Depending on the type of leaf we will check for existance of the
+  dictionary "hec.routes.static.$LEAFTYPE".
+#}
+{% macro render_route_statement(routes) %}
+{% for item in routes %}
+{% set route_statement = 'ip route' %}
+{% if item.vrf is defined %}
+{% set route_statement = route_statement + ' vrf ' + item.vrf %}
+{% endif %}
+{% set route_statement = route_statement + ' ' + item.destination + ' ' item.nexthop %}
+{% if item.interface is defined %}
+{% set route_statement = route_statement + ' ' + item.interface %}
+{% endif %}
+{% if item.metric is defined %}
+{% set route_statement = route_statement + ' ' + item.metric|string %}
+{% endif %}
+{{ route_statement }}
+{% endfor %}
+{% endmacro %}
+{% if (leafpurpose == 'b') and (id_short == 1) and (hec.routes.static.brdr01 is defined) %}
+{% call render_route_statement(hec.routes.static.brdr01) %}
+{% endcall %}
+{% endif %}

@@ -230,22 +230,31 @@ interface Vxlan1
   Depending on the type of leaf we will check for existance of the
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
-{% macro render_route_statement(routes) -%}
-  {% for route in routes %}
-    {% set route_statement = 'ip route' %}
-    {% if route.vrf is defined %}
-      {% set route_statement = route_statement + ' vrf ' + route.vrf %}
-    {% endif %}
-    {% set route_statement = route_statement + ' ' + route.destination + ' ' route.nexthop %}
-    {% if route.interface is defined %}
-    {% set route_statement = route_statement + ' ' + route.interface %}
-    {% endif %}
-    {% if route.metric is defined %}
-      {% set route_statement = route_statement + ' ' + route.metric|string %}
-    {% endif %}
-    {{ route_statement }}
-  {% endfor %}
-{%- endmacro %}
-{% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
-{{ render_route_statement(hec.routes.static.brdr01) }}
+{% macro render_route_statement(dest, gw, vrf, intf, met) %}
+{% set route_statement = 'ip route' %}
+{% if vrf != '' %}
+{% set route_statement = route_statement + ' vrf ' + vrf %}
 {% endif %}
+{{ route_statement }}
+{% endmacro %}
+{% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
+{% set route_dictionary = hec.routes.static.brdr01 %}
+{% endif %}
+{% for route in route_dictionary %}
+{% if route.vrf is not defined %}
+{% set vrf = '' %}
+{% else %}
+{% set vrf = route.vrf %}
+{% endif %}
+{% if route.interface is not defined %}
+{% set interface = '' %}
+{% else %}
+{% set interface = route.interface %}
+{% endif %}
+{% if route.metric is not defined %}
+{% set metric = '' %}
+{% else %}
+{% set metric = route.metric %}
+{% endif %}
+{{ render_route_statement(route.destination, route.nexthop, vrf, interface, metric) }}
+{% endfor %}

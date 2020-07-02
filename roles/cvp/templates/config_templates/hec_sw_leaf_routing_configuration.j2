@@ -230,7 +230,7 @@ interface Vxlan1
   Depending on the type of leaf we will check for existance of the
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
-{% macro render_route_statement(routes) %}
+{% macro render_route_statement(routes) -%}
 {% for item in routes %}
 {% set route_statement = 'ip route' %}
 {% if item.vrf is defined %}
@@ -245,7 +245,7 @@ interface Vxlan1
 {% endif %}
 {{ route_statement }}
 {% endfor %}
-{% endmacro %}
+{%- endmacro %}
 {% if (leafpurpose == 'b') and (id_short == 1) and (hec.routes.static.brdr01 is defined) %}
 {% call render_route_statement(hec.routes.static.brdr01) %}
 {% endcall %}

@@ -235,8 +235,17 @@ interface Vxlan1
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}
 {% endif %}
+{% set route_statement = route_statement + ' ' + dest %}
+{% set route_statement = route_statement + ' ' + gw %}
+{% if intf != '' %}
+{% set route_statement = route_statement + ' ' + intf %}
+{% endif %}
+{% if met != '' %}
+{% set route_statement = route_statement + ' ' + met %}
+{% endif %}
 {{ route_statement }}
 {% endmacro %}
+{% set route_dictionary = [] %}
 {% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
 {% set route_dictionary = hec.routes.static.brdr01 %}
 {% endif %}
@@ -256,5 +265,6 @@ interface Vxlan1
 {% else %}
 {% set metric = route.metric %}
 {% endif %}
-{{ render_route_statement(route.destination, route.nexthop, vrf, interface, metric) }}
+{% call render_route_statement(route.destination, route.nexthop, vrf, interface, metric) %}
+{% endcall %}
 {% endfor %}

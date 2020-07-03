@@ -29,3 +29,8 @@ vlans:
       vid: 967
     - name: RT-HEC-VPN-01B-TRANS
       vid: 968
+  inet_dmz:
+    - name: INET
+      vid: 940
+    - name: INET
+      vid: 1100

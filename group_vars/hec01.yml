@@ -369,14 +369,6 @@ hec:
           po: 10
           speed: 40gfull
           mtu: 9100
-        - id: 961
-          description: ->Transfer to rt-hec01-cwan-01a
-          type: vlan
-          ip: 10.254.253.1/31
-        - id: 965
-          description: ->Transfer to rt-hec01-vpn-01a
-          type: vlan
-          ip: 10.254.253.9/31
       port_channels:
         - id: 10
           description: fw-hec01-01
@@ -409,6 +401,29 @@ hec:
         - 32/1
       spine_port_towards_leaf: Et3/4/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.15/25
+          vrrp:
+            - id: 250
+              priority: 110
+              ip: 198.19.240.43
+              auth: FWTTRANS
+        - id: 962
+          type: vlan
+          description: Transfer to rt-hec01-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.3/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.0
+        - id: 966
+          type: vlan
+          description: Transfer to rt-hec01-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.11/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.8
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101

@@ -92,7 +92,7 @@
     - hec-hana
     - sw-hec-leaf
     - hec-vmware
-    - hec-vmware-special
+    - hec-vmware-L2
     - hec-xen
     - sw-hec-spine
     - sw-hec-hana-7160-32CQ

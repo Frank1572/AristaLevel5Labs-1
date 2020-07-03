@@ -72,6 +72,7 @@ container:
     parent_container: HEC-HV Top of rack
     configlets:
       - hec-vmware
+      - hec-vmware-special
   HEC-Xen Top of rack:
     parent_container: HEC-HV Top of rack
     configlets:
@@ -145,6 +146,7 @@ configlet_list:
   sw-hec-spine: "{{ lookup('file', 'configs/sw-hec-spine') }}"
   hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
+  hec-vmware-special: "{{ lookup('file', 'configs/hec-vmware-special') }}"
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
   sw-hec-leaf: "{{ lookup('file', 'configs/sw-hec-leaf') }}"
@@ -209,6 +211,7 @@ configlet_filter_list_generic:
   - sw-hec-spine
   - hec-hana
   - hec-vmware
+  - hec-vmware-special
   - hec-xen
   - sw-hec-interdc
   - sw-hec-vtep-static

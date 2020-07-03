@@ -156,6 +156,7 @@ router bgp {{ asn_generated }}
 {% set mlag_ip_peer  = hec.fabric.mlag_b_ip %}
 {% endif %}
    neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
+   !
    network 10.100.1.{{ Lo1 }}/32
    network 10.200.1.{{ cell_id }}/32
    network {{allbrdrs.nwmgmt_ip}}/32
@@ -256,7 +257,7 @@ interface Vxlan1
   We need to determine what list to iterate through, so let's find out
   what type of "specical leaf" we are currently working with.
 #}
-{# TODO: make this code to scale! It's now only for  #}
+{# TODO: make this code to scale! It's now only for brdr1-3, str1-2, shs1-2 #}
 {% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
 {% set route_dictionary = hec.routes.static.brdr01 %}
 {% endif %}

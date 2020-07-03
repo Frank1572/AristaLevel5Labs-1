@@ -2,6 +2,7 @@ vlan 7
    name DHCP03
 !
 vlan 900
+   name NW-MGMT
 !
 vlan 930
    name VMWARE-FAULT-TOLERANCE
@@ -11,6 +12,13 @@ vlan 931
 !
 vlan 932
    name VMWARE-VCENTER-HA
+!
+{#
+  The below vlan 7 to vni mapping on int Vxlan1 will be removed for L2 VMWare cells
+  by having an additional removal-configlet at the L2 VMWare container
+#}
+interface Vxlan1
+   vxlan vlan 7 vni 10007
 !
 {% for i in range(1, 24) %}
 interface Port-Channel{{ 100 + i }}

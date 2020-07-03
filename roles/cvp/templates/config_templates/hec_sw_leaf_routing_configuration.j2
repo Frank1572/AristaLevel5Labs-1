@@ -134,15 +134,9 @@ router bgp {{ asn_generated }}
    neighbor EDGE-PG send-community
    neighbor EDGE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
 {% for edge_neighbor in allbrdrs.ports %}
-{% if edge_neighbor.type is defined %}
-{% if edge_neighbor.type == "vlan" %}
-{% if edge_neighbor.ngdr_underlay is defined %}
-{% if edge_neighbor.ngdr_underlay %}
+{% if (edge_neighbor.type is defined) and (edge_neighbor.type == "vlan") and (edge_neighbor.ngdr_underlay is defined) and (edge_neighbor.ngdr_underlay)%}
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} peer-group EDGE-PG
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }}
-{% endif %}
-{% endif %}
-{% endif %}
 {% endif %}
 {% endfor %}
    !
@@ -206,6 +200,7 @@ router bgp {{ asn_generated }}
       exit
    exit
 !
+{% endif %}{# END vtep_distribution_mode evpn? #}
 {% if leafpurpose == 'b' %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {#
@@ -213,18 +208,17 @@ router bgp {{ asn_generated }}
   if the core routers and wan/vpn routers are still doing
   static transfer networks for wan/vpn connections
 #}
-{% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
+{% if (hec.core_vlans is defined) and hec.core_vlans %}
 vlan 3000-3499
 !
 interface Vxlan1
 {% for i in range(0,500) %}
    vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
 {% endfor %}
-{% endif %}
-{% endif %}
-{% endif %}
+{% endif %}{# END hec.core_vlans? #}
+{% endif %}{# END brdrtype 1/3 ? #}
+{% endif %}{# END leafpurpose=='b' #}
 !
-{% endif %}
 {% endfor %}
 {#
   Let's see if there are any (static) routes to be configured.

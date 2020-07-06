@@ -321,5 +321,5 @@ router bgp {{ asn_generated_global[0]|string }}
 {#
   call the macro to render the route statement
 #}
-{{ render_route_statement(route.destination, nexthop, vrf, interface, metric) }}
+{{ render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}

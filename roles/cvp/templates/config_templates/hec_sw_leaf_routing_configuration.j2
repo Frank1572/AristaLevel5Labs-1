@@ -25,6 +25,7 @@
 {% if leafpurpose == 'h' %}
 {% set loop_items = hec.shs %}
 {% endif %}
+{% set asn_generated_global = [] %}
 {#
  what we do next is to check for the "sub type" of the give leaf purpose.
  this just means we will not generate for each and every borderleaf listed under
@@ -55,6 +56,7 @@
 {% set asn_part = cell_id + 11000 %}
 {% set asn_part = cell_id + 10000 %}
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
+{% set _ = asn_generated_global.append(asn_generated) %}
 {% set asn_spine = '641' + hec.hec_nr + '.10000' %}
 {% if leafid == 'b' %}
 {% set Lo1 = cell_id + 100 %}
@@ -225,7 +227,7 @@ interface Vxlan1
   Depending on the type of leaf we will check for existance of the
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
-{% macro render_route_statement(dest, gw, vrf, intf, met) -%}
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
 {% set route_statement = 'ip route' %}
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}
@@ -241,6 +243,18 @@ interface Vxlan1
 {% set route_statement = route_statement + ' ' + met %}
 {% endif %}
 {{ route_statement }}
+{% if red_bgp == True %}
+router bgp {{ asn_generated_global[0]|string }}
+{% if vrf != '' %}
+   vrf {{ vrf }}
+     redistribute static
+{% else %}
+   redistribute static
+{% if dest == '0.0.0.0/0' %}
+   neighbor SPINE-PG default-originate
+{% endif %}
+{% endif %}
+{% endif %}
 {%- endmacro %}
 {#
   Create empty list first. Only for non-empty route_dictionary
@@ -298,6 +312,11 @@ interface Vxlan1
 {% set metric = '' %}
 {% else %}
 {% set metric = route.metric|string %}
+{% endif %}
+{% if route.redist_bgp is not defined %}
+{% set redist_bgp = False %}
+{% else %}
+{% set redist_bgp = route.redist_bgp %}
 {% endif %}
 {#
   call the macro to render the route statement

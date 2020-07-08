@@ -575,16 +575,16 @@ hec:
           access_vlan: 916
     - number: 3a
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ54-R2-2-29
+        contact: 34413783:ncons5402.wdf.sap.corp:1003
       oob_ip: 10.178.136.19
-      nwmgmt_ip: 198.19.190.15
+      nwmgmt_ip: 198.19.190.19
       uplinks:
         - 29/1
         - 30/1
         - 31/1
         - 32/1
-      spine_port_towards_leaf: Et3/7/1
+      spine_port_towards_leaf: Et3/9/1
       ports:
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/0
@@ -626,7 +626,7 @@ hec:
         - id: 1102
           description: rt-hec01-core-01d
           trunk: all
-        - id: 1104
+        - id: 1103
           description: rt-hec01-core-bypass-01a
           trunk: all
         - id: 1104
@@ -643,16 +643,16 @@ hec:
           trunk: all
     - number: 3b
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ54-R1-2-33
+        contact: 34413782:ncons5402.wdf.sap.corp:1004
       oob_ip: 10.178.136.20
-      nwmgmt_ip: 198.19.190.15
+      nwmgmt_ip: 198.19.190.20
       uplinks:
         - 25
         - 26
         - 35
         - 36
-      spine_port_towards_leaf: Et3/8/1
+      spine_port_towards_leaf: Et3/10/1
       ports:
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/1
@@ -694,7 +694,7 @@ hec:
         - id: 1102
           description: rt-hec01-core-01d
           trunk: all
-        - id: 1104
+        - id: 1103
           description: rt-hec01-core-bypass-01a
           trunk: all
         - id: 1104

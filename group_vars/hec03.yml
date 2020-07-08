@@ -148,7 +148,7 @@ hec:
   admin_sw_neig_as_oob1a: 64536
   admin_sw_neig_ip_oob1b: 10.255.224.9
   admin_sw_neig_as_oob1b: 1.463
-  oob01_lo0_prefix: 198.19.?.?
+  oob01_lo0_prefix: 198.19.249
   oob01_as: 64531.3
   spine_nr:
     - 11
@@ -163,29 +163,31 @@ hec:
     linecards: 1
     # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
-    # the following list 'port' is a workaround for mixed port speeds in existing
-    # Fabric builds.
-    # list every port and it's speed if it is different from the value
-    # provided in dictionary 'hec.fabric.interlink_speed'!!
-    fortygig: []
+    fortygig: [1/1, 2/1, 9/1, 10/1, 11/1, 12/1, 13/1, 14/1, 15/1, 16/1]
     # list the snmp contact and location for spines in this order
     number:
       - id: 11
         snmp:
-          location: foo
-          contact: bar
+          contact: 34373952:ncons-hec03-oob-02.net.sap.corp:1003
+          location: US-STL1-CAGE5-EV15-U29
       - id: 12
         snmp:
-          location: foo
-          contact: bar
+          contact: 34373951:ncons-hec03-oob-02.net.sap.corp:1001
+          location: US-STL1-CAGE5-EV15-U22
       - id: 13
         snmp:
-          location: foo
-          contact: bar
+          contact: 34373950:ncons-hec03-oob-02.net.sap.corp:1004
+          location: US-STL1-CAGE5-EV16-U29
       - id: 14
         snmp:
-          location: foo
-          contact: bar
+          contact: 34373949:ncons-hec03-oob-02.net.sap.corp:1002
+          location: US-STL1-CAGE5-EV16-U22
+      #ports_with_non_default_speed:
+      #  - port: Et1/1
+      #    speed: 40gfull
+      #  - port: Et2/1
+      #    speed: 40gfull
+      #ngdr_underlay:
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual
@@ -236,12 +238,13 @@ hec:
       snmp_contact: 34414790:ncons-hec03-oob-xx.net.sap.corp:100x
       snmp_location: US-STL1-CAGE4-GK17-RU44
       ip_last_octett: 7
-    - number: 06
-      snmp_contact: unknown
-      snmp_location:
-      ip_last_octett: 8
   brdr:
     - number: 1a
+      snmp:
+        location: US-STL1-CAGE5-EV16-32
+        contact: 34373948:ncons-hec03-oob-02.net.sap.corp:1005
+      oob_ip: 10.9.240.4
+      nwmgmt_ip: 198.19.156.15  
       uplinks:
         - 27
         - 28
@@ -271,6 +274,11 @@ hec:
           description: rt-hec03-core-01b
           trunk: all
     - number: 1b
+      snmp:
+        location: US-STL1-CAGE5-EV15-U32
+        contact: 34373947:ncons-hec03-oob-02.net.sap.corp:1006
+      oob_ip: 10.9.240.5
+      nwmgmt_ip: 198.19.156.16	
       uplinks:
         - 27
         - 28
@@ -300,6 +308,11 @@ hec:
           description: rt-hec03-core-01b
           trunk: all
     - number: 2a
+      snmp:
+        location: US-STL1-CAGE5-FG18-U37
+        contact: 34414802:ncons-hec03-oob-01.net.sap.corp:1007
+      oob_ip: 10.9.240.6
+      nwmgmt_ip: 198.19.156.17
       uplinks:
         - 51
         - 52
@@ -318,6 +331,11 @@ hec:
           po: 48
           access_vlan: 916
     - number: 2b
+      snmp:
+        location: US-STL1-CAGE5-FG20-U37
+        contact: 34414803:ncons-hec03-oob-01.net.sap.corp:1008
+      oob_ip: 10.9.240.7
+      nwmgmt_ip: 198.19.156.18
       uplinks:
         - 51
         - 52
@@ -336,6 +354,11 @@ hec:
           po: 48
           access_vlan: 916
     - number: 3a
+      snmp:
+        location: US-STL1-CAGE5-FG18-U35
+        contact: 34414800:ncons-hec03-oob-01.net.sap.corp:1009
+      oob_ip: 10.9.240.8
+      nwmgmt_ip: 198.19.156.19
       uplinks:
         - 29
         - 30
@@ -419,6 +442,11 @@ hec:
           description: rt-hec03-px-01b
           trunk: all
     - number: 3b
+      snmp:
+        location: US-STL1-CAGE5-FG20-U35
+        contact: 34414801:ncons-hec03-oob-01.net.sap.corp:1010
+      oob_ip: 10.9.240.9
+      nwmgmt_ip: 198.19.156.20
       uplinks:
         - 29
         - 30
@@ -503,6 +531,11 @@ hec:
           trunk: all
   str:
     - number: 1a
+      snmp:
+        location: US-STE1-AH-094-RU36
+        contact: 34414808:ncons-hec03-oob-04.net:1003
+      oob_ip: 10.9.240.10
+      nwmgmt_ip: 198.19.156.21
       spine_port_towards_leaf: Et9/1
       uplinks:
         - 25
@@ -520,6 +553,11 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 1b
+      snmp:
+        location: US-STE1-AH097-U36
+        contact: 34414809:ncons-hec03-oob-04.net:1004
+      oob_ip: 10.9.240.15
+      nwmgmt_ip: 198.19.156.22
       spine_port_towards_leaf: Et10/1
       uplinks:
         - 25
@@ -537,6 +575,11 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2a
+      snmp:
+        location: AMER-USA-Sterling1-(DC4)-Cage6-01.AF.082)-AH-097-34
+        contact: 34414810:ncons-hec03-oob-04.net.sap.corp:1005
+      oob_ip: 10.9.240.16
+      nwmgmt_ip: 198.19.156.23
       spine_port_towards_leaf: Et11/1
       uplinks:
         - 51
@@ -554,6 +597,11 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 2b
+      snmp:
+        location: AMER-USA-Sterling1-(DC4)-Cage6-01.AF.082)-AH-097-36
+        contact: 34414811:ncons-hec03-oob-04.net.sap.corp:1006
+      oob_ip: 10.9.240.17
+      nwmgmt_ip: 198.19.156.24
       spine_port_towards_leaf: Et12/1
       uplinks:
         - 51
@@ -570,6 +618,71 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+  shs:
+    - number: 1a
+      oob_ip: 10.9.240.17
+      nwmgmt_ip: 198.19.156.24
+      snmp:
+        location: foo
+        contact: bar
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      spine_port_towards_leaf: Et4/3/1
+      ports:
+        - id: 32
+          description: CIS-iSCSI
+          type: vlan
+          ip:
+        - id: 1/1
+          description: ->hec03f00501,e4a via MPO
+          po: 10
+        - id: 25/1
+          description: sw-hec03-shs-01b, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec03-shs-01b, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+        - id: 10
+          description: hec03f00501
+          trunk: 30,32,40,50,55,130,2001-2499
+    - number: 1b
+      oob_ip: 10.9.240.18
+      nwmgmt_ip: 198.19.156.25
+      snmp:
+        location: foo
+        contact: bar
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      spine_port_towards_leaf: Et4/4/1
+      ports:
+        - id: 32
+          description: CIS-iSCSI
+          type: vlan
+          ip:
+        - id: 1/1
+          description: ->hec03f00501,e4a via MPO
+          po: 10
+        - id: 25/1
+          description: sw-hec03-shs-01a, Et25
+          po: 42
+        - id: 26/1
+          description: sw-hec03-shs-01a, Et26
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+        - id: 10
+          description: hec03f00501
+          trunk: 30,32,40,50,55,130,2001-2499
   hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
         20 permit vlan 50 0x000 pim any any

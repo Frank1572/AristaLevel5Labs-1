@@ -44,11 +44,6 @@ vlan 916
 vlan 920
    name RT-TRANS
 !
-{% if leafpurpose == 'b' %}
-vlan 940
-   name Internet_DMZ
-!
-{% endif %}
 interface Vxlan1
 {% for item in [900, 914, 915, 916] %}
    vxlan vlan {{item}} vni 10{{item}}

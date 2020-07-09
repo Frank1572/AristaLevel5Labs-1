@@ -28,31 +28,6 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
-!
-vlan 900
-   name NW-MGMT
-!
-vlan 914
-   name FW-CORE-TRANS
-!
-vlan 915
-   name FWT-CORE-TRANS
-!
-vlan 916
-   name FW-BRDR-TRANS
-!
-vlan 920
-   name RT-TRANS
-!
-interface Vxlan1
-{% for item in [900, 914, 915, 916] %}
-   vxlan vlan {{item}} vni 10{{item}}
-{% endfor %}
-{# vxlan vlan 900 vni 10900
-vxlan vlan 914 vni 10914
-vxlan vlan 915 vni 10915
-vxlan vlan 916 vni 10916 #}
-!
 {% for item in vlans.inet_dmz %}
 vlan {{item.vid}}
    name {{item.name}}
@@ -67,12 +42,14 @@ interface Vxlan1
   until those have been connected/ moved to brdr01 & brdr03,
   we'll leave the code here to not exclude vlan 920 + vni-mapping for brdr02
 #}
-vlan 920
-   name RT-TRANS
+{% for item in vlans.brdr.trans %}
+vlan {{item.vid}}
+   name {{item.name}}
 !
 interface Vxlan1
-   vxlan vlan 920 vni 10920
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
 !
+{% endfor %}
 {% endif %}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}{% set loop_items = hec.str %}{% endif %}

@@ -34,3 +34,17 @@ vlans:
       vid: 940
     - name: INET
       vid: 1100
+  brdr:
+    trans:
+      - name: NW-MGMT
+        vid: 900
+      - name: FW-CORE-TRANS
+        vid: 914
+      - name: FWT-FW-TRANS
+        vid: 915
+      - name: FW-BRDR-TRANS
+        vid: 916
+      - name: BGP-TRANS
+        vid: 920
+      - name: BACKUP-TRANS
+        vid: 922

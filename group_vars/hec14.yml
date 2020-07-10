@@ -178,11 +178,6 @@ hec:
         snmp:
           contact: 34672209:ncons-hec14-oob-02.net 1010
           location: CA-TOR2-CAGE3-CAB43-U3
-    ports_with_non_default_speed:
-      - port: Et3/1/1
-        speed: 40gfull
-      - port: Et3/2/1
-        speed: 40gfull
   ngdr_underlay:
     edge_as: 65194
   #Are the core vlans 3000 to 3499 needed

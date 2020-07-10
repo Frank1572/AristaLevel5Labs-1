@@ -157,7 +157,7 @@ configlet_list:
   sw-hec-brdr-02b: "{{ lookup('file', 'configs/sw-hec-brdr-02b') }}"
   sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a') }}"
   sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b') }}"
-  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
+  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01a') }}"
   sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
   sw-hec-str-02a: "{{ lookup('file', 'configs/sw-hec-str-02a', errors='warn') }}"
   sw-hec-str-02b: "{{ lookup('file', 'configs/sw-hec-str-02b', errors='warn') }}"

@@ -510,24 +510,50 @@ hec:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
+        - id: 963
+          type: vlan
+          description: Transfer to rt-hec14-cwan-01b
+          mtu: 9100
+          ip: 10.254.253.5/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.4
+        - id: 967
+          type: vlan
+          description: Transfer to rt-hec14-vpn-01b
+          mtu: 9100
+          ip: 10.254.253.13/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.12
         - id: 1/1
           description: rt-hec14-core-01c, Fo0/2/0
           po: 1101
+          speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec14-core-01d, Fo0/2/0
           po: 1102
+          speed: 40gfull
+          mtu: 9100
         - id: 3/1
           description: rt-hec14-cwan-01b, Fo0/0/0
           po: 1103
+          speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec14-idc-01b, Fo0/0/0
           po: 1104
+          speed: 40gfull
+          mtu: 9100
         - id: 5/1
           description: rt-hec14-vpn-01b
           po: 1106
+          speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec14-inet-01b
           po: 1105
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-03b, Et27
           po: 42
@@ -579,24 +605,50 @@ hec:
             priority: 100
             ip: 198.19.233.71
             auth: FWTTRANS
+        - id: 964
+          type: vlan
+          description: Transfer to rt-hec14-cwan-01b
+          mtu: 9100
+          ip: 10.254.253.7/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.6
+        - id: 968
+          type: vlan
+          description: Transfer to rt-hec14-vpn-01b
+          mtu: 9100
+          ip: 10.254.253.15/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.14
         - id: 1/1
           description: rt-hec14-core-01c, Fo0/2/1
           po: 1101
+          speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec14-core-01d, Fo0/2/1
           po: 1102
+          speed: 40gfull
+          mtu: 9100
         - id: 3/1
           description: rt-hec14-cwan-01b, Fo1/0/0
           po: 1103
+          speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec14-idc-01b, Fo1/0/0
           po: 1104
+          speed: 40gfull
+          mtu: 9100
         - id: 5/1
           description: rt-hec14-vpn-01b
           po: 1106
+          speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec14-inet-01b
           po: 1105
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-03a, Et27
           po: 42

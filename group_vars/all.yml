@@ -1,6 +1,8 @@
 ---
 # file: group_vars/all
 vlans:
+  900: NW-MGMT
+  922: BACKUP-TRANS
   ranges:
     # customer backend vlan networks
     - name: cust_backend
@@ -36,7 +38,7 @@ vlans:
       vid: 1100
   brdr:
     trans:
-      - name: NW-MGMT
+      - name: "{{vlans.900}}"
         vid: 900
       - name: FW-CORE-TRANS
         vid: 914
@@ -46,5 +48,5 @@ vlans:
         vid: 916
       - name: BGP-TRANS
         vid: 920
-      - name: BACKUP-TRANS
+      - name: "{{vlans.922}}"
         vid: 922

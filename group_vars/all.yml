@@ -1,5 +1,6 @@
 ---
 # file: group_vars/all
+vlandb:
   900: {name: 'NW-MGMT'}
   922: {name: 'BACKUP-TRANS'}
 vlans:

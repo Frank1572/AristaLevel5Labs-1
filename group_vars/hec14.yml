@@ -185,7 +185,7 @@ hec:
         speed: 40gfull
   ngdr_underlay:
     edge_as: 65194
-  # Are the core vlans 3000 to 3499 needed
+  #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn, manual

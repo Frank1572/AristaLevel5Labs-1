@@ -836,6 +836,86 @@ hec:
       port_channels:
         - id: 800
           description: hec01f
+    - number: 3a
+      snmp:
+        location: EMEA-DE-ROT-RZ43-5L-9-35
+        contact: 34360487:ncons4317.wdf.sap.corp:1015
+      oob_ip: 10.178.136.130
+      nwmgmt_ip: 198.19.190.87
+      spine_port_towards_leaf: Et6/29/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      ports:
+        - id: 1/1
+          description: hec01f0081
+          po: 800
+        - id: 2/1
+          description: hec01f0082
+          po: 805
+        - id: 3/1
+          description: hec01f0083
+          po: 810
+        - id: 4/1
+          description: hec01f0084
+          po: 815
+        - id: 30/1
+          description: sw-hec01-str-03b, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec01-str-03b, Et31/1
+          po: 42
+      port_channels:
+        - id: 800
+          description: hec01f0081
+        - id: 805
+          description: hec01f0082
+        - id: 810
+          description: hec01f0083
+        - id: 815
+          description: hec01f0084
+    - number: 3b
+      snmp:
+        location: EMEA-DE-ROT-RZ43-5L-9-34
+        contact: 34360490:ncons4317.wdf.sap.corp:1016
+      oob_ip: 10.178.136.131
+      nwmgmt_ip: 198.19.190.88
+      spine_port_towards_leaf: Et6/30/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      ports:
+        - id: 1/1
+          description: hec01f0081
+          po: 800
+        - id: 2/1
+          description: hec01f0082
+          po: 805
+        - id: 3/1
+          description: hec01f0083
+          po: 810
+        - id: 4/1
+          description: hec01f0084
+          po: 815
+        - id: 30/1
+          description: sw-hec01-str-03a, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec01-str-03a, Et31/1
+          po: 42
+      port_channels:
+        - id: 800
+          description: hec01f0081
+        - id: 805
+          description: hec01f0082
+        - id: 810
+          description: hec01f0083
+        - id: 815
+          description: hec01f0084
   interdc:
     - number: "01"
       ports:

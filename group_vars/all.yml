@@ -65,3 +65,8 @@ vlans:
         vid: 920
       - name: "{{vlandb.922.name}}"
         vid: 922
+  str:
+    - name: "{{vlandb.900.name}}"
+      vid: 900
+    - name: "{{vlandb.922.name}}"
+      vid: 922

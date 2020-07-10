@@ -51,6 +51,16 @@ interface Vxlan1
 !
 {% endfor %}
 {% endif %}
+{% if leafpurpose == 's' %}
+{% for item in vlans.str %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{% endif %}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}{% set loop_items = hec.str %}{% endif %}
 {% if leafpurpose == 'h' %}{% set loop_items = hec.shs %}{% endif %}

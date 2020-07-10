@@ -317,6 +317,66 @@
     - storageleafs
 
 - set_fact:
+    id: 's3a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-03a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-03a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's3b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-03b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-03b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's4a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-04a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-04a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's4b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-04b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-04b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
     id: 'h1a'
   tags:
     - configlets

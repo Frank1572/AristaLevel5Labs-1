@@ -265,9 +265,10 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.81/25
           vrrp:
-            priority: 105
-            ip: 198.19.233.71
-            auth: FWTTRANS
+            - id: 250
+              priority: 105
+              ip: 198.19.233.71
+              auth: FWTTRANS
         - id: 961
           type: vlan
           description: Transfer to rt-hec14-cwan-01a
@@ -304,7 +305,7 @@ hec:
         - id: 28/1
           description: sw-hec14-brdr-01b, Et28
           po: 42
-        - id: 5
+        - id: 5/1
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull
@@ -354,9 +355,10 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.82/25
           vrrp:
-            priority: 105
-            ip: 198.19.233.71
-            auth: FWTTRANS
+            - id: 250
+              priority: 105
+              ip: 198.19.233.71
+              auth: FWTTRANS
         - id: 962
           type: vlan
           description: Transfer to rt-hec14-cwan-01a
@@ -444,7 +446,7 @@ hec:
         - id: 50/1
           description: sw-hec14-brdr-02b, Et50
           po: 42
-        - id: 48/1
+        - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916
@@ -476,7 +478,7 @@ hec:
         - id: 50/1
           description: sw-hec14-brdr-02a, Et50
           po: 42
-        - id: 48/1
+        - id: 48
           description: ->naa-hec14-01, in-band
           po: 48
           access_vlan: 916
@@ -507,9 +509,10 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.83/25
           vrrp:
-            priority: 100
-            ip: 198.19.233.71
-            auth: FWTTRANS
+            - id: 250
+              priority: 100
+              ip: 198.19.233.71
+              auth: FWTTRANS
         - id: 963
           type: vlan
           description: Transfer to rt-hec14-cwan-01b
@@ -602,9 +605,10 @@ hec:
           description: NW-MGMT
           ip: 198.19.233.84/25
           vrrp:
-            priority: 100
-            ip: 198.19.233.71
-            auth: FWTTRANS
+            - id: 250
+              priority: 100
+              ip: 198.19.233.71
+              auth: FWTTRANS
         - id: 964
           type: vlan
           description: Transfer to rt-hec14-cwan-01b

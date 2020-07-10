@@ -583,7 +583,7 @@ hec:
           ip: 198.19.233.84/25
           vrrp:
             - id: 250
-              priority: 105
+              priority: 100
               ip: 198.19.233.71
               auth: FWTTRANS
         - id: 1/1

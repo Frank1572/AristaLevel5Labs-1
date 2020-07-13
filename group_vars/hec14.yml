@@ -287,18 +287,22 @@ hec:
           description: rt-hec14-core-01a, Fo0/2/0
           po: 1101
           speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec14-core-01b, Fo0/2/0
           po: 1102
           speed: 40gfull
+          mtu: 9100
         - id: 3/1
           description: rt-hec14-cwan-01a, Fo0/0/0
           po: 1103
           speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec14-idc-01a, Fo0/0/0
           po: 1104
           speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-01b, Et27
           po: 42
@@ -309,10 +313,12 @@ hec:
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec14-inet-01a
           po: 1105
           speed: 40gfull
+          mtu: 9100
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -377,18 +383,22 @@ hec:
           description: rt-hec14-core-01a, Fo0/2/1
           po: 1101
           speed: 40gfull
+          mtu: 9100
         - id: 2/1
           description: rt-hec14-core-01b, Fo0/2/1
           po: 1102
           speed: 40gfull
+          mtu: 9100
         - id: 3/1
           description: rt-hec14-cwan-01a, Fo1/0/0
           po: 1103
           speed: 40gfull
+          mtu: 9100
         - id: 4/1
           description: rt-hec14-idc-01a, Fo1/0/0
           po: 1104
           speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-01a, Et27
           po: 42
@@ -399,10 +409,12 @@ hec:
           description: rt-hec14-vpn-01a
           po: 1106
           speed: 40gfull
+          mtu: 9100
         - id: 6/1
           description: rt-hec14-inet-01a
           po: 1105
           speed: 40gfull
+          mtu: 9100
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -741,11 +753,9 @@ hec:
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
-          speed: 100gfull
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
-          speed: 100gfull
           po: 42
       port_channels:
         - id: 42
@@ -766,11 +776,9 @@ hec:
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
-          speed: 100gfull
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
-          speed: 100gfull
           po: 42
       port_channels:
         - id: 42

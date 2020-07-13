@@ -741,11 +741,11 @@ hec:
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
-          speed: 100gfull
+          mtu: 9214
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
-          speed: 100gfull
+          mtu: 9214
           po: 42
       port_channels:
         - id: 42
@@ -766,11 +766,11 @@ hec:
       ports:
         - id: 49/1
           description: sw-hec14-str-02b, Et49
-          speed: 100gfull
+          mtu: 9214
           po: 42
         - id: 50/1
           description: sw-hec14-str-02b, Et50
-          speed: 100gfull
+          mtu: 9214
           po: 42
       port_channels:
         - id: 42

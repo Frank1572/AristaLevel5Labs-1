@@ -586,10 +586,10 @@ hec:
           description: rt-hec14-idc-01b
           trunk: all
         - id: 1105
-          description: rt-hec14-inet-01b
+          description: rt-hec14-vpn-01b
           trunk: all
         - id: 1106
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-inet-01b
           trunk: all
     - number: 3b
       oob_ip: 10.9.246.26
@@ -682,10 +682,10 @@ hec:
           description: rt-hec14-idc-01b
           trunk: all
         - id: 1105
-          description: rt-hec14-inet-01b
+          description: rt-hec14-vpn-01b
           trunk: all
         - id: 1106
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-inet-01b
           trunk: all
   str:
     - number: 1a

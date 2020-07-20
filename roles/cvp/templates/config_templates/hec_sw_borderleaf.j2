@@ -130,6 +130,9 @@ interface Ethernet{{ item.id }}
    speed forced {{hec.fabric.interlink_speed}}
    mtu {{hec.fabric.interlink_mtu}}
 {% endif %}
+{% if item.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
+   mtu {{ item.mtu }}
+{% endif %} {# End MTU shinans #}
 {% if item.ip is defined %}{# START ip is defined #}
 {% if (item.type is defined) and (item.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}

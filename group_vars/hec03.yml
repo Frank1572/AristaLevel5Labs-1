@@ -84,7 +84,7 @@ cvp:
         authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: Enabled
+        status: "Enabled"
 
 hec:
   hec_nr: "03"
@@ -187,7 +187,10 @@ hec:
       #    speed: 40gfull
       #  - port: Et2/1
       #    speed: 40gfull
-      #ngdr_underlay:
+  ngdr_underlay:
+    edge_as: 65199
+  #Are the core vlans 3000 to 3499 needed
+  core_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual
@@ -201,9 +204,19 @@ hec:
       - 10.200.1.7
       - 10.200.1.8
       - 10.200.1.9
+      - 10.200.1.11
+      - 10.200.1.12
+      - 10.200.1.14
+      - 10.200.1.15
+
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
+    # Spine BGP Listen ranges for EVPN
+    bgp_listen_ranges:
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
@@ -238,6 +251,11 @@ hec:
       snmp_contact: 34414790:ncons-hec03-oob-xx.net.sap.corp:100x
       snmp_location: US-STL1-CAGE4-GK17-RU44
       ip_last_octett: 7
+  routes:
+    static:
+      brdr01:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.235.1
   brdr:
     - number: 1a
       snmp:
@@ -246,12 +264,21 @@ hec:
       oob_ip: 10.9.240.4
       nwmgmt_ip: 198.19.156.15  
       uplinks:
-        - 27
-        - 28
-        - 29
-        - 30
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et3/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.235.96/24
+          vrrp:
+            - id: 250
+              priority: 105
+              ip: 198.19.235.254
+              auth: FWTTRANS
         - id: 1/1
           description: rt-hec03-core-01a, Fo0/0/0
           po: 1101
@@ -280,12 +307,21 @@ hec:
       oob_ip: 10.9.240.5
       nwmgmt_ip: 198.19.156.16	
       uplinks:
-        - 27
-        - 28
-        - 29
-        - 30
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et4/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.235.97/24
+          vrrp:
+            - id: 250
+              priority: 100
+              ip: 198.19.235.254
+              auth: FWTTRANS
         - id: 1/1
           description: rt-hec03-core-01a, Fo0/0/1
           po: 1101
@@ -314,10 +350,10 @@ hec:
       oob_ip: 10.9.240.6
       nwmgmt_ip: 198.19.156.17
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       spine_port_towards_leaf: Et5/1
       ports:
         - id: 48
@@ -337,10 +373,10 @@ hec:
       oob_ip: 10.9.240.7
       nwmgmt_ip: 198.19.156.18
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
       spine_port_towards_leaf: Et6/1
       ports:
         - id: 48
@@ -354,57 +390,89 @@ hec:
           po: 48
           access_vlan: 916
     - number: 3a
+      oob_ip: 10.9.240.8
+      nwmgmt_ip: 198.19.156.19
       snmp:
         location: US-STL1-CAGE5-FG18-U35
         contact: 34414800:ncons-hec03-oob-01.net.sap.corp:1009
-      oob_ip: 10.9.240.8
-      nwmgmt_ip: 198.19.156.19
       uplinks:
-        - 29
-        - 30
-        - 31
-        - 32
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       spine_port_towards_leaf: Et7/1
       ports:
-        - id: 1
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.156.19
+        - id: 961
+          type: vlan
+          description:Transfer to rt-hec03-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.1/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.0
+        - id: 963
+          type: vlan
+          description: Transfer to rt-hec03-cwan-01b
+          mtu: 9100
+          ip: 10.254.253.5/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.4
+        - id: 965
+          type: vlan
+          description: Transfer to rt-hec03-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.9/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.8
+        - id: 967
+          type: vlan
+          description: Transfer to rt-hec03-vpn-01b
+          mtu: 9100
+          ip:10.254.253.13/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.12
+        - id: 1/1
           description: rt-hec03-core-01c, Fo0/0/0
           po: 1103
-        - id: 2
+        - id: 2/1
           description: rt-hec03-core-01d, Fo0/0/0
           po: 1104
-        - id: 3
+        - id: 3/1
           description: rt-hec03-inet-01a, Fo0/2/0
           po: 1401
-        - id: 4
+        - id: 4/1
           description: rt-hec03-inet-01b, Fo0/2/0
           port: 1402
-        - id: 5
+        - id: 5/1
           description: rt-hec03-vpn-01a, Fo0/2/0
           po: 1503
-        - id: 6
+        - id: 6/1
           description: rt-hec03-vpn-01b, Fo0/2/0
           po: 1504
-        - id: 7
+        - id: 7/1
           description: rt-hec03-px-01a, Fo0/2/0
           po: 1901
-        - id: 8
+        - id: 8/1
           description: rt-hec03-px-01b, Fo0/2/0
           po: 1902
-        - id: 9
+        - id: 9/1
           description: rt-hec03-cwan-01a, Fo0/0/0
           po: 1501
-        - id: 10
+        - id: 10/1
           description: rt-hec03-cwan-01b, Fo0/0/0
           po: 1502
-        - id: 27
-          description: sw-hec03-brdr-02b, Et27
+        - id: 27/1
+          description: sw-hec03-brdr-03b, Et27/1
           po: 42
-        - id: 28
-          description: sw-hec03-brdr-02b, Et28
+        - id: 28/1
+          description: sw-hec03-brdr-03b, Et28/1
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER 
         - id: 1103
           description: rt-hec03-core-01c
           trunk: all
@@ -448,47 +516,79 @@ hec:
       oob_ip: 10.9.240.9
       nwmgmt_ip: 198.19.156.20
       uplinks:
-        - 29
-        - 30
-        - 31
-        - 32
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
       spine_port_towards_leaf: Et8/1
       ports:
-        - id: 1
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.156.20/32
+        - id: 962
+          type: vlan
+          description: Transfer to rt-hec03-cwan-01a
+          mtu: 9100
+          ip: 10.254.253.3/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.2
+        - id: 964
+          type:vlan
+          description: Transfer to rt-hec03-cwan-01b
+          mtu: 9100
+          ip: 10.254.253.7/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.6
+        - id: 966
+          type: vlan
+          description: Transfer to rt-hec03-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.11/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.10
+        id: 968
+          type:vlan
+          description: Transfer to rt-hec03-vpn-01b
+          mtu: 9100
+          ip: 10.254.253.15/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.14
+        - id: 1/1
           description: rt-hec03-core-01c, Fo0/0/1
           po: 1103
-        - id: 2
+        - id: 2/1
           description: rt-hec03-core-01d, Fo0/0/1
           po: 1104
-        - id: 3
+        - id: 3/1
           description: rt-hec03-inet-01a, Fo0/2/0
           po: 1401
-        - id: 4
+        - id: 4/1
           description: rt-hec03-inet-01b, Fo0/2/0
           port: 1402
-        - id: 5
+        - id: 5/1
           description: rt-hec03-vpn-01a, Fo0/2/0
           po: 1503
-        - id: 6
+        - id: 6/1
           description: rt-hec03-vpn-01b, Fo0/2/0
           po: 1504
-        - id: 7
+        - id: 7/1
           description: rt-hec03-px-01a, Fo0/2/0
           po: 1901
-        - id: 8
+        - id: 8/1
           description: rt-hec03-px-01b, Fo0/2/0
           po: 1902
-        - id: 9
+        - id: 9/1
           description: rt-hec03-cwan-01a, Fo0/0/1
           po: 1501
-        - id: 10
+        - id: 10/1
           description: rt-hec03-cwan-01b, Fo0/0/1
           po: 1502
-        - id: 27
-          description: sw-hec03-brdr-02b, Et27
+        - id: 27/1
+          description: sw-hec03-brdr-02b, Et27/1
           po: 42
-        - id: 28
-          description: sw-hec03-brdr-02b, Et28
+        - id: 28/1
+          description: sw-hec03-brdr-02b, Et28/1
           po: 42
       port_channels:
         - id: 42
@@ -538,10 +638,11 @@ hec:
       nwmgmt_ip: 198.19.156.21
       spine_port_towards_leaf: Et9/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 40gfull
       ports:
         - id: 30/1
           description: sw-hec03-str-01b, Et30/1
@@ -560,10 +661,11 @@ hec:
       nwmgmt_ip: 198.19.156.22
       spine_port_towards_leaf: Et10/1
       uplinks:
-        - 25
-        - 26
-        - 35
-        - 36
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 40gfull
       ports:
         - id: 30/1
           description: sw-hec03-str-01a, Et30/1
@@ -582,10 +684,11 @@ hec:
       nwmgmt_ip: 198.19.156.23
       spine_port_towards_leaf: Et11/1
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 40gfull
       ports:
         - id: 49/1
           description: sw-hec03-str-02b, Et49/1
@@ -604,10 +707,11 @@ hec:
       nwmgmt_ip: 198.19.156.24
       spine_port_towards_leaf: Et12/1
       uplinks:
-        - 51
-        - 52
-        - 53
-        - 54
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 40gfull
       ports:
         - id: 49/1
           description: sw-hec03-str-02a, Et49/1

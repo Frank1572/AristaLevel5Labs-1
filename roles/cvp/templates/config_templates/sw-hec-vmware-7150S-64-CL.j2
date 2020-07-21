@@ -16,6 +16,19 @@ interface Ethernet 33-47
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    spanning-tree portfast
 !
+interface Ethernet16,32
+   shutdown
+!
+! === MLAG Peer Link: ===
+interface Ethernet49/1,50/1
+   speed forced 40gfull
+   mtu {{hec.fabric.interlink_mtu}}
+   channel-group 42 mode active
+!
+! === Core Switch Uplinks: ===
+interface Ethernet51/1,52/1
+   speed forced 40gfull
+!
 {% for i in range(1,16) %}
 interface Ethernet{{i}},{{i+16}}
    channel-group {{i+100}} mode active
@@ -26,6 +39,8 @@ interface Ethernet{{i}},{{i+16}}
    channel-group {{i+150}} mode active
 !
 {% endfor %}
-interface Ethernet16,32
-   shutdown
+interface Ethernet48
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   switchport mode trunk
+   channel-group 900 mode active
 !

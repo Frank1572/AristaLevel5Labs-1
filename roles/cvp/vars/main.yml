@@ -168,6 +168,7 @@ configlet_list:
   sw-hec-hana-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-7160-32CQ', errors='warn') }}"
   sw-hec-hana-pwr-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-pwr-7160-32CQ', errors='warn') }}"
   sw-hec-hvv-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvv-7160-32CQ', errors='warn') }}"
+  sw-hec-vmware-7150S-64-CL: "{{ lookup('file', 'configs/sw-hec-vmware-7150S-64-CL', errors='warn') }}"
   sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ', errors='warn') }}"
   sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6', errors='warn') }}"
   sw-hec-spine-11: "{{ lookup('file', 'configs/sw-hec-spine-11') }}"
@@ -238,6 +239,7 @@ configlet_filter_list_generic:
   - sw-hec-hana-7160-32CQ
   - sw-hec-hana-pwr-7160-32CQ
   - sw-hec-hvv-7160-32CQ
+  - sw-hec-vmware-7150S-64-CL
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
   - sw-hec-spine-11

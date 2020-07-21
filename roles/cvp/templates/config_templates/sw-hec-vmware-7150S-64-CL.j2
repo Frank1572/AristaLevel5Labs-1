@@ -1,0 +1,31 @@
+{# 7150S-64-CL #}
+
+interface Ethernet 1-15,17-31
+   speed forced 10gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
+   spanning-tree portfast
+!
+interface Ethernet 33-47
+   speed forced 10gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
+   spanning-tree portfast
+!
+{% for i in range(1,16) %}
+interface Ethernet{{i}},{{i+16}}
+   channel-group {{i+100}} mode active
+!
+{% endfor %}
+{% for i in range(33,48) %}
+interface Ethernet{{i}},{{i+16}}
+   channel-group {{i+150}} mode active
+!
+{% endfor %}
+interface Ethernet16,32
+   shutdown
+!

@@ -98,6 +98,7 @@
     - sw-hec-hana-7160-32CQ
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
+    - sw-hec-vmware-7150S-64-CL
     - sw-hec-hvx-7160-32CQ
     - sw-hec-hvx-7160-48YC6
     - sw-hec-oob-01
@@ -441,7 +442,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builders/"
-    dest: /tmp
+    dest: tmp
   tags:
     - upload_configlets
 
@@ -449,7 +450,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configs"
-    dest: /tmp
+    dest: tmp
   tags:
     - upload_configlets
 
@@ -457,7 +458,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
-    dest: /tmp/configlet_builder.py
+    dest: tmp/configlet_builder.py
   tags:
     - upload_configlets
 
@@ -465,22 +466,22 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlets.py"
-    dest: /tmp/configlets.py
+    dest: tmp/configlets.py
   tags:
     - upload_configlets
 
-- name: Copy cvprac to /tmp/cvprac/ direcory on CVP
+- name: Copy cvprac to tmp/cvprac/ direcory on CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/cvprac"
-    dest: /tmp
+    dest: tmp
   tags:
     - reload_TerminAttr
     - upload_configlets
 
 - name: Upload generated configlet builders
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - upload_configlets
 
@@ -525,13 +526,13 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/aaa_configuration.py"
-    dest: /tmp/aaa_configuration.py
+    dest: tmp/aaa_configuration.py
   tags:
     - configure_aaa
 
 - name: Configure AAA servers
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  command: python tmp/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - configure_aaa
 
@@ -539,13 +540,13 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/restore_reload_TerminAttr.py"
-    dest: /tmp/restore_reload_TerminAttr.py
+    dest: tmp/restore_reload_TerminAttr.py
   tags:
     - reload_TerminAttr
 
 - name: Reload TerminAttr on devices after restoring a backup
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: "python /tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
+  command: "python tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
   tags:
     - reload_TerminAttr
 

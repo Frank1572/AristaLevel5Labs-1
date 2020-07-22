@@ -70,3 +70,15 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
+# net:
+#   device:
+#     leaf:
+#       vmware:
+#         - model: "7160-32CQ"
+#           ports:
+#             prod: "1/1-12/4"
+#             ic: "13/1-18/4"
+#         - model: "7150S-64-CL"
+#           ports:
+#             prod: "1-15,17-31"
+#             ic: "33-47"

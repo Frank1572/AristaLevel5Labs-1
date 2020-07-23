@@ -122,8 +122,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.9.245.252
   oob_cvp: 10.9.245.253
-  as_low: 4200998673
-  as_high: 4200999871
+  as_low: 4201719569
+  as_high: 4201720767
   cvp_ingest_key: SecureKey13
   dns1: 100.127.37.1
   dns2: 100.127.37.2
@@ -146,8 +146,8 @@ hec:
     - prefix_mask: "10.9.244.0/23"
       sequence: "20"
   admin_sw_interface: Ethernet1
-  admin_sw_description_oob1a: ->tordc01-adm-03-co, Et1/18
-  admin_sw_description_oob1b: ->tordc01-adm-04-co, Et1/18
+  admin_sw_description_oob1a: tordc01-adm-03-co, Et1/18
+  admin_sw_description_oob1b: tordc01-adm-04-co, Et1/18
   admin_sw_prefix: 10.255.194
   admin_sw_mask: 31
   admin_sw_ip_oob1a: 10.255.194.8
@@ -263,6 +263,8 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      lo900_suffix: 29
+      mgmt1_suffix: 16
       spine_port_towards_leaf: Et3/3/1
       ports:
         - id: 900
@@ -276,53 +278,53 @@ hec:
               auth: FWTTRANS
         - id: 961
           type: vlan
-          description: ->Transfer to rt-hec13-cwan-01a
+          description: Transfer to rt-hec13-cwan-01a
           mtu: 9100
           ip: 10.254.253.1/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.0
         - id: 965
           type: vlan
-          description: ->Transfer to rt-hec13-vpn-01a
+          description: Transfer to rt-hec13-vpn-01a
           mtu: 9100
           ip: 10.254.253.9/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.8
         - id: 1/1
-          description: ->rt-hec13-core-01a, Fo0/2/0
+          description: rt-hec13-core-01a, Fo0/2/0
           po: 1101
           speed: 40gfull
           mtu: 9100
         - id: 2/1
-          description: ->rt-hec13-core-01b, Fo0/2/0
+          description: rt-hec13-core-01b, Fo0/2/0
           po: 1102
           speed: 40gfull
           mtu: 9100
         - id: 3/1
-          description: ->rt-hec13-cwan-01a, Fo0/0/0
+          description: rt-hec13-cwan-01a, Fo0/0/0
           po: 1103
           speed: 40gfull
           mtu: 9100
         - id: 4/1
-          description: ->rt-hec13-idc-01a, Fo0/0/0
+          description: rt-hec13-idc-01a, Fo0/0/0
           po: 1104
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: ->rt-hec13-vpn-01a, Fo0/2/0
+          description: rt-hec13-vpn-01a, Fo0/2/0
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: ->rt-hec13-inet-01a, Fo0/2/0
+          description: rt-hec13-inet-01a, Fo0/2/0
           po: 1105
           speed: 40gfull
           mtu: 9100
         - id: 27/1
-          description: ->sw-hec13-brdr-01b, Et27/1
+          description: sw-hec13-brdr-01b, Et27/1
           po: 42
         - id: 28/1
-          description: ->sw-hec13-brdr-01b, Et28/1
+          description: sw-hec13-brdr-01b, Et28/1
           po: 42
       port_channels:
         - id: 42
@@ -357,6 +359,8 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      lo900_suffix: 30
+      mgmt1_suffix: 17
       spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 900
@@ -370,53 +374,53 @@ hec:
               auth: FWTTRANS
         - id: 962
           type: vlan
-          description: ->Transfer to rt-hec13-cwan-01a
+          description: Transfer to rt-hec13-cwan-01a
           mtu: 9100
           ip: 10.254.253.3/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.2
         - id: 966
           type: vlan
-          description: ->Transfer to rt-hec13-vpn-01a
+          description: Transfer to rt-hec13-vpn-01a
           mtu: 9100
           ip: 10.254.253.11/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.10
         - id: 1/1
-          description: ->rt-hec13-core-01a, Fo0/2/1
+          description: rt-hec13-core-01a, Fo0/2/1
           po: 1101
           speed: 40gfull
           mtu: 9100
         - id: 2/1
-          description: ->rt-hec13-core-01b, Fo0/2/1
+          description: rt-hec13-core-01b, Fo0/2/1
           po: 1102
           speed: 40gfull
           mtu: 9100
         - id: 3/1
-          description: ->rt-hec13-cwan-01a, Fo1/0/0
+          description: rt-hec13-cwan-01a, Fo1/0/0
           po: 1103
           speed: 40gfull
           mtu: 9100
         - id: 4/1
-          description: ->rt-hec13-idc-01a, Fo1/0/0
+          description: rt-hec13-idc-01a, Fo1/0/0
           po: 1104
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: ->rt-hec13-vpn-01a, Fo0/2/1
+          description: rt-hec13-vpn-01a, Fo0/2/1
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: ->rt-hec13-inet-01a, Fo0/2/1
+          description: rt-hec13-inet-01a, Fo0/2/1
           po: 1105
           speed: 40gfull
           mtu: 9100
         - id: 27/1
-          description: ->sw-hec13-brdr-01a, Et27/1
+          description: sw-hec13-brdr-01a, Et27/1
           po: 42
         - id: 28/1
-          description: ->sw-hec13-brdr-01a, Et28/1
+          description: sw-hec13-brdr-01a, Et28/1
           po: 42
       port_channels:
         - id: 42
@@ -451,33 +455,35 @@ hec:
         - 52/1
         - 53/1
         - 54/1
+      lo900_suffix: 31
+      mgmt1_suffix: 18
       spine_port_towards_leaf: Et3/5/1
       ports:
         - id: 916
           type: vlan
-          description: ->Transfer network for inband management
+          description: Transfer network for inband management
           ip: 10.255.185.76/28
         - id: 4
-          description: ->lb-hec13-03, 1.4
+          description: lb-hec13-03, 1.4
           speed: 10000full
           access_vlan: 902
         - id: 48
-          description: ->naa-hec13-01, 11
+          description: naa-hec13-01, 11
           po: 48
           speed: 1000full
           access_vlan: 916
         - id: 49/1
-          description: ->sw-hec13-brdr-02b, Eth49/1
+          description: sw-hec13-brdr-02b, Eth49/1
           po: 42
         - id: 50/1
-          description: ->sw-hec13-brdr-02b, Eth50/1
+          description: sw-hec13-brdr-02b, Eth50/1
           po: 42
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
         - id: 48
-          description: ->naa-hec13-01, in-band
+          description: naa-hec13-01, in-band
           access_vlan: 916
     - number: 2b
       snmp:
@@ -490,33 +496,35 @@ hec:
         - 52/1
         - 53/1
         - 54/1
+      lo900_suffix: 32
+      mgmt1_suffix: 19
       spine_port_towards_leaf: Et3/6/1
       ports:
         - id: 916
           type: vlan
-          description: ->Transfer network for inband management
+          description: Transfer network for inband management
           ip: 10.255.185.77/28
         - id: 4
-          description: ->lb-hec13-04, 1.4
+          description: lb-hec13-04, 1.4
           speed: 10000full
           access_vlan: 902
         - id: 48
-          description: ->naa-hec13-01, 12
+          description: naa-hec13-01, 12
           po: 48
           speed: 1000full
           access_vlan: 916
         - id: 49/1
-          description: ->sw-hec13-brdr-02a, Eth49/1
+          description: sw-hec13-brdr-02a, Eth49/1
           po: 42
         - id: 50/1
-          description: ->sw-hec13-brdr-02a, Eth50/1
+          description: sw-hec13-brdr-02a, Eth50/1
           po: 42
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
         - id: 48
-          description: ->naa-hec13-01, in-band
+          description: naa-hec13-01, in-band
           access_vlan: 916
     - number: 3a
       snmp:
@@ -529,6 +537,8 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      lo900_suffix: 33
+      mgmt1_suffix: 20
       spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 900
@@ -542,53 +552,53 @@ hec:
               auth: FWTTRANS
         - id: 963
           type: vlan
-          description: ->Transfer to rt-hec13-cwan-01b
+          description: Transfer to rt-hec13-cwan-01b
           mtu: 9100
           ip: 10.254.253.5/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.4
         - id: 967
           type: vlan
-          description: ->Transfer to rt-hec13-vpn-01b
+          description: Transfer to rt-hec13-vpn-01b
           mtu: 9100
           ip: 10.254.253.13/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.12
         - id: 1/1
-          description: ->rt-hec13-core-01c, Fo0/2/0
+          description: rt-hec13-core-01c, Fo0/2/0
           po: 1101
           speed: 40gfull
           mtu: 9100
         - id: 2/1
-          description: ->rt-hec13-core-01d, Fo0/2/0
+          description: rt-hec13-core-01d, Fo0/2/0
           po: 1102
           speed: 40gfull
           mtu: 9100
         - id: 3/1
-          description: ->rt-hec13-cwan-01b, Fo0/0/0
+          description: rt-hec13-cwan-01b, Fo0/0/0
           po: 1103
           speed: 40gfull
           mtu: 9100
         - id: 4/1
-          description: ->rt-hec13-idc-01b, Fo0/0/0
+          description: rt-hec13-idc-01b, Fo0/0/0
           po: 1104
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: ->rt-hec13-vpn-01b, Fo0/2/0
+          description: rt-hec13-vpn-01b, Fo0/2/0
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: ->rt-hec13-inet-01b, Fo0/2/0
+          description: rt-hec13-inet-01b, Fo0/2/0
           po: 1105
           speed: 40gfull
           mtu: 9100
         - id: 27/1
-          description: ->sw-hec13-brdr-03b, Et27/1
+          description: sw-hec13-brdr-03b, Et27/1
           po: 42
         - id: 28/1
-          description: ->sw-hec13-brdr-03b, Et28/1
+          description: sw-hec13-brdr-03b, Et28/1
           po: 42
       port_channels:
         - id: 42
@@ -623,6 +633,8 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      lo900_suffix: 34
+      mgmt1_suffix: 21
       spine_port_towards_leaf: Et3/8/1
       ports:
         - id: 900
@@ -636,53 +648,53 @@ hec:
               auth: FWTTRANS
         - id: 964
           type: vlan
-          description: ->Transfer to rt-hec13-cwan-01b
+          description: Transfer to rt-hec13-cwan-01b
           mtu: 9100
           ip: 10.254.253.7/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.6
         - id: 968
           type: vlan
-          description: ->Transfer to rt-hec13-vpn-01b
+          description: Transfer to rt-hec13-vpn-01b
           mtu: 9100
           ip: 10.254.253.15/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.14
         - id: 1/1
-          description: ->rt-hec13-core-01c, Fo0/2/1
+          description: rt-hec13-core-01c, Fo0/2/1
           po: 1101
           speed: 40gfull
           mtu: 9100
         - id: 2/1
-          description: ->rt-hec13-core-01d, Fo0/2/1
+          description: rt-hec13-core-01d, Fo0/2/1
           po: 1102
           speed: 40gfull
           mtu: 9100
         - id: 3/1
-          description: ->rt-hec13-cwan-01b, Fo1/0/0
+          description: rt-hec13-cwan-01b, Fo1/0/0
           po: 1103
           speed: 40gfull
           mtu: 9100
         - id: 4/1
-          description: ->rt-hec13-idc-01b, Fo1/0/0
+          description: rt-hec13-idc-01b, Fo1/0/0
           po: 1104
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: ->rt-hec13-vpn-01b, Fo0/2/1
+          description: rt-hec13-vpn-01b, Fo0/2/1
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: ->rt-hec13-inet-01b, Fo0/2/1
+          description: rt-hec13-inet-01b, Fo0/2/1
           po: 1105
           speed: 40gfull
           mtu: 9100
         - id: 27/1
-          description: ->sw-hec13-brdr-03a, Et27/1
+          description: sw-hec13-brdr-03a, Et27/1
           po: 42
         - id: 28/1
-          description: ->sw-hec13-brdr-01a, Et28/1
+          description: sw-hec13-brdr-01a, Et28/1
           po: 42
       port_channels:
         - id: 42
@@ -721,10 +733,10 @@ hec:
         - 36/1
       ports:
         - id: 30/1
-          description: ->sw-hec13-str-01b, Et30/1
+          description: sw-hec13-str-01b, Et30/1
           po: 42
         - id: 31/1
-          description: ->sw-hec13-str-01b, Et31/1
+          description: sw-hec13-str-01b, Et31/1
           po: 42
       port_channels:
         - id: 42
@@ -765,10 +777,10 @@ hec:
         - 54/1
       ports:
         - id: 49/1
-          description: ->sw-hec13-str-02b, Et49/1
+          description: sw-hec13-str-02b, Et49/1
           po: 42
         - id: 50/1
-          description: ->sw-hec13-str-01b, Et50/1
+          description: sw-hec13-str-01b, Et50/1
           po: 42
       port_channels:
         - id: 42
@@ -787,10 +799,10 @@ hec:
         - 54/1
       ports:
         - id: 49/1
-          description: ->sw-hec13-str-02a, Et49/1
+          description: sw-hec13-str-02a, Et49/1
           po: 42
         - id: 50/1
-          description: ->sw-hec13-str-01a, Et50/1
+          description: sw-hec13-str-01a, Et50/1
           po: 42
       port_channels:
         - id: 42

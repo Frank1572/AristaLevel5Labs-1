@@ -238,6 +238,18 @@ hec:
       snmp_contact: unknown
       snmp_location: unknown
       ip_last_octett: 8
+  routes:
+    static:
+      brdr01:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          interface: Vlan916
+          redist_bgp: true
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          interface: Vlan916
+          redist_bgp: true
   brdr:
     - number: 1a
       oob_ip: 10.9.246.21

@@ -233,11 +233,11 @@ interface Vxlan1
 {% set route_statement = route_statement + ' vrf ' + vrf %}
 {% endif %}
 {% set route_statement = route_statement + ' ' + dest %}
-{% if gw != '' %}
-{% set route_statement = route_statement + ' ' + gw %}
-{% endif %}
 {% if intf != '' %}
 {% set route_statement = route_statement + ' ' + intf %}
+{% endif %}
+{% if gw != '' %}
+{% set route_statement = route_statement + ' ' + gw %}
 {% endif %}
 {% if met != '' %}
 {% set route_statement = route_statement + ' ' + met %}

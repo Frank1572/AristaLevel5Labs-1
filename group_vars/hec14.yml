@@ -243,12 +243,12 @@ hec:
       brdr01:
         - destination: 0.0.0.0/0
           nexthop: 198.19.233.1
-          interface: Vlan916
+          interface: Vlan900
           redist_bgp: true
       brdr03:
         - destination: 0.0.0.0/0
           nexthop: 198.19.233.1
-          interface: Vlan916
+          interface: Vlan900
           redist_bgp: true
   brdr:
     - number: 1a

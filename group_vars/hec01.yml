@@ -282,6 +282,8 @@ hec:
       brdr01:
         - destination: 0.0.0.0/0
           nexthop: 198.19.240.1
+          interface: Vlan916
+          redist_bgp: true
         - destination: 10.200.1.0/24
           interface: Null0
           metric: 240
@@ -300,6 +302,11 @@ hec:
         - destination: 198.19.251.113/32
           interface: Null0
           metric: 240
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          interface: Vlan916
+          redist_bgp: true
   brdr:
     - number: 1a
       snmp:

@@ -280,6 +280,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      uplinks_speed: 100gfull
       lo900_suffix: 29
       mgmt1_suffix: 16
       spine_port_towards_leaf: Et3/3/1
@@ -376,6 +377,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      uplinks_speed: 100gfull
       lo900_suffix: 30
       mgmt1_suffix: 17
       spine_port_towards_leaf: Et3/4/1
@@ -472,6 +474,7 @@ hec:
         - 52/1
         - 53/1
         - 54/1
+      uplinks_speed: 100gfull
       lo900_suffix: 31
       mgmt1_suffix: 18
       spine_port_towards_leaf: Et3/5/1
@@ -513,6 +516,7 @@ hec:
         - 52/1
         - 53/1
         - 54/1
+      uplinks_speed: 100gfull
       lo900_suffix: 32
       mgmt1_suffix: 19
       spine_port_towards_leaf: Et3/6/1
@@ -554,6 +558,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      uplinks_speed: 100gfull
       lo900_suffix: 33
       mgmt1_suffix: 20
       spine_port_towards_leaf: Et3/7/1
@@ -650,6 +655,7 @@ hec:
         - 30/1
         - 31/1
         - 32/1
+      uplinks_speed: 100gfull
       lo900_suffix: 34
       mgmt1_suffix: 21
       spine_port_towards_leaf: Et3/8/1

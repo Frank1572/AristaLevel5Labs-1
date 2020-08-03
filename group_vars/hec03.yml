@@ -722,6 +722,52 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+   - number: 6a
+      snmp:
+        location: US-STL-1-(DC4)-Cage4-GK-16-37
+        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1024
+      oob_ip: 10.9.240.1
+      nwmgmt_ip: 198.19.156.61
+      spine_port_towards_leaf: Et43/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 100gfull
+      ports:
+        - id: 49/1
+          description: sw-hec03-str-06b,Et49/1
+          po: 42
+        - id: 50/1
+          description: sw-hec03-str-06b,Et50/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+   - number: 6b
+      snmp:
+        location: US-STL-1-(DC4)-Cage4-(01.GH.004)-GK-17-37
+        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1025
+      oob_ip: 10.9.240.102
+      nwmgmt_ip: 198.19.156.62
+      spine_port_towards_leaf: Et44/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 100gfull
+      ports:
+      - id: 49/1
+          description: sw-hec03-str-06a,Et49/1
+          po: 42
+       - id: 50/1
+          description: sw-hec03-str-06a, Et50/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER         
   shs:
     - number: 1a
       oob_ip: 10.9.240.17

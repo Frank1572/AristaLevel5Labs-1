@@ -857,7 +857,7 @@ hec:
         contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1020
       oob_ip: 10.9.240.97
       nwmgmt_ip: 198.19.156.57
-      spine_port_towards_leaf: Et39//1
+      spine_port_towards_leaf: Et39/1
       uplinks:
         - 51/1
         - 52/1
@@ -880,7 +880,7 @@ hec:
         contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1021
       oob_ip: 10.9.240.98
       nwmgmt_ip: 198.19.156.58
-      spine_port_towards_leaf: Eti40//1
+      spine_port_towards_leaf: Et40/1
       uplinks:
         - 51/1
         - 52/1

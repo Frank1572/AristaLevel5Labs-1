@@ -383,6 +383,36 @@
     - configlets
     - storageleafs
 
+- set_fact:
+    id: 's6a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-06a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-06a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's6b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-06b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-06b"
+  tags:
+    - configlets
+    - storageleafs
+
 - name: Render sw-hec-shs-01a
   delegate_to: 127.0.0.1
   template:

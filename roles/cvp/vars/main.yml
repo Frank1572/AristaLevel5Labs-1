@@ -165,6 +165,8 @@ configlet_list:
   sw-hec-str-03b: "{{ lookup('file', 'configs/sw-hec-str-03b', errors='warn') }}"
   sw-hec-str-04a: "{{ lookup('file', 'configs/sw-hec-str-04a', errors='warn') }}"
   sw-hec-str-04b: "{{ lookup('file', 'configs/sw-hec-str-04b', errors='warn') }}"
+  sw-hec-str-06a: "{{ lookup('file', 'configs/sw-hec-str-06a', errors='warn') }}"
+  sw-hec-str-06b: "{{ lookup('file', 'configs/sw-hec-str-06b', errors='warn') }}"
   sw-hec-hana-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-7160-32CQ', errors='warn') }}"
   sw-hec-hana-pwr-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hana-pwr-7160-32CQ', errors='warn') }}"
   sw-hec-hvv-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvv-7160-32CQ', errors='warn') }}"
@@ -236,6 +238,8 @@ configlet_filter_list_generic:
   - sw-hec-str-03b
   - sw-hec-str-04a
   - sw-hec-str-04b
+  - sw-hec-str-06a
+  - sw-hec-str-06b
   - sw-hec-hana-7160-32CQ
   - sw-hec-hana-pwr-7160-32CQ
   - sw-hec-hvv-7160-32CQ

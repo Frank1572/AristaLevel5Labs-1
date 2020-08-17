@@ -595,6 +595,23 @@ hec:
         - 32/1
       spine_port_towards_leaf: Et3/9/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.217/25
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.240.216
+              auth: FWTTRANS
+        - id: 963
+          type: vlan
+          description: ->Transfer to rt-hec01-cwan-01b
+          ip: 10.254.253.5/31
+        - id: 967
+          type: vlan
+          description: ->Transfer to rt-hec01-vpn-01b
+          ip: 10.254.253.13/31
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/0
           po: 1101
@@ -663,6 +680,15 @@ hec:
         - 36
       spine_port_towards_leaf: Et3/10/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.218/25
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.240.216
+              auth: FWTTRANS
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/1
           po: 1101

@@ -35,7 +35,7 @@ interface Ethernet{{i}},{{i+16}}
 !
 {% endfor %}
 {% for i in range(33,48) %}
-interface Ethernet{{i}},{{i+16}}
+interface Ethernet{{i}}
    channel-group {{loop.index0+150}} mode active
 !
 {% endfor %}

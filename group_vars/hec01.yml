@@ -344,6 +344,12 @@ hec:
           ip: 10.254.253.9/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.8
+        - id: 969
+          type: vlan
+          description: ->Transfer to rt-hec01-605
+          ip: 10.254.253.17/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.16
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/0
           po: 1101
@@ -612,6 +618,12 @@ hec:
           type: vlan
           description: ->Transfer to rt-hec01-vpn-01b
           ip: 10.254.253.13/31
+        - id: 971
+          type: vlan
+          description: ->Transfer to rt-hec01-606
+          ip: 10.254.253.21/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.20
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/0
           po: 1101
@@ -636,6 +648,9 @@ hec:
         - id: 9/1
           description: fw-hec01-02, et2-01
           po: 20
+        - id: 10/1
+          description: rt-hec01-606, Fo0/0/0
+          po: 1606
         - id: 27/1
           description: sw-hec01-brdr-03b, Et27/1
           po: 42
@@ -667,6 +682,9 @@ hec:
         - id: 1402
           description: rt-hec01-inet-01b
           trunk: all
+        - id: 1606
+          description: rt-hec01-606
+          trunk: all
     - number: 3b
       snmp:
         location: DE-ROT2-RZ54-R1-2-33
@@ -689,6 +707,12 @@ hec:
               priority: 120
               ip: 198.19.240.216
               auth: FWTTRANS
+        - id: 972
+          type: vlan
+          description: ->Transfer to rt-hec01-606
+          ip: 10.254.253.23/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.22
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/1
           po: 1101
@@ -713,6 +737,9 @@ hec:
         - id: 9/1
           description: fw-hec01-02, et2-02
           po: 20
+        - id: 10/1
+          description: rt-hec01-606, Fo1/0/0
+          po: 1606
         - id: 27/1
           description: sw-hec01-brdr-03a, Et27/1
           po: 42
@@ -743,6 +770,9 @@ hec:
           trunk: all
         - id: 1402
           description: rt-hec01-inet-01b
+          trunk: all
+        - id: 1606
+          description: rt-hec01-606
           trunk: all
   str:
     - number: 1a

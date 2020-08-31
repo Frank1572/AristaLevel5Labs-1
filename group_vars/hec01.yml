@@ -707,6 +707,18 @@ hec:
               priority: 120
               ip: 198.19.240.216
               auth: FWTTRANS
+        - id: 964
+          type: vlan
+          description: ->Transfer to rt-hec01-cwan-01b
+          ip: 10.254.253.7/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.6
+        - id: 968
+          type: vlan
+          description: ->Transfer to rt-hec01-vpn-01b
+          ip: 10.254.253.15/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.14
         - id: 972
           type: vlan
           description: ->Transfer to rt-hec01-606

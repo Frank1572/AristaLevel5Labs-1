@@ -16,6 +16,10 @@ vlandb:
   966: {name: 'RT-HEC-VPN-01A-TRANS'}
   967: {name: 'RT-HEC-VPN-01B-TRANS'}
   968: {name: 'RT-HEC-VPN-01B-TRANS'}
+  969: {name: 'RT-HEC-605-TRANS'}
+  970: {name: 'RT-HEC-605-TRANS'}
+  971: {name: 'RT-HEC-606-TRANS'}
+  972: {name: 'RT-HEC-606-TRANS'}
   1100: {name: 'INET'}
 vlans:
   ranges:
@@ -46,6 +50,14 @@ vlans:
       vid: 967
     - name: "{{vlandb.968.name}}"
       vid: 968
+    - name: "{{vlandb.969.name}}"
+      vid: 969
+    - name: "{{vlandb.970.name}}"
+      vid: 970
+    - name: "{{vlandb.971.name}}"
+      vid: 971
+    - name: "{{vlandb.972.name}}"
+      vid: 972
   inet_dmz:
     - name: "{{vlandb.940.name}}"
       vid: 940

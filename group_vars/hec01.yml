@@ -614,43 +614,58 @@ hec:
           type: vlan
           description: ->Transfer to rt-hec01-cwan-01b
           ip: 10.254.253.5/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.4
+          mtu: 9100
         - id: 967
           type: vlan
           description: ->Transfer to rt-hec01-vpn-01b
           ip: 10.254.253.13/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.12
+          mtu: 9100
         - id: 971
           type: vlan
           description: ->Transfer to rt-hec01-606
           ip: 10.254.253.21/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.20
+          mtu: 9100
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/0
           po: 1101
+          speed: 40gfull
         - id: 2/1
           description: rt-hec01-core-01d, Fo0/2/0
           po: 1102
+          speed: 40gfull
         - id: 4/1
           description: rt-hec01-cwan-01b, Fo0/0/0
           po: 1502
+          speed: 40gfull
         - id: 5/1
           description: rt-hec01-vpn-01b, Fo0/2/0
           po: 1504
-        - id: 4/1
+          speed: 40gfull
+        - id: 6/1
           description: rt-hec01-inet-01b, Fo0/2/0
           po: 1402
+          speed: 40gfull
         - id: 7/1
           description: rt-hec01-core-bypass-01a, Fo0/2/0
           po: 1103
+          speed: 40gfull
         - id: 8/1
           description: rt-hec01-core-bypass-01b, Fo0/2/0
           po: 1104
+          speed: 40gfull
         - id: 9/1
           description: fw-hec01-02, et2-01
           po: 20
         - id: 10/1
           description: rt-hec01-606, Fo0/0/0
           po: 1606
+          speed: 40gfull
         - id: 27/1
           description: sw-hec01-brdr-03b, Et27/1
           po: 42
@@ -669,10 +684,10 @@ hec:
           trunk: all
         - id: 1103
           description: rt-hec01-core-bypass-01a
-          trunk: all
+          trunk: 60,900
         - id: 1104
           description: rt-hec01-core-bypass-01b
-          trunk: all
+          trunk: 60,900
         - id: 1502
           description: rt-hec01-cwan-01b
           trunk: all
@@ -713,45 +728,56 @@ hec:
           ip: 10.254.253.7/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.6
+          mtu: 9100
         - id: 968
           type: vlan
           description: ->Transfer to rt-hec01-vpn-01b
           ip: 10.254.253.15/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.14
+          mtu: 9100
         - id: 972
           type: vlan
           description: ->Transfer to rt-hec01-606
           ip: 10.254.253.23/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.22
+          mtu: 9100
         - id: 1/1
           description: rt-hec01-core-01c, Fo0/2/1
           po: 1101
+          speed: 40gfull
         - id: 2/1
           description: rt-hec01-core-01d, Fo0/2/1
           po: 1102
+          speed: 40gfull
         - id: 4/1
           description: rt-hec01-cwan-01b, Fo0/1/0
           po: 1502
+          speed: 40gfull
         - id: 5/1
           description: rt-hec01-vpn-01b, Fo0/2/1
           po: 1504
-        - id: 4/1
+          speed: 40gfull
+        - id: 6/1
           description: rt-hec01-inet-01b, Fo0/2/1
           po: 1402
+          speed: 40gfull
         - id: 7/1
           description: rt-hec01-core-bypass-01a, Fo0/2/1
           po: 1103
+          speed: 40gfull
         - id: 8/1
           description: rt-hec01-core-bypass-01b, Fo0/2/1
           po: 1104
+          speed: 40gfull
         - id: 9/1
           description: fw-hec01-02, et2-02
           po: 20
         - id: 10/1
           description: rt-hec01-606, Fo1/0/0
           po: 1606
+          speed: 40gfull
         - id: 27/1
           description: sw-hec01-brdr-03a, Et27/1
           po: 42
@@ -770,10 +796,10 @@ hec:
           trunk: all
         - id: 1103
           description: rt-hec01-core-bypass-01a
-          trunk: all
+          trunk: 60,900
         - id: 1104
           description: rt-hec01-core-bypass-01b
-          trunk: all
+          trunk: 60,900
         - id: 1502
           description: rt-hec01-cwan-01b
           trunk: all

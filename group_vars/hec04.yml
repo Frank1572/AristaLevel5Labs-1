@@ -152,7 +152,25 @@ hec:
     model: 7280
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 1
+    linecards: 4
+    fortygig: [3/1/1, 3/2/1, 3/13/1, 3/l4/1]
+    number:
+      - id: 11
+        snmp:
+          location: US-CA01-P30-C46-U3
+          contact: 34412895:ncons-hec04-oob-01.net 1007
+      - id: 12
+        snmp:
+          location: US-CA01-P30-C47-U3
+          contact: 34412896:ncons-hec04-oob-01.net 1008
+      - id: 13
+        snmp:
+          location: US-CA01-P30-C48-U3
+          contact: 34412897:ncons-hec04-oob-01.net 1009
+      - id: 14
+        snmp:
+          location: US-CA01-P30-C49-U3
+          contact: 34412898:ncons-hec04-oob-01.net 1010
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual
@@ -194,9 +212,9 @@ hec:
   oob01b_snmp_location: NL-AMS-AM7-Z1C-03-01-39
   oobs_2_7:
     - number: 02
-      snmp_contact: 34340574:ncons-hec04-06.net.sap.corp:1016
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
-      ip_last_octett: 4
+      snmp_contact: xxxxxx:ncons-hec04-oob-01:1001
+      snmp_location: CA01-POD30-C50-RU43
+      ip_last_octett: 22
     - number: 03
       snmp_contact: 34340566:ncons-hec04-07.net.sap.corp:1017
       snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-03-01-38
@@ -213,79 +231,6 @@ hec:
       snmp_contact: unknown
       snmp_location: unknown
       ip_last_octett: 8
-  interdc:
-    - number: "01"
-      ports:
-        - id: 1
-          description: DCP2Pb:W1B11596:hec04:hec04:sw-hec04-interDC01:Et1
-          po: 999
-        - id: 2
-          description: -> dc2wanrt01, te0/1/0 (SaaS)
-        - id: 21
-          description: sw-hec04-interdc02, Et21
-          po: 42
-        - id: 22
-          description: sw-hec04-interdc02, Et22
-          po: 42
-        - id: 23
-          description: sw-hec04-interdc02, Et23
-          po: 42
-        - id: 24
-          description: sw-hec04-interdc02, Et24
-          po: 42
-        - id: 45
-          description: sw-hec04-interdc02, Et45
-          po: 42
-        - id: 46
-          description: sw-hec04-interdc02, Et46
-          po: 42
-        - id: 47
-          description: sw-hec04-interdc02, Et47
-          po: 42
-        - id: 48
-          description: sw-hec04-interdc02, Et48
-          po: 42
-      port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 999
-          description: ->sw-hec04 Po999
-          trunk: 961,962
-    - number: "02"
-      ports:
-        - id: 1
-          description: DCP2Pb:01-400040-005:hec04:hec04:sw-hec04-interDC02:Et1
-          po: 999
-        - id: 21
-          description: sw-hec04-interdc02, Et21
-          po: 42
-        - id: 22
-          description: sw-hec04-interdc02, Et22
-          po: 42
-        - id: 23
-          description: sw-hec04-interdc02, Et23
-          po: 42
-        - id: 24
-          description: sw-hec04-interdc02, Et24
-          po: 42
-        - id: 45
-          description: sw-hec04-interdc01, Et45
-          po: 42
-        - id: 46
-          description: sw-hec04-interdc01, Et46
-          po: 42
-        - id: 47
-          description: sw-hec04-interdc01, Et47
-          po: 42
-        - id: 48
-          description: sw-hec04-interdc01, Et48
-          po: 42
-      port_channels:
-        - id: 42
-          description: mlag peer link
-        - id: 999
-          description: ->sw-hec04 Po999
-          trunk: 961,962
   brdr:
     - number: 1a
       uplinks:
@@ -697,6 +642,79 @@ hec:
         - id: 10
           description: hec15f00501
           trunk: 30,32,40,50,55,130,2001-2499
+  interdc:
+    - number: "01"
+      ports:
+        - id: 1
+          description: DCP2Pb:W1B11596:hec04:hec04:sw-hec04-interDC01:Et1
+          po: 999
+        - id: 2
+          description: -> dc2wanrt01, te0/1/0 (SaaS)
+        - id: 21
+          description: sw-hec04-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec04-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec04-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec04-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec04-interdc02, Et45
+          po: 42
+        - id: 46
+          description: sw-hec04-interdc02, Et46
+          po: 42
+        - id: 47
+          description: sw-hec04-interdc02, Et47
+          po: 42
+        - id: 48
+          description: sw-hec04-interdc02, Et48
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 999
+          description: ->sw-hec04 Po999
+          trunk: 961,962
+    - number: "02"
+      ports:
+        - id: 1
+          description: DCP2Pb:01-400040-005:hec04:hec04:sw-hec04-interDC02:Et1
+          po: 999
+        - id: 21
+          description: sw-hec04-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec04-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec04-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec04-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec04-interdc01, Et45
+          po: 42
+        - id: 46
+          description: sw-hec04-interdc01, Et46
+          po: 42
+        - id: 47
+          description: sw-hec04-interdc01, Et47
+          po: 42
+        - id: 48
+          description: sw-hec04-interdc01, Et48
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+        - id: 999
+          description: ->sw-hec04 Po999
+          trunk: 961,962
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

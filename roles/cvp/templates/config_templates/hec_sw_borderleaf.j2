@@ -1,145 +1,221 @@
-#jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes'
 {# hec_sw_borderleaf.j2 #}
-{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
-{% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
-{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123][ab]$', '\\g<purpose>') %}
+{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf and 'h for shared-hana-storage '#####}
+{% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
-{% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
-{% set speed = '40gfull' %}
-!id {{id}}
-!id_short {{ id_short }}
-!leafpurpose {{ leafpurpose}}
-!leafid {{leafid}}
-!brdrtype {{brdrtype}}
-!
-{% if brdrtype == '2' and leafpurpose == 'b' %}
-  vlan 914
-     name FW-CORE-TRANS
-  vlan 915
-     name FWT-CORE-TRANS
-  vlan 916
-     name FW-BRDR-TRANS
-  interface Vxlan1
-    vxlan vlan 914 vni 10914
-    vxlan vlan 916 vni 10916
-{% else %}
-  vlan 900
-     name NW-MGMT
-  {% if leafpurpose != 'h' %}
-    vlan 920
-       name RT-TRANS
-    interface Vxlan1
-       vxlan vlan 920 vni 10920
-  {% endif %}
-{% endif %}
-
-!leafid {{ leafid }}
-{% set loop_items = hec.brdr %}
-{% if leafpurpose == 's' %}
-  {% set loop_items = hec.str %}
+{% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123456])[ab]$', '\\g<one_or_two>') %}
+{% set speed = hec.fabric.interlink_speed %}
+{#
+ Let's generate the hostname base on the id-string that we were called with
+#}
+{% set hname = 'sw-hec' + hec.hec_nr +'-' %}
+{% if leafpurpose == 'b' %}
+{% set hname = hname + 'brdr-' %}
+{% set mlagText = "BRDR" %}
 {% endif %}
 {% if leafpurpose == 'h' %}
-  {% set loop_items = hec.shs %}
+{% set hname = hname + 'shs-' %}
+{% set mlagText = "SHS" %}
+{% endif %}
+{% if leafpurpose == 's' %}
+{% set hname = hname + 'str-' %}
+{% set mlagText = "STR" %}
+{% endif %}
+{% set hname = hname + '0' + brdrtype + leafid %}
+hostname {{hname}}
+!
+mlag configuration
+   domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
+!
+{% if leafpurpose == 'b' %}
+{% for item in vlans.inet_dmz %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{#
+ as currently do have routers connected also to brdr-02a/b,
+  we need to stretch vlan 920 there as well.
+  until those have been connected/ moved to brdr01 & brdr03,
+  we'll leave the code here to not exclude vlan 920 + vni-mapping for brdr02
+#}
+{% for item in vlans.brdr.trans %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{% endif %}
+{% if leafpurpose == 's' %}
+{% for item in vlans.str %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{% endif %}
+{% set loop_items = hec.brdr %}
+{% if leafpurpose == 's' %}{% set loop_items = hec.str %}{% endif %}
+{% if leafpurpose == 'h' %}{% set loop_items = hec.shs %}{% endif %}
+!
+{% if hec.ngdr_underlay is defined %}
+{% if leafpurpose == 'b' %}
+! ===== EDGE Transfer VLANs =====
+{% for item in vlans.evpn_edge_trans %}
+vlan {{item.vid}}
+   name {{item.name|upper}}
+!
+{% endfor %}
+{% endif %}
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
-!allbrdrs.number {{allbrdrs.number}}
-    {% for item in allbrdrs.uplinks %}
-    ! ===== Spine Uplinks =====
-    interface Ethernet{{ item }}
-      no switchport
-      description SPINE UPLINK
-      mtu {{ hec.fabric.interlink_mtu }}
-      {% if uplinks_speed is defined %}
-      {% set speed = uplinks_speed %}
-      {% endif %}
-      speed forced {{ speed }}
-    !
-    {% endfor %}
-    ! ===== End device ports =====
-    {% for item in allbrdrs.ports %}
-      {% if item.type is defined %}
-        {% if item.type != "Ethernet" %}
-          {% if item.type == 'vlan' %}
-            {% set inttype = 'Vlan' %}
-          {% endif %}
-          {% if item.type == 'spine_link' %}
-            {% set inttype = 'Ethernet' %}
-          {% endif %}
-          interface {{ inttype }}{{ item.id }}
-        {% endif %}
-      {% endif %}
-      {% if item.type is not defined %}
-        interface Ethernet{{ item.id }}
-      {% endif %}
-        description ->{{ item.description }}
-      {% if item.po is defined %}
-        channel-group {{ item.po }} mode active
-      {% endif %}
-      {% if item.trunk is defined %} {# BEGIN port is vlan trunk #}
-        switchport mode trunk
-        {% if item.trunk != "all" %}
-          switchport trunk allowed vlan {{ item.trunk }}
-        {% endif %}
-      {% endif %} {# END port is vlan trunk #}
-      {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
-        switchport access vlan {{ item.access_vlan }}
-      {% endif %} {# END port is access_vlan #}
-      {% if item.speed is defined %} {# BEGIN port is access_vlan #}
-        speed forced {{ item.speed }}
-      {% endif %} {# END port is access_vlan #}
-      {% if item.ip is defined %}
-        {% if item.type is defined %}
-          {% if item.type != "vlan" %}
-            no switchport
-          {% endif %}
-          {% if item.type == "spine_link" %}
-            mtu {{ hec.fabric.interlink_mtu }}
-          {% endif %}
-        {% endif %}
-        ip address {{ item.ip }}
-      {% endif %}
-    {% endfor %}
-    ! ===== Port-channels =====
-    {% if allbrdrs.port_channels is defined %}
-      {% for po in allbrdrs.port_channels %}
-      interface Port-Channel{{ po.id }}
-      {% if po.id == 42 %}
-        description {{ po.description }}
-        switchport mode trunk
-        switchport trunk group MLAG-Peer
-      {% else %}
-        description {{ po.description }}
-        mlag {{ po.id }}
-        {% if po.trunk is defined %}
-          switchport mode trunk
-          {% if po.trunk != "all" %}
-            switchport trunk allowed vlan {{ po.trunk }}
-          {% endif %}
-        {% endif %}
-        {% if po.access_vlan is defined %}
-          switchport access vlan {{ po.access_vlan }}
-        {% endif %}
-      {% endif %}
-      {% endfor %}
-    {% endif %}
+!
+snmp-server contact {{allbrdrs.snmp.contact}}
+snmp-server location {{allbrdrs.snmp.location}}
+!
+interface Loopback900
+   description NW-MGMT
+   ip address {{allbrdrs.nwmgmt_ip}}/32
+!
+interface Management1
+   description OOB MGMT
+   vrf forwarding OOB
+   ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
+!
+! ===== Spine Uplinks =====
+{% for item in allbrdrs.uplinks %}
+interface Ethernet{{ item }}
+   no switchport
+   description SPINE UPLINK
+   mtu {{ hec.fabric.interlink_mtu }}
+{% if allbrdrs.uplinks_speed is defined %}{% set speed = allbrdrs.uplinks_speed %}{% endif %}
+   speed forced {{ speed }}
+!
 {% endfor %}
-
-{##### VARP specific configuration for brdr-02 #####}
-{% if brdrtype == '2' and leafpurpose == 'b' %}
+! ===== End device ports =====
+{% for item in allbrdrs.ports %}
+{% if item.type is defined %}
+{% if item.type != 'Ethernet' %}
+{% if item.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
+{% if item.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
+interface {{ inttype }}{{ item.id }}
+{% endif %}
+{% endif %}
+{% if item.type is not defined %}
+interface Ethernet{{ item.id }}
+{% endif %}
+   description ->{{ item.description }}
+{% if item.po is defined %}
+   channel-group {{ item.po }} mode active
+{% endif %}
+{% if item.trunk is defined %}{# BEGIN port is vlan trunk #}
+   switchport mode trunk
+{% if item.trunk != "all" %}
+   switchport trunk allowed vlan {{ item.trunk }}
+{% endif %}
+{% endif %}{# END port is vlan trunk #}
+{% if item.access_vlan is defined %}{# BEGIN port is access_vlan #}
+   switchport access vlan {{ item.access_vlan }}
+{% endif %}{# END port is access_vlan #}
+{% if item.speed is defined %}
+   speed forced {{ item.speed }}
+{% elif (item.po is defined) and (item.po == 42) %}
+   speed forced {{hec.fabric.interlink_speed}}
+   mtu {{hec.fabric.interlink_mtu}}
+{% endif %}
+{% if item.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
+   mtu {{ item.mtu }}
+{% endif %} {# End MTU shinans #}
+{% if item.ip is defined %}{# START ip is defined #}
+{% if (item.type is defined) and (item.type == "spine_link") %}
+   mtu {{ hec.fabric.interlink_mtu }}
+{% endif %}
+{% if (item.type is defined) and (item.type != "vlan") %}
+   no switchport
+{% elif (item.type is defined) and (item.type == "vlan") %}
+{% if item.vrrp is not defined %}
+   no autostate
+{% endif %}
+{% endif %}
+{% if item.mtu is defined %}
+   mtu {{ item.mtu }}
+{% endif %}
+{#
+ vrrp group, if any defined
+#}
+{% if item.vrrp is defined %}{# START vrrp is defined #}
+{% for vrrp_group in item.vrrp %}
+   vrrp {{vrrp_group.id}} priority {{ vrrp_group.priority }}
+   vrrp {{vrrp_group.id}} preempt delay minimum 180
+   vrrp {{vrrp_group.id}} preempt delay reload 180
+{% if vrrp_group.auth is defined %}
+   vrrp {{vrrp_group.id}} authentication text {{ vrrp_group.auth }}
+{% endif %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ip ' + vrrp_group.ip|string %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{conf_str_ip}}
+{% endfor %}
+{% endif %}{# END vrrp is defined #}
+   ip address {{ item.ip }}
+{% endif %}{# END ip is defined #}
+!
+{% endfor %}
+! ===== Port-channels =====
+{% if allbrdrs.port_channels is defined %}
+{% for po in allbrdrs.port_channels %}
+interface Port-Channel{{ po.id }}
+{% if po.id != 42 %}
+{#
+  As we do assign the configlet sw-mlag-a/b
+  to all leafs, the creation of Po42 is not required here.
+  Also it's not required to define it under hec.brdr/str/shs.port-channels
+#}
+   description {{ po.description }}
+   mlag {{ po.id }}
+{% if po.trunk is defined %}
+   switchport mode trunk
+{% if po.trunk != "all" %}
+   switchport trunk allowed vlan {{ po.trunk }}
+{% endif %}
+{% endif %}
+{% if po.access_vlan is defined %}
+   switchport access vlan {{ po.access_vlan }}
+{% endif %}
+{% endif %}
+{% endfor %}
+!
+{% endif %}
+{% endfor %}
+{#
+  let's do some more borderleaf specific stuff below here
+#}
+{% if leafpurpose == 'b' %}
+{##### VARP specific configuration for BRDR-02 #####}
+{% if brdrtype == '2' %}
 ! ==============================================
 !   Inband management - transfer to firewall
 ! ==============================================
-interface Vlan916
-   description ->Transfer network for inband management
+interface {{hec.inband_trans_gw_vlan}}
    ip virtual-router address {{ hec.inband_trans_brdr }}
 !
 ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}
 !
-{% if hec.inband_trans_gw_vlan is defined %}
+{# {% if hec.inband_trans_gw_vlan is defined %}
 ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
 {% else %}
 ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
-{% endif %}
+{% endif %} #}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
 {% endif %}
+{% endif %}
+{#
+  Above this is the END for borderleaf specific stuff
+#}
 {% include "templates/config_templates/hec_sw_leaf_routing_configuration.j2" %}

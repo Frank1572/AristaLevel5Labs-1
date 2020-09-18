@@ -1,7 +1,8 @@
 vlan 7
-   name DHCP-03
+   name DHCP03
 !
 vlan 900
+   name NW-MGMT
 !
 vlan 930
    name VMWARE-FAULT-TOLERANCE
@@ -12,18 +13,25 @@ vlan 931
 vlan 932
    name VMWARE-VCENTER-HA
 !
-{% for i in range(1, 24) %}
+{#
+  The below vlan 7 to vni mapping on int Vxlan1 will be removed for L2 VMWare cells
+  by having an additional removal-configlet at the L2 VMWare container
+#}
+interface Vxlan1
+   vxlan vlan 7 vni 10007
+!
+{% for i in range(1, 25) %}
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    port-channel lacp fallback individual
    spanning-tree portfast
 !
 {% endfor %}
-{% for i in range(51, 74) %}
+{% for i in range(51, 75) %}
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 7
@@ -34,10 +42,8 @@ interface Port-Channel{{ 100 + i }}
    spanning-tree portfast
 !
 {% endfor %}
-interface Port-Channel900
-   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
-   switchport mode trunk
-   mlag 900
+{% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
+
 !
 ip access-list HEC{{ hec.hec_nr }}-L2-APP
 {{ hec.hvv_hvx_acl_rules }}

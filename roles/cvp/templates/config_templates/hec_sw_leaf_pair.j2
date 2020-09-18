@@ -16,7 +16,7 @@ router bgp $BGP_AS
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG maximum-routes $EBGP_RTMAX
    neighbor SPINE-PG fall-over bfd
-   ! 
+   !
    neighbor MLPEER-PG peer-group
    neighbor MLPEER-PG remote-as $BGP_AS
    neighbor MLPEER-PG next-hop-self
@@ -33,10 +33,9 @@ router bgp $BGP_AS
    neighbor EVPN-PG maximum-routes $EVPN_RTMAX
    neighbor EVPN-PG fall-over bfd
    !
-   neighbor 10.100.0.11 peer-group EVPN-PG
-   neighbor 10.100.0.12 peer-group EVPN-PG
-   neighbor 10.100.0.13 peer-group EVPN-PG
-   neighbor 10.100.0.14 peer-group EVPN-PG
+{% for i in range(11,14) %}
+   neighbor 10.100.0.{{i}} peer-group EVPN-PG
+{% endfor %}
    !
    address-family evpn
       neighbor EVPN-PG activate

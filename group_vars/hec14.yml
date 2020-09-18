@@ -202,11 +202,6 @@ hec:
       - 198.19.251.0/24
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
-    # Spine BGP Listen ranges for EVPN
-    bgp_listen_ranges:
-      - 10.100.0.0/16
-      - 198.19.249.0/24
-      - 198.19.251.0/24
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
@@ -243,6 +238,18 @@ hec:
       snmp_contact: unknown
       snmp_location: unknown
       ip_last_octett: 8
+  routes:
+    static:
+      brdr01:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.233.1
+          interface: Vlan900
+          redist_bgp: true
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.233.1
+          interface: Vlan900
+          redist_bgp: true
   brdr:
     - number: 1a
       oob_ip: 10.9.246.21
@@ -591,10 +598,10 @@ hec:
           description: rt-hec14-idc-01b
           trunk: all
         - id: 1105
-          description: rt-hec14-inet-01b
+          description: rt-hec14-vpn-01b
           trunk: all
         - id: 1106
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-inet-01b
           trunk: all
     - number: 3b
       oob_ip: 10.9.246.26
@@ -687,10 +694,10 @@ hec:
           description: rt-hec14-idc-01b
           trunk: all
         - id: 1105
-          description: rt-hec14-inet-01b
+          description: rt-hec14-vpn-01b
           trunk: all
         - id: 1106
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-inet-01b
           trunk: all
   str:
     - number: 1a
@@ -775,10 +782,10 @@ hec:
         - 54/1
       ports:
         - id: 49/1
-          description: sw-hec14-str-02b, Et49
+          description: sw-hec14-str-02a, Et49
           po: 42
         - id: 50/1
-          description: sw-hec14-str-02b, Et50
+          description: sw-hec14-str-02a, Et50
           po: 42
       port_channels:
         - id: 42

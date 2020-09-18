@@ -1,19 +1,39 @@
-hardware port-group 1 select Et1/1-4
-!
-interface Ethernet 1/1-18/4
+{% include "templates/config_templates/7160.j2" %}
+
+interface Ethernet 1/1-12/4
    speed forced 25gfull
    switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    spanning-tree portfast
 !
+interface Ethernet 13/1-18/4
+   speed forced 25gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
+   spanning-tree portfast
+!
+interface Ethernet 19/1-25/4
+   shutdown
+!
 ! === MLAG Peer Link: ===
 interface Ethernet27/1,28/1
+   mtu {{hec.fabric.interlink_mtu}}
+   speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
 interface Ethernet29/1,30/1,31/1,32/1
+{#
+  40gfull is not applicable for all cells in all locations
+  as of now there is no way to determine the transceiver speed
+  while rendering this jinja template, we need to leave this out.
+
    speed forced 40gfull
+#}
    no switchport
 !
 interface Ethernet1/1-2
@@ -165,4 +185,4 @@ interface Ethernet26/1
    speed forced 10000full
    switchport mode trunk
    channel-group 900 mode active
-   exit
+!

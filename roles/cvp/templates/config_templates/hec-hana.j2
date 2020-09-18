@@ -3,7 +3,7 @@ username cfmadm privilege 15 role network-admin secret 5 $1$EaZmGCRk$gwoPz3UrfjP
 !# HANA CFM VLANs (1101-1140->HANA, 1141-1180->GPFS)
 vlan 1101-1180
 !
-{% for i in range(1, 18) %}
+{% for i in range(1, 19) %}
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 40
@@ -14,10 +14,8 @@ interface Port-Channel{{ 100 + i }}
    spanning-tree portfast
 !
 {% endfor %}
-interface Port-Channel900
-   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
-   switchport mode trunk
-   mlag 900
+{% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
+
 !
 ip access-list HEC{{ hec.hec_nr }}-L2-HANA
 {{ hec.hana_acl_rules }}

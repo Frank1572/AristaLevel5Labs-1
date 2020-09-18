@@ -1,0 +1,7 @@
+{% if hec.sflow is defined %}
+{% for dest in hec.sflow.destination %}
+sflow destination {{dest.ipv4}} {{dest.port}}
+{% endfor %}
+sflow source-interface {{hec.sflow.source}}
+sflow run
+{% endif %}

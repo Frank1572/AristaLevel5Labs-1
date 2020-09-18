@@ -92,11 +92,13 @@
     - hec-hana
     - sw-hec-leaf
     - hec-vmware
+    - hec-vmware-L2
     - hec-xen
     - sw-hec-spine
     - sw-hec-hana-7160-32CQ
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
+    - sw-hec-vmware-7150S-64-CL
     - sw-hec-hvx-7160-32CQ
     - sw-hec-hvx-7160-48YC6
     - sw-hec-oob-01
@@ -107,13 +109,29 @@
     - mgmt-oob
     - mgmt-default
     - CVP-Arista
-    - sw-hec-vtep-static
+    - sw-hec-vtep
     - hec-shs
     - sw-hec-hana-pwr
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
+  tags:
+    - configlets
+
+# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific radius strings.
+- set_fact:
+    aaa_purpose: 'hana'
+  tags:
+    - configlets
+
+- name: Render hana aaa configlet template
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-aaa.j2"
+    dest: "{{role_path}}/files/configs/{{item}}"
+  loop:
+    - sw-hec-aaa-hana
   tags:
     - configlets
 
@@ -127,6 +145,7 @@
     - sw-hec-autoconf-ipmi
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
+    - sw-hec-autoconf-generate-only
   tags:
     - configlets
 
@@ -134,8 +153,8 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hec-spine-xx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item }}"
-  with_items: "{{ hec.spine_nr }}"
+    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}"
+  with_items: "{{ hec.spine.number }}"
   tags:
     - configlets
 
@@ -299,7 +318,97 @@
     - storageleafs
 
 - set_fact:
+    id: 's3a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-03a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-03a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's3b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-03b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-03b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's4a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-04a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-04a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's4b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-04b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-04b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
     id: 'h1a'
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's6a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-06a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-06a"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
+    id: 's6b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-06b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-06b"
   tags:
     - configlets
     - storageleafs
@@ -363,7 +472,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builders/"
-    dest: /tmp
+    dest: tmp
   tags:
     - upload_configlets
 
@@ -371,7 +480,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configs"
-    dest: /tmp
+    dest: tmp
   tags:
     - upload_configlets
 
@@ -379,7 +488,7 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
-    dest: /tmp/configlet_builder.py
+    dest: tmp/configlet_builder.py
   tags:
     - upload_configlets
 
@@ -387,22 +496,22 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlets.py"
-    dest: /tmp/configlets.py
+    dest: tmp/configlets.py
   tags:
     - upload_configlets
 
-- name: Copy cvprac to /tmp/cvprac/ direcory on CVP
+- name: Copy cvprac to tmp/cvprac/ direcory on CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/cvprac"
-    dest: /tmp
+    dest: tmp
   tags:
     - reload_TerminAttr
     - upload_configlets
 
 - name: Upload generated configlet builders
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - upload_configlets
 
@@ -447,13 +556,13 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/aaa_configuration.py"
-    dest: /tmp/aaa_configuration.py
+    dest: tmp/aaa_configuration.py
   tags:
     - configure_aaa
 
 - name: Configure AAA servers
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python /tmp/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  command: python tmp/aaa_configuration.py "{{ cvp.aaa_config }}" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
   tags:
     - configure_aaa
 
@@ -461,13 +570,13 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/restore_reload_TerminAttr.py"
-    dest: /tmp/restore_reload_TerminAttr.py
+    dest: tmp/restore_reload_TerminAttr.py
   tags:
     - reload_TerminAttr
 
 - name: Reload TerminAttr on devices after restoring a backup
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: "python /tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
+  command: "python tmp/restore_reload_TerminAttr.py {{ cvp.ip_eth0 }} {{ cvp.password }}"
   tags:
     - reload_TerminAttr
 

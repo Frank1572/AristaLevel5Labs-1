@@ -1,7 +1,7 @@
 ---
 # file: static.yml
 
-- hosts: all
+- hosts: build
   gather_facts: no
   roles:
     - role: cvp

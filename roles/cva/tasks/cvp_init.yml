@@ -195,7 +195,7 @@
     mode: 0755
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Delete installation directory for netsnmp if already exists
   delegate_to: "{{ cvp.ip_eth0 }}"
@@ -204,7 +204,7 @@
     state: absent
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Create directory for netsnmp installation files (/tmp/netsnmp/)
   delegate_to: "{{ cvp.ip_eth0 }}"
@@ -213,14 +213,14 @@
     warn: no
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Extract netsnmp tar file on CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp.tar.gz -C /tmp/netsnmp"
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Install netsnmp RPMs on the CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
@@ -232,7 +232,7 @@
   changed_when: rpm_install.rc == 0
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Render SNMP config and put the file to the CVP machine
   delegate_to: "{{ cvp.ip_eth0 }}"
@@ -241,14 +241,14 @@
     dest: "/etc/snmp/snmpd.conf"
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Set the snmpd to enabled for persistence after reboot
   delegate_to: "{{ cvp.ip_eth0 }}"
   command: "systemctl enable snmpd"
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp
 
 - name: Restart snmpd service
   delegate_to: "{{ cvp.ip_eth0 }}"
@@ -257,4 +257,4 @@
     state: restarted
   tags:
     - cvp_init
-    - snmp
+    - snmp_cvp

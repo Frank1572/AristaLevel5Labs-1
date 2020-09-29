@@ -53,13 +53,6 @@
   tags:
     - cvp_init
 
-#- name: Extract setuptools to CVA
-#  unarchive:
-#    src: "{{role_path}}/files/setuptools-41.0.1.zip"
-#    dest: /tmp/
-#  tags:
-#    - cvp_init
-
 - name: Build setuptools
   command: "python /tmp/setuptools-41.0.1/setup.py build"
   tags:
@@ -141,6 +134,7 @@
 
 - name: Restart network service
   delegate_to: "{{ cvp.ip_eth0 }}"
+  ignore_errors: yes
   service:
     name: network
     state: restarted
@@ -190,3 +184,77 @@
   command: "/cvpi/tools/update-mgmt-password -auth none -password {{ cvp.password }}"
   tags:
     - cvp_init
+
+- name: Copy netsnmp tar file to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  copy:
+    src: "{{role_path}}/files/centos-7.6.1810-netsnmp.tar.gz"
+    dest: /tmp/centos-7.6.1810-netsnmp.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Delete installation directory for netsnmp if already exists
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  file:
+    path: "/tmp/netsnmp"
+    state: absent
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Create directory for netsnmp installation files (/tmp/netsnmp/)
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "mkdir /tmp/netsnmp"
+  args:
+    warn: no
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Extract netsnmp tar file on CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp.tar.gz -C /tmp/netsnmp"
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Install netsnmp RPMs on the CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "rpm -ivh /tmp/netsnmp/*.rpm"
+  args:
+    warn: false
+  register: rpm_install
+  failed_when: rpm_install.rc != 0 and "is already installed" not in rpm_install.stderr
+  changed_when: rpm_install.rc == 0
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Render SNMP config and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/snmpd.conf.j2"
+    dest: "/etc/snmp/snmpd.conf"
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Set the snmpd to enabled for persistence after reboot
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "systemctl enable snmpd"
+  tags:
+    - cvp_init
+    - snmp
+
+- name: Restart snmpd service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: snmpd
+    state: restarted
+  tags:
+    - cvp_init
+    - snmp

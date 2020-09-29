@@ -46,19 +46,29 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
  		bash
 		sudo cat /var/lib/dhcpd/dhcpd.leases
 
- - Set the IP assigned to the CVA in the file <ansible-home>/production/production.yml
+# Initial Setup of the CVA and CVP
 
- - Run the ansible playbooks to setup the environment
+ - Prerequisite is that the CVA received an IP address from DHCP on an OOB Switch 
 
-       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 60  --limit hecXX
+ - Set the dynamic IP assigned to the CVA in the file <ansible-home>/dhcp
+ 
+ - Run the ansible playbooks to initially setup the CVA and iDRAC
 
-       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 60  --limit hecXX
+       ansible-playbook idrac.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
 
-       ansible-playbook cva.yml -i cva --tags "cva_init" --timeout 60  --limit hecXX
+       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
 
-       ansible-playbook cva.yml -i cva --tags "cva_install" --timeout 60  --limit hecXX
+ - Set the static IP assigned to the CVA in the file <ansible-home>/cva
 
-       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecXX
+ - Run the ansible playbooks to setup the CVP
+
+       ansible-playbook cva.yml -i cva --tags "cvp_stop" --timeout 240  --limit hecXX
+       
+       ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
+
+       ansible-playbook cva.yml -i cva --tags "cvp_install" --timeout 240  --limit hecXX
+
+       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 

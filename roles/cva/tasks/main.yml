@@ -79,7 +79,7 @@
 
 - name: Render SNMP config and put the file to the CVA machine
   template:
-    src: "templates/snmpd.conf.j2"
+    src: "templates/snmpd_cva.conf.j2"
     dest: "/etc/snmp/snmpd.conf"
   tags:
     - cva

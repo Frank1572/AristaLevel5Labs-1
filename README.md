@@ -54,7 +54,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
  
  - Run the ansible playbooks to initially setup the CVA and iDRAC
 
-       ansible-playbook idrac.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
+       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
 
        ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
 

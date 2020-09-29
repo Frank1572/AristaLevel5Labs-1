@@ -10,11 +10,11 @@ The following describes how to use the ansible playbooks in a greenfield environ
 
 Always consider the use of "--limit hecXX" (with 'XX' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
 
-- Create OOB01 a/b configuration with the ansible scripts
+# DHCP on OOB01a/b to provide a dynamic IP to CVA and iDRAC for initial setup
 
-		ansible-playbook cva.yml -i dhcp --tags "oob01" --limit hecXX
+- Create OOB01 a/b dhcp configuration with the ansible scripts
 
- - Copy the generated configs onto the OOB01 a/b switches. File location is from main ansible folder in "roles/oob01/files/configs/"
+		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
 
@@ -35,8 +35,23 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 		4) On the OOB switch: Make the extension persist over reboots
 		copy installed-extensions boot-extensions
 
+  - Put the following alias configuration snippet on OOB01 a/b to be able to enable and disable the DHCP service
+		
+		alias dhcp-off
+		   10 bash sudo service dhcpd stop
+		   20 bash sudo service dhcpd status
+		!
+		alias dhcp-on
+		   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+		   20 bash sudo service dhcpd start
+		   30 bash sudo service dhcpd status
+		!
+		alias dhcp-status
+		   10 bash sudo service dhcpd status
+		   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 
  - Enable DHCP server on OOB01 a/b
+		
 		dhcp-on
 		dhcp-status
 

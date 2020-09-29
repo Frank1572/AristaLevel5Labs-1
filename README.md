@@ -73,7 +73,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 
        ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
 
- - Set the static IP assigned to the CVA in the file "<ansible-home>/cva"
+ - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva"
 
  - Run the ansible playbooks to setup the CVP
 

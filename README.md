@@ -65,7 +65,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 
  - Prerequisite is that the CVA received an IP address from DHCP on an OOB Switch 
 
- - Set the dynamic IP assigned to the CVA in the file "<ansible-home>/dhcp"
+ - Set the dynamic IP assigned to the CVA in the file "\<ansible-home\>/dhcp"
  
  - Run the ansible playbooks to initially setup the CVA and iDRAC
 

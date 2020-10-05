@@ -10,11 +10,11 @@ The following describes how to use the ansible playbooks in a greenfield environ
 
 Always consider the use of "--limit hecXX" (with 'XX' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
 
-- Create OOB01 a/b configuration with the ansible scripts
+# DHCP on OOB01a/b to provide a dynamic IP to CVA and iDRAC for initial setup
 
-		ansible-playbook cva.yml -i dhcp --tags "oob01" --limit hecXX
+- Create OOB01 a/b dhcp configuration with the ansible scripts
 
- - Copy the generated configs onto the OOB01 a/b switches. File location is from main ansible folder in "roles/oob01/files/configs/"
+		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
 
@@ -35,8 +35,23 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 		4) On the OOB switch: Make the extension persist over reboots
 		copy installed-extensions boot-extensions
 
+  - Put the following alias configuration snippet on OOB01 a/b to be able to enable and disable the DHCP service
+		
+		alias dhcp-off
+		   10 bash sudo service dhcpd stop
+		   20 bash sudo service dhcpd status
+		!
+		alias dhcp-on
+		   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+		   20 bash sudo service dhcpd start
+		   30 bash sudo service dhcpd status
+		!
+		alias dhcp-status
+		   10 bash sudo service dhcpd status
+		   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 
  - Enable DHCP server on OOB01 a/b
+		
 		dhcp-on
 		dhcp-status
 
@@ -46,19 +61,29 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
  		bash
 		sudo cat /var/lib/dhcpd/dhcpd.leases
 
- - Set the IP assigned to the CVA in the file <ansible-home>/production/production.yml
+# Initial Setup of the CVA and CVP
 
- - Run the ansible playbooks to setup the environment
+ - Prerequisite is that the CVA received an IP address from DHCP on an OOB Switch 
 
-       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 60  --limit hecXX
+ - Set the dynamic IP assigned to the CVA in the file "\<ansible-home\>/dhcp"
+ 
+ - Run the ansible playbooks to initially setup the CVA and iDRAC
 
-       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 60  --limit hecXX
+       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
 
-       ansible-playbook cva.yml -i cva --tags "cva_init" --timeout 60  --limit hecXX
+       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
 
-       ansible-playbook cva.yml -i cva --tags "cva_install" --timeout 60  --limit hecXX
+ - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva"
 
-       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecXX
+ - Run the ansible playbooks to setup the CVP
+
+       ansible-playbook cva.yml -i cva --tags "cvp_stop" --timeout 240  --limit hecXX
+       
+       ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
+
+       ansible-playbook cva.yml -i cva --tags "cvp_install" --timeout 240  --limit hecXX
+
+       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 

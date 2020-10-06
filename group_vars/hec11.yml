@@ -17,7 +17,7 @@ cva:
   ip: 10.177.248.43 # Correct as per nslookup naa-hec11-01.hec.oob.net.sap.
   mask: 255.255.254.0 # Correct /23 see DNS Tool
   gw: 10.177.248.1 # Correct see DNS Tool
-  name: naa-hec01-01 # Correct as per nslookup naa-hec11-01.hec.oob.net.sap.
+  name: naa-hec11-01 # Correct as per nslookup naa-hec11-01.hec.oob.net.sap.
   dns1: 100.127.5.1 # dns01-mow.mow.hec.sap.biz ?????
   dns2: 100.127.5.2 # dns01-mow.mow.hec.sap.biz ?????
   domain: hec.oob.net.sap # Correct nslookup naa-hec01-01.hec.oob.net.sap.
@@ -35,41 +35,41 @@ cvp:
   version: cvp-2019.1.2-kvm.tgz # Correct
   path_to_cvp_file: /data/ # file is on nw-admin-02.rot /data
   ip_eth0: 10.177.249.253 # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
-  ip_eth1: 10.255.241.69
-  mask_eth0: 255.255.254.0
-  mask_eth1: 255.255.240.0
-  gw: 10.178.136.1
+  ip_eth1: 10.255.183.69 # Correct as per xls HEC Transit
+  mask_eth0: 255.255.254.0 # correct this is the /23
+  mask_eth1: 255.255.240.0 # correct
+  gw: 10.177.248.1 # correct
   name: naa-hec11-cvp-01.hec.oob.net.sap. # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
-  dns1: 10.17.121.30
-  dns2: 10.17.122.10
+  dns1: 10.17.121.30 # global dns server for non fab devices like oob
+  dns2: 10.17.122.10 # global dns server for non fab devices like oob
   domain: hec.oob.net.sap # Correct
-  ntp1: 10.17.122.185
-  ntp2: 10.33.142.104
-  device_int: eth0
-  cluster_int: eth1
+  ntp1: 10.17.122.185 # global ntp server for non fab devices like oob
+  ntp2: 10.33.142.104 # global ntp server for non fab devices like oob
+  device_int: eth0 # correct
+  cluster_int: eth1 # correct
   ingest_key: SecureKey11 # Correct
-  vmname: cvp-hec01
-  KvmDomain: cvp
-  password: arista
-  backupuser: cvpbkp
+  vmname: cvp-hec11 # correct
+  KvmDomain: cvp # correct
+  password: arista  # correct
+  backupuser: cvpbkp  # correct
   eth1_routes:
-  # HEC01-NW-MGMT-04 (all router and ipmi's)
-    - prefix: 198.19.234.0
-      mask: 24
-      nexthop: 10.255.241.78
-  # HEC01-NW-MGMT05 (all fab)
-    - prefix: 198.19.190.0
-      mask: 24
-      nexthop: 10.255.241.78
+   # HEC11-NW-MGMT-01 198.19.230.0/25 (all router and ipmi's also legacy inband)
+    - prefix: 198.19.230.0 # correct
+      mask: 25 # correct
+      nexthop: 10.255.183.78 # correct
+  # HEC11-NW-MGMT09 198.19.230.160/27 (all fab like spines and boarders all added to tic)
+    - prefix: 198.19.230.160 # Correct
+      mask: 27 # Correct
+      nexthop: 10.255.183.78 # correct see xls Hec_transit
   dhcp:
-    prefix: 10.178.140.0
-    mask: 255.255.254.0
-    range_low: 10.178.137.224
-    range_high: 10.178.137.247
+    prefix: 10.177.248.0 # correct
+    mask: 255.255.254.0  # correct
+    range_low: 10.177.249.224  # correct
+    range_high: 10.177.249.247  # correct
   aaa_config:
     aaa_type: RADIUS
     servers:
-      - ip: 10.17.121.35
+      - ip: 10.17.121.35 # cvp radius config will be done by hand
         secret: secretRadPw
         authMode: PAP
         authPort: 1645
@@ -82,69 +82,68 @@ cvp:
         accPort: 1646
         status: "Enabled"
 hec:
-  hec_nr: "01"
-  hana_hvx_descriptions_PO_MIN: 101
-  hana_hvx_descriptions_PO_MAX: 124
-  hvv_descriptions_PO_MAX: 24
-  hvv_descriptions_PO_RANGE: "{101,151}"
-  ma_domain: "net.sap.corp"
-  lo900_domain: "rot.hec.sap.biz"
-  vl900_domain: "rot.hec.sap.biz"
-  vl900_mask: 24
-  vl900_def_gw: 198.19.241.1
-  vl900_net: 198.19.241.0/24
-  lo900_net: 198.19.190.0/24
-  lo900_prefix: 198.19.190
-  inband_trans_brdr: 10.255.241.78
-  inband_trans_brdr_mac: 00:1c:73:00:00:96
-  inband_trans_net: 10.255.241.64/28
-  inband_trans_prefix: 10.255.241
-  inband_trans_mask: 28
-  inband_trans_gw_vlan: Vlan916
-  inband_trans_gw: 10.255.241.65
-  inband_trans_cvx: 10.255.241.68
-  inband_trans_cvp: 10.255.241.69
-  oob_def_gw: 10.178.136.1
-  oob_prefix: 10.178.136
-  oob_mask: 23
-  oob_vrf: OOB
-  oob_cvx: 10.178.137.252
-  oob_cvp: 10.178.137.253
-  as_low: 4200933137
-  as_high: 4200934335
-  cvp_ingest_key: SecureKey01
-  dns1: 10.127.141.1
-  dns2: 10.127.141.2
-  ntp1: 147.204.148.93
-  ntp2: 147.204.148.92
-  snmp1: 147.204.148.100
-  snmp2: 147.204.148.87
-  syslog1: 147.204.148.91
-  syslog2: 147.204.149.69
-  syslog3: 147.204.146.42
-  radius1: 147.204.146.74
-  radius2: 147.204.146.75
+  hec_nr: "11" 
+  hana_hvx_descriptions_PO_MIN: 101 # is this true and still required for what
+  hana_hvx_descriptions_PO_MAX: 124 # is this true and still required for what
+  hvv_descriptions_PO_MAX: 24 # is this true and still required for what
+  hvv_descriptions_PO_RANGE: "{101,151}" # is this true and still required for what
+  ma_domain: "hec.oob.net.sap" # correct
+  lo900_domain: "mow.hec.sap.biz" # correct
+  vl900_domain: "mow.hec.sap.biz" # correct
+  vl900_mask: 24 # correct ???????????????????
+  vl900_def_gw: 198.19.230.1 # TIC GTW for inband address all routers,ipmi, legacy inband (not new fab)
+  vl900_net: 198.19.230.0/25 # HEC11-NW-MGMT-01 198.19.230.0/25 (all router and ipmi's also legacy inband)
+  lo900_net: 198.19.230.160/27 # Network inband management for fabric devices
+  lo900_prefix: 198.19.230 # HEC11-NW-MGMT09 198.19.230.160/27 (all fab like spines and boarders all added to tic)
+  inband_trans_brdr: 10.255.183.78 # see hec transit xls
+  inband_trans_brdr_mac: 00:1c:73:00:00:96 # for brdr2ab 10g leaf from https://wiki.wdf.sap.corp/wiki/display/CND/HEC+VARP+MAC+addressing+scheme
+  inband_trans_net: 10.255.183.64/28 # see hec transit xls
+  inband_trans_prefix: 10.255.183 # see hec transit xls
+  inband_trans_mask: 28 # see hec transit xls
+  inband_trans_gw_vlan: Vlan916 # see hec transit xls
+  inband_trans_gw: 10.255.183.65 # see hec transit xls
+  inband_trans_cvx: 10.255.183.68 # see hec transit xls BUT WE NOT NEED cvx anymore
+  inband_trans_cvp: 10.255.183.69 # see hec transit xls
+  oob_def_gw: 10.177.249.1 # correct
+  oob_prefix: 10.177.249 # correct
+  oob_mask: 23 # correct
+  oob_vrf: OOB  # correct
+  oob_cvx: 10.177.249.252 # correct
+  oob_cvp: 10.177.249.253 # correct
+  as_low: 4200933137 # I do not know if correct
+  as_high: 4200934335  # I do not know if correct
+  cvp_ingest_key: SecureKey11 # correct
+  dns1: 100.127.5.1 # dns1: 100.127.5.1 # dns01-mow.mow.hec.sap.biz ?????
+  dns2: 100.127.5.2 # dns2: 100.127.5.2 # dns01-mow.mow.hec.sap.biz ?????
+  ntp1: 100.127.5.37 # taken from sw-hec11-101 correct  ?
+  ntp2: 100.127.5.38 # taken from sw-hec11-101 correct ?
+  snmp1: 147.204.148.100 # taken from sw-hec11-101 correct ?
+  snmp2: 147.204.148.87 # taken from sw-hec11-101 correct ?
+  syslog1: 100.127.2.65 # taken from sw-hec11-101 correct ?
+  syslog2: 100.127.5.69 # taken from sw-hec11-101 correct ?
+  radius1: 10.17.121.35 # taken from sw-hec11-101 correct ?
+  radius2: 10.17.122.21 # taken from sw-hec11-101 correct ?
   sflow:
     destination:
-      - ipv4: 147.204.148.160
-        port: 9995
-    source: Loopback900
-  admin_mpls:
-    - prefix_mask: "10.178.140.0/23"
-      sequence: "20"
-  admin_sw_interface: Ethernet49
-  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
-  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"
-  admin_sw_prefix: 10.255.202
-  admin_sw_mask: 29
-  admin_sw_ip_oob1a: 10.255.202.9
-  admin_sw_ip_oob1b: 10.255.202.10
-  admin_sw_neig_ip_oob1a: 10.255.202.11
-  admin_sw_neig_as_oob1a: 1.463
-  admin_sw_neig_ip_oob1b: 10.255.202.12
-  admin_sw_neig_as_oob1b: 1.463
-  oob01_lo0_prefix: 198.19.249
-  oob01_as: 64531.2
+      - ipv4: 100.127.4.47 # taken from sw-hec11-101 correct ?
+        port: 9995 # taken from sw-hec11-101 correct ?
+    source: Loopback900 # on non fab or router it is vlan900
+  admin_mpls: # this is not updated as already in place
+    - prefix_mask: "10.178.140.0/23"  # this is not updated as already in place
+      sequence: "20"  # this is not updated as already in place
+  admin_sw_interface: Ethernet49  # this is not updated as already in place
+  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"  # this is not updated as already in place
+  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"  # this is not updated as already in place
+  admin_sw_prefix: 10.255.202  # this is not updated as already in place
+  admin_sw_mask: 29  # this is not updated as already in place
+  admin_sw_ip_oob1a: 10.255.202.9  # this is not updated as already in place
+  admin_sw_ip_oob1b: 10.255.202.10  # this is not updated as already in place
+  admin_sw_neig_ip_oob1a: 10.255.202.11  # this is not updated as already in place
+  admin_sw_neig_as_oob1a: 1.463  # this is not updated as already in place
+  admin_sw_neig_ip_oob1b: 10.255.202.12  # this is not updated as already in place
+  admin_sw_neig_as_oob1b: 1.463  # this is not updated as already in place
+  oob01_lo0_prefix: 198.19.249  # this is not updated as already in place
+  oob01_as: 64531.2  # this is not updated as already in place
   spine_nr:
     - 11
     - 12
@@ -152,12 +151,12 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7504
+    model: 7280 # hec11 does use chassis spines - correct
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 4
+    linecards: 1 # hec11 does use chassis spines - correct
     # Enable or disable Bfd for underlay (true or false)
-    underlay_bfd: True
+    underlay_bfd: True # not sure ????????????
     # the following list 'port' is a workaround for mixed port speeds in existing
     # Fabric builds.
     # list every port and it's speed if it is different from the value

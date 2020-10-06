@@ -151,7 +151,7 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7280 # hec11 does use chassis spines - correct
+    model: 7280 # hec11 does use chassis Arista DCS-7280CR3-96-F spines - correct
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1 # hec11 does use chassis spines - correct
@@ -180,14 +180,14 @@ hec:
         snmp:
           location: ROT02-RZ54-R1-8-RU22
           contact: 34344373:ncons5401.wdf.sap.corp:1012
-  ngdr_underlay:
-    edge_as: 65200
+  ngdr_underlay: # there is no ngdr in hec11
+    edge_as: 65200 # there is no ngdr in hec11
   # Are the core vlans 3000 to 3499 needed
-  core_vlans: true
+  core_vlans: true # no idea correct 
   fabric:
     # valid modes are: manual, cvx, evpn
-    vtep_distribution_mode: manual
-    vtep_ips:
+    vtep_distribution_mode: evpn # from my understanding we install as evpn site but not sure as it s a legacy site like amsterdam
+    vtep_ips: # below are over from hec01
       - 10.200.1.1
       - 10.200.1.2
       - 10.200.1.3
@@ -218,10 +218,10 @@ hec:
       - 10.200.1.29
       - 10.200.1.30
       - 10.200.1.31
-      - 10.200.1.32 # hvv-27
-      - 10.200.1.33 # hvv-28
-      - 10.200.1.34 # hvv-29
-      - 10.200.1.37 # hvv-30
+      - 10.200.1.32
+      - 10.200.1.33
+      - 10.200.1.34
+      - 10.200.1.37
       - 10.200.1.38 # hvv-31
       - 10.200.1.69
       - 10.200.1.70

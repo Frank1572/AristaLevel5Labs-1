@@ -81,9 +81,9 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 
        ansible-playbook cva.yml -i cva --tags "cvp_stop" --timeout 240  --limit hecXX
        
-       ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
-
        ansible-playbook cva.yml -i cva --tags "cvp_install" --timeout 240  --limit hecXX
+       
+       ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
 
        ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
 

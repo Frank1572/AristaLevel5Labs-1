@@ -72,6 +72,8 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
        ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
 
        ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
+       
+ Note: last task "restart network service" will fail because IP address change to static IP.
 
  - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva"
 

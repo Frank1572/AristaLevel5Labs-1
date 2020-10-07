@@ -75,7 +75,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
        
  Note: last task "restart network service" will fail because IP address change to static IP.
 
- - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva"
+ - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva" example x.x.x.43
 
  - Run the ansible playbooks to setup the CVP
 
@@ -84,6 +84,8 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
        ansible-playbook cva.yml -i cva --tags "cvp_install" --timeout 240  --limit hecXX
        
        ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
+       
+  - Set the static IP assigned to the CVP in the file "\<ansible-home\>/cvp" example x.x.x.253
 
        ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
 

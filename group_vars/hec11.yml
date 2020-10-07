@@ -32,7 +32,7 @@ oob1:
     cva_ip: 10.177.248.249 # Correct sudo cat /var/lib/dhcpd/dhcpd.leases
 
 cvp:
-  version: cvp-2019.1.2-kvm.tgz # Correct
+  version: cvp-2019.1.2-kvm.tar # Correct
   path_to_cvp_file: /data/ # file is on nw-admin-02.rot /data
   ip_eth0: 10.177.249.253 # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
   ip_eth1: 10.255.183.69 # Correct as per xls HEC Transit

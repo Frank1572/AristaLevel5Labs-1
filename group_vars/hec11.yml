@@ -93,8 +93,8 @@ hec:
   vl900_mask: 24 # correct ???????????????????
   vl900_def_gw: 198.19.230.1 # TIC GTW for inband address all routers,ipmi, legacy inband (not new fab)
   vl900_net: 198.19.230.0/25 # HEC11-NW-MGMT-01 198.19.230.0/25 (all router and ipmi's also legacy inband)
-  lo900_net: 198.19.230.160/27 # Network inband management for fabric devices
-  lo900_prefix: 198.19.230 # HEC11-NW-MGMT09 198.19.230.160/27 (all fab like spines and boarders all added to tic)
+  lo900_net: 198.19.188.0/24 # Network inband management for fabric devices - T10 as taken not used in xls
+  lo900_prefix: 198.19.188. # HEC11-NW-MGMT10(all fab like spines and boarders all added to tic)
   inband_trans_brdr: 10.255.183.78 # see hec transit xls
   inband_trans_brdr_mac: 00:1c:73:00:00:96 # for brdr2ab 10g leaf from https://wiki.wdf.sap.corp/wiki/display/CND/HEC+VARP+MAC+addressing+scheme
   inband_trans_net: 10.255.183.64/28 # see hec transit xls
@@ -104,11 +104,11 @@ hec:
   inband_trans_gw: 10.255.183.65 # see hec transit xls
   inband_trans_cvx: 10.255.183.68 # see hec transit xls BUT WE NOT NEED cvx anymore
   inband_trans_cvp: 10.255.183.69 # see hec transit xls
-  oob_def_gw: 10.177.249.1 # correct
-  oob_prefix: 10.177.249 # correct
+  oob_def_gw: 10.177.248.1 # correct
+  oob_prefix: 10.177.248 # correct
   oob_mask: 23 # correct
   oob_vrf: OOB  # correct
-  oob_cvx: 10.177.249.252 # correct
+  oob_cvx: 10.177.249.252 # correct but not required as do not use cvx
   oob_cvp: 10.177.249.253 # correct
   as_low: 4200933137 # I do not know if correct
   as_high: 4200934335  # I do not know if correct
@@ -128,22 +128,22 @@ hec:
       - ipv4: 100.127.4.47 # taken from sw-hec11-101 correct ?
         port: 9995 # taken from sw-hec11-101 correct ?
     source: Loopback900 # on non fab or router it is vlan900
-  admin_mpls: # this is not updated as already in place
-    - prefix_mask: "10.178.140.0/23"  # this is not updated as already in place
-      sequence: "20"  # this is not updated as already in place
-  admin_sw_interface: Ethernet49  # this is not updated as already in place
-  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"  # this is not updated as already in place
-  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"  # this is not updated as already in place
-  admin_sw_prefix: 10.255.202  # this is not updated as already in place
-  admin_sw_mask: 29  # this is not updated as already in place
-  admin_sw_ip_oob1a: 10.255.202.9  # this is not updated as already in place
-  admin_sw_ip_oob1b: 10.255.202.10  # this is not updated as already in place
-  admin_sw_neig_ip_oob1a: 10.255.202.11  # this is not updated as already in place
-  admin_sw_neig_as_oob1a: 1.463  # this is not updated as already in place
-  admin_sw_neig_ip_oob1b: 10.255.202.12  # this is not updated as already in place
-  admin_sw_neig_as_oob1b: 1.463  # this is not updated as already in place
-  oob01_lo0_prefix: 198.19.249  # this is not updated as already in place
-  oob01_as: 64531.2  # this is not updated as already in place
+  admin_mpls: # 
+    - prefix_mask: "10.177.248.0/23"  # correct
+      sequence: "20"  # correct
+  admin_sw_interface: Ethernet45  # this is the port oob1ab are connected to admin switch - fwt port is 1
+  admin_sw_description_oob1a: "mowdc01-adm-03-co 1/13"  # correct location admin Cage1-06/05/11-32
+  admin_sw_description_oob1b: "mowdc01-adm-04-co 1/13"  # correct location admin Cage1-06/05/12-52
+  admin_sw_prefix: 10.255.211  # given by Brian see visio
+  admin_sw_mask: 29  # not sure as - is it /31 ??
+  admin_sw_ip_oob1a: 10.255.211.8  # correct this is the ip set on oob1a site - adm site is 9
+  admin_sw_ip_oob1b: 10.255.211.10  # correct this is the ip set on oob1b site - adm site is 11
+  admin_sw_neig_ip_oob1a: 10.255.211.9  # correct this is the ip set on adm site connected to oob1a
+  admin_sw_neig_as_oob1a: 1.463  # correct century link 65999
+  admin_sw_neig_ip_oob1b: 10.255.211.11  # correct this is the ip set on adm site connected to oob1b
+  admin_sw_neig_as_oob1b: 1.463  # correct century link 65999
+  oob01_lo0_prefix: 198.19.251  # correct taken from oob1ab .180 and .181 for oob1b
+  oob01_as: 64531.11  # correct .11
   spine_nr:
     - 11
     - 12

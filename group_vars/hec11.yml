@@ -20,7 +20,7 @@ cva:
   name: naa-hec11-01 # Correct as per nslookup naa-hec11-01.hec.oob.net.sap.
   dns1: 100.127.5.1 # dns01-mow.mow.hec.sap.biz ?????
   dns2: 100.127.5.2 # dns01-mow.mow.hec.sap.biz ?????
-  domain: hec.oob.net.sap # Correct nslookup naa-hec01-01.hec.oob.net.sap.
+  domain: hec.oob.net.sap # Correct nslookup naa-hec11-01.hec.oob.net.sap.
   password: arista # Correct
 
 oob1:

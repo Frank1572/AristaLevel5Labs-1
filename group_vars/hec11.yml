@@ -57,9 +57,9 @@ cvp:
     - prefix: 198.19.230.0 # correct
       mask: 25 # correct
       nexthop: 10.255.183.78 # correct
-  # HEC11-NW-MGMT09 198.19.230.160/27 (all fab like spines and boarders all added to tic)
-    - prefix: 198.19.230.160 # Correct
-      mask: 27 # Correct
+  # HEC11-NW-MGMT10 198.19.188.0/24 (all fab like spines and boarders all added to tic)
+    - prefix: 198.19.188.0 # Correct
+      mask: 24 # Correct
       nexthop: 10.255.183.78 # correct see xls Hec_transit
   dhcp:
     prefix: 10.177.248.0 # correct

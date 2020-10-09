@@ -78,3 +78,13 @@ maintenance
     exit
   exit
 !
+! ============= to enable a port, add it to the list of interfaces below =============
+!
+{% for interface in spine_interfaces.interfaces %}
+{% if "Ethernet" in interface.name %}
+{% if interface.enabled %}
+interface {{ interface.name }}
+ no shutdown
+{% endif %}
+{% endif %}
+{% endfor %}

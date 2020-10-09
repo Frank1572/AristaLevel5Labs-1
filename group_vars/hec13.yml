@@ -1,5 +1,5 @@
 ---
-# file: group_vars/hec13
+# file: group_vars/hec13 YAML File
 idrac:
   # IDRAC IP reserved in IPAM :
   ip: "10.9.245.254"

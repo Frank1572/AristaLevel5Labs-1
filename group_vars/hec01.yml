@@ -130,7 +130,7 @@ hec:
         port: 9995
     source: Loopback900
   admin_mpls:
-    - prefix_mask: "10.178.140.0/23"
+    - prefix_mask: "10.178.136.0/23"
       sequence: "20"
   admin_sw_interface: Ethernet49
   admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"

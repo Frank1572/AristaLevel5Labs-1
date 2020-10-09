@@ -65,6 +65,32 @@
   tags:
     - configlets
 
+- name: Grab Spine interfaces 
+  delegate_to: 127.0.0.1
+  connection: network_cli
+  eos_facts:
+    host: "{{ hec.oob_prefix }}.11"
+    gather_subset: min
+    gather_network_resources: interfaces
+  tags:
+    - configlets
+
+- name: Store the Spine interfaces in a file
+  delegate_to: 127.0.0.1
+  copy:
+    content: '{{ansible_network_resources | to_nice_yaml}}'
+    dest: '{{role_path}}/files/configs/spine_interfaces'
+  tags:
+    - configlets
+
+- name: Include interface for Spine from file
+  delegate_to: 127.0.0.1
+  include_vars:
+    file: '{{role_path}}/files/configs/spine_interfaces'
+    name: spine_interfaces
+  tags:
+    - configlets
+
 - name: Render all templates
   delegate_to: 127.0.0.1
   template:

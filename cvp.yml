@@ -1,5 +1,5 @@
 ---
-# file: static.yml
+# file: cvp.yml
 
 - hosts: build
   gather_facts: no

@@ -1,6 +1,6 @@
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
 {% set ports_per_lc = 36 %}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+{% if hec.spine.model|string is search('75[01][486].*') %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}
 {% endif %}
@@ -11,6 +11,7 @@
 {% if hec.spine.model|string is search('.*-.*') %}
 {% set ports_per_lc = hec.spine.model|string %}
 {% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
+{# ports_per_lc {{ports_per_lc}} #}
 {% endif %}
 {% set create_ip_on_interface = "no" %}
 {% include "templates/config_templates/sw-hec-spine-ips.j2" %}

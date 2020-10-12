@@ -17,11 +17,11 @@
 {#
   determine the correct interface name based on the spine model
 #}
-{% if hec.spine.model|string == '7280' %}
+{% if hec.spine.model|string is search('7280.*') %}
 {% set intf_name = subintf|string+'/1' %}
 {# interface Ethernet{{ subintf }}/1 #}
 {% endif %}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+{% if hec.spine.model|string is search('75[01][486].*')  %}
 {% set intf_name = lc|string+'/'+subintf|string+'/1' %}
 {# interface Ethernet{{ lc }}/{{ subintf }}/1 #}
 {% endif %}

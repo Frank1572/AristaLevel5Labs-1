@@ -167,19 +167,19 @@ hec:
       - id: 11
         snmp:
           location: RU-MOW1-CAGE3-13/05/08/13 # correct
-          contact: 34847180:ncons-hec11-oob-01a.net.sap.corp:1001
+          contact: 34847180:ncons-hec11-07.hec.oob.net.sap:1001  # correct
       - id: 12
         snmp:
           location: RU-MOW1-CAGE3-13/05/09/13 # correct
-          contact: 34847181:ncons-hec11-oob-01a.net.sap.corp:1001
+          contact: 34847181:ncons-hec11-07.hec.oob.net.sap:1002  # correct
       - id: 13
         snmp:
-          location: RU-MOW1-CAGE3-13/05/11/12/13 # correct
-          contact: 34847182
+          location: RU-MOW1-CAGE3-13/05/11/13 # correct
+          contact: 34847182:ncons-hec11-08.hec.oob.net.sap:1001  # correct
       - id: 14
         snmp:
-          location: RU-MOW1-CAGE3-13/05/
-          contact: 34847183
+          location: RU-MOW1-CAGE3-13/05/43/03  # correct
+          contact: 34847183:ncons-hec11-08.hec.oob.net.sap:1002  # correct
   ngdr_underlay: # there is no ngdr in hec11
     edge_as: 65200 # there is no ngdr in hec11
   # Are the core vlans 3000 to 3499 needed
@@ -209,21 +209,25 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6 # brdr2ab
         uplink_ports: 51/1,52/1,53/1,54/1
-  oob01a_snmp_contact: 34847161.......   # missing ncons
+  # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008   #  correct
+  # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37 # correct 
+  # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008  # correct
+  # fwt01b_snmp_location: RU-MOW1-CAGE3-13/05/12/37 #  correct     
+  oob01a_snmp_contact: 34847161:ncons-hec11-06.hec.oob.net.sap:1001   # 
   oob01a_snmp_location: RU-MOW1-CAGE1-06/04/22/45 # correct
-  oob01b_snmp_contact: 34847162   # missing ncons
+  oob01b_snmp_contact: 34847162:ncons-hec11-06.hec.oob.net.sap:1002   # correct
   oob01b_snmp_location: RU-MOW1-CAGE1-06/04/21/45 # correct
-  oob02a_snmp_contact: 34847178.......  # missing ncons
+  oob02a_snmp_contact: 34847178:ncons-hec11-07.hec.oob.net.sap:1006 # correct
   oob02a_snmp_location: RU-MOW1-CAGE3-13/05/08/35 # corrected
-  oob02b_snmp_contact: 34847179    # missing ncons
+  oob02b_snmp_contact: 34847179:ncons-hec11-08.hec.oob.net.sap:1006    # correct
   oob02b_snmp_location: RU-MOW1-CAGE3-13/05/11/35  # correct
   oobs_2_7:   # in real we have oob3 and oob4
-    - number: 03   # this is not updated as already in place
-      snmp_contact: 34847165   # this is not updated as already in place
+    - number: 03   # correct
+      snmp_contact: 34847165:ncons-hec11-07.hec.oob.net.sap:1007 # correct
       snmp_location: RU-MOW1-CAGE3-13/05/08/05  # correct
       ip_last_octett: 4   # ??????????????????
     - number: 04   # this is not updated as already in place
-      snmp_contact: 34847166   # this is not updated as already in place
+      snmp_contact: 34847166:ncons-hec11-08.hec.oob.net.sap:1007   # correct
       snmp_location: RU-MOW1-CAGE3-13/05/11/05   # correct
       ip_last_octett: 5  # ??????????????????
   routes:
@@ -248,15 +252,15 @@ hec:
     - number: 4a # updated from 1a to 4a - 4 is the special leaf 7280QR-C36 towards legacy
       snmp:
         location: RU-MOW1-CAGE3-13/05/09/33 # correct
-        contact: 34847172 # missing ncons
-      oob_ip: 10.178.136.15 # to be checked
-      nwmgmt_ip: 198.19.190.15 # to be checked
+        contact: 34847172:ncons-hec11-07.hec.oob.net.sap:1004 # correct
+      oob_ip: 10.177.248.17  # correct see nslookup
+      nwmgmt_ip: 198.19.188.17 # correct see nslookup
       uplinks:
         - 25/1 # 7280QR-C36
         - 26/1 # 7280QR-C36
         - 35/1 # 7280QR-C36
         - 36/1 # 7280QR-C36
-      spine_port_towards_leaf: Et3/3/1
+      spine_port_towards_leaf: Et3/3/1 # to be checked
       ports:
         - id: 900
           type: vlan
@@ -345,20 +349,20 @@ hec:
     - number: 4b
       snmp:
         location: RU-MOW1-CAGE3-13/05/12/33 # correct
-        contact: 34847173 # ncons ???
-      oob_ip: 10.178.136.16 # to be checked
-      nwmgmt_ip: 198.19.190.16 # to be checked
+        contact: 34847173:ncons-hec11-08.hec.oob.net.sap:1004 # correct
+      oob_ip: 10.177.248.18  # correct see nslookup
+      nwmgmt_ip: 198.19.188.18 # correct see nslookup
       uplinks:
         - 29/1
         - 30/1
         - 31/1
         - 32/1
-      spine_port_towards_leaf: Et3/4/1
+      spine_port_towards_leaf: Et3/4/1 # to be checked
       ports:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.240.15/25
+          ip: 198.19.240.15/25 # to be checked
           vrrp:
             - id: 250
               priority: 110
@@ -435,10 +439,10 @@ hec:
           trunk: all
     - number: 2a
       snmp:
-        location: RU-MOW1-CAGE3-13/05/08/33
-        contact: 34847184 # missing
-      oob_ip: 10.178.136.17 # to be checked
-      nwmgmt_ip: 198.19.190.17
+        location: RU-MOW1-CAGE3-13/05/08/33 # correct
+        contact: 34847184:ncons-hec11-07.hec.oob.net.sap:1003 # correct
+      oob_ip: 10.177.248.15 # corect see nslookup
+      nwmgmt_ip: 198.19.188.15 # correct see nslookup
       uplinks:
         - 53/1
         - 54/1
@@ -482,15 +486,15 @@ hec:
     - number: 2b
       snmp:
         location: RU-MOW1-CAGE3-13/05/11/33 # correct
-        contact: 34847185 # missing
-      oob_ip: 10.178.136.18
-      nwmgmt_ip: 198.19.190.18
+        contact: 34847185:ncons-hec11-08.hec.oob.net.sap:1003 # correct
+      oob_ip: 10.177.248.16 # corect see nslookup
+      nwmgmt_ip: 198.19.188.16 # correct see nslookup
       uplinks:
         - 53/1
         - 54/1
         - 55/1
         - 56/1
-      spine_port_towards_leaf: Et3/8/1
+      spine_port_towards_leaf: Et3/8/1 # to be checked
       ports:
         - id: 6
           description: ->fw-hec01-01, eth2
@@ -527,16 +531,16 @@ hec:
           access_vlan: 916
     - number: 3a # there is no 3a or 3b yet below is copy paste
       snmp:
-        location: DE-ROT2-RZ54-R2-2-29
-        contact: 34413783:ncons5402.wdf.sap.corp:1003
-      oob_ip: 10.178.136.19
-      nwmgmt_ip: 198.19.190.19
+        location: unkown
+        contact: unkown
+      oob_ip: 10.177.248.16 # corect see nslookup
+      nwmgmt_ip: 198.19.190.19 # to be added
       uplinks:
         - 29/1
         - 30/1
         - 31/1
         - 32/1
-      spine_port_towards_leaf: Et3/9/1
+      spine_port_towards_leaf: Et3/9/1 # to be checked
       ports:
         - id: 900
           type: vlan
@@ -638,6 +642,230 @@ hec:
           description: rt-hec01-606
           trunk: all
     - number: 3b
+      snmp:
+        location: DE-ROT2-RZ54-R1-2-33
+        contact: 34413782:ncons5402.wdf.sap.corp:1004
+      oob_ip: 10.178.136.20
+      nwmgmt_ip: 198.19.190.20
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et3/10/1
+      ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.218/25
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.240.216
+              auth: FWTTRANS
+        - id: 964
+          type: vlan
+          description: ->Transfer to rt-hec01-cwan-01b
+          ip: 10.254.253.7/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.6
+          mtu: 9100
+        - id: 968
+          type: vlan
+          description: ->Transfer to rt-hec01-vpn-01b
+          ip: 10.254.253.15/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.14
+          mtu: 9100
+        - id: 972
+          type: vlan
+          description: ->Transfer to rt-hec01-606
+          ip: 10.254.253.23/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.22
+          mtu: 9100
+        - id: 1/1
+          description: rt-hec01-core-01c, Fo0/2/1
+          po: 1101
+          speed: 40gfull
+        - id: 2/1
+          description: rt-hec01-core-01d, Fo0/2/1
+          po: 1102
+          speed: 40gfull
+        - id: 4/1
+          description: rt-hec01-cwan-01b, Fo0/1/0
+          po: 1502
+          speed: 40gfull
+        - id: 5/1
+          description: rt-hec01-vpn-01b, Fo0/2/1
+          po: 1504
+          speed: 40gfull
+        - id: 6/1
+          description: rt-hec01-inet-01b, Fo0/2/1
+          po: 1402
+          speed: 40gfull
+        - id: 7/1
+          description: rt-hec01-core-bypass-01a, Fo0/2/1
+          po: 1103
+          speed: 40gfull
+        - id: 8/1
+          description: rt-hec01-core-bypass-01b, Fo0/2/1
+          po: 1104
+          speed: 40gfull
+        - id: 9/1
+          description: fw-hec01-02, et2-02
+          po: 20
+        - id: 10/1
+          description: rt-hec01-606, Fo1/0/0
+          po: 1606
+          speed: 40gfull
+        - id: 27/1
+          description: sw-hec01-brdr-03a, Et27/1
+          po: 42
+        - id: 28/1
+          description: sw-hec01-brdr-03a, Et28/1
+          po: 42
+      port_channels:
+        - id: 20
+          description: fw-hec01-02
+          trunk: all
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
+        - id: 1103
+          description: rt-hec01-core-bypass-01a
+          trunk: 60,900
+        - id: 1104
+          description: rt-hec01-core-bypass-01b
+          trunk: 60,900
+        - id: 1502
+          description: rt-hec01-cwan-01b
+          trunk: all
+        - id: 1504
+          description: rt-hec01-vpn-01b
+          trunk: all
+        - id: 1402
+          description: rt-hec01-inet-01b
+          trunk: all
+        - id: 1606
+          description: rt-hec01-606
+          trunk: all
+  - number: 1a # there is no 1a or 1b yet below is copy paste
+      snmp:
+        location: unkown
+        contact: unkown
+      oob_ip: 10.177.248.16 # corect see nslookup
+      nwmgmt_ip: 198.19.190.19 # to be added
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et3/9/1 # to be checked
+      ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.240.217/25
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.240.216
+              auth: FWTTRANS
+        - id: 963
+          type: vlan
+          description: ->Transfer to rt-hec01-cwan-01b
+          ip: 10.254.253.5/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.4
+          mtu: 9100
+        - id: 967
+          type: vlan
+          description: ->Transfer to rt-hec01-vpn-01b
+          ip: 10.254.253.13/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.12
+          mtu: 9100
+        - id: 971
+          type: vlan
+          description: ->Transfer to rt-hec01-606
+          ip: 10.254.253.21/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.20
+          mtu: 9100
+        - id: 1/1
+          description: rt-hec01-core-01c, Fo0/2/0
+          po: 1101
+          speed: 40gfull
+        - id: 2/1
+          description: rt-hec01-core-01d, Fo0/2/0
+          po: 1102
+          speed: 40gfull
+        - id: 4/1
+          description: rt-hec01-cwan-01b, Fo0/0/0
+          po: 1502
+          speed: 40gfull
+        - id: 5/1
+          description: rt-hec01-vpn-01b, Fo0/2/0
+          po: 1504
+          speed: 40gfull
+        - id: 6/1
+          description: rt-hec01-inet-01b, Fo0/2/0
+          po: 1402
+          speed: 40gfull
+        - id: 7/1
+          description: rt-hec01-core-bypass-01a, Fo0/2/0
+          po: 1103
+          speed: 40gfull
+        - id: 8/1
+          description: rt-hec01-core-bypass-01b, Fo0/2/0
+          po: 1104
+          speed: 40gfull
+        - id: 9/1
+          description: fw-hec01-02, et2-01
+          po: 20
+        - id: 10/1
+          description: rt-hec01-606, Fo0/0/0
+          po: 1606
+          speed: 40gfull
+        - id: 27/1
+          description: sw-hec01-brdr-03b, Et27/1
+          po: 42
+        - id: 28/1
+          description: sw-hec01-brdr-03b, Et28/1
+          po: 42
+      port_channels:
+        - id: 20
+          description: fw-hec01-02
+          trunk: all
+        - id: 1101
+          description: rt-hec01-core-01c
+          trunk: all
+        - id: 1102
+          description: rt-hec01-core-01d
+          trunk: all
+        - id: 1103
+          description: rt-hec01-core-bypass-01a
+          trunk: 60,900
+        - id: 1104
+          description: rt-hec01-core-bypass-01b
+          trunk: 60,900
+        - id: 1502
+          description: rt-hec01-cwan-01b
+          trunk: all
+        - id: 1504
+          description: rt-hec01-vpn-01b
+          trunk: all
+        - id: 1402
+          description: rt-hec01-inet-01b
+          trunk: all
+        - id: 1606
+          description: rt-hec01-606
+          trunk: all
+    - number: 1b # there is no 1 b yet in hec11
       snmp:
         location: DE-ROT2-RZ54-R1-2-33
         contact: 34413782:ncons5402.wdf.sap.corp:1004

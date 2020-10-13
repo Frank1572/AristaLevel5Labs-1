@@ -313,7 +313,7 @@ hec:
         location: US-STL1-CAGE5-EV15-U32
         contact: 34373947:ncons-hec03-oob-02.net.sap.corp:1006
       oob_ip: 10.9.240.5
-      nwmgmt_ip: 198.19.156.16	
+      nwmgmt_ip: 198.19.156.16
       uplinks:
         - 27/1
         - 28/1
@@ -653,32 +653,32 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 3/1
-          description: rt-hec03-inet-01a, Fo0/2/0
+          description: rt-hec03-inet-01a, Fo0/2/1
           po: 1401
           speed: 40gfull
           mtu: 9100
         - id: 4/1
-          description: rt-hec03-inet-01b, Fo0/2/0
+          description: rt-hec03-inet-01b, Fo0/2/1
           port: 1402
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: rt-hec03-vpn-01a, Fo0/2/0
+          description: rt-hec03-vpn-01a, Fo0/2/1
           po: 1503
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: rt-hec03-vpn-01b, Fo0/2/0
+          description: rt-hec03-vpn-01b, Fo0/2/1
           po: 1504
           speed: 40gfull
           mtu: 9100
         - id: 7/1
-          description: rt-hec03-px-01a, Fo0/2/0
+          description: rt-hec03-px-01a, Fo0/2/1
           po: 1901
           speed: 40gfull
           mtu: 9100
         - id: 8/1
-          description: rt-hec03-px-01b, Fo0/2/0
+          description: rt-hec03-px-01b, Fo0/2/1
           po: 1902
           speed: 40gfull
           mtu: 9100
@@ -700,7 +700,7 @@ hec:
           po: 42
       port_channels:
         - id: 42
-          description: mlag peer link
+          description: MLAG-PEER
         - id: 1103
           description: rt-hec03-core-01c
           trunk: all
@@ -880,7 +880,7 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-  - number: 3b
+    - number: 3b
       snmp: 
         location: AMER-US-STL1-(DC4)-Cage1-(01.HK.004)-IM-23-39
         contact: xxxxx:ncons-hec03-oob-07.net.sap.corp:1002
@@ -902,7 +902,7 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link      
-  - number: 4a
+    - number: 4a
       snmp:
         location: US-STL-1-(DC4)-Cage1-(01.HK.004)-IM-21-37
         contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1020
@@ -948,6 +948,104 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+    - number: 5a
+      snmp:
+        location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-16-39
+        contact: 34862671:ncons-hec03-oob-03.net.sap.corp:1022
+      oob_ip: 10.9.240.99
+      nwmgmt_ip: 198.19.156.59
+      spine_port_towards_leaf: Et41/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 100gfull
+      ports:
+       - id: 1/1
+         description: hec03f0053,e4a
+         po: 800
+         speed: 40gfull
+       - id: 2/1
+         description: hec03f0054,e4a
+         po: 805
+         speed: 40gfull
+       - id: 3/1
+         description: hec03f0055,e4a
+         po: 810
+         speed: 40gfull
+       - id: 4/1
+         description: hec03f0056,e4a
+         po: 815
+         speed: 40gfull
+       - id: 30/1
+         description: sw-hec03-str-05b,Et30/1
+         po: 42
+         speed: 100gfull 
+       - id: 31/1
+         description: sw-hec03-str-05b,Et31/1
+         po: 42
+         speed: 100gfull
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+        - id: 800
+          description: hec03f0053,Data
+        - id: 805
+          description: hec03f0054,Data
+        - id: 810
+          description: hec03f0055,Data
+        - id: 815
+          description: hec03f0056,Data
+    - number: 5b
+      snmp:
+        location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-17-39 
+        contact: 34862672:ncons-hec03-oob-03.net.sap.corp:1023
+      oob_ip: 10.9.240.100
+      nwmgmt_ip: 198.19.156.60
+      spine_port_towards_leaf: Et42/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 100gfull
+      ports:
+       - id: 1/1
+         description: hec03f0053,e0j
+         po: 800
+         speed: 40gfull
+       - id: 2/1
+         description: hec03f0054,e0j
+         po: 805
+         speed: 40gfull
+       - id: 3/1
+         description: hec03f0055,e0j
+         po: 810
+         speed: 40gfull
+       - id: 4/1
+         description: hec03f0056,e0j
+         po: 815
+         speed: 40gfull
+       - id: 30/1
+         description: sw-hec03-str-05a,Et30/1
+         po: 42
+         speed: 100gfull
+       - id: 31/1
+         description: sw-hec03-str-05a,Et31/1
+         po: 42
+         speed: 100gfull
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+        - id: 800
+          description: hec03f0053,Data
+        - id: 805
+          description: hec03f0054,Data
+        - id: 810
+          description: hec03f0055,Data
+        - id: 815
+          description: hec03f0056,Data
     - number: 6a
       snmp:
         location: US-STL-1-(DC4)-Cage4-GK-16-37

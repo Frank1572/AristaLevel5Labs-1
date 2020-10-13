@@ -126,7 +126,7 @@ hec:
   snmp2: 147.204.148.87
   syslog1: 169.145.82.65
   syslog2: 169.145.84.91
-  syslog3: 147.204.146.42
+ # syslog3: 147.204.146.42
   radius1: 169.145.33.70
   radius2: 10.4.201.55
   radius_key: 07037265610E0D170E54333D547F3D
@@ -193,7 +193,7 @@ hec:
   #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:
-    # valid modes are: manual, cvx, evpn, manual
+    # valid modes are: manual, cvx, evpn
     vtep_distribution_mode: manual
     vtep_ips:
       - 10.200.1.1
@@ -207,16 +207,22 @@ hec:
       - 10.200.1.9
       - 10.200.1.11
       - 10.200.1.12
+      - 10.200.1.13
       - 10.200.1.14
       - 10.200.1.15
+      - 10.200.1.17
       - 10.200.1.18
+      - 10.200.1.19
+      - 10.200.1.20
+      - 10.200.1.21
+      - 10.200.1.22
+      - 10.200.1.23
       - 10.254.200.1
       - 198.19.251.118
       - 198.19.251.119
       - 198.19.251.120
       - 198.19.251.121
-      
-      
+            
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
@@ -861,7 +867,7 @@ hec:
     - number: 3a
       snmp:
         location: AMER-US-STL1-(DC4)-Cage1-(01.HK.004)-IM-21-39
-        contact: xxxxx:ncons-hec03-oob-07.net.sap.corp:1001
+        contact: 34862673:ncons-hec03-oob-07.net.sap.corp 1001
       oob_ip: 10.9.240.95
       nwmgmt_ip: 198.19.156.55
       spine_port_towards_leaf: Et37/1
@@ -880,10 +886,10 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
-  - number: 3b
+    - number: 3b
       snmp: 
         location: AMER-US-STL1-(DC4)-Cage1-(01.HK.004)-IM-23-39
-        contact: xxxxx:ncons-hec03-oob-07.net.sap.corp:1002
+        contact: 34862674:ncons-hec03-oob-07.net.sap.corp 1002
       oob_ip: 10.9.240.96
       nwmgmt_ip: 198.19.156.56
       spine_port_towards_leaf: Et38/1
@@ -902,7 +908,7 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link      
-  - number: 4a
+    - number: 4a
       snmp:
         location: US-STL-1-(DC4)-Cage1-(01.HK.004)-IM-21-37
         contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1020

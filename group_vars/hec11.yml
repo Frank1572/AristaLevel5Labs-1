@@ -753,7 +753,7 @@ hec:
         - id: 1606
           description: rt-hec01-606
           trunk: all
-  - number: 1a # there is no 1a or 1b yet below is copy paste
+    - number: 1a # there is no 1a or 1b yet below is copy paste
       snmp:
         location: unkown
         contact: unkown

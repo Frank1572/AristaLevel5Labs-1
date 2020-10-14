@@ -37,7 +37,7 @@ cvp:
   ip_eth0: 10.177.249.253 # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
   ip_eth1: 10.255.183.69 # Correct as per xls HEC Transit
   mask_eth0: 255.255.254.0 # correct this is the /23
-  mask_eth1: 255.255.240.0 # correct
+  mask_eth1: 255.255.255.240 # corrected
   gw: 10.177.248.1 # correct
   name: naa-hec11-cvp-01.hec.oob.net.sap # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
   dns1: 10.17.121.30 # global dns server for non fab devices like oob

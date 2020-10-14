@@ -977,51 +977,31 @@ hec:
         - id: 1606
           description: rt-hec01-606
           trunk: all
-  hvv_hvx_acl_rules: |# to be updated for hec11 below is hec02 or hec01
+  hvv_hvx_acl_rules: |# # updated taking acl from legacy 606 und 308 tor switch
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any
       30 permit vlan 50 0x000 92 any any
       40 permit vlan 50 0x000 vrrp any any
       50 permit vlan 50 0x000 ip any 224.0.0.0/5
-      60 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.51.255
-      70 permit vlan 50 0x000 ip 198.18.48.0/22 198.18.51.0/24
-      80 permit vlan 50 0x000 ip 198.18.51.0/24 198.18.48.0/22
-      90 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.48.1
-      100 deny vlan 50 0x000 ip 198.18.48.0/22 198.18.48.0/22
-      110 permit vlan 50 0x000 ip 198.18.48.0/22 any
-      120 permit vlan 50 0x000 ip any any
-      210 permit vlan 55 0x000 icmp any any
-      220 permit vlan 55 0x000 pim any any
-      230 permit vlan 55 0x000 92 any any
-      240 permit vlan 55 0x000 vrrp any any
-      250 permit vlan 55 0x000 ip any 224.0.0.0/5
-      260 permit vlan 55 0x000 ip 100.126.0.0/16 host 100.126.255.255
-      270 permit vlan 55 0x000 ip 100.126.0.0/16 100.126.240.0/20
-      280 permit vlan 55 0x000 ip 100.126.240.0/20 100.126.0.0/16
-      290 permit vlan 55 0x000 ip 100.126.0.0/16 host 100.126.0.1
-      300 deny vlan 55 0x000 ip 100.126.0.0/16 100.126.0.0/16
-      310 permit vlan 55 0x000 ip 100.126.0.0/16 any
-      320 permit vlan 55 0x000 ip any any
-      430 permit vlan 60 0x000 icmp any any
-      440 permit vlan 60 0x000 pim any any
-      450 permit vlan 60 0x000 92 any any
-      460 permit vlan 60 0x000 vrrp any any
-      470 permit vlan 60 0x000 ip any 224.0.0.0/5
-      480 permit vlan 60 0x000 ip 100.124.0.0/19 host 100.124.31.255
-      490 permit vlan 60 0x000 ip 100.124.0.0/19 host 100.124.0.1
-      500 deny vlan 60 0x000 ip 100.124.0.0/19 100.124.0.0/19
-      510 permit vlan 60 0x000 ip 100.124.0.0/19 any
-      520 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.31.255
-      530 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.24.1
-      540 deny vlan 60 0x000 ip 198.18.24.0/21 198.18.24.0/21
-      550 permit vlan 60 0x000 ip 198.18.24.0/21 any
-      560 permit vlan 60 0x000 ip 198.19.208.0/20 host 198.19.223.255
-      570 permit vlan 60 0x000 ip 198.19.208.0/20 host 198.19.208.1
-      580 deny vlan 60 0x000 ip 198.19.208.0/20 198.19.208.0/20
-      590 permit vlan 60 0x000 ip 198.19.208.0/20 any
-      600 permit vlan 60 0x000 ip any any
-      610 permit ip any any
-  hana_acl_rules: |# updated taking acl from legacy sw-hec234 tor
+      60 permit vlan 50 0x000 ip 198.19.80.0/22 host 198.19.83.255
+      70 permit vlan 50 0x000 ip 198.19.80.0/22 198.19.83.0/24
+      80 permit vlan 50 0x000 ip 198.19.83.0/24 198.19.80.0/22
+      90 permit vlan 50 0x000 ip 198.19.80.0/22 host 198.19.80.1
+      100 deny vlan 50 0x000 ip 198.19.80.0/22 198.19.80.0/22 log 
+      110 permit vlan 50 0x000 ip 198.19.80.0/22 any
+      120 permit vlan 50 0x000 ip any any log 
+      130 permit vlan 60 0x000 icmp any any
+      140 permit vlan 60 0x000 pim any any
+      150 permit vlan 60 0x000 92 any any
+      160 permit vlan 60 0x000 vrrp any any
+      170 permit vlan 60 0x000 ip any 224.0.0.0/5
+      180 permit vlan 60 0x000 ip 198.19.88.0/22 host 198.19.91.255
+      190 permit vlan 60 0x000 ip 198.19.88.0/22 host 198.19.88.1
+      200 deny vlan 60 0x000 ip 198.19.88.0/22 198.19.88.0/22 log 
+      210 permit vlan 60 0x000 ip 198.19.88.0/22 any
+      220 permit vlan 60 0x000 ip any any log 
+      230 permit ip any any     
+hana_acl_rules: # updated taking acl from legacy sw-hec234 tor
       10 permit icmp any any
       20 permit pim any any
       30 permit 92 any any

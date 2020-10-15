@@ -404,6 +404,37 @@
     - storageleafs
 
 - set_fact:
+    id: 's5a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-05a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-05a"
+  tags:
+    - configlets
+    - storageleafs
+
+
+- set_fact:
+    id: 's5b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-05b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-05b"
+  tags:
+    - configlets
+    - storageleafs
+
+- set_fact:
     id: 'h1a'
   tags:
     - configlets

@@ -435,12 +435,6 @@
     - storageleafs
 
 - set_fact:
-    id: 'h1a'
-  tags:
-    - configlets
-    - storageleafs
-
-- set_fact:
     id: 's6a'
   tags:
     - configlets
@@ -470,6 +464,12 @@
     - configlets
     - storageleafs
 
+- set_fact:
+    id: 'h1a'
+  tags:
+    - configlets
+    - storageleafs
+    
 - name: Render sw-hec-shs-01a
   delegate_to: 127.0.0.1
   template:

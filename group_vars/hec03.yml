@@ -370,6 +370,24 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et5/1
       ports:
+        - id: 973
+          type: vlan
+          description: ->Transfer to rt-hec03-505/rt-hec03-cwan-02a
+          ip: 10.254.253.25/31
+          mtu: 9100
+        - id: 975
+          type: vlan
+          description: ->Transfer to rt-hec03-506/rt-hec03-cwan-02b
+          ip: 10.254.253.29/31
+          mtu: 9100
+        - id: 1/1
+          description: ->rt-hec03-505/cwan-02a-Te0/1/0
+          po: 1505
+          speed: 10000full
+        - id: 1/2
+          description: ->rt-hec03-506/cwan-02b-Te0/1/0
+          po: 1506
+          speed: 10000full
         - id: 916
           type: vlan
           description: ->Transfer network for inband management
@@ -409,6 +427,12 @@ hec:
           description: sw-hec03-spine-14:Ethernet3/1
           mtu: 9100
       port_channels:
+        - id: 1505
+          description: rt-hec03-cwan-02a
+          trunk: all
+        - id: 1506
+          description: rt-hec03-cwan-02b
+          trunk: all
         - id: 42
           description: mlag peer link
         - id: 48

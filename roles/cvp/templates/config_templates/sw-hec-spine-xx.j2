@@ -18,7 +18,13 @@ snmp-server location {{a.snmp.location}}
 {% set lc_start = 3 %}
 {% set lc_end   = 4 %}
 {% endif %}
+{% if hec.spine.model|string is search('.*-.*') %}
+{% set ports_per_lc = hec.spine.model|string %}
+{% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
+{% endif %}
 {% set create_ip_on_interface = "yes" %}
+{% set port_range_end = ports_per_lc|int + 1 %}
+! DEBUG: port_range_end {{port_range_end}}
 {% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 !
 interface Loopback1

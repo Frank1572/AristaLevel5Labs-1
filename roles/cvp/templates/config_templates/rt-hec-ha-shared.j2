@@ -1,0 +1,223 @@
+! Start: Remove config not needed for NGDR 
+!
+no route-map MLPEER-RM permit 10 
+no route-map MLPEER-RM permit 20
+no ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32 
+no interface Loopback2 
+no vlan internal allocation policy descending range 3100 3999
+! 
+! End: Remove config not needed for NGDR 
+!
+!
+route-map RM-MAINT permit 10
+   set as-path prepend auto auto auto auto 
+!
+alias drain
+   10 configure
+   20 maintenance
+   30 unit System
+   40 quiesce
+   50 router bgp 641{{ hec.hec_nr }}.10999
+   60 neighbor PG-EDGE-ROUTER route-map RM-MAINT out
+   70 end
+!
+alias undrain
+   10 configure
+   20 router bgp 641{{ hec.hec_nr }}.10999
+   30 no neighbor PG-EDGE-ROUTER route-map RM-MAINT out
+   40 no maintenance
+   50 end
+!
+event-monitor 
+!
+vlan 900 
+   name NW-MGMT 
+! 
+vlan 922 
+   name BACKUP-TRANS 
+!
+vrf definition INFRA 
+   description InfraVRF 
+!
+bfd multihop interval 1000 min_rx 1000 multiplier 3 
+!
+interface Ethernet 1/1,2/1,3/1,4/1,5/1,6/1,7/1,8/1,9/1,10/1,11/1,12/1,13/1,14/1,15/1,16/1,17/1,18/1,19/1,20/1,21/1,22/1,23/1,24/1,25/1
+   shutdown
+!
+{% for interface in item.ports %}
+{% if interface.type is defined %}
+{% if interface.type != 'Ethernet' %}
+{% if interface.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
+{% if interface.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
+interface {{ inttype }}{{ interface.id }}
+{% endif %}
+{% endif %}
+{% if interface.type is not defined %}
+interface Ethernet{{ interface.id }}
+{% endif %}
+{% if interface.speed is defined %}
+   speed forced {{ interface.speed }}
+{% else %}
+{% if interface.type is not defined %}
+   speed forced {{ hec.fabric.interlink_speed }}
+{% endif %} 
+{% endif %} 
+{% if interface.mtu is defined %}
+   mtu {{ interface.mtu }}
+{% else %}
+   mtu {{ hec.fabri.interlink_mtu }}
+{% endif %} 
+{% if interface.ip is defined %}
+{% if interface.type is not defined %}
+   no switchport
+{% endif %} 
+{% if interface.type is defined %}
+{% if interface.type|lower != 'vlan' %}
+   no switchport 
+{% endif %} 
+{% if interface.type|lower == 'vlan' %}
+   no autostate
+{% endif %} 
+{% endif %} 
+{% if interface.vrf is defined %}
+   vrf {{ interface.vrf }}  
+{% endif %} 
+{% if interface.virtual_router_ip is defined %}
+   ip virtual-router address {{ interface.virtual_router_ip }}
+{% endif %}
+{% endif %} 
+{% if interface.bfd is defined %}
+   bfd interval 1000 min_rx 1000 multiplier 3  
+{% endif %} 
+{% endfor %}  
+! 
+! ===== Spine Uplinks =====
+{% for uplink in item.uplinks %}
+interface Ethernet{{ uplink }}
+   no switchport
+   description SPINE UPLINK
+   mtu {{ hec.fabric.interlink_mtu }}
+{% if item.uplinks_speed is defined %}
+   {% set speed = item.uplinks_speed %}
+{% else %}
+   {% set speed = hec.fabric.interlink_speed %}
+{% endif %}
+speed forced {{ speed }}
+!
+{% endfor %}
+!
+interface Loopback1 
+   description Router-ID and VTEP
+!
+interface Loopback900 
+   description NW-MGMT
+! 
+interface Management1 
+   vrf forwarding OOB  
+! 
+interface Vxlan1 
+   vxlan source-interface Loopback1 
+   vxlan vlan 922 vni 10922   
+   vxlan vrf INFRA vni 9{{ hec.hec_nr }}0000
+!
+hardware tcam 
+   system profile vxlan-routing   
+!
+ip virtual-router mac-address 00:1c:73:00:00:98 
+!
+ip routing vrf INFRA 
+!
+{% if hec.ngdr_overlay.routes is defined %}
+{% for route in hec.ngdr_overlay.routes %}
+ip route vrf {{ route.vrf }} {{ route.network }} {{ route.interface }} {{ route.nexthop }}
+{% endfor %}
+{% endif %}
+!
+ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32 
+ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32 
+ip prefix-list PL-FORBIDDEN-PREF seq 10 permit 10.0.0.0/8 le 32 
+ip extcommunity-list FILTER_LOCAL_MAC permit rt 1:1 
+!
+route-map RM-EDGE permit 10 
+   match ip address prefix-list PL-EDGE 
+! 
+route-map RM-HAPEER deny 10 
+   match ip address prefix-list PL-FORBIDDEN-PREF 
+! 
+route-map RM-HAPEER deny 15 
+   match extcommunity FILTER_LOCAL_MAC 
+! 
+route-map RM-HAPEER permit 20 
+! 
+router bgp 641{{ hec.hec_nr }}.10999 
+   bgp asn notation asdot 
+   no bgp default ipv4-unicast 
+   distance bgp 20 95 200 
+   maximum-paths 8 ecmp 16 
+   neighbor PG-EDGE-ROUTER peer-group 
+   neighbor PG-EDGE-ROUTER remote-as {{ hec.ngdr_underlay.edge_as }}.{{ hec.hec_nr }}
+   neighbor PG-EDGE-ROUTER next-hop-unchanged 
+   neighbor PG-EDGE-ROUTER update-source Loopback1 
+   neighbor PG-EDGE-ROUTER fall-over bfd 
+   neighbor PG-EDGE-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-EDGE-ROUTER ebgp-multihop 
+   neighbor PG-EDGE-ROUTER send-community standard extended 
+   neighbor PG-EDGE-ROUTER maximum-routes 0 
+   neighbor PG-HA-ROUTER peer-group 
+   neighbor PG-HA-ROUTER remote-as 641{{ hec.hec_nr }}.10999 
+   neighbor PG-HA-ROUTER update-source Loopback1 
+   neighbor PG-HA-ROUTER fall-over bfd 
+   neighbor PG-HA-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-HA-ROUTER send-community standard extended 
+   neighbor PG-HA-ROUTER maximum-routes 0 
+   neighbor PG-RMT-HA-ROUTER peer-group 
+   neighbor PG-RMT-HA-ROUTER remote-as 641{{ hec.ngdr_overlay.remote_hec_nr }}.10999 
+   neighbor PG-RMT-HA-ROUTER next-hop-unchanged 
+   neighbor PG-RMT-HA-ROUTER fall-over bfd 
+   neighbor PG-RMT-HA-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-RMT-HA-ROUTER route-map RM-HAPEER out 
+   neighbor PG-RMT-HA-ROUTER send-community standard extended 
+   neighbor PG-RMT-HA-ROUTER maximum-routes 0 
+   neighbor PG-SPINE peer-group 
+   neighbor PG-SPINE remote-as 641{{ hec.hec_nr }}.10000 
+   neighbor PG-SPINE allowas-in 3 
+   neighbor PG-SPINE soft-reconfiguration inbound all 
+   neighbor PG-SPINE send-community 
+   neighbor PG-SPINE maximum-routes 0 
+   neighbor PG-SPINE-EVPN peer-group 
+   neighbor PG-SPINE-EVPN remote-as 641{{ hec.hec_nr }}.10000 
+   neighbor PG-SPINE-EVPN update-source Loopback1 
+   neighbor PG-SPINE-EVPN fall-over bfd 
+   neighbor PG-SPINE-EVPN soft-reconfiguration inbound all 
+   neighbor PG-SPINE-EVPN ebgp-multihop 2 
+   neighbor PG-SPINE-EVPN send-community standard extended 
+   neighbor PG-SPINE-EVPN maximum-routes 0 
+   neighbor 10.100.0.11 peer-group PG-SPINE-EVPN 
+   neighbor 10.100.0.12 peer-group PG-SPINE-EVPN 
+   neighbor 10.100.0.13 peer-group PG-SPINE-EVPN 
+   neighbor 10.100.0.14 peer-group PG-SPINE-EVPN 
+{% for neighbor in hec.ngdr_overlay.edge_neighbors %}
+   neighbor {{ neighbor.ip }} peer-group PG-EDGE-ROUTER
+   neighbor {{ neighbor.ip }} description *** BGP to {{ neighbor.hostname }} ***
+{% endfor %}
+   ! 
+   vlan-aware-bundle all-vlans 
+      route-target both 1:1 
+      redistribute learned 
+      vlan 5-2999 
+   ! 
+   address-family evpn 
+      neighbor PG-SPINE-EVPN activate
+{% for neighbor in hec.ngdr_overlay.edge_neighbors %}
+      neighbor {{ neighbor.ip }} activate
+{% endfor %} 
+   ! 
+   address-family ipv4 
+      no neighbor PG-SPINE-EVPN activate 
+   ! 
+   vrf INFRA 
+      rd {{ hec.hec_nr }}:900 
+      route-target import evpn {{ hec.ngdr_overlay.remote_hec_nr }}:900 
+      route-target export evpn {{ hec.hec_nr }}:900 
+      redistribute static 
+! 

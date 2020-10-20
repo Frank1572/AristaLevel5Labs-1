@@ -29,7 +29,7 @@ hec.TYPE.spine_port_towards_leaf | name the port that is used on spine-XX to con
 hec.TYPE.ports | list of interface IDs without the interface name but only the ID
 hec.TYPE.ports.id | interface ID without the interface name but only the ID
 hec.TYPE.ports.description | the interface description
-hec.TYPE.ports.type | optional value. Valid options: **vlan**, **spine_link**
+hec.TYPE.ports.type | optional value. Valid options: `vlan`, `spine_link`
 hec.TYPE.ports.ip | optional value. IPv4 address in CIDR notation
 hec.TYPE.ports.po | optional value. Assign port to given port-channel number. Requires also to define the port-channel.
 hec.TYPE.ports.trunk | optional value. If set to _all_ the port will be a vlan trunk port with no limitations. Instead of _all_ list all vlans that should only be allowed on the trunk. Notation is colons-separated list of vlan-ids.
@@ -42,12 +42,12 @@ hec.TYPE.ports.speed | optional value.
 Variable name in the dictionary tree | Description
 ------------------------------------ | -----------
 hec.ngdr_underlay.edge_as | This is the ASN to be used in EVPN peering.
-hec.TYPE.ports.ngdr_underlay | set to "true" to indicate that BGP will use this interface for setting up BGP peering
+hec.TYPE.ports.ngdr_underlay | set to `true` to indicate that BGP will use this interface for setting up BGP peering
 hec.TYPE.ports.ngdr_underlay_neighbor | IPv4 address of the BGP neighbor for this transit network (do not provide CIDR subnet mask)
 
 ## Example content in yml file
 
-The interface must be an SVI (port of "type: vlan") and it must have an IPv4 address ("ip: XX")
+The interface must be an SVI (port of `type: vlan`) and it must have an IPv4 address (`ip: XX`)
 ````
     ngdr_underlay:
       edge_as: 65195

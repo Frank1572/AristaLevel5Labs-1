@@ -33,12 +33,12 @@
 #}
 {% for allbrdrs in loop_items if allbrdrs.number == id_short %}
 {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+{% if hec.spine.model|string is search('75[01][486].*')  %}
 {# Chassis based devices #}
 {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
 {% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
 {% endif %}
-{% if hec.spine.model|string == '7280' %}
+{% if hec.spine.model|string is search('7280.*') %}
 {# Non-modular switches like 7280 #}
 {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
 {% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}

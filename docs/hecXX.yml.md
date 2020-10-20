@@ -37,6 +37,7 @@ hec.TYPE.ports.speed | optional value.
 
 # How to configure NGDR-underlay direct transit networks on Borderleafs.
 
+## Settings in the locations yml file
 
 Variable name in the dictionary tree | Description
 ------------------------------------ | -----------

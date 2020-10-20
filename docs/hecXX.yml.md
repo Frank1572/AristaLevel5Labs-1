@@ -48,6 +48,7 @@ hec.TYPE.ports.ngdr_underlay_neighbor | IPv4 address of the BGP neighbor for thi
 ## Example content in yml file
 
 The interface must be an SVI (port of "type: vlan") and it must have an IPv4 address ("ip: XX")
+````
     ngdr_underlay:
       edge_as: 65195
     brdr:
@@ -60,3 +61,4 @@ The interface must be an SVI (port of "type: vlan") and it must have an IPv4 add
             ip: 10.254.253.9/31
             ngdr_underlay: true
             ngdr_underlay_neighbor: 10.254.253.8
+````

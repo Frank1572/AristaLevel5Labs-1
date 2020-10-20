@@ -1171,7 +1171,7 @@ hec:
         - id: 10
           description: hec03f00501
           trunk: 30,32,40,50,55,130,2001-2499
-  hvv_hvx_acl_rules: | # update to acl on 20/10/2020 after finding the hvv/hvx running hec02 ACL
+  hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
         20 permit vlan 50 0x000 pim any any
         30 permit vlan 50 0x000 92 any any

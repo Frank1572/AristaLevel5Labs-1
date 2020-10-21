@@ -2,6 +2,8 @@
 - name: load default EOS CLI syntax (4.22.x and earlier)
   set_fact:
     eos_cmd: "{{cli_cmd.22.cmd}}"
+  tags:
+    - always
 
 # load newer CLI syntax if eos.new_syntax is set true.
 - name: check if newer EOS CLI command syntax to load
@@ -9,3 +11,5 @@
     eos_cmd: "{{cli_cmd.23.cmd}}"
   when: eos.new_syntax
   ignore_errors: true
+  tags:
+    - always

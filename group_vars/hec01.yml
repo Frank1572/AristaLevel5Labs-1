@@ -155,6 +155,9 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
+    # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
+    # This number of port per linecard may be appended to each model. If not appended,
+    # the default value of 36 ports is used for port configuration.
     model: 7504
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
@@ -1254,4 +1257,3 @@ hec:
       190 deny ip 198.18.8.0/22 198.18.8.0/22
       200 permit ip 198.18.8.0/22 any
       210 permit ip any any
-!

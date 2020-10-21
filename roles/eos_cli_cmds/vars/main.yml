@@ -1,9 +1,41 @@
 cli_cmd:
   23:
     cmd:
-      c_vrrp_priority: vrrp priority-level
-      c_vrrp_ip: vrrp ipv4
+      c_vrrp_priority: priority-level
+      c_vrrp_ip: ipv4
+      c_vrrp_ip_secondary: ipv4 secondary
+      c_vrrp_track: tracked-object
+      c_vrrp_authentication: peer authentication
+      c_vlan_internal_allocation_policy: vlan internal order
+      c_vrf_defintion: vrf instance
+      c_vrf_forwarding: vrf
+      c_ntp_source: ntp local-interface
+      c_neighbor_soft-reconfiguration: neighbor rib-in pre-policy retain
+      c_neighbor_peer-group: peer group
+      c_neighbor_fall-over_bfd: bfd
+      c_ip_http_client_source-interface: ip http client local-interface
+      c_ip_extcommunity-list_standard: ip extcommunity-list
+      c_ip_domain-name: dns domain
+      c_enable_secret: enable password
+      c_bgp_listen_limit: dynamic peer max
+      c_aaa_authorization_console: aaa authorization serial-console
   22:
     cmd:
-      c_vrrp_priority: vrrp priority
-      c_vrrp_ip: vrrp ip
+      c_vrrp_priority: priority
+      c_vrrp_ip: ip
+      c_vrrp_ip_secondary: ip secondary
+      c_vrrp_track: track
+      c_vrrp_authentication: authentication
+      c_vlan_internal_allocation_policy: vlan internal allocation policy
+      c_vrf_defintion: vrf definition
+      c_vrf_forwarding: vrf forwarding
+      c_ntp_source: ntp source
+      c_neighbor_soft-reconfiguration: soft-reconfiguration
+      c_neighbor_peer-group: peer-group
+      c_neighbor_fall-over_bfd: fall-over bfd
+      c_ip_http_client_source-interface: ip http client source-interface
+      c_ip_extcommunity-list_standard: ip extcommunity-list standard
+      c_ip_domain-name: ip domain-name
+      c_enable_secret: enable secret
+      c_bgp_listen_limit: bgp listen limit
+      c_aaa_authorization_console: aaa authorization console

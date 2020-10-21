@@ -1,0 +1,4 @@
+---
+- name: determine EOS CLI command syntax
+  set_fact:
+    eos_cmd: '{%if eos.new_syntax is defined and eos.new_syntax %}{{cli_cmd.23.cmd}}{% else %}{{cli_cmd.22.cmd}}{% endif %}'

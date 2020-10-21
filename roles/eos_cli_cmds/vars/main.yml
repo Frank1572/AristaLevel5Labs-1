@@ -1,0 +1,9 @@
+cli_cmd:
+  - 23:
+    cmd:
+      c_vrrp_priority: vrrp priority-level
+      c_vrrp_ip: vrrp ipv4
+  - 22:
+    cmd:
+      c_vrrp_priority: vrrp priority
+      c_vrrp_ip: vrrp ip

@@ -1183,37 +1183,44 @@ hec:
         60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
         70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
         80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
-        90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
-        100 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22 log
-        110 permit vlan 50 0x000 ip 198.18.80.0/22 any
-        120 permit vlan 50 0x000 ip any any log
-        130 permit vlan 55 0x000 icmp any any
-        140 permit vlan 55 0x000 pim any any
-        150 permit vlan 55 0x000 92 any any
-        160 permit vlan 55 0x000 vrrp any any
-        170 permit vlan 55 0x000 ip any 224.0.0.0/5
-        180 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.25
-        190 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
-        200 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
-        210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
-        220 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16 log
-        230 permit vlan 55 0x000 ip 100.125.0.0/16 any
-        240 permit vlan 55 0x000 ip any any log
-        250 permit vlan 60 0x000 icmp any any
-        260 permit vlan 60 0x000 pim any any
-        270 permit vlan 60 0x000 92 any any
-        280 permit vlan 60 0x000 vrrp any any
-        290 permit vlan 60 0x000 ip any 224.0.0.0/5
-        300 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
-        310 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
-        320 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21 log
-        330 permit vlan 60 0x000 ip 198.18.88.0/21 any log
-        340 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.25
-        350 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
-        360 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20 log
-        370 permit vlan 60 0x000 ip 198.19.128.0/20 any
-        380 permit vlan 60 0x000 ip any any log
-        390 permit ip any any log
+        90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.81.112
+        100 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.81.96/28
+        110 permit vlan 50 0x000 ip 198.18.81.96/28 198.18.80.0/22
+        120 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
+        130 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22 log
+        140 permit vlan 50 0x000 ip 198.18.80.0/22 any
+        150 permit vlan 50 0x000 ip any any
+        160 permit vlan 55 0x000 icmp any any
+        170 permit vlan 55 0x000 pim any any
+        180 permit vlan 55 0x000 92 any any
+        190 permit vlan 55 0x000 vrrp any any
+        200 permit vlan 55 0x000 ip any 224.0.0.0/5
+        210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.255
+        220 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
+        230 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
+        240 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
+        250 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16 log
+        260 permit vlan 55 0x000 ip 100.125.0.0/16 any
+        270 permit vlan 55 0x000 ip any any
+        280 permit vlan 60 0x000 icmp any any
+        290 permit vlan 60 0x000 pim any any
+        300 permit vlan 60 0x000 92 any any
+        310 permit vlan 60 0x000 vrrp any any
+        320 permit vlan 60 0x000 ip any 224.0.0.0/5
+        330 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
+        340 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
+        350 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21 log
+        360 permit vlan 60 0x000 ip 198.18.88.0/21 any
+        370 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.255
+        380 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
+        390 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20 log
+        400 permit vlan 60 0x000 ip 198.19.128.0/20 any
+        410 permit vlan 60 0x000 ip 100.124.32.0/19 host 100.124.63.255
+        420 permit vlan 60 0x000 ip 100.124.32.0/19 host 100.124.32.1
+        430 deny vlan 60 0x000 ip 100.124.32.0/19 100.124.32.0/19 log
+        440 permit vlan 60 0x000 ip 100.124.32.0/19 any
+        450 permit vlan 60 0x000 ip any any
+        460 permit ip any any
 
   hana_acl_rules: |
         10 permit icmp any any

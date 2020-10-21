@@ -191,7 +191,7 @@ hec:
   ngdr_underlay:
     edge_as: 65199
   ngdr_overlay:
-    remote_hec_nr: 16
+    remote_hec_nr: "16"
     routes:
       - network: 100.68.0.0/15
         interface: Vlan922
@@ -223,6 +223,8 @@ hec:
       - ip: 198.19.249.151
       - ip: 198.19.249.152
       - ip: 198.19.249.153
+  lrdr_overlay:
+    remote_hec_nr: "04"
   #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:

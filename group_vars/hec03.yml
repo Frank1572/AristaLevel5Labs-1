@@ -158,7 +158,7 @@ hec:
     - 14
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7280
+    model: 7280-60
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1

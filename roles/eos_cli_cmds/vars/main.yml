@@ -11,7 +11,7 @@ cli_cmd:
       c_vrf_forwarding: vrf
       c_ntp_source: ntp local-interface
       c_neighbor_soft_reconfiguration: neighbor rib-in pre-policy retain
-      c_neighbor_peer-group: peer group
+      c_neighbor_peer_group: peer group
       c_neighbor_fall_over_bfd: bfd
       c_ip_http_client_source_interface: ip http client local-interface
       c_ip_extcommunity_list_standard: ip extcommunity-list

@@ -72,6 +72,8 @@
     host: "{{ hec.oob_prefix }}.11"
     gather_subset: min
     gather_network_resources: interfaces
+  ignore_errors: yes
+  ignore_unreachable: yes
   tags:
     - configlets
 
@@ -80,6 +82,8 @@
   copy:
     content: '{{ansible_network_resources | to_nice_yaml}}'
     dest: '{{role_path}}/files/configs/spine_interfaces'
+  ignore_errors: yes
+  ignore_unreachable: yes
   tags:
     - configlets
 
@@ -88,6 +92,8 @@
   include_vars:
     file: '{{role_path}}/files/configs/spine_interfaces'
     name: spine_interfaces
+  ignore_errors: yes
+  ignore_unreachable: yes
   tags:
     - configlets
 

@@ -87,6 +87,7 @@ maintenance
 !
 ! ============= to enable a port, add it to the list of interfaces below =============
 !
+{% if spine_interfaces is defined %}
 {% for interface in spine_interfaces.interfaces %}
 {% if "Ethernet" in interface.name %}
 {% if interface.enabled %}
@@ -95,3 +96,4 @@ interface {{ interface.name }}
 {% endif %}
 {% endif %}
 {% endfor %}
+{% endif %}

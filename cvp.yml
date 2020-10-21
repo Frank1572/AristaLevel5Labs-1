@@ -4,4 +4,5 @@
 - hosts: build
   gather_facts: no
   roles:
-    - role: cvp
+    - eos_cli_cmds
+    - cvp

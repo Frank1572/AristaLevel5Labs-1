@@ -85,6 +85,9 @@ container:
     parent_container: HEC-Routed Fabric
   HEC-NGDR:
     parent_container: HEC-Routed Fabric
+    configlets:
+      - HEC-VLANs
+      - sw-hec-leaf
   HEC-Leaf:
     parent_container: HEC-Routed Fabric
     configlets:

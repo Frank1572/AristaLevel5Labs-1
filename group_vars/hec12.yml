@@ -1251,4 +1251,3 @@ hec:
       190 deny ip 198.18.8.0/22 198.18.8.0/22
       200 permit ip 198.18.8.0/22 any
       210 permit ip any any
-!

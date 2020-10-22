@@ -32,12 +32,12 @@ oob1:
     cva_ip: 10.177.251.249 # Correct sudo cat /var/lib/dhcpd/dhcpd.leases
 
 cvp:
-  version: cvp-2019.1.2-kvm.tgz # Correct
+  version: cvp-2019.1.2-kvm.tar # Correct (changed from tgz to tar)
   path_to_cvp_file: /data/ # file is on nw-admin-02.rot /data
   ip_eth0: 10.177.251.253 # Correct as per nslookup naa-hec12-cvp-01.hec.oob.net.sap.
   ip_eth1: 10.255.184.69 # xls hec_transit networks
   mask_eth0: 255.255.254.0 # correct
-  mask_eth1: 255.255.240.0 # correct
+  mask_eth1: 255.255.240.0 # correct (changed from 255.255.240.0 to 255.255.255.240) xls hec_transit networks
   gw: 10.177.250.1 # correct
   name: naa-hec12-cvp-01.hec.oob.net.sap # Correct as per nslookup naa-hec11-cvp-01.hec.oob.net.sap.
   dns1: 10.17.121.30 # global dns server for non fab devices like oob
@@ -47,7 +47,7 @@ cvp:
   ntp2: 10.33.142.104 # global ntp server for non fab devices like oob
   device_int: eth0 # Correct
   cluster_int: eth1 # Correct
-  ingest_key: SecureKey11 # Correct
+  ingest_key: SecureKey12 # Correct
   vmname: cvp-hec12 # correct
   KvmDomain: cvp  # correct
   password: arista  # correct
@@ -58,8 +58,8 @@ cvp:
       mask: 25 # correct
       nexthop: 10.255.184.78 # correct
   # HEC12-NW-MGMT10 198.19.231.160/27 (all fab)
-    - prefix: 198.19.231.160  # correct
-      mask: 27  # correct
+    - prefix: 198.19.189.0  # correct (after discussion with Robert I selected for hec12 as for hec11 a free network from xls inventory file)
+      mask: 24  # correct
       nexthop: 10.255.184.78 # correct
   dhcp:
     prefix: 10.177.250.0 # correct

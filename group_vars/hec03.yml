@@ -515,6 +515,12 @@ hec:
           description: sw-hec03-spine-14:Ethernet6/1
           mtu: 9100
       port_channels:
+        - id: 1505
+          description: rt-hec03-cwan-02a
+          trunk: all
+        - id: 1506
+          description: rt-hec03-cwan-02b
+          trunk: all
         - id: 42
           description: mlag peer link
         - id: 48

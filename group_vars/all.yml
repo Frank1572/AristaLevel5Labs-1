@@ -20,10 +20,10 @@ vlandb:
   970: {name: 'RT-HEC-605-TRANS'}
   971: {name: 'RT-HEC-606-TRANS'}
   972: {name: 'RT-HEC-606-TRANS'}
-  973: {name: 'RT-HEC-CWAN-02A-TRANS'}
-  974: {name: 'RT-HEC-CWAN-02A-TRANS'}
-  975: {name: 'RT-HEC-CWAN-02B-TRANS'}
-  976: {name: 'RT-HEC-CWAN-02B-TRANS'}
+  973: {name: 'RT-HEC-505-TRANS'}
+  974: {name: 'RT-HEC-505-TRANS'}
+  975: {name: 'RT-HEC-506-TRANS'}
+  976: {name: 'RT-HEC-506-TRANS'}
   1100: {name: 'INET'}
 vlans:
   ranges:

@@ -621,6 +621,14 @@ hec:
           po: 1502
           speed: 40gfull
           mtu: 9100
+        - id: 11/1
+          po: 1601
+          speed: 40gfull
+          mtu: 9100
+        - id: 12/1
+          po: 1602
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec03-brdr-03b, Et27/1
           po: 42
@@ -724,7 +732,7 @@ hec:
           mtu: 9100
         - id: 4/1
           description: rt-hec03-inet-01b, Fo0/2/1
-          port: 1402
+          po: 1402
           speed: 40gfull
           mtu: 9100
         - id: 5/1
@@ -755,6 +763,14 @@ hec:
         - id: 10/1
           description: rt-hec03-cwan-01b, Fo0/0/1
           po: 1502
+          speed: 40gfull
+          mtu: 9100
+        - id: 11/1
+          po: 1601
+          speed: 40gfull
+          mtu: 9100
+        - id: 12/1
+          po: 1602
           speed: 40gfull
           mtu: 9100
         - id: 27/1

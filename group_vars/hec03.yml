@@ -970,7 +970,7 @@ hec:
     - number: 4a
       snmp:
         location: US-STL-1-(DC4)-Cage1-(01.HK.004)-IM-21-37
-        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1020
+        contact: 34846176:ncons-hec03-oob-07.net.sap.corp 1003
       oob_ip: 10.9.240.97
       nwmgmt_ip: 198.19.156.57
       spine_port_towards_leaf: Et39/1
@@ -981,6 +981,35 @@ hec:
         - 54/1
       uplinks_speed: 100gfull
       ports:
+        - id: 1
+          description: hec03f0057,e0e
+          speed: 10000full
+          po: 50
+        - id: 2
+          description: hec03f0057,e0f
+          speed: 10000full
+          po: 50
+        - id: 3
+          description: hec03f0058,e0e
+          speed: 10000full
+          po: 60
+        - id: 4
+          description: hec03f0058,e0f
+          speed: 10000full
+          po: 60
+        - id: 5
+          description: hec03f0057,e0c
+          po: 5
+        - id: 6
+          description: hec03f0058,e0c
+          po: 6
+        - id: 7
+          description: hec03f0057 r,e0M
+          access_vlan: 10
+        - id: 21
+          description: hec03fc002cs1 MGMT
+          speed: 10000full
+          access_vlan: 110        
         - id: 49/1
           description: sw-hec03-str-04b,Et49/1
           po: 42
@@ -990,10 +1019,22 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+        - id: 5
+          description: hec03f0057
+          access_vlan: 110
+        - id: 6
+          description: hec03f0058
+          access_vlan: 110
+        - id: 50
+          description: hec03f0057
+          trunk: 30,40,50,55,130,2001-2499
+        - id: 60
+          description: hec03f0058
+          trunk: 30,40,50,55,130,2001-2499   
     - number: 4b
       snmp:
         location: US-STL-1-DC4)-Cage1-(01.HK.004)-IM-23-37
-        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1021
+        contact: 34846177:ncons-hec03-oob-07.net.sap.corp 1004
       oob_ip: 10.9.240.98
       nwmgmt_ip: 198.19.156.58
       spine_port_towards_leaf: Et40/1
@@ -1004,6 +1045,35 @@ hec:
         - 54/1
       uplinks_speed: 100gfull
       ports:
+        - id: 1
+          description: hec03f0057,e0g
+          speed: 10000full
+          po: 50
+        - id: 2
+          description: hec03f0057,e0h
+          speed: 10000full
+          po: 50
+        - id: 3
+          description: hec03f0058,e0g
+          speed: 10000full
+          po: 60
+        - id: 4
+          description: hec03f0058,e0h
+          speed: 10000full
+          po: 60
+        - id: 5
+          description: hec03f0057,e0d
+          po: 5
+        - id: 6
+          description: hec03f0058,e0d
+          po: 6
+        - id: 7
+          description: hec03f0058r,e0M
+          access_vlan: 10
+        - id: 21
+          description: hec03fc002cs2 MGMT
+          speed: 10000full
+          access_vlan: 110
         - id: 49/1
           description: sw-hec03-str-04a,Et49/1
           po: 42
@@ -1013,6 +1083,18 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+        - id: 5
+          description: hec03f0057
+          access_vlan: 110
+        - id: 6
+          description: hec03f0058
+          access_vlan: 110
+        - id: 50
+          description: hec03f0057
+          trunk: 30,40,50,55,130,2001-2499
+        - id: 60
+          description: hec03f0058
+          trunk: 30,40,50,55,130,2001-2499          
     - number: 5a
       snmp:
         location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-16-39

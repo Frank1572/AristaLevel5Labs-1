@@ -387,11 +387,11 @@ hec:
           mtu: 9100
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.28
-        - id: 1/1
+        - id: 1
           description: ->rt-hec03-505/cwan-02a-Te0/1/0
           po: 1505
           speed: 10000full
-        - id: 1/2
+        - id: 2
           description: ->rt-hec03-506/cwan-02b-Te0/1/0
           po: 1506
           speed: 10000full
@@ -473,11 +473,11 @@ hec:
           mtu: 9100
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.30
-        - id: 1/1
+        - id: 1
           description: ->rt-hec03-505/cwan-02a-Te0/1/1
           po: 1505
           speed: 10000full
-        - id: 1/2
+        - id: 2
           description: ->rt-hec03-506/cwan-02b-Te0/1/1
           po: 1506
           speed: 10000full

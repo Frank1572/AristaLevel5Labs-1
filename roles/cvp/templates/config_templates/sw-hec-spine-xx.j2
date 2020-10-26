@@ -1,3 +1,4 @@
+{% set ports_per_lc = 36 %}
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item.id }}
 !
 snmp-server contact {{ item.snmp.contact }}

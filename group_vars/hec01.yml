@@ -1,5 +1,8 @@
 ---
 # file: group_vars/hec01.yml
+eos:
+  new_syntax: true
+
 idrac:
   ip: 10.178.136.254
   mask: 255.255.254.0

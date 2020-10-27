@@ -62,6 +62,14 @@ vlans:
       vid: 971
     - name: "{{vlandb.972.name}}"
       vid: 972
+    - name: "{{vlandb.973.name}}"
+      vid: 973
+    - name: "{{vlandb.974.name}}"
+      vid: 974
+    - name: "{{vlandb.975.name}}"
+      vid: 975
+    - name: "{{vlandb.976.name}}"
+      vid: 976
   inet_dmz:
     - name: "{{vlandb.940.name}}"
       vid: 940

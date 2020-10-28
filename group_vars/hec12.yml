@@ -64,8 +64,8 @@ cvp:
   dhcp:
     prefix: 10.177.250.0 # correct
     mask: 255.255.254.0 # correct
-    range_low: 10.178.251.224 # correct
-    range_high: 10.178.251.247 # correct
+    range_low: 10.177.251.224 # correct
+    range_high: 10.177.251.247 # correct
   aaa_config:
     aaa_type: RADIUS
     servers:

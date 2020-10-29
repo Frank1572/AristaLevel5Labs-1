@@ -1433,7 +1433,7 @@ hec:
       210 permit vlan 60 0x000 ip 198.19.88.0/22 any
       220 permit vlan 60 0x000 ip any any log 
       230 permit ip any any     
-hana_acl_rules: |
+  hana_acl_rules: |
       10 permit icmp any any
       20 permit pim any any
       30 permit 92 any any

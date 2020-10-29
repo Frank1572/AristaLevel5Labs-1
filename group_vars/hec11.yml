@@ -1,8 +1,7 @@
 ---
-# file: group_vars/hec11.yml
-# copy of hec01
-# each line has a comment
-# if not commented then the value is for hec01 still
+eos:
+  new_syntax: true
+  
 idrac:
   ip: 10.177.249.254 # Correct as per nslookup
   mask: 255.255.254.0 # Correct /23 see DNS Tool

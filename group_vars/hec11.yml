@@ -93,7 +93,7 @@ hec:
   vl900_def_gw: 198.19.230.1 # TIC GTW for inband address all routers,ipmi, legacy inband (not new fab)
   vl900_net: 198.19.230.0/25 # HEC11-NW-MGMT-01 198.19.230.0/25 (all router and ipmi's also legacy inband)
   lo900_net: 198.19.188.0/24 # Network inband management for fabric devices - T10 as taken not used in xls
-  lo900_prefix: 198.19.188. # HEC11-NW-MGMT10(all fab like spines and boarders all added to tic)
+  lo900_prefix: 198.19.188 # HEC11-NW-MGMT10(all fab like spines and boarders all added to tic)
   inband_trans_brdr: 10.255.183.78 # see hec transit xls
   inband_trans_brdr_mac: 00:1c:73:00:00:96 # for brdr2ab 10g leaf from https://wiki.wdf.sap.corp/wiki/display/CND/HEC+VARP+MAC+addressing+scheme
   inband_trans_net: 10.255.183.64/28 # see hec transit xls

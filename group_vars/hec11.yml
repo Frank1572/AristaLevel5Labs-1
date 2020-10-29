@@ -431,7 +431,7 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et1/4 # correct
       ports:
-   - id: 1
+        - id: 1
           description: lb-hec11-02, eth1.1
           speed: 10000full
           trunk: 940

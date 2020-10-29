@@ -276,24 +276,12 @@ hec:
         - id: 1/2 # 40G Link to L2 core switch
           description: sw-hec11-102 Et5/35/4
           po: 1102
-        - id: 25/1
-          description: sw-hec11-spine-11:Ethernet1/1
-          mtu: 9100
-        - id: 26/1
-          description: sw-hec11-spine-12:Ethernet1/1
-          mtu: 9100
         - id: 30/1
           description: sw-hec11-brdr-04a Et30/1
           po: 42
         - id: 31/1
           description: sw-hec11-brdr-04a Et31/1
           po: 42 
-        - id: 35/1
-          description: sw-hec11-spine-13:Ethernet1/1
-          mtu: 9100
-        - id: 36/1
-          description: sw-hec11-spine-14:Ethernet1/1
-          mtu: 9100
       port_channels:
         - id: 42
           description: mlag peer link
@@ -331,24 +319,12 @@ hec:
         - id: 1/2 # 40G Link to L2 core switch
           description: sw-hec11-102 Et5/36/4
           po: 1102
-        - id: 25/1
-          description: sw-hec11-spine-11:Ethernet1/2
-          mtu: 9100
-        - id: 26/1
-          description: sw-hec11-spine-12:Ethernet1/2
-          mtu: 9100
         - id: 30/1
           description: sw-hec11-brdr-04a Et30/1
           po: 42
         - id: 31/1
           description: sw-hec11-brdr-04a Et31/1
           po: 42 
-        - id: 35/1
-          description: sw-hec11-spine-13:Ethernet1/2
-          mtu: 9100
-        - id: 36/1
-          description: sw-hec11-spine-14:Ethernet1/2
-          mtu: 9100
       port_channels:
         - id: 42
           description: mlag peer link
@@ -398,18 +374,6 @@ hec:
         - id: 50/1
           description: sw-hec01-brdr-02b, Et52/1
           po: 42
-        - id: 51/1
-          description: sw-hec11-spine-11:Ethernet1/3
-          mtu: 9100
-        - id: 52/1
-          description: sw-hec11-spine-12:Ethernet1/3
-          mtu: 9100
-        - id: 53/1
-          description: sw-hec11-spine-13:Ethernet1/3
-          mtu: 9100
-        - id: 54/1
-          description: sw-hec11-spine-14:Ethernet1/3
-          mtu: 9100
         - id: 916
           description: FW-TRANS
           type: vlan
@@ -458,18 +422,6 @@ hec:
         - id: 50/1
           description: sw-hec01-brdr-02a, Et52/1
           po: 42
-        - id: 51/1
-          description: sw-hec11-spine-11:Ethernet1/4
-          mtu: 9100
-        - id: 52/1
-          description: sw-hec11-spine-12:Ethernet1/4
-          mtu: 9100
-        - id: 53/1
-          description: sw-hec11-spine-13:Ethernet1/4
-          mtu: 9100
-        - id: 54/1
-          description: sw-hec11-spine-14:Ethernet1/4
-          mtu: 9100
         - id: 916
           description: FW-TRANS
           type: vlan

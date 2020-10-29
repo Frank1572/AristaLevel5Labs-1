@@ -110,8 +110,8 @@ hec:
   oob_vrf: OOB  # correct
   oob_cvx: 10.177.249.252 # correct but not required as do not use cvx
   oob_cvp: 10.177.249.253 # correct
-  as_low: 4200933137 # I do not know if correct
-  as_high: 4200934335  # I do not know if correct
+  as_low: 4201588497 # I do not know if correct
+  as_high: 4201589695  # I do not know if correct
   cvp_ingest_key: SecureKey11 # correct
   dns1: 100.127.5.1 # dns1: 100.127.5.1 # dns01-mow.mow.hec.sap.biz ?????
   dns2: 100.127.5.2 # dns2: 100.127.5.2 # dns01-mow.mow.hec.sap.biz ?????

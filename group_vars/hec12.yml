@@ -110,8 +110,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.178.137.252
   oob_cvp: 10.178.137.253
-  as_low: 4200933137
-  as_high: 4200934335
+  as_low: 4201654033 # correct see apnic
+  as_high: 4200934335 # correct see apnic
   cvp_ingest_key: SecureKey01
   dns1: 10.127.141.1
   dns2: 10.127.141.2

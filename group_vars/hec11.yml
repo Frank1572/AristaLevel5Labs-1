@@ -110,8 +110,8 @@ hec:
   oob_vrf: OOB  # correct
   oob_cvx: 10.177.249.252 # correct but not required as do not use cvx
   oob_cvp: 10.177.249.253 # correct
-  as_low: 4201588497 # I do not know if correct
-  as_high: 4201589695  # I do not know if correct
+  as_low: 4201588497 # correct see apnic
+  as_high: 4201589695  # correct see apnic
   cvp_ingest_key: SecureKey11 # correct
   dns1: 100.127.5.1 # dns1: 100.127.5.1 # dns01-mow.mow.hec.sap.biz ?????
   dns2: 100.127.5.2 # dns2: 100.127.5.2 # dns01-mow.mow.hec.sap.biz ?????
@@ -260,14 +260,15 @@ hec:
         - 26/1 # 7280QR-C36
         - 35/1 # 7280QR-C36
         - 36/1 # 7280QR-C36
-      spine_port_towards_leaf: Et3/3/1 # to be checked
+      spine_port_towards_leaf: Et3/3/1 # changed from Et3/3/1 to 1/1 as per the MCS  and is correct
+
       ports:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.240.14/25
-          vrrp:
-            - id: 250
+          ip: 198.19.188.17/24 # correct HEC11-NW-MGMT10
+          vrrp: # VRRP gw for FWTRANS towards HEC01 Fabric
+        - id: 250
               priority: 120
               ip: 198.19.240.43
               auth: FWTTRANS
@@ -362,8 +363,8 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.240.15/25 # to be checked
-          vrrp:
+          ip: 198.19.188.18/24 # correct HEC11-NW-MGMT10
+          vrrp: # VRRP gw for FWTRANS towards HEC01 Fabric
             - id: 250
               priority: 110
               ip: 198.19.240.43

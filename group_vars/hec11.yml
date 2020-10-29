@@ -371,38 +371,52 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et1/3
       ports:
-        - id: 6
-          description: ->fw-hec01-01, eth1
-          po: 10
-          speed: 1000full
-        - id: 7
-          description: ->fw-hec01-01, eth2
-          po: 20
-          speed: 1000full
+        - id: 1
+          description: lb-hec11-01, eth1.1
+          speed: 10000full
+          trunk: 940
+        - id: 2
+          description: lb-hec11-01, eth1.2
+          speed: 10000full
+          trunk: vlan 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec11-01, eth1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec11-01, eth1.4
+          trunk: 902
+          speed: 10000full
         - id: 48
-          description: ->naa-hec01-01, in-band
+          description: naa-hec01-01, e3 (inband)
           po: 48
           access_vlan: 916
           speed: 1000full
-        - id: 51/1
+        - id: 49/1
           description: sw-hec01-brdr-02b, Et51/1
           po: 42
-        - id: 52/1
+        - id: 50/1
           description: sw-hec01-brdr-02b, Et52/1
           po: 42
+        - id: 51/1
+          description: sw-hec11-spine-11:Ethernet1/3
+          mtu: 9100
+        - id: 52/1
+          description: sw-hec11-spine-12:Ethernet1/3
+          mtu: 9100
+        - id: 53/1
+          description: sw-hec11-spine-13:Ethernet1/3
+          mtu: 9100
+        - id: 54/1
+          description: sw-hec11-spine-14:Ethernet1/3
+          mtu: 9100
         - id: 916
           description: FW-TRANS
           type: vlan
-          ip: 10.255.241.76/28
+          ip: 10.255.183.76/28 # 183 for hec11
       port_channels:
-        - id: 10
-          description: ->fw-hec01-01
-          trunk: 916
-        - id: 20
-          description: ->fw-hec01-02
-          trunk: 916
         - id: 48
-          description: ->naa-hec01-01, in-band
+          description: naa-hec01-01, in-band
           access_vlan: 916
     - number: 2b
       snmp:
@@ -411,44 +425,58 @@ hec:
       oob_ip: 10.177.248.16 # corect see nslookup
       nwmgmt_ip: 198.19.188.16 # correct see nslookup
       uplinks:
+        - 51/1 # 7280SR-48C6
+        - 52/1
         - 53/1
         - 54/1
-        - 55/1
-        - 56/1
-      spine_port_towards_leaf: Et3/8/1 # to be checked
+      spine_port_towards_leaf: Et1/4 # correct
       ports:
-        - id: 6
-          description: ->fw-hec01-01, eth2
-          po: 10
-          speed: 1000full
-        - id: 7
-          description: ->fw-hec01-02, eth2
-          po: 20
-          speed: 1000full
+   - id: 1
+          description: lb-hec11-02, eth1.1
+          speed: 10000full
+          trunk: 940
+        - id: 2
+          description: lb-hec11-02, eth1.2
+          speed: 10000full
+          trunk: vlan 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec11-02, eth1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec11-02, eth1.4
+          trunk: 902
+          speed: 10000full
         - id: 48
-          description: ->naa-hec01-01, in-band
+          description: naa-hec01-01, e4 (inband)
           po: 48
           access_vlan: 916
           speed: 1000full
-        - id: 51/1
+        - id: 49/1
           description: sw-hec01-brdr-02a, Et51/1
           po: 42
-        - id: 52/1
+        - id: 50/1
           description: sw-hec01-brdr-02a, Et52/1
           po: 42
+        - id: 51/1
+          description: sw-hec11-spine-11:Ethernet1/4
+          mtu: 9100
+        - id: 52/1
+          description: sw-hec11-spine-12:Ethernet1/4
+          mtu: 9100
+        - id: 53/1
+          description: sw-hec11-spine-13:Ethernet1/4
+          mtu: 9100
+        - id: 54/1
+          description: sw-hec11-spine-14:Ethernet1/4
+          mtu: 9100
         - id: 916
           description: FW-TRANS
           type: vlan
-          ip: 10.255.241.77/28
+          ip: 10.255.183.76/28 # 183 for hec11
       port_channels:
-        - id: 10
-          description: ->fw-hec01-01
-          trunk: 916
-        - id: 20
-          description: ->fw-hec01-02
-          trunk: 916
         - id: 48
-          description: ->naa-hec01-01, in-band
+          description: naa-hec01-01, in-band
           access_vlan: 916
     - number: 3a # there is no 3a or 3b yet below is copy paste
       snmp:

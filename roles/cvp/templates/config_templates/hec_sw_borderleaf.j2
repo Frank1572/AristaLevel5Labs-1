@@ -86,7 +86,7 @@ interface Loopback900
 !
 interface Management1
    description OOB MGMT
-   vrf forwarding OOB
+   {{eos_cmd.c_vrf_forwarding}} OOB
    ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
 !
 ! ===== Spine Uplinks =====
@@ -152,13 +152,13 @@ interface Ethernet{{ item.id }}
 #}
 {% if item.vrrp is defined %}{# START vrrp is defined #}
 {% for vrrp_group in item.vrrp %}
-   vrrp {{vrrp_group.id}} priority {{ vrrp_group.priority }}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group.priority }}
    vrrp {{vrrp_group.id}} preempt delay minimum 180
    vrrp {{vrrp_group.id}} preempt delay reload 180
 {% if vrrp_group.auth is defined %}
-   vrrp {{vrrp_group.id}} authentication text {{ vrrp_group.auth }}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
 {% endif %}
-{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ip ' + vrrp_group.ip|string %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
 {% endfor %}

@@ -65,6 +65,38 @@
   tags:
     - configlets
 
+- name: Grab Spine interfaces 
+  delegate_to: 127.0.0.1
+  connection: network_cli
+  eos_facts:
+    host: "{{ hec.oob_prefix }}.11"
+    gather_subset: min
+    gather_network_resources: interfaces
+  ignore_errors: yes
+  ignore_unreachable: yes
+  tags:
+    - configlets
+
+- name: Store the Spine interfaces in a file
+  delegate_to: 127.0.0.1
+  copy:
+    content: '{{ansible_network_resources | to_nice_yaml}}'
+    dest: '{{role_path}}/files/configs/spine_interfaces'
+  ignore_errors: yes
+  ignore_unreachable: yes
+  tags:
+    - configlets
+
+- name: Include interface for Spine from file
+  delegate_to: 127.0.0.1
+  include_vars:
+    file: '{{role_path}}/files/configs/spine_interfaces'
+    name: spine_interfaces
+  ignore_errors: yes
+  ignore_unreachable: yes
+  tags:
+    - configlets
+
 - name: Render all templates
   delegate_to: 127.0.0.1
   template:
@@ -378,7 +410,32 @@
     - storageleafs
 
 - set_fact:
-    id: 'h1a'
+    id: 's5a'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-05a
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-05a"
+  tags:
+    - configlets
+    - storageleafs
+
+
+- set_fact:
+    id: 's5b'
+  tags:
+    - configlets
+    - storageleafs
+
+- name: Render sw-hec-str-05b
+  delegate_to: 127.0.0.1
+  template:
+    src: templates/config_templates/hec_sw_borderleaf.j2
+    dest: "{{role_path}}/files/configs/sw-hec-str-05b"
   tags:
     - configlets
     - storageleafs
@@ -413,6 +470,12 @@
     - configlets
     - storageleafs
 
+- set_fact:
+    id: 'h1a'
+  tags:
+    - configlets
+    - storageleafs
+    
 - name: Render sw-hec-shs-01a
   delegate_to: 127.0.0.1
   template:

@@ -1,13 +1,20 @@
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
+{% set ports_per_lc = 36 %}
+{% if hec.spine.model|string is search('75[01][486].*') %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}
 {% endif %}
-{% if hec.spine.model|string == '7280' %}
+{% if hec.spine.model|string is search('7280.*') %}
 {% set lc_start = 3 %}
 {% set lc_end   = 4 %}
 {% endif %}
+{% if hec.spine.model|string is search('.*-.*') %}
+{% set ports_per_lc = hec.spine.model|string %}
+{% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
+{% endif %}
 {% set create_ip_on_interface = "no" %}
+{% set port_range_end = ports_per_lc|int + 1 %}
+! DEBUG: port_range_end {{port_range_end}}
 {% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 {########## BGP CONFIGURATION ##########}
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
@@ -57,12 +64,12 @@ router bgp 641{{ hec.hec_nr }}.10000
 !
 {########## SPINE MAINTENANCE CONFIGURATION ##########}
 group interface FABRIC
-{% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-   interface Et{% for lc in range(lc_start, lc_end) %}{% for subintf in range(1,37) %}{{ lc }}/{{ subintf }}/1{% if not ( lc == lc_end-1 and subintf == 36 ) %},{% endif %}{% endfor %}{% endfor %}
+{% if hec.spine.model|string is search('75[01][486].*')  %}
+   interface Et{% for lc in range(lc_start, lc_end) %}{% for subintf in range(1, port_range_end) %}{{ lc }}/{{ subintf }}/1{% if not ( lc == lc_end-1 and subintf == ports_per_lc ) %},{% endif %}{% endfor %}{% endfor %}
 
 {% endif %}
-{% if hec.spine.model|string == '7280'  %}
-   interface Et{% for subintf in range(1,37) %}{{ subintf }}/1{% if not ( subintf == 36 ) %},{% endif %}{% endfor %}
+{% if hec.spine.model|string is search('7280.*')  %}
+   interface Et{% for subintf in range(1, port_range_end) %}{{ subintf }}/1{% if not ( subintf == ports_per_lc ) %},{% endif %}{% endfor %}
 
 {% endif %}
    exit
@@ -78,3 +85,15 @@ maintenance
     exit
   exit
 !
+! ============= to enable a port, add it to the list of interfaces below =============
+!
+{% if spine_interfaces is defined %}
+{% for interface in spine_interfaces.interfaces %}
+{% if "Ethernet" in interface.name %}
+{% if interface.enabled %}
+interface {{ interface.name }}
+ no shutdown
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}

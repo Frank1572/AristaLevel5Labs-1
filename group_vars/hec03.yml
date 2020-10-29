@@ -622,10 +622,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
+          description: rt-hec03-idc-01a, Fo0/0/0 
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
+          description: rt-hec03-idc-01b, Fo0/0/0  
           po: 1602
           speed: 40gfull
           mtu: 9100
@@ -766,10 +768,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
+          description: rt-hec03-idc-01a, Fo0/0/1  
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
+          description: rt-hec03-idc-01b, Fo0/0/1  
           po: 1602
           speed: 40gfull
           mtu: 9100

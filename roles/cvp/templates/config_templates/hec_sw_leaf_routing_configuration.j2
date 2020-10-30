@@ -187,16 +187,16 @@ router bgp {{ asn_generated }}
       route-target both 1:1
       redistribute learned
 {% if leafpurpose != 'b' %}
-      vlan 5-2999
+      vlan 5-2499
 {% else %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
 {% else %}
-      vlan 5-2999
+      vlan 5-2499
 {% endif %}
 {% elif (brdrtype == '2')  %}
-      vlan 5-2999
+      vlan 5-2499
 {% endif %}
 {% endif %}
       exit
@@ -266,7 +266,7 @@ router bgp {{ asn_generated_global[0]|string }}
   what type of "specical leaf" we are currently working with.
 #}
 {# TODO: make this code to scale! It's now only for brdr1-3, str1-2, shs1-2 #}
-{% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
+{# {% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
 {% set route_dictionary = hec.routes.static.brdr01 %}
 {% endif %}
 {% if (leafpurpose == 'b') and (brdrtype == '2') and (hec.routes.static.brdr02 is defined) %}
@@ -274,6 +274,9 @@ router bgp {{ asn_generated_global[0]|string }}
 {% endif %}
 {% if (leafpurpose == 'b') and (brdrtype == '3') and (hec.routes.static.brdr03 is defined) %}
 {% set route_dictionary = hec.routes.static.brdr03 %}
+{% endif %}
+{% if (leafpurpose == 'b') and (brdrtype == '4') and (hec.routes.static.brdr04 is defined) %}
+{% set route_dictionary = hec.routes.static.brdr04 %}
 {% endif %}
 {% if (leafpurpose == 's') and (brdrtype == '1') and (hec.routes.static.str01 is defined) %}
 {% set route_dictionary = hec.routes.static.str01 %}
@@ -286,7 +289,23 @@ router bgp {{ asn_generated_global[0]|string }}
 {% endif %}
 {% if (leafpurpose == 'h') and (brdrtype == '2') and (hec.routes.static.shs02 is defined) %}
 {% set route_dictionary = hec.routes.static.shs02 %}
+{% endif %} #}
+{% if hec.routes.static is defined %}
+{% for item_rt_static in hec.routes.static %}
+{#
+  loop through all subitems. depending on the actual switch purpose we are working at,
+  we do loop through all the subitems.
+#}
+{% if leafpurpose == 'b' and item_rt_static is search('brdr') %}
+{# get the type number (tailing integer like 1,2,3,...) #}
+{% set num_tailing = regex_replace('^.*(?P<num_tailing>[123456])$', '\\g<num_tailing>') %}
+{% if brdrtype == num_tailing %}
+{% set route_dictionary = item_rt_static %}
+! new static route code. it should have set the route_dictionary with hec.routes.static.brdr* dictionary
 {% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}{# endif hec.routes.statis is defined #}
 {#
   The keys 'nexthop', 'interface', 'metric', 'vrf'
   are optional, so if they have not been set, we set it

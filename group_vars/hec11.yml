@@ -249,6 +249,7 @@ hec:
           metric: 240
   brdr:
     - number: 4a # updated from 1a to 4a - 4 is the special leaf 7280QR-C36 towards legacy
+      is_l2l3_transit: true
       snmp:
         location: RU-MOW1-CAGE3-13/05/09/33 # correct
         contact: 34847172:ncons-hec11-07.hec.oob.net.sap:1004 # correct
@@ -292,6 +293,7 @@ hec:
           description: sw-hec11-102
           trunk: all        
     - number: 4b
+      is_l2l3_transit: true
       snmp:
         location: RU-MOW1-CAGE3-13/05/12/33 # correct
         contact: 34847173:ncons-hec11-08.hec.oob.net.sap:1004 # correct

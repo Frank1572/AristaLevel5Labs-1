@@ -1,5 +1,5 @@
 {# hec_sw_leaf_routing_configuration.j2 #}
-{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
+{% set id = id + item.number %}
 {#
  first, let's find out the leaf's purpose.
   - 'b' is a borderleaf
@@ -187,16 +187,16 @@ router bgp {{ asn_generated }}
       route-target both 1:1
       redistribute learned
 {% if leafpurpose != 'b' %}
-      vlan 5-2999
+      vlan 5-2499
 {% else %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
 {% else %}
-      vlan 5-2999
+      vlan 5-2499
 {% endif %}
 {% elif (brdrtype == '2')  %}
-      vlan 5-2999
+      vlan 5-2499
 {% endif %}
 {% endif %}
       exit
@@ -265,34 +265,43 @@ router bgp {{ asn_generated_global[0]|string }}
   We need to determine what list to iterate through, so let's find out
   what type of "specical leaf" we are currently working with.
 #}
-{# TODO: make this code to scale! It's now only for brdr1-3, str1-2, shs1-2 #}
-{% if (leafpurpose == 'b') and (brdrtype == '1') and (hec.routes.static.brdr01 is defined) %}
-{% set route_dictionary = hec.routes.static.brdr01 %}
+{% if hec.routes.static is defined %}
+{% for item_rt_static in hec.routes.static %}
+{# ! {{item_rt_static}}
+! {{hec.routes.static[item_rt_static]}} #}
+{# get the type number (tailing integer like 1,2,3,...) #}
+{% set num_tailing = item_rt_static | regex_replace('^.*(?P<num_tailing>[123456])$', '\\g<num_tailing>') %}
+{#
+  loop through all subitems. depending on the actual switch purpose we are working at,
+  we do loop through all the subitems.
+#}
+{% if leafpurpose == 'b' and item_rt_static is search("brdr") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
+{# ! inner for-loop var "route_dictionary": {{route_dictionary}}
+! new static route code. it should have set the route_dictionary with hec.routes.static.brdr* dictionary
+! {{route_dictionary}} #}
 {% endif %}
-{% if (leafpurpose == 'b') and (brdrtype == '2') and (hec.routes.static.brdr02 is defined) %}
-{% set route_dictionary = hec.routes.static.brdr02 %}
 {% endif %}
-{% if (leafpurpose == 'b') and (brdrtype == '3') and (hec.routes.static.brdr03 is defined) %}
-{% set route_dictionary = hec.routes.static.brdr03 %}
+{% if leafpurpose == 's' and item_rt_static is search("str") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
 {% endif %}
-{% if (leafpurpose == 's') and (brdrtype == '1') and (hec.routes.static.str01 is defined) %}
-{% set route_dictionary = hec.routes.static.str01 %}
 {% endif %}
-{% if (leafpurpose == 's') and (brdrtype == '2') and (hec.routes.static.str02 is defined) %}
-{% set route_dictionary = hec.routes.static.str02 %}
+{% if leafpurpose == 'h' and item_rt_static is search("shs") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
 {% endif %}
-{% if (leafpurpose == 'h') and (brdrtype == '1') and (hec.routes.static.shs01 is defined) %}
-{% set route_dictionary = hec.routes.static.shs01 %}
 {% endif %}
-{% if (leafpurpose == 'h') and (brdrtype == '2') and (hec.routes.static.shs02 is defined) %}
-{% set route_dictionary = hec.routes.static.shs02 %}
-{% endif %}
+{% endfor %}
+{% endif %}{# endif hec.routes.statis is defined #}
 {#
   The keys 'nexthop', 'interface', 'metric', 'vrf'
   are optional, so if they have not been set, we set it
   to emtpy strings befor calling the macro
 #}
-{% for route in route_dictionary %}
+{% if route_dictionary[0] is defined %}
+{% for route in route_dictionary[0] %}
 {% if route.vrf is not defined %}
 {% set vrf = '' %}
 {% else %}
@@ -323,3 +332,4 @@ router bgp {{ asn_generated_global[0]|string }}
 #}
 {{ render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}
+{% endif %}

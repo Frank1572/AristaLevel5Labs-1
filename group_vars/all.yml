@@ -7,7 +7,7 @@ vlandb:
   916: {name: 'FW-BRDR-TRANS'}
   920: {name: 'BGP-TRANS'}
   922: {name: 'BACKUP-TRANS'}
-  940: {name: 'INET'}
+  940: {name: 'INET'} 
   961: {name: 'RT-HEC-CWAN-01A-TRANS'}
   962: {name: 'RT-HEC-CWAN-01A-TRANS'}
   963: {name: 'RT-HEC-CWAN-01B-TRANS'}
@@ -20,6 +20,10 @@ vlandb:
   970: {name: 'RT-HEC-605-TRANS'}
   971: {name: 'RT-HEC-606-TRANS'}
   972: {name: 'RT-HEC-606-TRANS'}
+  973: {name: 'RT-HEC-505-TRANS'}
+  974: {name: 'RT-HEC-505-TRANS'}
+  975: {name: 'RT-HEC-506-TRANS'}
+  976: {name: 'RT-HEC-506-TRANS'}
   1100: {name: 'INET'}
 vlans:
   ranges:
@@ -58,6 +62,14 @@ vlans:
       vid: 971
     - name: "{{vlandb.972.name}}"
       vid: 972
+    - name: "{{vlandb.973.name}}"
+      vid: 973
+    - name: "{{vlandb.974.name}}"
+      vid: 974
+    - name: "{{vlandb.975.name}}"
+      vid: 975
+    - name: "{{vlandb.976.name}}"
+      vid: 976
   inet_dmz:
     - name: "{{vlandb.940.name}}"
       vid: 940

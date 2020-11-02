@@ -204,7 +204,6 @@
   tags:
     - configlets
     - borderleafs
-    - preload
 
 - name: "Render Borderleafs (new)"
   delegate_to: 127.0.0.1
@@ -215,7 +214,6 @@
   tags:
     - configlets
     - borderleafs
-    - preload
 
 #- name: Render sw-hec-brdr-01a
 #  delegate_to: 127.0.0.1
@@ -487,7 +485,6 @@
   tags:
     - configlets
     - storageleafs
-    - preload
 
 - name: "Render Storageleafs (new)"
   delegate_to: 127.0.0.1
@@ -498,14 +495,12 @@
   tags:
     - configlets
     - storageleafs
-    - preload
 
 - set_fact:
     id: 's'
   tags:
     - configlets
     - storageleafs
-    - preload
 
 - name: "Render Shared Hana Storageleafs (new)"
   delegate_to: 127.0.0.1
@@ -516,7 +511,6 @@
   tags:
     - configlets
     - storageleafs
-    - preload
 
 # - set_fact:
 #     id: 'h1a'

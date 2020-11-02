@@ -81,6 +81,11 @@ vlan {{item.vid}}
 {% endfor %}
 {% endif %}
 {% endif %}
+{% if is_l2l3_transit|default('', true) -%}
+  !
+  {% include "templates/config_templates/HEC-VLANs.j2" %}
+  !
+{%- endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !
 snmp-server contact {{allbrdrs.snmp.contact}}

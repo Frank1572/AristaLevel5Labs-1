@@ -1,4 +1,5 @@
 {# hec_sw_borderleaf.j2 #}
+{% set id = id + item.number %}
 {##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf and 'h for shared-hana-storage '#####}
 {% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
 {% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}

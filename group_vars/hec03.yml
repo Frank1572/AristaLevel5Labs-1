@@ -115,8 +115,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.9.241.252
   oob_cvp: 10.9.241.253
-  as_low: 4200998673
-  as_high: 4200999871
+  as_low: 4201064209
+  as_high: 4201065407
   cvp_ingest_key: SecureKey03
   dns1: 169.145.84.8
   dns2: 169.145.84.9
@@ -621,6 +621,16 @@ hec:
           po: 1502
           speed: 40gfull
           mtu: 9100
+        - id: 11/1
+          description: rt-hec03-idc-01a, Fo0/0/0 
+          po: 1601
+          speed: 40gfull
+          mtu: 9100
+        - id: 12/1
+          description: rt-hec03-idc-01b, Fo0/0/0  
+          po: 1602
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec03-brdr-03b, Et27/1
           po: 42
@@ -724,7 +734,7 @@ hec:
           mtu: 9100
         - id: 4/1
           description: rt-hec03-inet-01b, Fo0/2/1
-          port: 1402
+          po: 1402
           speed: 40gfull
           mtu: 9100
         - id: 5/1
@@ -755,6 +765,16 @@ hec:
         - id: 10/1
           description: rt-hec03-cwan-01b, Fo0/0/1
           po: 1502
+          speed: 40gfull
+          mtu: 9100
+        - id: 11/1
+          description: rt-hec03-idc-01a, Fo0/0/1  
+          po: 1601
+          speed: 40gfull
+          mtu: 9100
+        - id: 12/1
+          description: rt-hec03-idc-01b, Fo0/0/1  
+          po: 1602
           speed: 40gfull
           mtu: 9100
         - id: 27/1

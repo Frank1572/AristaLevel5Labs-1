@@ -1,3 +1,10 @@
+{#
+  Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
+#}
+{% set oob_mgmt_intf = "Management0" %}
+{% if hec.spine.model|string is search('7280.*') %}
+{% set oob_mgmt_intf = "Management1" %}
+{% endif %}
 {% set ports_per_lc = 36 %}
 hostname sw-hec{{ hec.hec_nr }}-spine-{{ item.id }}
 !
@@ -36,7 +43,7 @@ interface Loopback900
    description NW-MGMT
    ip address {{ hec.lo900_prefix }}.{{ item.id }}/32
 !
-interface Management0
+interface {{oob_mgmt_intf}}
    description OOB MGMT
    vrf forwarding OOB
    ip address {{ hec.oob_prefix }}.{{ item.id }}/{{ hec.oob_mask }}

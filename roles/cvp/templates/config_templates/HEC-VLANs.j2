@@ -61,7 +61,15 @@ vlan 140
 vlan 150
    name CUSTOMER_DATA_TRANSFER
 !
-vlan 2001-2999
+! HANA private networks in Fabric Extensions
+vlan 1500-1999
+!
+! Customer Back-end vlans
+vlan 2001-2499
+!
+! HANA private networks
+vlan 2500-2999
+!
 !
 ! === VLAN range for internal VLANs (routed interfaces) ===
 vlan internal allocation policy descending range 3100 3999

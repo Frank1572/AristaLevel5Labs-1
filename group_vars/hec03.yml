@@ -571,6 +571,20 @@ hec:
           ip: 10.254.253.13/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.12
+        - id: 969
+          type: vlan
+          description: Transfer to rt-hec03-idc-01a
+          mtu: 9100
+          ip: 10.254.253.17/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.16
+        - id: 971
+          type: vlan
+          description: Transfer to rt-hec03-idc-01b
+          mtu: 9100
+          ip: 10.254.253.21/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.20
         - id: 1/1
           description: rt-hec03-core-01c, Fo0/0/0
           po: 1103
@@ -717,6 +731,20 @@ hec:
           ip: 10.254.253.15/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.14
+        - id: 970
+          type: vlan
+          description: Transfer to rt-hec03-idc-01a
+          mtu: 9100
+          ip: 10.254.253.19/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.18
+        - id: 972
+          type: vlan
+          description: Transfer to rt-hec03-idc-01b
+          mtu: 9100
+          ip: 10.254.253.23/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.22
         - id: 1/1
           description: rt-hec03-core-01c, Fo0/0/1
           po: 1103

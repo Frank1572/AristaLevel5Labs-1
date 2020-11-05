@@ -340,11 +340,11 @@ interface Management1
 !
 interface Vlan21
    ip address {{ hec.oob_prefix }}.2/{{ hec.oob_mask }}
-   vrrp 21 priority 105
+   vrrp 21 {{eos_cmd.c_vrrp_priority}} 105
    vrrp 21 preempt delay minimum 180
    vrrp 21 preempt delay reload 180
-   vrrp 21 authentication text oobnw
-   vrrp 21 ip {{ hec.oob_def_gw }}
+   vrrp 21 {{eos_cmd.c_vrrp_authentication}} text oobnw
+   vrrp 21 {{eos_cmd.c_vrrp_ip}} {{ hec.oob_def_gw }}
    vrrp 21 track 494 decrement 10
 !
 interface Vlan4094

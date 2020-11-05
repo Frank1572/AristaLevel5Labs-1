@@ -104,8 +104,8 @@ track 494 interface Loopback494 line-protocol
 interface Vlan21
    vrrp 21 preempt delay minimum 180
    vrrp 21 preempt delay reload 180
-   vrrp 21 authentication text oobnw
-   vrrp 21 ip {{ hec.oob_def_gw }}
+   vrrp 21 {{eos_cmd.c_vrrp_authentication}} text oobnw
+   vrrp 21 {{eos_cmd.c_vrrp_ip}} {{ hec.oob_def_gw }}
    vrrp 21 track 494 decrement 10
 !
 ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
@@ -138,4 +138,3 @@ router ospf 1
 interface Vlan4094
    ip ospf network point-to-point
 !
-

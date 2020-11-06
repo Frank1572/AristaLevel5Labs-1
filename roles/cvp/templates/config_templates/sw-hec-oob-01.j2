@@ -21,7 +21,7 @@ ip radius source-interface Vlan21
 !
 logging source-interface Vlan21
 !
-ntp source Vlan21
+{{eos.c_ntp_source}} Vlan21
 !
 interface Port-Channel102
    description ->sw-hec{{ hec.hec_nr }}-oob-02,Po101

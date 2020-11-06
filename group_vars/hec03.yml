@@ -1235,6 +1235,18 @@ hec:
         - 54/1
       uplinks_speed: 100gfull
       ports:
+        - id: 1
+          description: hec03f0053,eoM
+          access_vlan: 110
+        - id: 2
+          description: hec03f0053r,BMC
+          access_vlan: 10
+        - id: 3
+          description: hec03f0055,eoM
+          access_vlan: 110
+        - id: 4
+          description: hec03f0055r,BMC
+          access_vlan: 10
         - id: 49/1
           description: sw-hec03-str-06b,Et49/1
           po: 42
@@ -1258,6 +1270,18 @@ hec:
         - 54/1
       uplinks_speed: 100gfull
       ports:
+        - id: 1
+          description: hec03f0054,eoM
+          access_vlan: 110
+        - id: 2
+          description: hec03f0054r,BMC
+          access_vlan: 10
+        - id: 3
+          description: hec03f0056,eoM
+          access_vlan: 110
+        - id: 4
+          description: hec03f0056r,BMC
+          access_vlan: 10
         - id: 49/1
           description: sw-hec03-str-06a,Et49/1
           po: 42

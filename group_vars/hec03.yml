@@ -1224,7 +1224,7 @@ hec:
     - number: 6a
       snmp:
         location: US-STL-1-(DC4)-Cage4-GK-16-37
-        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1024
+        contact: 34846178:ncons-hec03-oob-03.net.sap.corp 1024
       oob_ip: 10.9.240.101
       nwmgmt_ip: 198.19.156.61
       spine_port_towards_leaf: Et43/1
@@ -1247,7 +1247,7 @@ hec:
     - number: 6b
       snmp:
         location: US-STL-1-(DC4)-Cage4-(01.GH.004)-GK-17-37
-        contact: xxxxxx:ncons-hec03-oob-03.net.sap.corp 1025
+        contact: 34846179:ncons-hec03-oob-03.net.sap.corp 1025
       oob_ip: 10.9.240.102
       nwmgmt_ip: 198.19.156.62
       spine_port_towards_leaf: Et44/1

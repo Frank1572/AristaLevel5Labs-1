@@ -35,7 +35,7 @@ cli_cmd:
       c_neighbor_fall_over_bfd: fall-over bfd
       c_ip_http_client_source-interface: ip http client source-interface
       c_ip_extcommunity_list_standard: ip extcommunity-list standard
-      c_ip_domain-name: ip domain-name
+      c_ip_domain_name: ip domain-name
       c_enable_secret: enable secret
       c_bgp_listen_limit: bgp listen limit
       c_aaa_authorization_console: aaa authorization console

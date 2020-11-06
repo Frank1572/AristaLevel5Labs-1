@@ -45,12 +45,12 @@ interface Loopback900
 !
 interface {{oob_mgmt_intf}}
    description OOB MGMT
-   {{eos.c_vrf_forwarding}} OOB
+   {{eos_cmd.c_vrf_forwarding}} OOB
    ip address {{ hec.oob_prefix }}.{{ item.id }}/{{ hec.oob_mask }}
 !
 router bgp 641{{ hec.hec_nr }}.10000
    router-id 10.100.0.{{ item.id }}
-   bgp listen range 10.{{ item.id }}.0.0/16 {{eos.c_neighbor_peer_group}} LEAF-PG peer-filter LEAF-PF
+   bgp listen range 10.{{ item.id }}.0.0/16 {{eos_cmd.c_neighbor_peer_group}} LEAF-PG peer-filter LEAF-PF
    network 10.100.0.{{ item.id }}/32
    network {{ hec.lo900_prefix }}.{{ item.id }}/32
 !

@@ -80,32 +80,32 @@ mlag configuration
 router bgp 641{{ hec.hec_nr }}.10005
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
-   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG {{eos.c_neighbor_peer_group}}
    neighbor EVPN-PG remote-as 641{{ hec.hec_nr }}.10000
    neighbor EVPN-PG update-source Loopback1
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG maximum-routes 0
-   neighbor EVPN-PG fall-over bfd
+   neighbor EVPN-PG {{eos.c_neighbor_fall_over_bfd}}
    !
-   neighbor SPINE-PG peer-group
-   neighbor SPINE-PG soft-reconfiguration inbound all
+   neighbor SPINE-PG {{eos.c_neighbor_peer_group}}
+   neighbor SPINE-PG {{eos.c_neighbor_soft_reconfiguration}} inbound all
    neighbor SPINE-PG send-community
-   neighbor SPINE-PG fall-over bfd
+   neighbor SPINE-PG {{eos.c_neighbor_fall_over_bfd}}
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG maximum-routes 12000
    neighbor SPINE-PG remote-as 641{{ hec.hec_nr }}.10000
    !
-   neighbor MLPEER-PG peer-group
+   neighbor MLPEER-PG {{eos.c_neighbor_peer_group}}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes 12000
    neighbor MLPEER-PG remote-as 641{{ hec.hec_nr }}.10005
    network 10.200.1.5/32
    !
-   neighbor 10.100.0.11 peer-group EVPN-PG
-   neighbor 10.100.0.12 peer-group EVPN-PG
-   neighbor 10.100.0.13 peer-group EVPN-PG
-   neighbor 10.100.0.14 peer-group EVPN-PG
+   neighbor 10.100.0.11 {{eos.c_neighbor_peer_group}} EVPN-PG
+   neighbor 10.100.0.12 {{eos.c_neighbor_peer_group}} EVPN-PG
+   neighbor 10.100.0.13 {{eos.c_neighbor_peer_group}} EVPN-PG
+   neighbor 10.100.0.14 {{eos.c_neighbor_peer_group}} EVPN-PG
    !
    address-family evpn
       neighbor EVPN-PG activate

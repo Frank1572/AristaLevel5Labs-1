@@ -14,10 +14,10 @@ radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 {% set order = 'local group radius' %}
 {% endif %}
 aaa authentication login default {{order}}
-aaa authorization console
+{{eos.c_aaa_authorization_console}}
 aaa authorization exec default {{order}}
 !
-enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+{{eos.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 no aaa root
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1

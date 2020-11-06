@@ -217,11 +217,6 @@ interface {{hec.inband_trans_gw_vlan}}
 !
 ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}
 !
-{# {% if hec.inband_trans_gw_vlan is defined %}
-ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
-{% else %}
-ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
-{% endif %} #}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
 {% endif %}
 {% endif %}

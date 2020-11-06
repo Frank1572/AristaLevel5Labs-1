@@ -32,22 +32,22 @@ router bgp 641{{ hec.hec_nr }}.10000
    maximum-paths 8 ecmp 16
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 {% for listen_range in hec.fabric.bgp_listen_ranges %}
-   bgp listen range {{ listen_range }} {{eos.c_neighbor_peer_group}} EVPN-PG peer-filter EVPN-PF
+   bgp listen range {{ listen_range }} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG peer-filter EVPN-PF
 {% endfor %}
-   neighbor EVPN-PG {{eos.c_neighbor_peer_group}}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG update-source Loopback1
-   neighbor EVPN-PG {{eos.c_neighbor_fall_over_bfd}}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG maximum-routes 0
 {% endif %}
 !
-   neighbor LEAF-PG {{eos.c_neighbor_peer_group}}
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor LEAF-PG send-community
 {% if hec.spine.underlay_bfd %}
-   neighbor LEAF-PG {{eos.c_neighbor_fall_over_bfd}}
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}
-   neighbor LEAF-PG {{eos.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
    neighbor LEAF-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
 !
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}

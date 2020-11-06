@@ -111,33 +111,33 @@ router bgp {{ asn_generated }}
    router-id 10.100.1.{{ Lo1 }}
    maximum-paths 8 ecmp 16
    !
-   neighbor SPINE-PG {{eos.c_neighbor_peer_group}}
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor SPINE-PG remote-as {{ asn_spine }}
-   neighbor SPINE-PG {{eos.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
 {% if hec.spine.underlay_bfd %}
-   neighbor SPINE-PG {{eos.c_neighbor_fall_over_bfd}}
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG send-community
    neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
-   neighbor MLPEER-PG {{eos.c_neighbor_peer_group}}
+   neighbor MLPEER-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor MLPEER-PG remote-as {{ asn_generated }}
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
 {% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
-   neighbor EDGE-PG {{eos.c_neighbor_peer_group}}
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
-   neighbor EDGE-PG {{eos.c_neighbor_fall_over_bfd}}
-   neighbor EDGE-PG {{eos.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
    neighbor EDGE-PG route-map RM-EDGE in
    neighbor EDGE-PG route-map RM-EDGE out
    neighbor EDGE-PG send-community
    neighbor EDGE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
 {% for edge_neighbor in allbrdrs.ports %}
 {% if (edge_neighbor.type is defined) and (edge_neighbor.type == "vlan") and (edge_neighbor.ngdr_underlay is defined) and (edge_neighbor.ngdr_underlay)%}
-   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} {{eos.c_neighbor_peer_group}} EDGE-PG
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} {{eos_cmd.c_neighbor_peer_group}} EDGE-PG
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }}
 {% endif %}
 {% endfor %}
@@ -145,13 +145,13 @@ router bgp {{ asn_generated }}
 {% endif %}
    !
 {% for i in range(1,5) %}
-   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos.c_neighbor_peer_group}} SPINE-PG
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
 {% endfor %}
 {% set mlag_ip_peer  = hec.fabric.mlag_a_ip %}
 {% if leafid == 'a' %}
 {% set mlag_ip_peer  = hec.fabric.mlag_b_ip %}
 {% endif %}
-   neighbor {{ mlag_ip_peer }} {{eos.c_neighbor_peer_group}} MLPEER-PG
+   neighbor {{ mlag_ip_peer }} {{eos_cmd.c_neighbor_peer_group}} MLPEER-PG
    !
    network 10.100.1.{{ Lo1 }}/32
    network 10.200.1.{{ cell_id }}/32
@@ -161,16 +161,16 @@ router bgp {{ asn_generated }}
 {% endif %}
    !
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
-   neighbor EVPN-PG {{eos.c_neighbor_peer_group}}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG remote-as {{ asn_spine }}
    neighbor EVPN-PG update-source Loopback1
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG maximum-routes 0
-   neighbor EVPN-PG {{eos.c_neighbor_fall_over_bfd}}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
 {% for i in range(11,15) %}
-   neighbor 10.100.0.{{i}} {{eos.c_neighbor_peer_group}} EVPN-PG
+   neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
 {% endfor %}
    !
    address-family evpn

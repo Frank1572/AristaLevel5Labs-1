@@ -192,9 +192,9 @@ hec:
     interlink_speed: 100gfull # is the default speed
     # Spine BGP Listen ranges for EVPN
     bgp_listen_ranges:
-      - 10.100.0.0/16 # ????????????????
-      - 198.19.249.0/24 # HEC-Router-Loopback-global
-      - 198.19.251.0/24 # Global loopback addresses for routers (router IDs) like NGDR
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
     bgp_maximum_routes: 12000 # correct
     evpn_maximum_routes: 0 # to be checked ??????? we go with evpn or manual
     mlag_a_ip: 198.19.224.1 # correct
@@ -224,11 +224,11 @@ hec:
     - number: 03   # correct
       snmp_contact: 34847165:ncons-hec11-07.hec.oob.net.sap:1007 # correct
       snmp_location: RU-MOW1-CAGE3-13/05/08/05  # correct
-      ip_last_octett: 4   # ??????????????????
+      ip_last_octett: 6   # ??????????????????
     - number: 04   # this is not updated as already in place
       snmp_contact: 34847166:ncons-hec11-08.hec.oob.net.sap:1007   # correct
       snmp_location: RU-MOW1-CAGE3-13/05/11/05   # correct
-      ip_last_octett: 5  # ??????????????????
+      ip_last_octett: 7  # ??????????????????
   routes:
     static:
       brdr01: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa

@@ -231,18 +231,10 @@ hec:
       ip_last_octett: 7  # ??????????????????
   routes:
     static:
-      brdr01: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.230.160/27 # to be checked
-          interface: Vlan916  # to be checked
-          redist_bgp: true
-        - destination: 10.200.1.0/24 # to be checked
-          interface: Null0
-          metric: 240
       brdr04: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa
         - destination: 0.0.0.0/0
-          nexthop: 198.19.230.160/27  # to be checked
-          interface: Vlan900 # Why vlan900 and above 916
+          nexthop: 198.19.230.1
+          interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24 # to be checked
           interface: Null0
@@ -265,11 +257,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.188.17/24 # correct HEC11-NW-MGMT10
+          ip: 198.19.230.83/25
           vrrp: # VRRP gw for FWTRANS towards HEC01 Fabric
             - id: 250
               priority: 105
-              ip: 198.19.188.254 # DNS Host / sw-hec11-brdr4a-b-vlan900-vrrp.mow.hec.sap.biz:/198.19.188.254 in organization HEC
+              ip: 198.19.230.85
               auth: FWTTRANS
         - id: 1/1 # 40G Link to L2 core switch
           description: sw-hec11-101 Et5/35/4
@@ -304,16 +296,16 @@ hec:
         - 26/1 # 7280QR-C36
         - 35/1 # 7280QR-C36
         - 36/1 # 7280QR-C36
-      spine_port_towards_leaf: Et1/2 # checked and as per mcs
+      spine_port_towards_leaf: Et2/1 # checked and as per mcs
       ports:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.188.18/24 # correct HEC11-NW-MGMT10
+          ip: 198.19.230.84/24
           vrrp: # VRRP gw for FWTRANS towards HEC01 Fabric
             - id: 250
               priority: 100
-              ip: 198.19.188.254 # DNS Host / sw-hec11-brdr4a-b-vlan900-vrrp.mow.hec.sap.biz:/198.19.188.254 in organization HEC
+              ip: 198.19.230.85
               auth: FWTTRANS
         - id: 1/1 # 40G Link to L2 core switch
           description: sw-hec11-101 Et5/36/4
@@ -348,7 +340,7 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      spine_port_towards_leaf: Et1/3
+      spine_port_towards_leaf: Et3/1
       ports:
         - id: 1
           description: lb-hec11-01, eth1.1
@@ -357,7 +349,7 @@ hec:
         - id: 2
           description: lb-hec11-01, eth1.2
           speed: 10000full
-          trunk: vlan 85,90,95,100,2000-2499
+          trunk: 85,90,95,100,2000-2499
         - id: 3
           description: lb-hec11-01, eth1.3
           trunk: 900
@@ -396,7 +388,7 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      spine_port_towards_leaf: Et1/4 # correct
+      spine_port_towards_leaf: Et4/1 # correct
       ports:
         - id: 1
           description: lb-hec11-02, eth1.1
@@ -405,7 +397,7 @@ hec:
         - id: 2
           description: lb-hec11-02, eth1.2
           speed: 10000full
-          trunk: vlan 85,90,95,100,2000-2499
+          trunk: 85,90,95,100,2000-2499
         - id: 3
           description: lb-hec11-02, eth1.3
           trunk: 900

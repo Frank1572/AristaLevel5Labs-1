@@ -56,7 +56,7 @@ snmp-server community o4CSPCu1sap ro ACL_SNMP_VTY
 snmp-server community r0c4s ro ACL_SNMP_VTY
 !
 spanning-tree mode mstp
-no spanning-tree vlan 4094
+no {{eos_cmd.spanning_tree_vlan}} 4094
 !
 aaa authentication login default local group radius
 {{eos_cmd.c_aaa_authorization_console}}

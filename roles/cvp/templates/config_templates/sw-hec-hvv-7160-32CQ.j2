@@ -3,7 +3,7 @@
 interface Ethernet 1/1-12/4
    speed forced 25gfull
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport trunk allowed vlan 5,7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    spanning-tree portfast
@@ -11,7 +11,7 @@ interface Ethernet 1/1-12/4
 interface Ethernet 13/1-18/4
    speed forced 25gfull
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,930-931
+   switchport trunk allowed vlan 5,7,20,930-931
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    spanning-tree portfast

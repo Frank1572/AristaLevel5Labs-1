@@ -11,7 +11,7 @@ router bgp $BGP_AS
    !
    neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor SPINE-PG remote-as $SPINE_AS
-   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
    neighbor SPINE-PG send-community
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG maximum-routes $EBGP_RTMAX

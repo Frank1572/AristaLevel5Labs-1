@@ -113,7 +113,7 @@ router bgp {{ asn_generated }}
    !
    neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor SPINE-PG remote-as {{ asn_spine }}
-   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
 {% if hec.spine.underlay_bfd %}
    neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}

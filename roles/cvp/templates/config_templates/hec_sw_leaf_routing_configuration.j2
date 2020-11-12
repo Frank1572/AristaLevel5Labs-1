@@ -130,7 +130,7 @@ router bgp {{ asn_generated }}
    neighbor EDGE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
    neighbor EDGE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
-   neighbor EDGE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
    neighbor EDGE-PG route-map RM-EDGE in
    neighbor EDGE-PG route-map RM-EDGE out
    neighbor EDGE-PG send-community

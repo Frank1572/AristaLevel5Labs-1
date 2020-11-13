@@ -1,11 +1,11 @@
 vlan 30
-   name HEC{{ hec.hec_nr }}-IBM-PWR-MGMT01
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
 vlan 31
-   name HEC{{ hec.hec_nr }}-IBM-PWR-LPM
+   name HEC{{ hec.hec_nr }}-{{vlandb.31.name}}
 vlan 32
-   name HEC{{ hec.hec_nr }}-IBM-PWR-ISCSI
+   name HEC{{ hec.hec_nr }}-{{vlandb.32.name}}
 vlan 33
-   name HEC{{ hec.hec_nr }}-IBM-PWR-RMC01
+   name HEC{{ hec.hec_nr }}-{{vlandb.33.name}}
 !
 {% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
 

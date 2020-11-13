@@ -35,7 +35,7 @@ mlag configuration
 !
 {% if leafpurpose == 'b' %}
 vlan 30
-   name HEC{{ hec.hec_nr }}-IBM-PWR-MGMT01
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
 !
 {% for item in vlans.inet_dmz %}
 vlan {{item.vid}}

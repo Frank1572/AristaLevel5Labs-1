@@ -4,6 +4,7 @@ vlandb:
   5: {name: 'DHCP01'}
   6: {name: 'DHCP02'}
   7: {name: 'DHCP03'}
+  10: {name: 'IPMI01'}
   20: {name: 'HV-MGMT01'}
   22: {name: 'VMWARE-MGMT01'}
   23: {name: 'VMWARE-VMOTION01'}
@@ -121,6 +122,19 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
+  default:
+    - name: "{{vlandb.5.name}}"
+      vid: 5
+    - name: "{{vlandb.6.name}}"
+      vid: 6
+    - name: "{{vlandb.7.name}}"
+      vid: 7
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.20.name}}"
+      vid: 20
+    - name: "{{vlandb.23.name}}"
+      vid: 23
 # net:
 #   device:
 #     leaf:

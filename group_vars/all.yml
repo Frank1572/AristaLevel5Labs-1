@@ -1,13 +1,38 @@
 ---
 # file: group_vars/all
 vlandb:
+  5: {name: 'DHCP01'}
+  6: {name: 'DHCP02'}
+  7: {name: 'DHCP03'}
+  20: {name: 'HV-MGMT01'}
+  22: {name: 'VMWARE-MGMT01'}
+  23: {name: 'VMWARE-VMOTION01'}
+  30: {name: 'IBM-PWR-MGMT01'}
+  31: {name: 'IBM-PWR-LPM'}
+  32: {name: 'IBM-PWR-ISCSI'}
+  33: {name: 'IBM-PWR-RMC01'}
+  40: {name: 'HANA-MGMT01'}
+  50: {name: 'APP-STOR01'}
+  55: {name: 'APP-STOR02'}
+  60: {name: 'APP-MGMT01'}
+  70: {name: 'TS01'}
+  75: {name: 'TIC01'}
+  85: {name: 'SCS01'}
+  90: {name: 'CIS01'}
+  95: {name: 'DNS-01'}
+  100: {name: 'CSS01'}
+  110: {name: 'STOR-MGMT01'}
+  120: {name: 'BACKUP-SYNC01'}
+  130: {name: 'STOR-SYNC01'}
+  140: {name: 'BACKUP-DEVICES'}
+  150: {name: 'CUSTOMER_DATA_TRANSFER'}
   900: {name: 'NW-MGMT'}
   914: {name: 'FW-CORE-TRANS'}
   915: {name: 'FWT-FW-TRANS'}
   916: {name: 'FW-BRDR-TRANS'}
   920: {name: 'BGP-TRANS'}
   922: {name: 'BACKUP-TRANS'}
-  940: {name: 'INET'} 
+  940: {name: 'INET'}
   961: {name: 'RT-HEC-CWAN-01A-TRANS'}
   962: {name: 'RT-HEC-CWAN-01A-TRANS'}
   963: {name: 'RT-HEC-CWAN-01B-TRANS'}

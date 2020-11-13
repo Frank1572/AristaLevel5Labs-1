@@ -1,3 +1,12 @@
+{#
+  Do add/ remove VLANS with caution here. The resulting configlet is
+   bound to the container "HEC" and creates these VLANs for each switch
+   within this container.
+#}
+{% for vlan in (5,6,10,20,22) %}
+vlan {{vlan}}
+  {{vlandb.vlan.name}}
+{% endfor %}
 vlan 5
    name DHCP01
 !

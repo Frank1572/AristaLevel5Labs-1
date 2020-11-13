@@ -5,73 +5,15 @@
 #}
 {% for item in vlans.default %}
 vlan {{item.vid}}
-  {{item.name}}
+  name {{item.name}}
 !
 {% endfor %}
-vlan 5
-   name DHCP01
+{% for item in vlans.ranges %}
+{% if item.name == "cust_backend" %}
+! All possible customer backend networks
+vlan {{item.range}}
 !
-vlan 6
-   name DHCP02
-!
-vlan 10
-   name IPMI01
-!
-vlan 20
-   name HV-MGMT01
-!
-vlan 22
-   name VMWARE-MGMT01
-!
-vlan 23
-   name VMWARE-VMOTION01
-!
-vlan 40
-   name HANA-MGMT01
-!
-vlan 50
-   name APP-STOR01
-!
-vlan 55
-   name APP-STOR02
-!
-vlan 60
-   name APP-MGMT01
-!
-vlan 70
-   name TS01
-!
-vlan 75
-   name TIC01
-!
-vlan 85
-   name SCS01
-!
-vlan 90
-   name CIS01
-!
-vlan 95
-   name DNS-01
-!
-vlan 100
-   name CSS01
-!
-vlan 110
-   name STOR-MGMT01
-!
-vlan 120
-   name BACKUP-SYNC01
-!
-vlan 130
-   name STOR-SYNC01
-!
-vlan 140
-   name BACKUP-DEVICES
-!
-vlan 150
-   name CUSTOMER_DATA_TRANSFER
-!
-vlan 2001-2999
-!
+{% endif %}
+{% endfor %}
 ! === VLAN range for internal VLANs (routed interfaces) ===
 {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999

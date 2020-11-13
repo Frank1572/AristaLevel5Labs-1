@@ -133,8 +133,40 @@ vlans:
       vid: 10
     - name: "{{vlandb.20.name}}"
       vid: 20
+    - name: "{{vlandb.22.name}}"
+      vid: 22
     - name: "{{vlandb.23.name}}"
       vid: 23
+    - name: "{{vlandb.40.name}}"
+      vid: 40
+    - name: "{{vlandb.50.name}}"
+      vid: 50
+    - name: "{{vlandb.55.name}}"
+      vid: 55
+    - name: "{{vlandb.60.name}}"
+      vid: 60
+    - name: "{{vlandb.70.name}}"
+      vid: 70
+    - name: "{{vlandb.75.name}}"
+      vid: 75
+    - name: "{{vlandb.85.name}}"
+      vid: 85
+    - name: "{{vlandb.90.name}}"
+      vid: 90
+    - name: "{{vlandb.95.name}}"
+      vid: 95
+    - name: "{{vlandb.100.name}}"
+      vid: 100
+    - name: "{{vlandb.110.name}}"
+      vid: 110
+    - name: "{{vlandb.120.name}}"
+      vid: 120
+    - name: "{{vlandb.130.name}}"
+      vid: 130
+    - name: "{{vlandb.140.name}}"
+      vid: 140
+    - name: "{{vlandb.150.name}}"
+      vid: 150
 # net:
 #   device:
 #     leaf:

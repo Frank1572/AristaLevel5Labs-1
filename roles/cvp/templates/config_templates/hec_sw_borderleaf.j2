@@ -34,6 +34,9 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
+vlan 30
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
+!
 {% for item in vlans.inet_dmz %}
 vlan {{item.vid}}
    name {{item.name}}

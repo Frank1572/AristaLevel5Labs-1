@@ -20,7 +20,7 @@ cli_cmd:
       c_bgp_listen_limit: dynamic peer max
       c_aaa_authorization_console: aaa authorization serial-console
       c_spanning_tree_vlan: spanning-tree vlan-id
-      c_snmp_server: local-interface
+      c_snmp_source_interface: local-interface
   22:
     cmd:
       c_vrrp_priority: priority
@@ -42,4 +42,4 @@ cli_cmd:
       c_bgp_listen_limit: bgp listen limit
       c_aaa_authorization_console: aaa authorization console
       c_spanning_tree_vlan: spanning-tree vlan
-      c_snmp_server: source-interface
+      c_snmp_source_interface: source-interface

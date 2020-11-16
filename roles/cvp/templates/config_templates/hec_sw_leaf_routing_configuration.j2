@@ -203,6 +203,15 @@ router bgp {{ asn_generated }}
    exit
 !
 {% endif %}{# END vtep_distribution_mode evpn? #}
+{#
+  if this a storage switch, we do not need vni mappings for vlan 30 & 920
+#}
+{% if leafpurpose == 's' %} {# START storageleaf - remove vni for vlan 30 & 920 #}
+interface Vxlan1
+{% for i in (30,920) %}
+   no vxlan vlan {{i}} vni {{i+10000}}
+{% endfor %}
+{% endif %}{# END storageleaf - remove vni for vlan 30 & 920 #}
 {% if leafpurpose == 'b' %}
 {% if (brdrtype == '1') or (brdrtype == '3') %}
 {#

@@ -1,9 +1,7 @@
-vlan 10
-   name IPMI
-!
-vlan 900
-!
-logging source-interface Vlan900
+{% for item in vlans.ranges.ipmi %}
+vlan {{item.vid}}
+   name {{item.name}}
+{% endfor %}
 !
 interface Ethernet1-48
    switchport access vlan 10

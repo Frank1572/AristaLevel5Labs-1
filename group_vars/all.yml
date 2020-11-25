@@ -33,6 +33,9 @@ vlandb:
   916: {name: 'FW-BRDR-TRANS'}
   920: {name: 'BGP-TRANS'}
   922: {name: 'BACKUP-TRANS'}
+  930: {name: 'VMWARE-FAULT-TOLERANCE'}
+  931: {name: 'VMWARE-VMOTION'}
+  932: {name: 'VMWARE-VCENTER-HA'}
   940: {name: 'INET'}
   961: {name: 'RT-HEC-CWAN-01A-TRANS'}
   962: {name: 'RT-HEC-CWAN-01A-TRANS'}

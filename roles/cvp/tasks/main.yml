@@ -10,6 +10,7 @@
     - delete_configlets
     - configure_aaa
     - reload_TerminAttr
+    - delete_containers
 
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself

@@ -36,7 +36,6 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
-      - sw-hec-interdc
   HEC-Backup Routers:
     parent_container: HEC
   HEC-Switched Fabric:

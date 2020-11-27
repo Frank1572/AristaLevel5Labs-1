@@ -285,27 +285,11 @@
   tags:
     - upload_configlets
 
-- name: Copy configlets to the CVP
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  copy:
-    src: "{{role_path}}/files/configs"
-    dest: tmp
-  tags:
-    - upload_configlets
-
 - name: Copy python upload script for configlet builders to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
     dest: tmp/configlet_builder.py
-  tags:
-    - upload_configlets
-
-- name: Copy python upload script for configlets to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  copy:
-    src: "{{role_path}}/files/configlets.py"
-    dest: tmp/configlets.py
   tags:
     - upload_configlets
 

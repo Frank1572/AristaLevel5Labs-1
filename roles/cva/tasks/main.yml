@@ -110,6 +110,7 @@
   tags:
     - cvp_init
     - snmp_cvp
+    - pw_reset
 
 - name: Include cvp_ops
   include_tasks: cvp_ops.yml

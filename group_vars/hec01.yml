@@ -94,8 +94,8 @@ hec:
   lo900_domain: "rot.hec.sap.biz"
   vl900_domain: "rot.hec.sap.biz"
   vl900_mask: 24
-  vl900_def_gw: 198.19.241.1
-  vl900_net: 198.19.241.0/24
+  vl900_def_gw: 198.19.234.1
+  vl900_net: 198.19.234.0/24
   lo900_net: 198.19.190.0/24
   lo900_prefix: 198.19.190
   inband_trans_brdr: 10.255.241.78

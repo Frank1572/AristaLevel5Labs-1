@@ -346,10 +346,10 @@ hec:
         - id: 2/1
           description: rt-hec03-core-01b, Fo0/0/1
           po: 1102
-        - id: 31/1
+        - id: 27/1
           description: sw-hec03-brdr-01a, Et27/1
           po: 42
-        - id: 32/1
+        - id: 28/1
           description: sw-hec03-brdr-01a, Et28/1
           po: 42
       port_channels:

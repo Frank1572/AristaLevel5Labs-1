@@ -1,7 +1,8 @@
-{% interface_loopback1 = "10.90." + hec.hec_nr|int + "." + superspine_number %}
-{% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
+{% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
+{% set asn_generated = '641' + hec.hec_nr + '.90000' %}
 
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}
+{% include "templates/config_templates/sw-hec-superspine-bgp.j2" %}
   address-family ipv4
     network {{ interface_loopback1 }}/32

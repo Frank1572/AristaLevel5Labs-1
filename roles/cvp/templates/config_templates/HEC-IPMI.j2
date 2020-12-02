@@ -3,6 +3,9 @@ vlan {{item.vid}}
    name {{item.name}}
 {% endfor %}
 !
+spanning-tree mst configuration
+  instance 1 vlan  2-4093
+!
 interface Ethernet1-48
    switchport access vlan 10
 !

@@ -1,0 +1,7 @@
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'update-source Loopback1',
+                  'bfd', 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0'] %}
+  neighbor EVPN-OVERLAY-DYNAMIC {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'send-community standard extended', 'maximum-routes 0'] %}
+  neighbor UNDERLAY-DYNAMIC {{ setting }}
+{% endfor %}

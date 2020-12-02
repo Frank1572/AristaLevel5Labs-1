@@ -148,6 +148,7 @@
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
+    - sw-hec-superspine-all-interfaces
   tags:
     - configlets
 
@@ -189,6 +190,16 @@
   with_items: "{{ hec.spine.number }}"
   tags:
     - configlets
+
+- name: Render sw-hecxx-superspine-xx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-superspine-xx.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-superspine-{{ item.id }}"
+  with_items: "{{ hec.superspine.number }}"
+  tags:
+    - configlets
+    - superspines
 
 - name: Render sw-hecxx-oob-xx
   delegate_to: 127.0.0.1

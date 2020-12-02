@@ -1,0 +1,7 @@
+{% interface_loopback1 = "10.90." + hec.hec_nr|int + "." + superspine_number %}
+{% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
+
+router bgp {{ asn_generated }}
+  router-id {{ interface_loopback1 }}
+  address-family ipv4
+    network {{ interface_loopback1 }}/32

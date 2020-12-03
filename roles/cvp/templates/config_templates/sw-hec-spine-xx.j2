@@ -40,32 +40,32 @@ snmp-server location {{a.snmp.location}}
     So if there are superspines defined, the we need to
     generate the IP address based on the spine numer.
 #}
-{% set interface_loopback1 = '10.100.0.' + item.id %} {# this is the default for POD 1 always #}
+{% set interface_loopback1 = '10.100.0.' + item.id|string %} {# this is the default for POD 1 always #}
 {% if hec.superspine|default("") != "" %}
 {% if item.id|int > 20 and item.id|int < 30 %}
 {# POD 2 #}
-{% set interface_loopback1 = '10.110.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.110.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 30 and item.id|int < 40 %}
 {# POD 3 #}
-{% set interface_loopback1 = '10.120.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.120.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 40 and item.id|int < 50 %}
 {# POD 4 #}
-{% set interface_loopback1 = '10.130.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.130.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 50 and item.id|int < 60 %}
 {# POD 5 #}
-{% set interface_loopback1 = '10.140.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.140.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 60 and item.id|int < 70 %}
 {# POD 6 #}
-{% set interface_loopback1 = '10.150.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.150.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 70 and item.id|int < 80 %}
 {# POD 7 #}
-{% set interface_loopback1 = '10.160.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.160.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 80 and item.id|int < 90 %}
 {# POD 8 #}
-{% set interface_loopback1 = '10.170.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.170.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 90 and item.id|int < 100 %}
 {# POD 9 #}
-{% set interface_loopback1 = '10.180.' + hec.hec_nr|int + '.' + item.id %}
+{% set interface_loopback1 = '10.180.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% endif %}
 {% endif %}
 interface Loopback1

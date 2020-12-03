@@ -46,3 +46,8 @@ interface Ethernet {{intf_name}}
 !
 {% endfor %}
 {% endfor %}
+{# if this location has superspine switches defined in hecXX.yml, then we
+generate the uplink ports towards superspines. #}
+{% if hec.superspine|default("") != "" %}
+! this spines ID is: {{item.id}}
+{% endif %}

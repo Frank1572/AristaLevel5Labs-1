@@ -12,10 +12,10 @@
 {% set ports_per_lc = hec.spine.model|string %}
 {% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
 {% endif %}
-{% set create_ip_on_interface = "no" %}
+{# {% set create_ip_on_interface = "no" %} #}
 {% set port_range_end = ports_per_lc|int + 1 %}
 ! DEBUG: port_range_end {{port_range_end}}
-{% include "templates/config_templates/sw-hec-spine-ips.j2" %}
+{# {% include "templates/config_templates/sw-hec-spine-ips.j2" %} #}
 {########## BGP CONFIGURATION ##########}
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 peer-filter EVPN-PF

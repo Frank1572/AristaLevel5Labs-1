@@ -27,9 +27,9 @@
 {% endif %}
 interface Ethernet {{intf_name}}
  no switchport
-{% if create_ip_on_interface == 'yes' %}
+{# {% if create_ip_on_interface == 'yes' %} #}
  ip address 10.{{ item.id }}.{{ nextsubnet }}.{{ ip }}/31
-{% endif %}
+{# {% endif %} #}
 {# shutdown #}
  mtu {{ hec.fabric.interlink_mtu }}
 {#
@@ -49,5 +49,5 @@ interface Ethernet {{intf_name}}
 {# if this location has superspine switches defined in hecXX.yml, then we
 generate the uplink ports towards superspines. #}
 {% if hec.superspine|default("") != "" %}
-! this spines ID is: {{item.id}}
+! this spine's ID is: {{item.id}}
 {% endif %}

@@ -196,6 +196,7 @@
     src: "templates/config_templates/sw-hec-superspine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-superspine-{{ item.id }}"
   with_items: "{{ hec.superspine.number }}"
+  when: hec.superspine|default("") != ""
   tags:
     - configlets
     - superspines

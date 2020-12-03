@@ -1,5 +1,6 @@
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.90000' %}
+{% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
 
 {% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
 

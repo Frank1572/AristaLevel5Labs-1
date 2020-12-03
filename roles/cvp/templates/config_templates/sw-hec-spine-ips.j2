@@ -14,25 +14,6 @@
 {% set ip = ip - 256 %}
 {% set nextsubnet = 2 %}
 {% endif %}
-{# determine the POD ID in a superspine deployment. #}
-{% set podid = 1 %}
-{% if item.id|int > 20 and item.id|int < 30 %}
-{% set podid = 2 %}
-{% elif item.id|int > 30 and item.id|int < 40 %}
-{% set podid = 3 %}
-{% elif item.id|int > 40 and item.id|int < 50 %}
-{% set podid = 4 %}
-{% elif item.id|int > 50 and item.id|int < 60 %}
-{% set podid = 5 %}
-{% elif item.id|int > 60 and item.id|int < 70 %}
-{% set podid = 6 %}
-{% elif item.id|int > 70 and item.id|int < 80 %}
-{% set podid = 7 %}
-{% elif item.id|int > 80 and item.id|int < 90 %}
-{% set podid = 8 %}
-{% elif item.id|int > 90 and item.id|int < 100 %}
-{% set podid = 9 %}
-{% endif %}
 {#
   determine the correct interface name based on the spine model
 #}
@@ -62,11 +43,30 @@ interface Ethernet {{intf_name}}
 !
 {% endfor %}
 {% endfor %}
+{# determine the POD ID in a superspine deployment. #}
+{% set podid = 1 %}
+{% if item.id|int > 20 and item.id|int < 30 %}
+{% set podid = 2 %}
+{% elif item.id|int > 30 and item.id|int < 40 %}
+{% set podid = 3 %}
+{% elif item.id|int > 40 and item.id|int < 50 %}
+{% set podid = 4 %}
+{% elif item.id|int > 50 and item.id|int < 60 %}
+{% set podid = 5 %}
+{% elif item.id|int > 60 and item.id|int < 70 %}
+{% set podid = 6 %}
+{% elif item.id|int > 70 and item.id|int < 80 %}
+{% set podid = 7 %}
+{% elif item.id|int > 80 and item.id|int < 90 %}
+{% set podid = 8 %}
+{% elif item.id|int > 90 and item.id|int < 100 %}
+{% set podid = 9 %}
+{% endif %}
 {# if this location has superspine switches defined in hecXX.yml, then we
 generate the uplink ports towards superspines. #}
 {% if hec.superspine|default(false) %}
-{% if spine_port_towards_superspine|default("incorrect") != "incorrect" %}
-{% for x in spine_port_towards_superspine %}
+{% if item.spine_port_towards_superspine|default("incorrect") != "incorrect" %}
+{% for x in item.spine_port_towards_superspine %}
 interface {{x}}
   no switchport
   description Uplink to Superspine-{{loop.index}}
@@ -79,7 +79,7 @@ interface {{x}}
 {% elif item.id|string is regex('.4$') %}
 {% set lastoct = "7" %}
 {% endif %}
-{% set interface_ipv4 = '10.255.' + podid + loop.index + '.' + lastoct + '/31' %}
+{% set interface_ipv4 = '10.255.' + podid|string + loop.index + '.' + lastoct + '/31' %}
 {% endfor %}
 {% else %}
 ! ERROR: you did miss to set the "spine_port_towards_superspine" variable for each Spine.

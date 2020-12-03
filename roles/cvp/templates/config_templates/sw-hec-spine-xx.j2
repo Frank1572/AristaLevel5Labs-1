@@ -41,7 +41,7 @@ snmp-server location {{a.snmp.location}}
     generate the IP address based on the spine numer.
 #}
 {% set interface_loopback1 = '10.100.0.' + item.id|string %} {# this is the default for POD 1 always #}
-{% if hec.superspine|default("") != "" %}
+{% if hec.superspine|default(false) %}
 {% if item.id|int > 20 and item.id|int < 30 %}
 {# POD 2 #}
 {% set interface_loopback1 = '10.110.' + hec.hec_nr|int|string + '.' + item.id|string %}
@@ -88,7 +88,7 @@ router bgp 641{{ hec.hec_nr }}.10000
    network {{ hec.lo900_prefix }}.{{ item.id }}/32
 {# if this location has superspine switches defined in hecXX.yml, then we
 generate all BGP related settings. #}
-{% if hec.superspine|default("") != "" %}
+{% if hec.superspine|default(false) %}
 {% set superspine_asn = '641' + hec.hec_nr + '.90000' %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'update-source Loopback1',
                   'bfd', 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0'] %}

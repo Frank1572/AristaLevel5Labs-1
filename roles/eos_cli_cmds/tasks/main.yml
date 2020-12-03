@@ -9,7 +9,6 @@
 - name: check if newer EOS CLI command syntax to load
   set_fact:
     eos_cmd: "{{cli_cmd.23.cmd}}"
-  when: eos.new_syntax
-  ignore_errors: true
+  when: eos.new_syntax|default("false")
   tags:
     - always

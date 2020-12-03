@@ -122,6 +122,11 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
+  ipmi:
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.900.name}}"
+      vid: 900
   default:
     - name: "{{vlandb.5.name}}"
       vid: 5

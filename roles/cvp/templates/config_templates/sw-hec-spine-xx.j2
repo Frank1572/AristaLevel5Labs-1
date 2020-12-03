@@ -92,21 +92,21 @@ generate all BGP related settings. #}
 {% set superspine_asn = '641' + hec.hec_nr + '.90000' %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'update-source Loopback1',
                   'bfd', 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0'] %}
-  neighbor EVPN-UBERSPINE {{ setting }}
+   neighbor EVPN-UBERSPINE {{ setting }}
 {% endfor %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'send-community standard extended', 'maximum-routes 0'] %}
-  neighbor UNDERLAY-UBERSPINE {{ setting }}
+   neighbor UNDERLAY-UBERSPINE {{ setting }}
 {% endfor %}
 {% for item in range(1,5) %}
-  neighbor 10.90.{{ hec.hec_nr|int }}.{{item}} {{eos_cmd.c_neighbor_peer_group}} EVPN-UBERSPINE
-  ! add per superspine-underlay neighbor here as well
+   neighbor 10.90.{{ hec.hec_nr|int }}.{{item}} {{eos_cmd.c_neighbor_peer_group}} EVPN-UBERSPINE
+   ! add per superspine-underlay neighbor here as well
 {% endfor %}
-  address-family evpn
-     bgp next-hop-unchanged
-     neighbor EVPN-UBERSPINE activate
-     no neighbor UNDERLAY-UBERSPINE activate
-  address-family ipv4
-     no neighbor EVPN-UBERSPINE activate
-     neighbor UNDERLAY-UBERSPINE activate
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor EVPN-UBERSPINE activate
+      no neighbor UNDERLAY-UBERSPINE activate
+   address-family ipv4
+      no neighbor EVPN-UBERSPINE activate
+      neighbor UNDERLAY-UBERSPINE activate
 {% endif %}
 !

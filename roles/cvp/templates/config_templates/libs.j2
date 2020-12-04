@@ -1,0 +1,33 @@
+{% macro spine_superspine_linkip(spineid, superspineid) -%}
+{# DETERMINE INTERFACE'S LAST OCTECT IP-PART #}
+{% if spineid|string is regex('.1$') %}
+{% set lastoct = "1" %}
+{% elif spineid|string is regex('.2$') %}
+{% set lastoct = "3" %}
+{% elif spineid|string is regex('.3$') %}
+{% set lastoct = "5" %}
+{% elif spineid|string is regex('.4$') %}
+{% set lastoct = "7" %}
+{% endif %}
+{# POD ID CALCULATION #}
+{% set podid = 1 %}
+{% if superspineid|int > 20 and superspineid|int < 30 %}
+{% set podid = 2 %}
+{% elif superspineid|int > 30 and superspineid|int < 40 %}
+{% set podid = 3 %}
+{% elif superspineid|int > 40 and superspineid|int < 50 %}
+{% set podid = 4 %}
+{% elif superspineid|int > 50 and superspineid|int < 60 %}
+{% set podid = 5 %}
+{% elif superspineid|int > 60 and superspineid|int < 70 %}
+{% set podid = 6 %}
+{% elif superspineid|int > 70 and superspineid|int < 80 %}
+{% set podid = 7 %}
+{% elif superspineid|int > 80 and superspineid|int < 90 %}
+{% set podid = 8 %}
+{% elif superspineid|int > 90 and superspineid|int < 100 %}
+{% set podid = 9 %}
+{% endif %}
+{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
+{{ interface_ipv4 }}
+{% endmacro %}

@@ -4,8 +4,9 @@ logging host {{ hec.syslog2 }}
 {% if hec.syslog3 is defined %}
 logging host {{ hec.syslog3 }}
 {% endif %}
+logging buffered 1043741829
 logging trap debugging
 no logging console
-logging buffered 1043741829
+logging format hostname fqdn
 logging facility local5
 !

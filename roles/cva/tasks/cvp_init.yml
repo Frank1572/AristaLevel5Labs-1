@@ -1,0 +1,260 @@
+# file: roles/cvp/tasks/cvp_init.yml
+---
+- name: Render and create YAML File
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/singlenode.j2"
+    dest: "{{role_path}}/files/singlenode.yaml"
+  tags:
+    - cvp_init
+
+- name: Copy YAML File to CVA
+  copy:
+    src: "{{role_path}}/files/singlenode.yaml"
+    dest: /tmp/singlenode.yaml
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy cvpConfigParser.py to CVA
+  copy:
+    src: "{{role_path}}/files/cvpConfigParser.py"
+    dest: /tmp/cvpConfigParser.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy geniso.py to CVA
+  copy:
+    src: "{{role_path}}/files/geniso.py"
+    dest: /tmp/geniso.py
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Copy setuptools to CVA
+  copy:
+    src: "{{role_path}}/files/setuptools-41.0.1.tar.gz"
+    dest: /tmp/setuptools-41.0.1.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Unzip setuptools
+  command: "tar -zxvf /tmp/setuptools-41.0.1.tar.gz -C /tmp"
+  tags:
+    - cvp_init
+
+- name: Build setuptools
+  command: "python /tmp/setuptools-41.0.1/setup.py build"
+  tags:
+    - cvp_init
+
+- name: Install setuptools
+  command: "python /tmp/setuptools-41.0.1/setup.py install"
+  tags:
+    - cvp_init
+
+- name: Copy setuptools folder to python libs
+  command: "cp -r /tmp/setuptools-41.0.1/. /usr/lib/python2.7/site-packages/"
+  tags:
+    - cvp_init
+
+- name: Extract pip to CVA
+  unarchive:
+    src: "{{role_path}}/files/pip-19.1.1.tar.gz"
+    dest: /tmp/
+  tags:
+    - cvp_init
+
+- name: Install pip
+  shell: python setup.py install
+  args:
+    chdir: /tmp/pip-19.1.1/
+  tags:
+    - cvp_init
+
+- name: Copy PyYAML-5.1.tar.gz to CVA
+  copy:
+    src: "{{role_path}}/files/PyYAML-5.1.tar.gz"
+    dest: /tmp/PyYAML-5.1.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+
+- name: Install PyYaml
+  command: "pip install /tmp/PyYAML-5.1.tar.gz"
+  tags:
+    - cvp_init
+
+- name: Generate ISO file
+  command: "/tmp/geniso.py -y /tmp/singlenode.yaml -p {{ cvp.password }} -o /tmp"
+  tags:
+    - cvp_init
+
+- name: Start cvp VM if not running
+  command: "virsh start {{ cvp.KvmDomain }}"
+  ignore_errors: yes
+  tags:
+    - cvp_init
+
+- name: Attach the cdrom to the cvp VM
+  command: "virsh attach-disk {{ cvp.KvmDomain }} /tmp/node1-{{ cvp.vmname }}.iso  hdc --type cdrom --mode readonly"
+  tags:
+    - cvp_init
+
+- name: Reboot cvp VM with the cdrom infos
+  command: "virsh reboot {{ cvp.KvmDomain }}"
+  tags:
+    - cvp_init
+
+# Pause for 720 seconds to power up vm
+- pause:
+    seconds: 720
+  tags:
+    - cvp_init
+
+- name: Render CVP routes and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/route-eth1.j2"
+    dest: "/etc/sysconfig/network-scripts/route-eth1"
+  tags:
+    - cvp_init
+
+- name: Restart network service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  ignore_errors: yes
+  service:
+    name: network
+    state: restarted
+  tags:
+    - cvp_init
+
+- name: Render DHCP config and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/dhcpd.conf.j2"
+    dest: "/etc/dhcp/dhcpd.conf"
+  tags:
+    - cvp_init
+
+- name: Set the dhcpd to enabled for persistence after reboot
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "systemctl enable dhcpd"
+  tags:
+    - cvp_init
+
+- name: Restart dhcp service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: dhcpd
+    state: restarted
+  tags:
+    - cvp_init
+
+- name: "Create backup user account and add user to group cvp"
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  user:
+    name: "{{ cvp.backupuser }}"
+    groups: "cvp"
+  tags:
+    - cvp_init
+
+- name: "Add authorized keys"
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  authorized_key:
+    user: "{{ cvp.backupuser }}"
+    key: "{{ lookup('file', '{{role_path}}/files/'+ cvp.backupuser + '.key.pub') }}"
+  tags:
+    - cvp_init
+
+- name: Reset cvpadmin password
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "/cvpi/tools/update-mgmt-password -auth none -password {{ cvp.password }}"
+  tags:
+    - cvp_init
+
+- name: Copy netsnmp tar file to CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  copy:
+    src: "{{role_path}}/files/centos-7.6.1810-netsnmp.tar.gz"
+    dest: /tmp/centos-7.6.1810-netsnmp.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Delete installation directory for netsnmp if already exists
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  file:
+    path: "/tmp/netsnmp"
+    state: absent
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Create directory for netsnmp installation files (/tmp/netsnmp/)
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "mkdir /tmp/netsnmp"
+  args:
+    warn: no
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Extract netsnmp tar file on CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp.tar.gz -C /tmp/netsnmp"
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Install netsnmp RPMs on the CVP
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "rpm -ivh /tmp/netsnmp/*.rpm"
+  args:
+    warn: false
+  register: rpm_install
+  failed_when: rpm_install.rc != 0 and "is already installed" not in rpm_install.stderr
+  changed_when: rpm_install.rc == 0
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Render SNMP config and put the file to the CVP machine
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  template:
+    src: "templates/snmpd.conf.j2"
+    dest: "/etc/snmp/snmpd.conf"
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Set the snmpd to enabled for persistence after reboot
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "systemctl enable snmpd"
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Restart snmpd service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: snmpd
+    state: restarted
+  tags:
+    - cvp_init
+    - snmp_cvp

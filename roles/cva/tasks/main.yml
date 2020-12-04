@@ -29,6 +29,89 @@
 
 - name: Restart network service
   command: "systemctl restart network"
-  ignore_errors: yes 
+  ignore_errors: yes
   tags:
     - cva
+
+- name: Copy netsnmp tar file to CVA
+  copy:
+    src: "{{role_path}}/files/centos-7.6.1810-netsnmp_cva.tar.gz"
+    dest: /tmp/centos-7.6.1810-netsnmp_cva.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Delete installation directory for netsnmp if already exists
+  file:
+    path: "/tmp/netsnmp"
+    state: absent
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Create directory for netsnmp installation files (/tmp/netsnmp/)
+  command: "mkdir /tmp/netsnmp"
+  args:
+    warn: no
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Extract netsnmp tar file on CVA
+  command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp_cva.tar.gz -C /tmp/netsnmp"
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Install netsnmp RPMs on the CVA
+  command: "rpm -ivh --force /tmp/netsnmp/*.rpm"
+  args:
+    warn: false
+  register: rpm_install
+  failed_when: rpm_install.rc != 0 and "is already installed" not in rpm_install.stderr
+  changed_when: rpm_install.rc == 0
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Render SNMP config and put the file to the CVA machine
+  template:
+    src: "templates/snmpd_cva.conf.j2"
+    dest: "/etc/snmp/snmpd.conf"
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Set the snmpd to enabled for persistence after reboot
+  command: "systemctl enable snmpd"
+  tags:
+    - cva
+    - snmp_cva
+
+- name: Restart snmpd service
+  service:
+    name: snmpd
+    state: restarted
+  tags:
+    - cva
+    - snmp_cva
+
+# include operation, installation and initialization tasks
+- name: Include cvp_install
+  include_tasks: cvp_install.yml
+  tags:
+    - cvp_install
+
+- name: Include cvp_init
+  include_tasks: cvp_init.yml
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Include cvp_ops
+  include_tasks: cvp_ops.yml
+  tags:
+    - cvp_stop

@@ -4,17 +4,17 @@ These ansible playbooks are used to configure the cloud vision appliance (CVA), 
 
 It is required to install data from repository "repo_hec_globals". Run the following after cloning this repository:
 
- - ansible-galaxy install -r roles/requirements.yml
+ - ansible-galaxy install -r roles/requirements.yml -c --force
 
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 
-Always consider the use of "--limit hecxx" (with 'xx' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
+Always consider the use of "--limit hecXX" (with 'XX' being the location number) to ensure you are not running against the wrong/ all CVP installations in HEC. (This is work in process and may change)
 
-- Create OOB01 a/b configuration with the ansible scripts
+# DHCP on OOB01a/b to provide a dynamic IP to CVA and iDRAC for initial setup
 
-		ansible-playbook dhcp.yml -i dhcp --tags "oob01" --limit HECxx
+- Create OOB01 a/b dhcp configuration with the ansible scripts
 
- - Copy the generated configs onto the OOB01 a/b switches. File location is from main ansible folder in "roles/oob01/files/configs/"
+		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
 
@@ -35,8 +35,23 @@ Always consider the use of "--limit hecxx" (with 'xx' being the location number)
 		4) On the OOB switch: Make the extension persist over reboots
 		copy installed-extensions boot-extensions
 
+  - Put the following alias configuration snippet on OOB01 a/b to be able to enable and disable the DHCP service
+		
+		alias dhcp-off
+		   10 bash sudo service dhcpd stop
+		   20 bash sudo service dhcpd status
+		!
+		alias dhcp-on
+		   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+		   20 bash sudo service dhcpd start
+		   30 bash sudo service dhcpd status
+		!
+		alias dhcp-status
+		   10 bash sudo service dhcpd status
+		   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 
  - Enable DHCP server on OOB01 a/b
+		
 		dhcp-on
 		dhcp-status
 
@@ -46,17 +61,33 @@ Always consider the use of "--limit hecxx" (with 'xx' being the location number)
  		bash
 		sudo cat /var/lib/dhcpd/dhcpd.leases
 
- - Set the IP assigned to the CVA in the file <ansible-home>/production/production.yml
+# Initial Setup of the CVA and CVP
 
- - Run the ansible playbooks to setup the environment
+ - Prerequisite is that the CVA received an IP address from DHCP on an OOB Switch 
 
-       ansible-playbook dhcp.yml -i dhcp --tags "idrac" --timeout 60  --limit hecxx
+ - Set the dynamic IP assigned to the CVA in the file "\<ansible-home\>/dhcp"
+ 
+ - Run the ansible playbooks to initially setup the CVA and iDRAC
 
-       ansible-playbook dhcp.yml -i dhcp --tags "cva" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i dhcp --tags "idrac" --timeout 240  --limit hecXX
 
-       ansible-playbook static.yml -i static --tags "cvp_init" --timeout 60  --limit hecxx
+       ansible-playbook cva.yml -i dhcp --tags "cva" --timeout 240  --limit hecXX
+       
+ Note: last task "restart network service" will fail because IP address change to static IP.
 
-       ansible-playbook static.yml -i static --tags "configlets, upload_configlets, create_containers" --timeout 60  --limit hecxx
+ - Set the static IP assigned to the CVA in the file "\<ansible-home\>/cva" example x.x.x.43
+
+ - Run the ansible playbooks to setup the CVP
+
+       ansible-playbook cva.yml -i cva --tags "cvp_stop" --timeout 240  --limit hecXX
+       
+       ansible-playbook cva.yml -i cva --tags "cvp_install" --timeout 240  --limit hecXX
+       
+       ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
+       
+  - Set the static IP assigned to the CVP in the file "\<ansible-home\>/cvp" example x.x.x.253
+
+       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 
@@ -73,9 +104,9 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
        ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
 
- - Download cell switch configgurations from CVP
+ - Download cell switch configurations from CVP
 
-       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecxx
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i cvp --limit hecXX
 
  - Upload the stored configlets into remote repository
 
@@ -89,18 +120,18 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
 To deploy or correct configuration for TerminAttr agent on switches (if considered incorrect), run the following:
 
-       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecxx
+       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecXX
 
 Maintain the correct parameters for the daemon configuration in file inv_daemonTerminAttr.
 
 To stop daemon on device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecXX
 
 To restart daemon service on device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecXX
 
 To remove daemon configration from device(s):
 
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecxx
+      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecXX

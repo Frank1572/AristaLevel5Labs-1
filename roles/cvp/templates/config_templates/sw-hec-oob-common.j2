@@ -1,5 +1,4 @@
 ! == Upstream conf
-snmp-server community o4CSPCu1sap ro ACL_SNMP_VTY
 !
 ! OOB specific Global NTP Server (same NTP as used by CVP)
 no ntp server {{ hec.ntp1 }} prefer
@@ -7,9 +6,11 @@ no ntp server {{ hec.ntp2 }}
 ntp server {{ cvp.ntp1 }} prefer
 ntp server {{ cvp.ntp2 }}
 !
-vlan 21,100
+no sflow source-interface loopback900
+sflow source-interface Vlan21
+!
+vlan 21
    name OOB
 !
-enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
-username scp privilege 15 secret 5 $1$N8nIuE88$TCC9cVWog9.riMuiVcJOh.
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 !

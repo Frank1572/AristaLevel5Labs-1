@@ -1,9 +1,0 @@
----
-# file: static.yml
-
-- hosts: all
-  gather_facts: no
-  roles:
-    - role: cvp
-      vars:
-        - ansible_user: root

@@ -121,7 +121,7 @@ interface Loopback0
 interface Management1
 !
 interface Vlan21
-  vrrp 21 priority 105
+  vrrp 21 {{eos_cmd.c_vrrp_priority}} 105
   ip address {{ hec.oob_prefix }}.2/{{ hec.oob_mask }}
 !
 router bgp {{ hec.oob01_as }}
@@ -138,4 +138,3 @@ router bgp {{ hec.oob01_as }}
 router ospf 1
  router-id {{ hec.oob01_lo0_prefix }}.20
 !
-

@@ -1,0 +1,15 @@
+# cva
+
+[hec04]
+10.9.242.39
+
+[hec11]
+10.177.248.43 # naa-hec11-01.hec.oob.net.sap.
+
+[hec12]
+10.177.250.43 # naa-hec12-01.hec.oob.net.sap.
+
+[all:vars]
+ansible_connection=paramiko
+ansible_user=root
+ansible_password=arista

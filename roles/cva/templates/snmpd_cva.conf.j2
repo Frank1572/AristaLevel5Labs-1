@@ -1,0 +1,27 @@
+####
+# First, map the community name "public" into a "security name"
+#       sec.name     source          community
+com2sec roCommunity  default         r0c4s
+####
+# Second, map the security name into a group name:
+#       groupName      securityModel securityName
+group   roGroup        v2c           roCommunity
+####
+# Third, create a view for us to let the group have rights to:
+# Make at least  snmpwalk -v 1 localhost -c public system fast again.
+#       name           incl/excl     subtree         mask(optional)
+view	allview        included   .1
+####
+# Finally, grant the group read-only access to the systemview view.
+#       group          context sec.model sec.level prefix read    write  notif
+access  roGroup        ""      any       noauth    exact  allview none   none
+
+###
+# Enable monitoring for root partition (/) and data partition (/data)
+disk / 
+disk /data
+
+###
+# Set sys location and sys contact
+syslocation CVA HEC{{ hec.hec_nr }}
+syscontact SAP HEC Team

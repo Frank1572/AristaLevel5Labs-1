@@ -1,5 +1,189 @@
 ---
 # file: group_vars/all
-
-### Copy your topology variables to this file ###
-### example HEC19 ->   cp group_vars/hec19.yml group_vars/all.yml ###
+vlandb:
+  5: {name: 'DHCP01'}
+  6: {name: 'DHCP02'}
+  7: {name: 'DHCP03'}
+  10: {name: 'IPMI01'}
+  20: {name: 'HV-MGMT01'}
+  22: {name: 'VMWARE-MGMT01'}
+  23: {name: 'VMWARE-VMOTION01'}
+  30: {name: 'IBM-PWR-MGMT01'}
+  31: {name: 'IBM-PWR-LPM'}
+  32: {name: 'IBM-PWR-ISCSI'}
+  33: {name: 'IBM-PWR-RMC01'}
+  40: {name: 'HANA-MGMT01'}
+  50: {name: 'APP-STOR01'}
+  55: {name: 'APP-STOR02'}
+  60: {name: 'APP-MGMT01'}
+  70: {name: 'TS01'}
+  75: {name: 'TIC01'}
+  85: {name: 'SCS01'}
+  90: {name: 'CIS01'}
+  95: {name: 'DNS-01'}
+  100: {name: 'CSS01'}
+  110: {name: 'STOR-MGMT01'}
+  120: {name: 'BACKUP-SYNC01'}
+  130: {name: 'STOR-SYNC01'}
+  140: {name: 'BACKUP-DEVICES'}
+  150: {name: 'CUSTOMER_DATA_TRANSFER'}
+  900: {name: 'NW-MGMT'}
+  914: {name: 'FW-CORE-TRANS'}
+  915: {name: 'FWT-FW-TRANS'}
+  916: {name: 'FW-BRDR-TRANS'}
+  920: {name: 'BGP-TRANS'}
+  922: {name: 'BACKUP-TRANS'}
+  930: {name: 'VMWARE-FAULT-TOLERANCE'}
+  931: {name: 'VMWARE-VMOTION'}
+  932: {name: 'VMWARE-VCENTER-HA'}
+  940: {name: 'INET'}
+  961: {name: 'RT-HEC-CWAN-01A-TRANS'}
+  962: {name: 'RT-HEC-CWAN-01A-TRANS'}
+  963: {name: 'RT-HEC-CWAN-01B-TRANS'}
+  964: {name: 'RT-HEC-CWAN-01B-TRANS'}
+  965: {name: 'RT-HEC-VPN-01A-TRANS'}
+  966: {name: 'RT-HEC-VPN-01A-TRANS'}
+  967: {name: 'RT-HEC-VPN-01B-TRANS'}
+  968: {name: 'RT-HEC-VPN-01B-TRANS'}
+  969: {name: 'RT-HEC-605-TRANS'}
+  970: {name: 'RT-HEC-605-TRANS'}
+  971: {name: 'RT-HEC-606-TRANS'}
+  972: {name: 'RT-HEC-606-TRANS'}
+  973: {name: 'RT-HEC-505-TRANS'}
+  974: {name: 'RT-HEC-505-TRANS'}
+  975: {name: 'RT-HEC-506-TRANS'}
+  976: {name: 'RT-HEC-506-TRANS'}
+  1100: {name: 'INET'}
+vlans:
+  ranges:
+    # customer backend vlan networks
+    - name: cust_backend
+      range: 2001-2999
+    # customer transit networks between core and wan/vpn routers
+    #  only applicable where subinterfaces still used
+    - name: cust_static_trans
+      range: 3000-3499
+    # customer transits on wan switches to route from wan routers to provider edge devices
+    - name: cust_wan_trans
+      range: 3500-3999
+  evpn_edge_trans:
+    - name: "{{vlandb.961.name}}"
+      vid: 961
+    - name: "{{vlandb.962.name}}"
+      vid: 962
+    - name: "{{vlandb.963.name}}"
+      vid: 963
+    - name: "{{vlandb.964.name}}"
+      vid: 964
+    - name: "{{vlandb.965.name}}"
+      vid: 965
+    - name: "{{vlandb.966.name}}"
+      vid: 966
+    - name: "{{vlandb.967.name}}"
+      vid: 967
+    - name: "{{vlandb.968.name}}"
+      vid: 968
+    - name: "{{vlandb.969.name}}"
+      vid: 969
+    - name: "{{vlandb.970.name}}"
+      vid: 970
+    - name: "{{vlandb.971.name}}"
+      vid: 971
+    - name: "{{vlandb.972.name}}"
+      vid: 972
+    - name: "{{vlandb.973.name}}"
+      vid: 973
+    - name: "{{vlandb.974.name}}"
+      vid: 974
+    - name: "{{vlandb.975.name}}"
+      vid: 975
+    - name: "{{vlandb.976.name}}"
+      vid: 976
+  inet_dmz:
+    - name: "{{vlandb.940.name}}"
+      vid: 940
+    - name: "{{vlandb.1100.name}}"
+      vid: 1100
+  brdr:
+    trans:
+      - name: "{{vlandb.900.name}}"
+        vid: 900
+      - name: "{{vlandb.914.name}}"
+        vid: 914
+      - name: "{{vlandb.915.name}}"
+        vid: 915
+      - name: "{{vlandb.916.name}}"
+        vid: 916
+      - name: "{{vlandb.920.name}}"
+        vid: 920
+      - name: "{{vlandb.922.name}}"
+        vid: 922
+      - name: "{{vlandb.1100.name}}"
+        vid: 1100
+  str:
+    - name: "{{vlandb.900.name}}"
+      vid: 900
+    - name: "{{vlandb.922.name}}"
+      vid: 922
+  ipmi:
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.900.name}}"
+      vid: 900
+  default:
+    - name: "{{vlandb.5.name}}"
+      vid: 5
+    - name: "{{vlandb.6.name}}"
+      vid: 6
+    - name: "{{vlandb.7.name}}"
+      vid: 7
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.20.name}}"
+      vid: 20
+    - name: "{{vlandb.22.name}}"
+      vid: 22
+    - name: "{{vlandb.23.name}}"
+      vid: 23
+    - name: "{{vlandb.40.name}}"
+      vid: 40
+    - name: "{{vlandb.50.name}}"
+      vid: 50
+    - name: "{{vlandb.55.name}}"
+      vid: 55
+    - name: "{{vlandb.60.name}}"
+      vid: 60
+    - name: "{{vlandb.70.name}}"
+      vid: 70
+    - name: "{{vlandb.75.name}}"
+      vid: 75
+    - name: "{{vlandb.85.name}}"
+      vid: 85
+    - name: "{{vlandb.90.name}}"
+      vid: 90
+    - name: "{{vlandb.95.name}}"
+      vid: 95
+    - name: "{{vlandb.100.name}}"
+      vid: 100
+    - name: "{{vlandb.110.name}}"
+      vid: 110
+    - name: "{{vlandb.120.name}}"
+      vid: 120
+    - name: "{{vlandb.130.name}}"
+      vid: 130
+    - name: "{{vlandb.140.name}}"
+      vid: 140
+    - name: "{{vlandb.150.name}}"
+      vid: 150
+# net:
+#   device:
+#     leaf:
+#       vmware:
+#         - model: "7160-32CQ"
+#           ports:
+#             prod: "1/1-12/4"
+#             ic: "13/1-18/4"
+#         - model: "7150S-64-CL"
+#           ports:
+#             prod: "1-15,17-31"
+#             ic: "33-47"

@@ -1,0 +1,8 @@
+---
+# file: cvp.yml
+
+- hosts: build
+  gather_facts: no
+  roles:
+    - eos_cli_cmds
+    - cvp

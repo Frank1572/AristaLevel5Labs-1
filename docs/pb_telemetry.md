@@ -1,16 +1,6 @@
 # Configure and Install/ Upgrade TerminAttr daemon
 
-This playbook helps to ensure correctly configured telemetry data streaming daemon to CVP. It can also be used to install a specific daemon version to switches.
-
-Based on the values that are set in "inv_daemonTerminAttr" file, the configuration is checked and corrected if needed.
-Values in "inv_daemonTerminAttr" are:
-
-    teleipv4
-    televrf
-    teledaemonbinary
-    teledaemonversion
-
-Values set under all:vars do match to all groups. Values set under hecXX:vars are more specific to the selected group or the group that a device belongs to.
+For information about variables for the agent, please see the README.md in https://github.wdf.sap.corp/thecoolkids/arista_terminattr/README.md
 
 # Run the playbook
 

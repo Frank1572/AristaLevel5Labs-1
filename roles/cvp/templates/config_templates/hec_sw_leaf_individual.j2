@@ -1,0 +1,53 @@
+! ========== SNMP Individual ==========
+snmp-server contact $SNMP_CONTACT
+snmp-server location $SNMP_LOCATION
+
+! ========== SPINE Uplinks ==========
+interface $SPINE1_INTERFACE
+   description LLDP:$SPINE1_NAME:$SPINE1_PORT
+   ip address $SPINE1_IP/31
+   mtu $MTU
+   $SPEED
+interface $SPINE2_INTERFACE
+   description LLDP:$SPINE2_NAME:$SPINE2_PORT
+   ip address $SPINE2_IP/31
+   mtu $MTU
+   $SPEED
+interface $SPINE3_INTERFACE
+   description LLDP:$SPINE3_NAME:$SPINE3_PORT
+   ip address $SPINE3_IP/31
+   mtu $MTU
+   $SPEED
+interface $SPINE4_INTERFACE
+   description LLDP:$SPINE4_NAME:$SPINE4_PORT
+   ip address $SPINE4_IP/31
+   mtu $MTU
+   $SPEED
+
+! ========== Hostname ==========
+hostname $HOSTNAME
+
+! ========== Lo1 config ==========
+interface Loopback1
+   description Router-ID
+   ip address $LOOPBACK1_IP/32
+
+! ========== Ma1 config ==========
+interface Management1
+  {{eos_cmd.c_vrf_forwarding}} $MA_VRF
+  ip address $MA_IP/$MA_MASK
+
+! ========== Lo900 config ==========
+interface Loopback900
+   ip address $LOOPBACK900_IP/32
+
+! ========== BGP Individual ==========
+router bgp $BGP_AS
+   router-id $LOOPBACK1_IP
+   network $LOOPBACK1_IP/32
+   network $LOOPBACK900_IP/32
+   neighbor $SPINE1_NEIGHBOR_IP {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+   neighbor $SPINE2_NEIGHBOR_IP {{eos_cmd.c_neighbor_peer_group}}  SPINE-PG
+   neighbor $SPINE3_NEIGHBOR_IP {{eos_cmd.c_neighbor_peer_group}}  SPINE-PG
+   neighbor $SPINE4_NEIGHBOR_IP {{eos_cmd.c_neighbor_peer_group}}  SPINE-PG
+   neighbor $MLAG_NEIGHBOR_IP {{eos_cmd.c_neighbor_peer_group}}  MLPEER-PG

@@ -1,19 +1,38 @@
 radius-server timeout 3
 radius-server deadtime 1
+{% if hec.radius_key is defined %}
+radius-server key 7 {{ hec.radius_key }}
+{% else %}
 radius-server key 7 11061A161E115E5951
+{% endif %}
 !
 radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
 radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 !
-aaa authentication login default local group radius
-aaa authorization console
-aaa authorization exec default local group radius
+{% set order = 'group radius local' %}
+{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
+{% set order = 'local group radius' %}
+{% endif %}
+aaa authentication login default {{order}}
+{{eos_cmd.c_aaa_authorization_console}}
+aaa authorization exec default {{order}}
+!
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+no aaa root
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
+!
+management api http-commands
+   no shutdown
+   vrf default
+      ip access-group ACL_SNMP_VTY
+!
+management console
+   idle-timeout 30
 !
 management telnet
    shutdown
 !
 management ssh
+   ip access-group ACL_SNMP_VTY in
    idle-timeout 30
-

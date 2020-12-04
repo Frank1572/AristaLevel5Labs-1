@@ -1,0 +1,4 @@
+Value extension_name_version (\S+)
+
+Start
+  ^${extension_name_version}\.swix\s.*

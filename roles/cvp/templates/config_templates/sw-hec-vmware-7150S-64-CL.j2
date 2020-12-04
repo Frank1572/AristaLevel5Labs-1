@@ -1,0 +1,46 @@
+{# 7150S-64-CL #}
+
+interface Ethernet 1-15,17-31
+   speed forced 10000full
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
+   spanning-tree portfast
+!
+interface Ethernet 33-47
+   speed forced 10000full
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
+   spanning-tree portfast
+!
+interface Ethernet16,32
+   shutdown
+!
+! === MLAG Peer Link: ===
+interface Ethernet49/1,50/1
+   speed forced 40gfull
+   mtu {{hec.fabric.interlink_mtu}}
+   channel-group 42 mode active
+!
+! === Core Switch Uplinks: ===
+interface Ethernet51/1,52/1
+   speed forced 40gfull
+!
+{% for i in range(1,16) %}
+interface Ethernet{{i}},{{i+16}}
+   channel-group {{i+100}} mode active
+!
+{% endfor %}
+{% for i in range(33,48) %}
+interface Ethernet{{i}}
+   channel-group {{loop.index0+151}} mode active
+!
+{% endfor %}
+interface Ethernet48
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   switchport mode trunk
+   channel-group 900 mode active
+!

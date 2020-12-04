@@ -1,74 +1,9 @@
 ---
-- name: configure TerminAttr daemon
-  hosts: all
-  gather_facts: yes
+- name: Maintain Arista Telemetry Data Streaming Agent
+  gather_facts: true
   connection: network_cli
-  vars_prompt:
-    - name: "ansible_user"
-      prompt: "Username"
-      private: no
-    - name: "ansible_password"
-      prompt: "Password"
-      private: yes
-  vars:
-    incorrect: False
-    ispresent: False
-    cmd: "exec /usr/bin/TerminAttr -ingestvrf {{televrf}} -ingestgrpcurl={{teleipv4}}:9910 -taillogs -ingestauth=key,{{teleskey}} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-
+  hosts:
+    - all
   tasks:
-    - name: record configration of TerminAttr daemon if present
-      set_fact:
-        daemon_data: "{{ansible_net_config|parse_cli_textfsm('telemetry.fsm')}}"
-    - name: output gathered config if it was present
-      set_fact:
-        ispresent: True
-      loop: "{{daemon_data}}"
-      when: item['destination'] != "" or item['securekey'] != "" or item['vrf'] != ""
-    - name: Validating configuration if it was present
-      set_fact:
-        incorrect: True
-      loop: "{{daemon_data}}"
-      when: ispresent and
-            ( item['destination'] != teleipv4 or item['securekey'] != teleskey or item['vrf'] != televrf )
-    - name: removing daemon configuration
-      eos_config:
-        lines:
-          - no daemon TerminAttr
-        save_when: changed
-      when: incorrect
-    - name: Prepare daemon command
-      set_fact:
-        cmd: "exec /usr/bin/TerminAttr -ingestgrpcurl={{teleipv4}}:9910 -taillogs -ingestauth=key,{{teleskey}} -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-      when: ansible_net_hostname is search('oob')
-    - name: Applying configuration on device
-      eos_config:
-        lines:
-          - "{{cmd}}"
-          - "no shutdown"
-        parents: daemon TerminAttr
-        save_when: changed
-      when: not ispresent or incorrect
-    - name: removing daemon configuration
-      eos_config:
-        lines:
-          - no daemon TerminAttr
-      tags:
-        - never
-        - daemon_remove
-    - name: restarting daemon
-      eos_config:
-        lines:
-          - shutdown
-          - no shutdown
-        parents: daemon TerminAttr
-      tags:
-        - never
-        - daemon_restart
-    - name: stopping daemon
-      eos_config:
-        lines:
-          - shutdown
-        parents: daemon TerminAttr
-      tags:
-        - never
-        - daemon_stop
+  roles:
+    - arista_terminattr

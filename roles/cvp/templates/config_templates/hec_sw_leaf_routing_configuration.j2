@@ -1,152 +1,344 @@
 {# hec_sw_leaf_routing_configuration.j2 #}
-{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf #####}
-{% set id_short = id | regex_replace('^.*(?P<id>[123][ab])$', '\\g<id>') %}
-{% set leafpurpose = id | regex_replace('^(?P<purpose>[bs])[123][ab]$', '\\g<purpose>') %}
+{% set id = id + item.number %}
+{#
+ first, let's find out the leaf's purpose.
+  - 'b' is a borderleaf
+  - 's' is a storageleaf
+  - 'h' is a hana shared storage-leaf
+#}
+{% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
-{% set brdrtype = id | regex_replace('^(?P<one_or_two>[123])[ab]$', '\\g<one_or_two>') %}
-!leafid {{ leafid }}
+{% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123456])[ab]$', '\\g<one_or_two>') %}
+{#
+ based on the purpose, we set the list to loop through.
+ this list is what we define under hec.* in hecXX.yml.
+
+ say we have been called for a borderleaf, the leaf purpose will make us
+ to set the loop_items to hec.brdr and we will then process each entry
+ under hec.brdr
+#}
 {% set loop_items = hec.brdr %}
 {% if leafpurpose == 's' %}
-  {% set loop_items = hec.str %}
+{% set loop_items = hec.str %}
 {% endif %}
-{% for allbrdrs in loop_items %}
-!allbrdrs.number {{allbrdrs.number}}
-  {% if allbrdrs.number == id_short %}
-    {% if hec.spine.model|string == '7504' or hec.spine.model|string == '7508'  %}
-    {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
-    {# Chassis based devices #}
-    {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
-    {% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
-    {% endif %}
-    {% if hec.spine.model|string == '7280' %}
-    {# Non-modular switches like 7280 #}
-    {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
-    {% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
-    {% endif %}
-
-    {% if leafid == 'a' %}
-    {% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
-    {% endif %}
-
-    {% if leafid == 'b' %}
-    {% set cell_id  = (( spine_po|int ) / 2 )|int %}
-    {% endif %}
-
-    {% if spine_lc|int > 0 %}
-    {% set offset = spine_lc|int - 3 %}
-    {% set cell_id = cell_id + (offset * 18) %}
-    {% endif %}
-
-    {% set asn_part = cell_id + 11000 %}
-    {# if type == 'borderleaf' or type == 'storageleaf' #}
-    {% set asn_part = cell_id + 10000 %}
-    {# endif #}
-    {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
-    {% set asn_spine = '641' + hec.hec_nr + '.10000' %}
-    !
-    {% if leafid == 'b' %}
-    {% set Lo1 = cell_id + 100 %}
-    {% else %}
-    {% set Lo1 = cell_id %}
-    {% endif %}
-
-    interface Loopback1
-       ip address 10.100.1.{{ Lo1 }}/32
-    !
-    interface Loopback2
-       ip address 10.200.1.{{ cell_id }}/32
-    !
-    {% if spine_lc|int > 0 %}
-      {% set offset = spine_lc|int - 3 %}
-    {% else %}
-      {% set offset = 0 %}
-    {% endif %}
-    {% set ip = spine_po|int * 2 - 1 %}
-    {% set ip = ip + 72 * offset %}
-    {% set nextsubnet = 0 %}
-    {% if ip > 255 %}
-      {% set ip = ip - 256 %}
-      {% set nextsubnet = 1 %}
-    {% endif %}
-    {% if ip > 255 %}
-      {% set ip = ip - 256 %}
-      {% set nextsubnet = 2 %}
-    {% endif %}
-
-    {# set link_ip = (spine_po|int * 2 - 1)|int #}
-    {% set link_ip = ip %}
-
-    {% for intf in allbrdrs.uplinks %}
-    interface Ethernet{{ intf }}
-       ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
-    {% endfor %}
-    !
-    ip routing
-    no ip routing vrf OOB
-    !
-    ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32
-    !
-    route-map MLPEER-RM permit 10
-       match interface Vlan4094
-       set as-path prepend auto
-    !
-    route-map MLPEER-RM permit 20
-       match ip address prefix-list ANY-PL
-    !
-    router bgp {{ asn_generated }}
-       bgp asn notation asdot
-       router-id 10.100.1.{{ Lo1 }}
-       maximum-paths 8 ecmp 16
-       neighbor MLPEER-PG peer-group
-       neighbor MLPEER-PG remote-as {{ asn_generated }}
-       neighbor MLPEER-PG next-hop-self
-       neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
-       neighbor SPINE-PG peer-group
-       neighbor SPINE-PG remote-as {{ asn_spine }}
-       neighbor SPINE-PG soft-reconfiguration inbound all
-       neighbor SPINE-PG fall-over bfd
-       neighbor SPINE-PG route-map MLPEER-RM out
-       neighbor SPINE-PG send-community
-       neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
-       {% for i in range(1,5) %}
-       neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} peer-group SPINE-PG
-       {% endfor %}
-       {% set mlag_ip_peer  = '198.19.224.1' %}
-       {% if leafid == 'a' %}
-        {% set mlag_ip_peer  = '198.19.224.2' %}
-      {% endif %}
-       neighbor {{ mlag_ip_peer }} peer-group MLPEER-PG
-       network 10.100.1.{{ Lo1 }}/32
-       network 10.200.1.{{ cell_id }}/32
-       !add inband-mgmt address via "network xxx/32" here
-       {% if brdrtype == '2' %}
-       network {{ hec.inband_trans_net }}
-       {% endif %}
-
-       {% if hec.fabric.vtep_distribution_mode == "evpn" %}
-       neighbor EVPN-PG peer-group
-       neighbor EVPN-PG remote-as {{ asn_spine }}
-       neighbor EVPN-PG update-source Loopback1
-       neighbor EVPN-PG send-community standard extended
-       neighbor EVPN-PG ebgp-multihop 2
-       neighbor EVPN-PG maximum-routes 0
-       neighbor EVPN-PG fall-over bfd
-       !
-       address-family evpn
-          neighbor EVPN-PG activate
-       !
-       address-family ipv4
-          no neighbor EVPN-PG activate
-       !
-       address-family ipv6
-          no neighbor EVPN-PG activate
-       !
-       vlan-aware-bundle all-vlans
-          rd 10.200.1.3:1
-          route-target both 1:1
-          redistribute learned
-          vlan 5-2999
-       {% endif %}
-    !
-  {% endif %}
+{% if leafpurpose == 'h' %}
+{% set loop_items = hec.shs %}
+{% endif %}
+{% set asn_generated_global = [] %}
+{#
+ what we do next is to check for the "sub type" of the give leaf purpose.
+ this just means we will not generate for each and every borderleaf listed under
+ hec.brdr (f.e.) but we will only process brdr02a/b if "id_short" is set to "2".
+#}
+{% for allbrdrs in loop_items if allbrdrs.number == id_short %}
+{% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
+{% if hec.spine.model|string is search('75[01][486].*')  %}
+{# Chassis based devices #}
+{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
+{% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
+{% endif %}
+{% if hec.spine.model|string is search('7280.*') %}
+{# Non-modular switches like 7280 #}
+{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
+{% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
+{% endif %}
+{% if leafid == 'a' %}
+{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
+{% endif %}
+{% if leafid == 'b' %}
+{% set cell_id  = (( spine_po|int ) / 2 )|int %}
+{% endif %}
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% set cell_id = cell_id + (offset * 18) %}
+{% endif %}
+{% set asn_part = cell_id + 11000 %}
+{% set asn_part = cell_id + 10000 %}
+{% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
+{% set _ = asn_generated_global.append(asn_generated) %}
+{% set asn_spine = '641' + hec.hec_nr + '.10000' %}
+{% if leafid == 'b' %}
+{% set Lo1 = cell_id + 100 %}
+{% else %}
+{% set Lo1 = cell_id %}
+{% endif %}
+interface Loopback1
+   description Router-ID
+   ip address 10.100.1.{{ Lo1 }}/32
+!
+interface Loopback2
+   ip address 10.200.1.{{ cell_id }}/32
+!
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% else %}
+{% set offset = 0 %}
+{% endif %}
+{% set ip = spine_po|int * 2 - 1 %}
+{% set ip = ip + 72 * offset %}
+{% set nextsubnet = 0 %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 1 %}
+{% endif %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 2 %}
+{% endif %}
+{% set link_ip = ip %}
+{% for intf in allbrdrs.uplinks %}
+interface Ethernet{{ intf }}
+   ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
+!
 {% endfor %}
+ip routing
+no ip routing vrf OOB
+!
+{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
+ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
+ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
+ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
+!
+route-map RM-EDGE permit 10
+   match ip address prefix-list PL-EDGE
+!
+route-map RM-EDGE deny 20
+{% endif %}
+!
+router bgp {{ asn_generated }}
+   bgp asn notation asdot
+   router-id 10.100.1.{{ Lo1 }}
+   maximum-paths 8 ecmp 16
+   !
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor SPINE-PG remote-as {{ asn_spine }}
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
+{% if hec.spine.underlay_bfd %}
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+{% endif %}
+   neighbor SPINE-PG route-map MLPEER-RM out
+   neighbor SPINE-PG send-community
+   neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+   !
+   neighbor MLPEER-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor MLPEER-PG remote-as {{ asn_generated }}
+   neighbor MLPEER-PG next-hop-self
+   neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+   !
+{% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+   neighbor EDGE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
+   neighbor EDGE-PG route-map RM-EDGE in
+   neighbor EDGE-PG route-map RM-EDGE out
+   neighbor EDGE-PG send-community
+   neighbor EDGE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+{% for edge_neighbor in allbrdrs.ports %}
+{% if (edge_neighbor.type is defined) and (edge_neighbor.type == "vlan") and (edge_neighbor.ngdr_underlay is defined) and (edge_neighbor.ngdr_underlay)%}
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} {{eos_cmd.c_neighbor_peer_group}} EDGE-PG
+   neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} update-source Vlan{{ edge_neighbor.id }}
+{% endif %}
+{% endfor %}
+   !
+{% endif %}
+   !
+{% for i in range(1,5) %}
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+{% endfor %}
+{% set mlag_ip_peer  = hec.fabric.mlag_a_ip %}
+{% if leafid == 'a' %}
+{% set mlag_ip_peer  = hec.fabric.mlag_b_ip %}
+{% endif %}
+   neighbor {{ mlag_ip_peer }} {{eos_cmd.c_neighbor_peer_group}} MLPEER-PG
+   !
+   network 10.100.1.{{ Lo1 }}/32
+   network 10.200.1.{{ cell_id }}/32
+   network {{allbrdrs.nwmgmt_ip}}/32
+{% if (brdrtype == '2') and (leafpurpose == 'b') %}
+   network {{ hec.inband_trans_net }}
+{% endif %}
+   !
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor EVPN-PG remote-as {{ asn_spine }}
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG maximum-routes 0
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+   !
+{% for i in range(11,15) %}
+   neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% endfor %}
+   !
+   address-family evpn
+      neighbor EVPN-PG activate
+   !
+   address-family ipv4
+      no neighbor EVPN-PG activate
+   !
+   address-family ipv6
+      no neighbor EVPN-PG activate
+   !
+   vlan-aware-bundle all-vlans
+      rd 10.200.1.{{ cell_id }}:1
+      route-target both 1:1
+      redistribute learned
+{% if leafpurpose != 'b' %}
+      vlan 5-2499
+{% else %}
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
+      vlan 5-3499
+{% else %}
+      vlan 5-2499
+{% endif %}
+{% elif (brdrtype == '2')  %}
+      vlan 5-2499
+{% endif %}
+{% endif %}
+      exit
+   exit
+!
+{% endif %}{# END vtep_distribution_mode evpn? #}
+{#
+  if this a storage switch, we do not need vni mappings for vlan 30 & 920
+#}
+{% if leafpurpose == 's' %} {# START storageleaf - remove vni for vlan 30 & 920 #}
+interface Vxlan1
+{% for i in (30,920) %}
+   no vxlan vlan {{i}} vni {{i+10000}}
+{% endfor %}
+{% endif %}{# END storageleaf - remove vni for vlan 30 & 920 #}
+{% if leafpurpose == 'b' %}
+{% if (brdrtype == '1') or (brdrtype == '3') %}
+{#
+  we need to have vlans and the vni mapping for 3000-3499
+  if the core routers and wan/vpn routers are still doing
+  static transfer networks for wan/vpn connections
+#}
+{% if (hec.core_vlans is defined) and hec.core_vlans %}
+vlan 3000-3499
+!
+interface Vxlan1
+{% for i in range(0,500) %}
+   vxlan vlan {{ i + 3000 }} vni {{ i + 3000 }}000
+{% endfor %}
+{% endif %}{# END hec.core_vlans? #}
+{% endif %}{# END brdrtype 1/3 ? #}
+{% endif %}{# END leafpurpose=='b' #}
+!
+{% endfor %}
+{#
+  Let's see if there are any (static) routes to be configured.
+  Depending on the type of leaf we will check for existance of the
+  dictionary "hec.routes.static.$LEAFTYPE".
+#}
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
+{% set route_statement = 'ip route' %}
+{% if vrf != '' %}
+{% set route_statement = route_statement + ' vrf ' + vrf %}
+{% endif %}
+{% set route_statement = route_statement + ' ' + dest %}
+{% if intf != '' %}
+{% set route_statement = route_statement + ' ' + intf %}
+{% endif %}
+{% if gw != '' %}
+{% set route_statement = route_statement + ' ' + gw %}
+{% endif %}
+{% if met != '' %}
+{% set route_statement = route_statement + ' ' + met %}
+{% endif %}
+{{ route_statement }}
+{% if red_bgp == True %}
+router bgp {{ asn_generated_global[0]|string }}
+{% if vrf != '' %}
+   vrf {{ vrf }}
+     redistribute static
+{% else %}
+   redistribute static
+{% if dest == '0.0.0.0/0' %}
+   neighbor SPINE-PG default-originate
+{% endif %}
+{% endif %}
+{% endif %}
+{%- endmacro %}
+{#
+  Create empty list first. Only for non-empty route_dictionary
+  the macro will be called.
+#}
+{% set route_dictionary = [] %}
+{#
+  We need to determine what list to iterate through, so let's find out
+  what type of "specical leaf" we are currently working with.
+#}
+{% if hec.routes.static is defined %}
+{% for item_rt_static in hec.routes.static %}
+{# ! {{item_rt_static}}
+! {{hec.routes.static[item_rt_static]}} #}
+{# get the type number (tailing integer like 1,2,3,...) #}
+{% set num_tailing = item_rt_static | regex_replace('^.*(?P<num_tailing>[123456])$', '\\g<num_tailing>') %}
+{#
+  loop through all subitems. depending on the actual switch purpose we are working at,
+  we do loop through all the subitems.
+#}
+{% if leafpurpose == 'b' and item_rt_static is search("brdr") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
+{# ! inner for-loop var "route_dictionary": {{route_dictionary}}
+! new static route code. it should have set the route_dictionary with hec.routes.static.brdr* dictionary
+! {{route_dictionary}} #}
+{% endif %}
+{% endif %}
+{% if leafpurpose == 's' and item_rt_static is search("str") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
+{% endif %}
+{% endif %}
+{% if leafpurpose == 'h' and item_rt_static is search("shs") %}
+{% if brdrtype == num_tailing %}
+{% set _ = route_dictionary.append(hec.routes.static[item_rt_static]) %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}{# endif hec.routes.statis is defined #}
+{#
+  The keys 'nexthop', 'interface', 'metric', 'vrf'
+  are optional, so if they have not been set, we set it
+  to emtpy strings befor calling the macro
+#}
+{% if route_dictionary[0] is defined %}
+{% for route in route_dictionary[0] %}
+{% if route.vrf is not defined %}
+{% set vrf = '' %}
+{% else %}
+{% set vrf = route.vrf %}
+{% endif %}
+{% if route.interface is not defined %}
+{% set interface = '' %}
+{% else %}
+{% set interface = route.interface %}
+{% endif %}
+{% if route.nexthop is not defined %}
+{% set nexthop = '' %}
+{% else %}
+{% set nexthop = route.nexthop %}
+{% endif %}
+{% if route.metric is not defined %}
+{% set metric = '' %}
+{% else %}
+{% set metric = route.metric|string %}
+{% endif %}
+{% if route.redist_bgp is not defined %}
+{% set redist_bgp = False %}
+{% else %}
+{% set redist_bgp = route.redist_bgp %}
+{% endif %}
+{#
+  call the macro to render the route statement
+#}
+{{ render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
+{% endfor %}
+{% endif %}

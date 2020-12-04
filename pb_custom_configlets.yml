@@ -26,9 +26,16 @@
     - name: "Save each configlet to local file in roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/"
       copy: content='{{item.config}}' dest="roles/cvp/files/builder_generated_configs/{{inventory_hostname}}/{{item.name}}"
       loop: '{{ cvp_facts.ansible_facts.configlets }}'
-      when: item.name is search('sw-hec..-(hana|hvv|hvx|ipmi).*')
+      when: item.name is search('sw-hec..-(hana|hvv|hvx|ipmi|0|1|2|3|6|12|13).*')
       tags:
         - configlets_download_from_cvp
+
+    - name: upload configlets to git repo
+      delegate_to: localhost
+      run_once: True
+      shell: LOGMESS="$HOST/$USER at $(echo `date`)" && cd roles/cvp/files/builder_generated_configs && git add . && git commit -m "$LOGMESS" -a && git push
+      tags:
+        - configlets_upload_to_repo
 
     - name: Check if roles/cvp/files/builder_generated_configs exists
       delegate_to: localhost
@@ -48,10 +55,3 @@
       when: dir_to_delete.stat.exists and dir_to_delete.stat.isdir
       tags:
         - env_local_clean
-
-    - name: upload configlets to git repo
-      delegate_to: localhost
-      run_once: True
-      shell: LOGMESS="$HOST/$USER at $(echo `date`)" && cd roles/cvp/files/builder_generated_configs && git add . && git commit -m "$LOGMESS" -a && git push
-      tags:
-        - configlets_upload_to_repo

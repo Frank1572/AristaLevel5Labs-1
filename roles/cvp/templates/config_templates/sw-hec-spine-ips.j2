@@ -45,10 +45,6 @@
 interface Ethernet {{intf_name}}
  no switchport
 {# {% if create_ip_on_interface == 'yes' %} #}
-{% if hec.superspine|default(false) and (item.spine_port_towards_superspine|default("incorrect") != "incorrect") and ( intf_name in item.spine_port_towards_superspine) %}
-!! DEBUG: we should skip the default (in-sequence) IP address-generation
-!! for this interface, because it looks like this will be SuperSpine-Uplink
-{% endif %}
  ip address 10.{{ item.id }}.{{ nextsubnet }}.{{ ip }}/31
 {# {% endif %} #}
  mtu {{ hec.fabric.interlink_mtu }}

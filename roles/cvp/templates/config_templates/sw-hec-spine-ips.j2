@@ -1,5 +1,24 @@
 {# below lines get included by sw-hec-spine-xx.j2 and sw-hec-spine.j2 #}
-! DEBUG: inside sw-hec-spine-ips.j2
+{# ! DEBUG: inside sw-hec-spine-ips.j2 #}
+{# determine the POD ID in a superspine deployment. #}
+{% set podid = 1 %}
+{% if item.id|int > 20 and item.id|int < 30 %}
+{% set podid = 2 %}
+{% elif item.id|int > 30 and item.id|int < 40 %}
+{% set podid = 3 %}
+{% elif item.id|int > 40 and item.id|int < 50 %}
+{% set podid = 4 %}
+{% elif item.id|int > 50 and item.id|int < 60 %}
+{% set podid = 5 %}
+{% elif item.id|int > 60 and item.id|int < 70 %}
+{% set podid = 6 %}
+{% elif item.id|int > 70 and item.id|int < 80 %}
+{% set podid = 7 %}
+{% elif item.id|int > 80 and item.id|int < 90 %}
+{% set podid = 8 %}
+{% elif item.id|int > 90 and item.id|int < 100 %}
+{% set podid = 9 %}
+{% endif %}
 {% for lc in range(lc_start, lc_end ) %}
 {% for subintf in range(1,port_range_end) %}
 {% set ip = loop.index * 2 - 2 %}
@@ -26,6 +45,10 @@
 interface Ethernet {{intf_name}}
  no switchport
 {# {% if create_ip_on_interface == 'yes' %} #}
+{% if hec.superspine|default(false) and (item.spine_port_towards_superspine|default("incorrect") != "incorrect") and ( intf_name in item.spine_port_towards_superspine) %}
+!! DEBUG: we should skip the default (in-sequence) IP address-generation
+!! for this interface, because it looks like this will be SuperSpine-Uplink
+{% endif %}
  ip address 10.{{ item.id }}.{{ nextsubnet }}.{{ ip }}/31
 {# {% endif %} #}
  mtu {{ hec.fabric.interlink_mtu }}
@@ -43,33 +66,9 @@ interface Ethernet {{intf_name}}
 !
 {% endfor %}
 {% endfor %}
-{# determine the POD ID in a superspine deployment. #}
-{% set podid = 1 %}
-{% if item.id|int > 20 and item.id|int < 30 %}
-{% set podid = 2 %}
-{% elif item.id|int > 30 and item.id|int < 40 %}
-{% set podid = 3 %}
-{% elif item.id|int > 40 and item.id|int < 50 %}
-{% set podid = 4 %}
-{% elif item.id|int > 50 and item.id|int < 60 %}
-{% set podid = 5 %}
-{% elif item.id|int > 60 and item.id|int < 70 %}
-{% set podid = 6 %}
-{% elif item.id|int > 70 and item.id|int < 80 %}
-{% set podid = 7 %}
-{% elif item.id|int > 80 and item.id|int < 90 %}
-{% set podid = 8 %}
-{% elif item.id|int > 90 and item.id|int < 100 %}
-{% set podid = 9 %}
-{% endif %}
 {# if this location has superspine switches defined in hecXX.yml, then we
 generate the uplink ports towards superspines. #}
 {% if hec.superspine|default(false) %}
-{% if item.spine_port_towards_superspine|default("incorrect") != "incorrect" %}
-{% for x in item.spine_port_towards_superspine %}
-interface {{x}}
-  no switchport
-  description Uplink to Superspine-{{loop.index}}
 {% if item.id|string is regex('.1$') %}
 {% set lastoct = "1" %}
 {% elif item.id|string is regex('.2$') %}
@@ -79,7 +78,13 @@ interface {{x}}
 {% elif item.id|string is regex('.4$') %}
 {% set lastoct = "7" %}
 {% endif %}
-{% set interface_ipv4 = '10.255.' + podid|string + loop.index + '.' + lastoct + '/31' %}
+{% if item.spine_port_towards_superspine|default("incorrect") != "incorrect" %}
+{% for x in item.spine_port_towards_superspine %}
+interface {{x}}
+  no switchport
+  description Uplink to Superspine-{{loop.index}}
+{% set interface_ipv4 = '10.255.' + podid|string + loop.index|string + '.' + lastoct + '/31' %}
+  ip address {{ interface_ipv4 }}
 {% endfor %}
 {% else %}
 ! ERROR: you did miss to set the "spine_port_towards_superspine" variable for each Spine.

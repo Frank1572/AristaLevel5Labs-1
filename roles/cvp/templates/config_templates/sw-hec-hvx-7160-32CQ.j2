@@ -1,11 +1,12 @@
 {% include "templates/config_templates/7160.j2" %}
 {% import "templates/config_templates/libs.j2" as funcs %}
-{% set p_data={'start': 1, 'end': 11} %}
+{% set p_data={'start': 1, 'end': 12} %}
 {% set p_vmotion={'start': 13, 'end': 18} %}
 {% set p_mlag={'start': 27, 'end': 28} %}
+{% set intf_spines = {'name' : 'none'} %}
 {% for m in hec.fabric.leaf_models %}
-{% if m.model is search("7160-32CQ") %}
-{% set spine_uplinks = m.uplink_ports %}
+{% if m.model == "7160-32CQ" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
 {% endif %}
 {% endfor %}
 
@@ -19,7 +20,7 @@ interface {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
-interface Ethernet {{ spine_uplinks }}
+interface Ethernet {{ intf_spines['name'] }}
 {#
   40gfull is not applicable for all cells in all locations
   as of now there is no way to determine the transceiver speed

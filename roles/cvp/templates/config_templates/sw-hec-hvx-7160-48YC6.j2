@@ -16,7 +16,7 @@ interface Ethernet {{p_data['start']}}-{{p_data['end']}}
    spanning-tree portfast
 !
 ! === MLAG Peer Link: ===
-interface Ethernet {{p_mlag['start']}},{{p_mlag['end']}}
+interface Ethernet {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    mtu {{hec.fabric.interlink_mtu}}
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active

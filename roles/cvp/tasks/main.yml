@@ -10,11 +10,6 @@
     - delete_configlets
     - configure_aaa
     - reload_TerminAttr
-- name: just debug
-  debug:
-    var: hec.fabric
-  tags:
-    - always
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself
 - name: Check if directory for configlet builders exists

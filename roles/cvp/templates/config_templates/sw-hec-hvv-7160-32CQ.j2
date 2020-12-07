@@ -3,6 +3,11 @@
 {% set p_data={'start': 1, 'end': 12} %}
 {% set p_vmotion={'start': 13, 'end': 18} %}
 {% set p_mlag={'start': 27, 'end': 28} %}
+{% for m in hec.leaf_models %}
+{% if m.model == "7160-32CQ" %}
+{% set spine_uplinks = m.uplink_ports %}
+{% endif %}
+{% endfor %}
 
 interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
 {{ funcs.leaf_hvv_ports_data(hec.hec_nr) }}
@@ -14,13 +19,13 @@ interface Ethernet 19/1-25/4
    shutdown
 !
 ! === MLAG Peer Link: ===
-interface Ethernet{{p_mlag['start']}}/1,{{p_mlag['end']}}/1
+interface Ethernet {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    mtu {{hec.fabric.interlink_mtu}}
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
-interface Ethernet29/1,30/1,31/1,32/1
+interface Ethernet {{ spine_uplinks }}
 {#
   40gfull is not applicable for all cells in all locations
   as of now there is no way to determine the transceiver speed
@@ -31,17 +36,17 @@ interface Ethernet29/1,30/1,31/1,32/1
    no switchport
 !
 {% for main_intf in range(p_data['start'], p_data['end']+1) %}
-interf Et {{main_intf}}/1-2
+interface Ethernet {{ main_intf }}/1-2
    channel-group {{ main_intf + 100 + loop.index0 }} mode active
 !
-interf Et {{main_intf}}/3-4
+interface Ethernet {{ main_intf }}/3-4
    channel-group {{ main_intf + 101 + loop.index0 }} mode active
 !
 {% endfor %}
 {% for main_intf in range(p_vmotion['start'], p_vmotion['end']+1) %}
 {% set out_i = loop.index0 %}
 {% for subint in range(1,5) %}
-interface Et{{main_intf}}/{{subint}}
+interface Ethernet {{ main_intf }}/{{ subint }}
    channel-group {{ 150 + subint + 4 * out_i }} mode active
 !
 {% endfor %}

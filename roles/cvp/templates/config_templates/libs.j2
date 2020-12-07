@@ -14,3 +14,10 @@
    ip access-group HEC{{ hec_nr }}-L2-APP in
    spanning-tree portfast
 {%- endmacro %}
+{% macro leaf_hvx_ports_data(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 5
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}

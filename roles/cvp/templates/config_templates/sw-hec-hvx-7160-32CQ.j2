@@ -4,7 +4,7 @@
 {% set p_vmotion={'start': 13, 'end': 18} %}
 {% set p_mlag={'start': 27, 'end': 28} %}
 {% for m in hec.fabric.leaf_models %}
-{% if m.model == "7160-32CQ" %}
+{% if m.model is search("7160-32CQ") %}
 {% set spine_uplinks = m.uplink_ports %}
 {% endif %}
 {% endfor %}

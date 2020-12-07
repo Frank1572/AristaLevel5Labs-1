@@ -2,18 +2,19 @@
 {% import "templates/config_templates/libs.j2" as funcs %}
 {% set p_data={'start': 1, 'end': 12} %}
 {% set p_vmotion={'start': 13, 'end': 18} %}
-{{ p_data }}
-interface Ethernet 1/1-12/4
+{% set p_mlag={'start': 27, 'end': 28} %}
+
+interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
 {{ funcs.leaf_hvv_ports_data(hec.hec_nr) }}
 !
-interface Ethernet 13/1-18/4
+interface Ethernet {{p_vmotion['start']}}/1-{{p_vmotion['end']}}/4
 {{ funcs.leaf_hvv_ports_vmotion(hec.hec_nr) }}
 !
 interface Ethernet 19/1-25/4
    shutdown
 !
 ! === MLAG Peer Link: ===
-interface Ethernet27/1,28/1
+interface Ethernet{{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    mtu {{hec.fabric.interlink_mtu}}
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
@@ -108,6 +109,15 @@ interface Ethernet12/1-2
 interface Ethernet12/3-4
    channel-group 124 mode active
 !
+
+{% for main_intf in range(p_vmotion['start'], p_vmotion['end']+1) %}
+{% set out_i = loop.index0 %}
+{% for subint in range(1,5) %}
+interface Et{{main_intf}}/{{subint}}
+   channel-group {{ 150 + subint + out_i }} mode active
+{% endfor %}
+{% endfor %}
+
 interface Ethernet13/1
    channel-group 151 mode active
 !

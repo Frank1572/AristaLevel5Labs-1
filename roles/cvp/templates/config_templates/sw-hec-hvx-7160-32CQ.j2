@@ -3,7 +3,7 @@
 {% set p_data={'start': 1, 'end': 11} %}
 {% set p_vmotion={'start': 13, 'end': 18} %}
 {% set p_mlag={'start': 27, 'end': 28} %}
-{% for m in hec.leaf_models %}
+{% for m in hec.fabric.leaf_models %}
 {% if m.model == "7160-32CQ" %}
 {% set spine_uplinks = m.uplink_ports %}
 {% endif %}

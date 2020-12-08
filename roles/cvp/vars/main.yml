@@ -83,8 +83,6 @@ container:
       - sw-hec-spine
   HEC-Superspine:
     parent_container: HEC-Routed Fabric
-    configlets:
-      - sw-hec-superspine-all-interfaces
   HEC-NGDR:
     parent_container: HEC-Routed Fabric
   HEC-Leaf:

@@ -78,7 +78,7 @@ interface Loopback900
 !
 interface {{oob_mgmt_intf}}
    description OOB MGMT
-   {{eos_cmd.c_vrf_forwarding}} OOB
+   {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
    ip address {{ hec.oob_prefix }}.{{ item.id }}/{{ hec.oob_mask }}
 !
 router bgp 641{{ hec.hec_nr }}.10000

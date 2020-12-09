@@ -10,7 +10,7 @@
 hostname sw-hec{{ hec.hec_nr }}-uberspine-{{ item.id }}
 !
 {% for a in hec.superspine.number %}
-{% if a.id == item %}
+{% if a.id == item.id %}
 snmp-server contact {{a.snmp.contact}}
 snmp-server location {{a.snmp.location}}
 !

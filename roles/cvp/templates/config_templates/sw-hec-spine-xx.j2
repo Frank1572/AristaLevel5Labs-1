@@ -104,7 +104,7 @@ generate all BGP related settings. #}
 {% endfor %}
 {% for x in item.spine_port_towards_superspine %}
 {% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index) %}
-   ! superspine-underlay neighbor {{ neighbor_ipv4|ipaddr('0')|ipaddr('address') }} ?
+   neighbor {{ neighbor_ipv4|ipaddr('0')|ipaddr('address') }} {{eos_cmd.c_neighbor_peer_group}} UNDERLAY-UBERSPINE
 {% endfor %}
    address-family evpn
       bgp next-hop-unchanged

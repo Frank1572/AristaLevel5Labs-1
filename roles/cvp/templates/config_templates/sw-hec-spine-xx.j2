@@ -1,3 +1,4 @@
+{% import "templates/config_templates/libs.j2" as funcs %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -100,6 +101,10 @@ generate all BGP related settings. #}
 {% for item in range(1,5) %}
    neighbor 10.90.{{ hec.hec_nr|int }}.{{item}} {{eos_cmd.c_neighbor_peer_group}} EVPN-UBERSPINE
    ! add per superspine-underlay neighbor here as well
+{% endfor %}
+{% for x in item.spine_port_towards_superspine %}
+{% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index)|ipaddr(-1) %}
+   ! superspine-underlay neighbor {{ neighbor_ipv4 }} ?
 {% endfor %}
    address-family evpn
       bgp next-hop-unchanged

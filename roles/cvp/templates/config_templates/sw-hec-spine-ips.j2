@@ -52,7 +52,7 @@ interface {{x}}
   no switchport
   description Uplink to Superspine-{{loop.index}}
 {% import "templates/config_templates/libs.j2" as funcs %}
-  ip address {{ funcs.spine_superspine_linkip(item.id, loop.index) }}
+  ip address {{ funcs.spine_superspine_linkip(item.id, loop.index) }}/31
 {% endfor %}
 {% else %}
 ! ERROR: you did miss to set the "spine_port_towards_superspine" variable for each Spine.

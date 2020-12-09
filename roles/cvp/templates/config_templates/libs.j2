@@ -32,7 +32,7 @@
 {% set lastoct = "7" %}
 {% endif %}
 {# POD ID CALCULATION #}
-{# {% set podid = 0 %}
+{% set podid = 0 %}
 {% if (spineid|int > 10) and (spineid|int < 20) %}
 {% set podid = 1 %}
 {% elif (spineid|int > 20) and (spineid|int < 30) %}
@@ -51,10 +51,8 @@
 {% set podid = 8 %}
 {% elif (spineid|int > 90) and (spineid|int < 100) %}
 {% set podid = 9 %}
-{% endif %} #}
-{% from "templates/config_templates/libs.j2" import podid_calculation as funcs with context %}
-{{ funcs.podid_calculation }}
-{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
+{% endif %}
+{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct %}
 {{ interface_ipv4 }}
 {%- endmacro %}
 {% macro leaf_hvv_ports_data(hec_nr) -%}

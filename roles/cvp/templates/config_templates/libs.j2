@@ -52,7 +52,7 @@
 {% elif (spineid|int > 90) and (spineid|int < 100) %}
 {% set podid = 9 %}
 {% endif %}
-{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct %}
+{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
 {{ interface_ipv4 }}
 {%- endmacro %}
 {% macro leaf_hvv_ports_data(hec_nr) -%}

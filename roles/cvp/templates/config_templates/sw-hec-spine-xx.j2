@@ -102,7 +102,7 @@ generate all BGP related settings. #}
    ! add per superspine-underlay neighbor here as well
 {% endfor %}
 {% for x in item.spine_port_towards_superspine %}
-{% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index) + '/31' %}
+{% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index) %}
    ! superspine-underlay neighbor {{ neighbor_ipv4|ipaddr('0')|ipaddr('address') }} ?
 {% endfor %}
    address-family evpn

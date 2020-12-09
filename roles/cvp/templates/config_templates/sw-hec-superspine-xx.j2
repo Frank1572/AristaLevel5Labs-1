@@ -1,3 +1,10 @@
+{#
+  Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
+#}
+{% set oob_mgmt_intf = "Management0" %}
+{% if hec.superspine.model|string is search('7280.*') %}
+{% set oob_mgmt_intf = "Management1" %}
+{% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.90000' %}
 hostname sw-hec{{ hec.hec_nr }}-uberspine-{{ item.id }}

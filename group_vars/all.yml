@@ -6,8 +6,6 @@ vlandb:
   7: {name: 'DHCP03'}
   10: {name: 'IPMI01'}
   20: {name: 'HV-MGMT01'}
-  22: {name: 'VMWARE-MGMT01'}
-  23: {name: 'VMWARE-VMOTION01'}
   30: {name: 'IBM-PWR-MGMT01'}
   31: {name: 'IBM-PWR-LPM'}
   32: {name: 'IBM-PWR-ISCSI'}
@@ -141,10 +139,6 @@ vlans:
       vid: 10
     - name: "{{vlandb.20.name}}"
       vid: 20
-    - name: "{{vlandb.22.name}}"
-      vid: 22
-    - name: "{{vlandb.23.name}}"
-      vid: 23
     - name: "{{vlandb.40.name}}"
       vid: 40
     - name: "{{vlandb.50.name}}"

@@ -334,11 +334,21 @@
   tags:
     - upload_configlets
 
-- name: "Upload configlets to {{inventory_hostname}} instance"
+- name: "Upload all global configlets to {{inventory_hostname}} instance"
   arista.cvp.cv_configlet:
     cvp_facts: "{{ cvp_facts.ansible_facts }}"
-    configlets: "{{ configlet_list }}"
-    configlet_filter: "{{ configlet_filter_list_generic }}"
+    configlets: "{{ configlet_list_global }}"
+    configlet_filter: "{{ configlet_filter_list_global }}"
+    state: present
+  register: cvp_configlet
+  tags:
+    - upload_configlets
+
+- name: "Upload some DC specific configlets to {{inventory_hostname}} instance"
+  arista.cvp.cv_configlet:
+    cvp_facts: "{{ cvp_facts.ansible_facts }}"
+    configlets: "{{ configlet_list_dc_specific }}"
+    configlet_filter: "{{ configlet_filter_list_dc_specific }}"
     state: present
   register: cvp_configlet
   tags:

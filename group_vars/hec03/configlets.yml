@@ -1,0 +1,27 @@
+---
+configlet_list_dc_specific:
+  sw-hec-spine-21: "{{ lookup('file', 'configs/sw-hec-spine-21', errors='warn') }}"
+  sw-hec-spine-22: "{{ lookup('file', 'configs/sw-hec-spine-22', errors='warn') }}"
+  sw-hec-spine-23: "{{ lookup('file', 'configs/sw-hec-spine-23', errors='warn') }}"
+  sw-hec-spine-24: "{{ lookup('file', 'configs/sw-hec-spine-24', errors='warn') }}"
+  sw-hec-spine-31: "{{ lookup('file', 'configs/sw-hec-spine-31', errors='warn') }}"
+  sw-hec-spine-32: "{{ lookup('file', 'configs/sw-hec-spine-32', errors='warn') }}"
+  sw-hec-spine-33: "{{ lookup('file', 'configs/sw-hec-spine-33', errors='warn') }}"
+  sw-hec-spine-34: "{{ lookup('file', 'configs/sw-hec-spine-34', errors='warn') }}"
+  sw-hec-superspine-1: "{{ lookup('file', 'configs/sw-hec-superspine-1', errors='warn') }}"
+  sw-hec-superspine-2: "{{ lookup('file', 'configs/sw-hec-superspine-2', errors='warn') }}"
+  sw-hec-superspine-3: "{{ lookup('file', 'configs/sw-hec-superspine-3', errors='warn') }}"
+  sw-hec-superspine-4: "{{ lookup('file', 'configs/sw-hec-superspine-4', errors='warn') }}"
+configlet_filter_list_dc_specific:
+  - sw-hec-spine-21
+  - sw-hec-spine-22
+  - sw-hec-spine-23
+  - sw-hec-spine-24
+  - sw-hec-spine-31
+  - sw-hec-spine-32
+  - sw-hec-spine-33
+  - sw-hec-spine-34
+  - sw-hec-superspine-1
+  - sw-hec-superspine-2
+  - sw-hec-superspine-3
+  - sw-hec-superspine-4

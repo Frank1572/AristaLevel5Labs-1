@@ -118,7 +118,7 @@ container:
     configlets:
       - hec-shs
 
-configlet_list:
+configlet_list_global:
   sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"
   sw-hec-aaa: "{{ lookup('file', 'configs/sw-hec-aaa') }}"
   sw-hec-aaa-hana: "{{ lookup('file', 'configs/sw-hec-aaa-hana') }}"
@@ -181,42 +181,6 @@ configlet_list:
   sw-hec-spine-12: "{{ lookup('file', 'configs/sw-hec-spine-12') }}"
   sw-hec-spine-13: "{{ lookup('file', 'configs/sw-hec-spine-13') }}"
   sw-hec-spine-14: "{{ lookup('file', 'configs/sw-hec-spine-14') }}"
-  sw-hec-spine-21: "{{ lookup('file', 'configs/sw-hec-spine-21', errors='warn') }}"
-  sw-hec-spine-22: "{{ lookup('file', 'configs/sw-hec-spine-22', errors='warn') }}"
-  sw-hec-spine-23: "{{ lookup('file', 'configs/sw-hec-spine-23', errors='warn') }}"
-  sw-hec-spine-24: "{{ lookup('file', 'configs/sw-hec-spine-24', errors='warn') }}"
-  sw-hec-spine-31: "{{ lookup('file', 'configs/sw-hec-spine-31', errors='warn') }}"
-  sw-hec-spine-32: "{{ lookup('file', 'configs/sw-hec-spine-32', errors='warn') }}"
-  sw-hec-spine-33: "{{ lookup('file', 'configs/sw-hec-spine-33', errors='warn') }}"
-  sw-hec-spine-34: "{{ lookup('file', 'configs/sw-hec-spine-34', errors='warn') }}"
-  sw-hec-spine-41: "{{ lookup('file', 'configs/sw-hec-spine-41', errors='warn') }}"
-  sw-hec-spine-42: "{{ lookup('file', 'configs/sw-hec-spine-42', errors='warn') }}"
-  sw-hec-spine-43: "{{ lookup('file', 'configs/sw-hec-spine-43', errors='warn') }}"
-  sw-hec-spine-44: "{{ lookup('file', 'configs/sw-hec-spine-44', errors='warn') }}"
-  sw-hec-spine-51: "{{ lookup('file', 'configs/sw-hec-spine-51', errors='warn') }}"
-  sw-hec-spine-52: "{{ lookup('file', 'configs/sw-hec-spine-52', errors='warn') }}"
-  sw-hec-spine-53: "{{ lookup('file', 'configs/sw-hec-spine-53', errors='warn') }}"
-  sw-hec-spine-54: "{{ lookup('file', 'configs/sw-hec-spine-54', errors='warn') }}"
-  sw-hec-spine-61: "{{ lookup('file', 'configs/sw-hec-spine-61', errors='warn') }}"
-  sw-hec-spine-62: "{{ lookup('file', 'configs/sw-hec-spine-62', errors='warn') }}"
-  sw-hec-spine-63: "{{ lookup('file', 'configs/sw-hec-spine-63', errors='warn') }}"
-  sw-hec-spine-64: "{{ lookup('file', 'configs/sw-hec-spine-64', errors='warn') }}"
-  sw-hec-spine-71: "{{ lookup('file', 'configs/sw-hec-spine-71', errors='warn') }}"
-  sw-hec-spine-72: "{{ lookup('file', 'configs/sw-hec-spine-72', errors='warn') }}"
-  sw-hec-spine-73: "{{ lookup('file', 'configs/sw-hec-spine-73', errors='warn') }}"
-  sw-hec-spine-74: "{{ lookup('file', 'configs/sw-hec-spine-74', errors='warn') }}"
-  sw-hec-spine-81: "{{ lookup('file', 'configs/sw-hec-spine-81', errors='warn') }}"
-  sw-hec-spine-82: "{{ lookup('file', 'configs/sw-hec-spine-82', errors='warn') }}"
-  sw-hec-spine-83: "{{ lookup('file', 'configs/sw-hec-spine-83', errors='warn') }}"
-  sw-hec-spine-84: "{{ lookup('file', 'configs/sw-hec-spine-84', errors='warn') }}"
-  sw-hec-spine-91: "{{ lookup('file', 'configs/sw-hec-spine-91', errors='warn') }}"
-  sw-hec-spine-92: "{{ lookup('file', 'configs/sw-hec-spine-92', errors='warn') }}"
-  sw-hec-spine-93: "{{ lookup('file', 'configs/sw-hec-spine-93', errors='warn') }}"
-  sw-hec-spine-94: "{{ lookup('file', 'configs/sw-hec-spine-94', errors='warn') }}"
-  sw-hec-superspine-1: "{{ lookup('file', 'configs/sw-hec-superspine-1', errors='warn') }}"
-  sw-hec-superspine-2: "{{ lookup('file', 'configs/sw-hec-superspine-2', errors='warn') }}"
-  sw-hec-superspine-3: "{{ lookup('file', 'configs/sw-hec-superspine-3', errors='warn') }}"
-  sw-hec-superspine-4: "{{ lookup('file', 'configs/sw-hec-superspine-4', errors='warn') }}"
   sw-hec-oob-01: "{{ lookup('file', 'configs/sw-hec-oob-01') }}"
   sw-hec-oob-01a: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
   sw-hec-oob-01b: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
@@ -230,7 +194,7 @@ configlet_list:
   autoconf.ini: "{{ lookup('file', 'configs/autoconf.ini') }}"
   7160-profile-tcam-acl: "{{ lookup('file', 'configs/7160-profile-tcam-acl') }}"
 
-configlet_filter_list_generic:
+configlet_filter_list_global:
   - sw-hec
   - sw-hec-aaa
   - sw-hec-aaa-hana
@@ -294,42 +258,6 @@ configlet_filter_list_generic:
   - sw-hec-spine-12
   - sw-hec-spine-13
   - sw-hec-spine-14
-  - sw-hec-spine-21
-  - sw-hec-spine-22
-  - sw-hec-spine-23
-  - sw-hec-spine-24
-  - sw-hec-spine-31
-  - sw-hec-spine-32
-  - sw-hec-spine-33
-  - sw-hec-spine-34
-  - sw-hec-spine-41
-  - sw-hec-spine-42
-  - sw-hec-spine-43
-  - sw-hec-spine-44
-  - sw-hec-spine-51
-  - sw-hec-spine-52
-  - sw-hec-spine-53
-  - sw-hec-spine-54
-  - sw-hec-spine-61
-  - sw-hec-spine-62
-  - sw-hec-spine-63
-  - sw-hec-spine-64
-  - sw-hec-spine-71
-  - sw-hec-spine-72
-  - sw-hec-spine-73
-  - sw-hec-spine-74
-  - sw-hec-spine-81
-  - sw-hec-spine-82
-  - sw-hec-spine-83
-  - sw-hec-spine-84
-  - sw-hec-spine-91
-  - sw-hec-spine-92
-  - sw-hec-spine-93
-  - sw-hec-spine-94
-  - sw-hec-superspine-1
-  - sw-hec-superspine-2
-  - sw-hec-superspine-3
-  - sw-hec-superspine-4
   - sw-hec-oob-01
   - sw-hec-oob-01a
   - sw-hec-oob-01b

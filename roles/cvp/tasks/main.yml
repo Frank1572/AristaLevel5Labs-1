@@ -113,6 +113,7 @@
     - sw-hec-logging
     - sw-hec-fab-logging
     - sw-hec-switch-logging
+    - sw-hec-switch-slow
     - sw-hec-fab-L900
     - sw-hec-oob-vrf
     - sw-hec-tele-oob

@@ -18,6 +18,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Out of band:
     parent_container: HEC
     configlets:
@@ -36,6 +37,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
       - sw-hec-interdc
   HEC-Backup Routers:
     parent_container: HEC
@@ -46,6 +48,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
@@ -133,6 +136,7 @@ configlet_list:
   sw-hec-switch-snmp: "{{ lookup('file', 'configs/sw-hec-switch-snmp') }}"
   sw-hec-switch-ntp: "{{ lookup('file', 'configs/sw-hec-switch-ntp') }}"
   sw-hec-switch-logging: "{{ lookup('file', 'configs/sw-hec-switch-logging') }}"
+  sw-hec-switch-sflow: "{{ lookup('file', 'configs/sw-hec-switch-sflow') }}"
   mgmt-default: "{{ lookup('file', 'configs/mgmt-default') }}"
   sw-hec-oob-common: "{{ lookup('file', 'configs/sw-hec-oob-common') }}"
   sw-hec-tele-default: "{{ lookup('file', 'configs/sw-hec-tele-default') }}"
@@ -210,6 +214,7 @@ configlet_filter_list_generic:
   - sw-hec-switch-snmp
   - sw-hec-switch-ntp
   - sw-hec-switch-logging
+  - sw-hec-switch-sflow
   - mgmt-default
   - sw-hec-oob-common
   - sw-hec-tele-default

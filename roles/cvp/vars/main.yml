@@ -177,6 +177,7 @@ configlet_list:
   sw-hec-vmware-7150S-64-CL: "{{ lookup('file', 'configs/sw-hec-vmware-7150S-64-CL', errors='warn') }}"
   sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ', errors='warn') }}"
   sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6', errors='warn') }}"
+  sw-hec-hvv-7050CX3-32S: "{{ lookup('file', 'configs/sw-hec-hvv-7050CX3-32S', errors='warn') }}"
   sw-hec-spine-11: "{{ lookup('file', 'configs/sw-hec-spine-11') }}"
   sw-hec-spine-12: "{{ lookup('file', 'configs/sw-hec-spine-12') }}"
   sw-hec-spine-13: "{{ lookup('file', 'configs/sw-hec-spine-13') }}"
@@ -254,6 +255,7 @@ configlet_filter_list_generic:
   - sw-hec-vmware-7150S-64-CL
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
+  - sw-hec-hvv-7050CX3-32S
   - sw-hec-spine-11
   - sw-hec-spine-12
   - sw-hec-spine-13

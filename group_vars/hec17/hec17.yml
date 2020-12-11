@@ -69,7 +69,7 @@ cvp:
       # This IP is the Firewall but for the begining we bypass the firewall
       nexthop: "10.255.243.78"
       # HEC1x-NW-MGMT02 (Lo900)
-    - prefix: "198.19.167.0
+    - prefix: "198.19.167.0"
       mask: "24"
       # This IP is the Firewall but for the begining we bypass the firewall
       nexthop: "10.255.243.78"

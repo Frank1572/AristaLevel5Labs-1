@@ -174,62 +174,62 @@ hec:
         snmp:
           contact: 34373952:ncons-hec03-oob-02.net.sap.corp:1003
           location: US-STL1-CAGE5-EV15-U29
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
       - id: 12
         snmp:
           contact: 34373951:ncons-hec03-oob-02.net.sap.corp:1001
           location: US-STL1-CAGE5-EV15-U22
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
       - id: 13
         snmp:
           contact: 34373950:ncons-hec03-oob-02.net.sap.corp:1004
           location: US-STL1-CAGE5-EV16-U29
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
       - id: 14
         snmp:
           contact: 34373949:ncons-hec03-oob-02.net.sap.corp:1002
           location: US-STL1-CAGE5-EV16-U22
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
       - id: 21
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage-1-(01.HK.004)-IM-21-2
+          contact: xxxxx:ncons-hec03-oob-06.net.sap.corp:1004
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
       - id: 22
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage-1-(01.HK.004)-IM-23-2
+          contact: xxxxx:ncons-hec03-oob-06.net.sap.corp:1005
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
       - id: 23
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage-1-(01.HK.004)-IM-21-15
+          contact: xxxxx:ncons-hec03-oob-06.net.sap.corp 1006
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
       - id: 24
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location:  AMER-US-STL1-Cage-1-(01.HK.004)-IM-23-15
+          contact: xxxxx:ncons-hec03-oob-06.net.sap.corp:1007
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
       - id: 31
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage4-(01.GH.004)-GK-16-22
+          contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1028
+        spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
       - id: 32
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage4-(01.GH.004)-GK-17-22
+          contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1029
+        spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
       - id: 33
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage4-(01.GH.004)-GK-16-29
+          contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1030
+        spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
       - id: 34
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
-        spine_port_towards_superspine: [ 'Et3/60/1', 'Et3/61/1', 'Et3/62/1', 'Et3/63/1']
+          location: AMER-US-STL1-Cage4-(01.GH.004)-GK-17-29
+          contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1031
+        spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
   superspine:
     # valid models are: 7504, 7508, 7280
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!

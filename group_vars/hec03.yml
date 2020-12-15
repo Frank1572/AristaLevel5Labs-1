@@ -221,6 +221,10 @@ hec:
         hostname: rt-hec03-vpn-01a
       - ip: 198.19.251.67
         hostname: rt-hec03-vpn-01b
+      - ip: 198.19.251.68
+        hostname: rt-hec03-idc-01a
+      - ip: 198.19.251.69
+        hostname: rt-hec03-idc-01b
     remote_edge_routers:
       - ip: 198.19.249.143
       - ip: 198.19.249.151

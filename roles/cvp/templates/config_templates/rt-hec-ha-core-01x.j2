@@ -159,9 +159,11 @@ router bgp 641{{ hec.hec_nr }}.10999
       neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} activate
       neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} activate
    !
+{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
    vlan-aware-bundle all-vlans 
       rd {{ item.loopback1_ip }}:1 
    ! 
+{% endif %}
    address-family ipv4 
 {% for interface in item.uplinks %}
       neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip | int -1 }} activate

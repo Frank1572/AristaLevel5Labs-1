@@ -242,28 +242,28 @@ hec:
     number:
       - id: 1
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
+          location: AMER-US-STL1-Cage5-FG18-29
+          contact: xxxxx:ncons-hec03-oob-01.net.sap.corp:1029
         oob_ip: 10.9.241.33
         nwmgmt_ip: 198.19.156.65
       - id: 2
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
+          location: AMER-US-STL1-Cage5-FG20-29
+          contact: xxxxx:ncons-hec03-oob-01.net.sap.corp:1030
         oob_ip: 10.9.241.34
-        nwmgmt_ip: 198.19.156.65
+        nwmgmt_ip: 198.19.156.66
       - id: 3
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
+          location: AMER-US-STL1-Cage5-FG18-31
+          contact: xxxxx:ncons-hec03-oob-01.net.sap.corp:1031
         oob_ip: 10.9.241.35
-        nwmgmt_ip: 198.19.156.65
+        nwmgmt_ip: 198.19.156.67
       - id: 4
         snmp:
-          location: US-STL1
-          contact: ncons-hec03-oob-02.net.sap.corp
+          location: AMER-US-STL1-Cage5-FG20-31
+          contact: xxxxx:ncons-hec03-oob-01.net.sap.corp:1032
         oob_ip: 10.9.241.36
-        nwmgmt_ip: 198.19.156.65
+        nwmgmt_ip: 198.19.156.68
   ngdr_underlay:
     edge_as: 65199
   #Are the core vlans 3000 to 3499 needed

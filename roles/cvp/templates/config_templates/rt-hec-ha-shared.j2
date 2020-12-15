@@ -183,7 +183,8 @@ router bgp 641{{ hec.hec_nr }}.10999
    neighbor PG-SPINE allowas-in 3 
    neighbor PG-SPINE soft-reconfiguration inbound all 
    neighbor PG-SPINE send-community 
-   neighbor PG-SPINE maximum-routes 0 
+   neighbor PG-SPINE maximum-routes 0
+{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
    neighbor PG-SPINE-EVPN peer-group 
    neighbor PG-SPINE-EVPN remote-as 641{{ hec.hec_nr }}.10000 
    neighbor PG-SPINE-EVPN update-source Loopback1 
@@ -196,24 +197,31 @@ router bgp 641{{ hec.hec_nr }}.10999
    neighbor 10.100.0.12 peer-group PG-SPINE-EVPN 
    neighbor 10.100.0.13 peer-group PG-SPINE-EVPN 
    neighbor 10.100.0.14 peer-group PG-SPINE-EVPN 
+{% endif %}
 {% for neighbor in hec.ngdr_overlay.edge_neighbors %}
    neighbor {{ neighbor.ip }} peer-group PG-EDGE-ROUTER
    neighbor {{ neighbor.ip }} description *** BGP to {{ neighbor.hostname }} ***
 {% endfor %}
    ! 
+{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
    vlan-aware-bundle all-vlans 
       route-target both 1:1 
       redistribute learned 
       vlan 5-2999 
    ! 
+{% endif %}
    address-family evpn 
+{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
       neighbor PG-SPINE-EVPN activate
+{% endif %}
 {% for neighbor in hec.ngdr_overlay.edge_neighbors %}
       neighbor {{ neighbor.ip }} activate
 {% endfor %} 
    ! 
    address-family ipv4 
+{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
       no neighbor PG-SPINE-EVPN activate 
+{% endif %}
    ! 
    vrf INFRA 
       rd {{ hec.hec_nr }}:900 

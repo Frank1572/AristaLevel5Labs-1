@@ -155,7 +155,7 @@ router bgp 641{{ hec.hec_nr }}.10999
    distance bgp 20 95 200 
    maximum-paths 8 ecmp 16 
    neighbor PG-EDGE-ROUTER peer-group 
-   neighbor PG-EDGE-ROUTER remote-as {{ hec.ngdr_underlay.edge_as }}.{{ hec.hec_nr }}
+   neighbor PG-EDGE-ROUTER remote-as {{ hec.ngdr_underlay.edge_as }}
    neighbor PG-EDGE-ROUTER next-hop-unchanged 
    neighbor PG-EDGE-ROUTER update-source Loopback1 
    neighbor PG-EDGE-ROUTER fall-over bfd 

@@ -99,7 +99,7 @@ ip route {{ item.remote_ha_ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }
 router bgp 641{{ hec.hec_nr }}.10999 
    router-id {{ item.loopback1_ip }}
 {% for interface in item.uplinks %}
-   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip | int -1 }} peer-group PG-SPINE
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip | int -1 }} {{eos_cmd.c_neighbor_peer_group}} PG-SPINE
 {% endfor %}
 
 {% for interface in item.ports %}
@@ -111,7 +111,7 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int -1 %}
 {% endif %}
 {% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
-   neighbor {{ remote_ha_ip }} peer-group PG-RMT-HA-ROUTER
+   neighbor {{ remote_ha_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-RMT-HA-ROUTER
    neighbor {{ remote_ha_ip }} description *** BGP to rt-hec{{ hec.ngdr_overlay.remote_hec_nr }}-ha-core-0{{ item.number}} ***
    address-family evpn 
       neighbor {{ remote_ha_ip }} activate 
@@ -147,11 +147,11 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set ha_neighbor3_ip = item.loopback1_ip.split(".")[3] | int -1 %}
 {% set ha_neighbor3_letter = 'c' %}
 {% endif %}
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} peer-group PG-HA-ROUTER
+   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor1_letter }} ***
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} peer-group PG-HA-ROUTER
+   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor2_letter }} ***
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} peer-group PG-HA-ROUTER
+   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor3_letter }} ***
    ! 
    address-family evpn 

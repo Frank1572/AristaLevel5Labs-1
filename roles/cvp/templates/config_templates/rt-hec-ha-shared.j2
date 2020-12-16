@@ -40,7 +40,7 @@ vlan 900
 vlan 922 
    name BACKUP-TRANS 
 !
-vrf definition INFRA 
+{{eos_cmd.c_vrf_defintion}} INFRA 
    description InfraVRF 
 !
 bfd multihop interval 1000 min_rx 1000 multiplier 3 
@@ -85,7 +85,7 @@ interface Ethernet{{ interface.id }}
 {% endif %} 
 {% endif %} 
 {% if interface.vrf is defined %}
-   vrf {{ interface.vrf }}  
+   {{eos_cmd.c_vrf_forwarding}} {{ interface.vrf }}  
 {% endif %} 
 {% if interface.virtual_router_ip is defined %}
    ip virtual-router address {{ interface.virtual_router_ip }}
@@ -118,7 +118,7 @@ interface Loopback900
    description NW-MGMT
 ! 
 interface Management1 
-   vrf forwarding OOB  
+   {{eos_cmd.c_vrf_forwarding}} OOB  
 ! 
 interface Vxlan1 
    vxlan source-interface Loopback1 
@@ -159,52 +159,52 @@ router bgp 641{{ hec.hec_nr }}.10999
    no bgp default ipv4-unicast 
    distance bgp 20 95 200 
    maximum-paths 8 ecmp 16 
-   neighbor PG-EDGE-ROUTER peer-group 
+   neighbor PG-EDGE-ROUTER {{eos_cmd.c_neighbor_peer_group}} 
    neighbor PG-EDGE-ROUTER remote-as {{ hec.ngdr_underlay.edge_as }}
    neighbor PG-EDGE-ROUTER next-hop-unchanged 
    neighbor PG-EDGE-ROUTER update-source Loopback1 
-   neighbor PG-EDGE-ROUTER fall-over bfd 
-   neighbor PG-EDGE-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-EDGE-ROUTER {{eos_cmd.c_neighbor_fall_over_bfd}} 
+   neighbor PG-EDGE-ROUTER {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-EDGE-ROUTER ebgp-multihop 
    neighbor PG-EDGE-ROUTER send-community standard extended 
    neighbor PG-EDGE-ROUTER maximum-routes 0 
-   neighbor PG-HA-ROUTER peer-group 
+   neighbor PG-HA-ROUTER {{eos_cmd.c_neighbor_peer_group}} 
    neighbor PG-HA-ROUTER remote-as 641{{ hec.hec_nr }}.10999 
    neighbor PG-HA-ROUTER update-source Loopback1 
-   neighbor PG-HA-ROUTER fall-over bfd 
-   neighbor PG-HA-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-HA-ROUTER {{eos_cmd.c_neighbor_fall_over_bfd}} 
+   neighbor PG-HA-ROUTER {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-HA-ROUTER send-community standard extended 
    neighbor PG-HA-ROUTER maximum-routes 0 
-   neighbor PG-RMT-HA-ROUTER peer-group 
+   neighbor PG-RMT-HA-ROUTER {{eos_cmd.c_neighbor_peer_group}}
    neighbor PG-RMT-HA-ROUTER remote-as 641{{ hec.ngdr_overlay.remote_hec_nr }}.10999 
    neighbor PG-RMT-HA-ROUTER next-hop-unchanged 
-   neighbor PG-RMT-HA-ROUTER fall-over bfd 
-   neighbor PG-RMT-HA-ROUTER soft-reconfiguration inbound all 
+   neighbor PG-RMT-HA-ROUTER {{eos_cmd.c_neighbor_fall_over_bfd}} 
+   neighbor PG-RMT-HA-ROUTER {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-RMT-HA-ROUTER route-map RM-HAPEER out 
    neighbor PG-RMT-HA-ROUTER send-community standard extended 
    neighbor PG-RMT-HA-ROUTER maximum-routes 0 
-   neighbor PG-SPINE peer-group 
+   neighbor PG-SPINE {{eos_cmd.c_neighbor_peer_group}}
    neighbor PG-SPINE remote-as 641{{ hec.hec_nr }}.10000 
    neighbor PG-SPINE allowas-in 3 
-   neighbor PG-SPINE soft-reconfiguration inbound all 
+   neighbor PG-SPINE {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-SPINE send-community 
    neighbor PG-SPINE maximum-routes 0
 {% if hec.fabric.vtep_distribution_mode == "evpn" %} 
-   neighbor PG-SPINE-EVPN peer-group 
+   neighbor PG-SPINE-EVPN {{eos_cmd.c_neighbor_peer_group}} 
    neighbor PG-SPINE-EVPN remote-as 641{{ hec.hec_nr }}.10000 
    neighbor PG-SPINE-EVPN update-source Loopback1 
-   neighbor PG-SPINE-EVPN fall-over bfd 
-   neighbor PG-SPINE-EVPN soft-reconfiguration inbound all 
+   neighbor PG-SPINE-EVPN {{eos_cmd.c_neighbor_fall_over_bfd}} 
+   neighbor PG-SPINE-EVPN {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-SPINE-EVPN ebgp-multihop 2 
    neighbor PG-SPINE-EVPN send-community standard extended 
    neighbor PG-SPINE-EVPN maximum-routes 0 
-   neighbor 10.100.0.11 peer-group PG-SPINE-EVPN 
-   neighbor 10.100.0.12 peer-group PG-SPINE-EVPN 
-   neighbor 10.100.0.13 peer-group PG-SPINE-EVPN 
-   neighbor 10.100.0.14 peer-group PG-SPINE-EVPN 
+   neighbor 10.100.0.11 {{eos_cmd.c_neighbor_peer_group}} PG-SPINE-EVPN 
+   neighbor 10.100.0.12 {{eos_cmd.c_neighbor_peer_group}} PG-SPINE-EVPN 
+   neighbor 10.100.0.13 {{eos_cmd.c_neighbor_peer_group}} PG-SPINE-EVPN 
+   neighbor 10.100.0.14 {{eos_cmd.c_neighbor_peer_group}} PG-SPINE-EVPN 
 {% endif %}
 {% for neighbor in hec.ngdr_overlay.edge_neighbors %}
-   neighbor {{ neighbor.ip }} peer-group PG-EDGE-ROUTER
+   neighbor {{ neighbor.ip }} {{eos_cmd.c_neighbor_peer_group}} PG-EDGE-ROUTER
    neighbor {{ neighbor.ip }} description *** BGP to {{ neighbor.hostname }} ***
 {% endfor %}
    ! 

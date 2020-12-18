@@ -30,6 +30,9 @@ vlan 1101-1180
 {% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
 
 !
+interface Port-Channel900
+   switchport trunk allowed vlan add 30,110
+!
 interface Port-Channel400
    switchport trunk allowed vlan 10,30,32,40,50,55,110,130,2001-2499
    switchport mode trunk

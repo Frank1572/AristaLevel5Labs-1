@@ -1,10 +1,6 @@
 {% import "templates/config_templates/libs.j2" as funcs %}
-{% include "templates/config_templates/hec-hana.j2" %}
-{# Following for-loop is to remove the portchannels of normal HANA-cells #}
-{% for i in range(1, 19) %}
-no interface Port-Channel{{ 100 + i }}
-{% endfor %}
-!
+{% include "templates/config_templates/hec-hana-generic.j2" %}
+
 vlan 30
    name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
 vlan 31
@@ -56,5 +52,3 @@ interface Port-Channel{{ 1300 + i }}
    mlag {{ 1300 + i }}
 !
 {% endfor %}
-ip access-list HEC{{ hec.hec_nr }}-L2-HANA
-{{ hec.hana_acl_rules }}

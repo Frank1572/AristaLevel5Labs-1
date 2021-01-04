@@ -1,32 +1,32 @@
 {% include "templates/config_templates/7160.j2" %}
+{% import "templates/config_templates/libs.j2" as funcs %}
+{% set p_data={'start': 1, 'end': 12} %}
+{% set p_vmotion={'start': 13, 'end': 18} %}
+{% set p_mlag={'start': 27, 'end': 28} %}
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == "7160-32CQ" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
 
-interface Ethernet 1/1-12/4
-   speed forced 25gfull
-   switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
-   switchport mode trunk
-   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
-   spanning-tree portfast
+interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
+{{ funcs.leaf_hvv_ports_data(hec.hec_nr) }}
 !
-interface Ethernet 13/1-18/4
-   speed forced 25gfull
-   switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,930-931
-   switchport mode trunk
-   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
-   spanning-tree portfast
+interface Ethernet {{p_vmotion['start']}}/1-{{p_vmotion['end']}}/4
+{{ funcs.leaf_hvv_ports_vmotion(hec.hec_nr) }}
 !
 interface Ethernet 19/1-25/4
    shutdown
 !
 ! === MLAG Peer Link: ===
-interface Ethernet27/1,28/1
+interface Ethernet {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    mtu {{hec.fabric.interlink_mtu}}
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
-interface Ethernet29/1,30/1,31/1,32/1
+interface Ethernet {{ intf_spines['name'] }}
 {#
   40gfull is not applicable for all cells in all locations
   as of now there is no way to determine the transceiver speed
@@ -36,150 +36,22 @@ interface Ethernet29/1,30/1,31/1,32/1
 #}
    no switchport
 !
-interface Ethernet1/1-2
-   channel-group 101 mode active
+{% for main_intf in range(p_data['start'], p_data['end']+1) %}
+interface Ethernet {{ main_intf }}/1-2
+   channel-group {{ main_intf + 100 + loop.index0 }} mode active
 !
-interface Ethernet1/3-4
-   channel-group 102 mode active
+interface Ethernet {{ main_intf }}/3-4
+   channel-group {{ main_intf + 101 + loop.index0 }} mode active
 !
-interface Ethernet2/1-2
-   channel-group 103 mode active
+{% endfor %}
+{% for main_intf in range(p_vmotion['start'], p_vmotion['end']+1) %}
+{% set out_i = loop.index0 %}
+{% for subint in range(1,5) %}
+interface Ethernet {{ main_intf }}/{{ subint }}
+   channel-group {{ 150 + subint + 4 * out_i }} mode active
 !
-interface Ethernet2/3-4
-   channel-group 104 mode active
-!
-interface Ethernet3/1-2
-   channel-group 105 mode active
-!
-interface Ethernet3/3-4
-   channel-group 106 mode active
-!
-interface Ethernet4/1-2
-   channel-group 107 mode active
-!
-interface Ethernet4/3-4
-   channel-group 108 mode active
-!
-interface Ethernet5/1-2
-   channel-group 109 mode active
-!
-interface Ethernet5/3-4
-   channel-group 110 mode active
-!
-interface Ethernet6/1-2
-   channel-group 111 mode active
-!
-interface Ethernet6/3-4
-   channel-group 112 mode active
-!
-interface Ethernet7/1-2
-   channel-group 113 mode active
-!
-interface Ethernet7/3-4
-   channel-group 114 mode active
-!
-interface Ethernet8/1-2
-   channel-group 115 mode active
-!
-interface Ethernet8/3-4
-   channel-group 116 mode active
-!
-interface Ethernet9/1-2
-   channel-group 117 mode active
-!
-interface Ethernet9/3-4
-   channel-group 118 mode active
-!
-interface Ethernet10/1-2
-   channel-group 119 mode active
-!
-interface Ethernet10/3-4
-   channel-group 120 mode active
-!
-interface Ethernet11/1-2
-   channel-group 121 mode active
-!
-interface Ethernet11/3-4
-   channel-group 122 mode active
-!
-interface Ethernet12/1-2
-   channel-group 123 mode active
-!
-interface Ethernet12/3-4
-   channel-group 124 mode active
-!
-interface Ethernet13/1
-   channel-group 151 mode active
-!
-interface Ethernet13/2
-   channel-group 152 mode active
-!
-interface Ethernet13/3
-   channel-group 153 mode active
-!
-interface Ethernet13/4
-   channel-group 154 mode active
-!
-interface Ethernet14/1
-   channel-group 155 mode active
-!
-interface Ethernet14/2
-   channel-group 156 mode active
-!
-interface Ethernet14/3
-   channel-group 157 mode active
-!
-interface Ethernet14/4
-   channel-group 158 mode active
-!
-interface Ethernet15/1
-   channel-group 159 mode active
-!
-interface Ethernet15/2
-   channel-group 160 mode active
-!
-interface Ethernet15/3
-   channel-group 161 mode active
-!
-interface Ethernet15/4
-   channel-group 162 mode active
-!
-interface Ethernet16/1
-   channel-group 163 mode active
-!
-interface Ethernet16/2
-   channel-group 164 mode active
-!
-interface Ethernet16/3
-   channel-group 165 mode active
-!
-interface Ethernet16/4
-   channel-group 166 mode active
-!
-interface Ethernet17/1
-   channel-group 167 mode active
-!
-interface Ethernet17/2
-   channel-group 168 mode active
-!
-interface Ethernet17/3
-   channel-group 169 mode active
-!
-interface Ethernet17/4
-   channel-group 170 mode active
-!
-interface Ethernet18/1
-   channel-group 171 mode active
-!
-interface Ethernet18/2
-   channel-group 172 mode active
-!
-interface Ethernet18/3
-   channel-group 173 mode active
-!
-interface Ethernet18/4
-   channel-group 174 mode active
-!
+{% endfor %}
+{% endfor %}
 interface Ethernet26/1
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    speed forced 10000full

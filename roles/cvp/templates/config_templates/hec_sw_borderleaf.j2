@@ -1,5 +1,11 @@
 {# hec_sw_borderleaf.j2 #}
-{##### the leaf's purpose may be of value 'b' for borderleaf and 's' for storageleaf and 'h for shared-hana-storage '#####}
+{% set id = id + item.number %}
+{#
+ first, let's find out the leaf's purpose.
+  - 'b' is a borderleaf
+  - 's' is a storageleaf
+  - 'h' is a hana shared storage-leaf
+#}
 {% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
 {% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}
 {% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
@@ -28,6 +34,9 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
+vlan 30
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
+!
 {% for item in vlans.inet_dmz %}
 vlan {{item.vid}}
    name {{item.name}}
@@ -75,6 +84,10 @@ vlan {{item.vid}}
 {% endfor %}
 {% endif %}
 {% endif %}
+{% if is_l2l3_transit|default('', true) %}
+{% include "templates/config_templates/HEC-VLANs.j2" %}
+
+{% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
 !
 snmp-server contact {{allbrdrs.snmp.contact}}
@@ -86,7 +99,7 @@ interface Loopback900
 !
 interface Management1
    description OOB MGMT
-   vrf forwarding OOB
+   {{eos_cmd.c_vrf_forwarding}} OOB
    ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
 !
 ! ===== Spine Uplinks =====
@@ -152,13 +165,13 @@ interface Ethernet{{ item.id }}
 #}
 {% if item.vrrp is defined %}{# START vrrp is defined #}
 {% for vrrp_group in item.vrrp %}
-   vrrp {{vrrp_group.id}} priority {{ vrrp_group.priority }}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group.priority }}
    vrrp {{vrrp_group.id}} preempt delay minimum 180
    vrrp {{vrrp_group.id}} preempt delay reload 180
 {% if vrrp_group.auth is defined %}
-   vrrp {{vrrp_group.id}} authentication text {{ vrrp_group.auth }}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
 {% endif %}
-{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ip ' + vrrp_group.ip|string %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
 {% endfor %}
@@ -207,11 +220,6 @@ interface {{hec.inband_trans_gw_vlan}}
 !
 ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}
 !
-{# {% if hec.inband_trans_gw_vlan is defined %}
-ip route 0.0.0.0/0 {{ hec.inband_trans_gw_vlan }} {{ hec.inband_trans_gw }}
-{% else %}
-ip route 0.0.0.0/0 {{ hec.inband_trans_gw }}
-{% endif %} #}
 ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
 {% endif %}
 {% endif %}

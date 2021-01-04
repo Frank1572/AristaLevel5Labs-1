@@ -38,7 +38,7 @@ logging source-interface Vlan21
 !
 hostname sw-hec{{ hec.hec_nr }}-oob-01a
 !
-ntp source Vlan21
+{{eos_cmd.c_ntp_source}} Vlan21
 ntp server {{ hec.ntp1 }} prefer
 ntp server {{ hec.ntp2 }}
 !
@@ -56,13 +56,13 @@ snmp-server community o4CSPCu1sap ro ACL_SNMP_VTY
 snmp-server community r0c4s ro ACL_SNMP_VTY
 !
 spanning-tree mode mstp
-no spanning-tree vlan 4094
+no {{eos_cmd.spanning_tree_vlan}} 4094
 !
 aaa authentication login default local group radius
-aaa authorization console
+{{eos_cmd.c_aaa_authorization_console}}
 aaa authorization exec default local group radius
 !
-enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 no aaa root
 !
 username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
@@ -80,7 +80,7 @@ vlan 4094
    name MLAG_Vlan
    trunk group MLAG-PEER
 !
-vrf definition OOB
+{{eos_cmd.c_vrf_defintion}} OOB
    description Out of Band
 !
 interface Port-Channel42
@@ -340,11 +340,11 @@ interface Management1
 !
 interface Vlan21
    ip address {{ hec.oob_prefix }}.2/{{ hec.oob_mask }}
-   vrrp 21 priority 105
+   vrrp 21 {{eos_cmd.c_vrrp_priority}} 105
    vrrp 21 preempt delay minimum 180
    vrrp 21 preempt delay reload 180
-   vrrp 21 authentication text oobnw
-   vrrp 21 ip {{ hec.oob_def_gw }}
+   vrrp 21 {{eos_cmd.c_vrrp_authentication}} text oobnw
+   vrrp 21 {{eos_cmd.c_vrrp_ip}} {{ hec.oob_def_gw }}
    vrrp 21 track 494 decrement 10
 !
 interface Vlan4094

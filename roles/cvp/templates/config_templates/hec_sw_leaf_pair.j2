@@ -9,32 +9,32 @@ router bgp $BGP_AS
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
    !
-   neighbor SPINE-PG peer-group
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor SPINE-PG remote-as $SPINE_AS
-   neighbor SPINE-PG soft-reconfiguration inbound all
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
    neighbor SPINE-PG send-community
    neighbor SPINE-PG route-map MLPEER-RM out
    neighbor SPINE-PG maximum-routes $EBGP_RTMAX
-   neighbor SPINE-PG fall-over bfd
+   neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
-   neighbor MLPEER-PG peer-group
+   neighbor MLPEER-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor MLPEER-PG remote-as $BGP_AS
    neighbor MLPEER-PG next-hop-self
    neighbor MLPEER-PG maximum-routes $IBGP_RTMAX
-   neighbor MLPEER-PG fall-over bfd
+   neighbor MLPEER-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    network $LOOPBACK2_IP/32
    !
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
-   neighbor EVPN-PG peer-group
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG remote-as $SPINE_AS
    neighbor EVPN-PG update-source Loopback1
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG maximum-routes $EVPN_RTMAX
-   neighbor EVPN-PG fall-over bfd
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
 {% for i in range(11,14) %}
-   neighbor 10.100.0.{{i}} peer-group EVPN-PG
+   neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
 {% endfor %}
    !
    address-family evpn

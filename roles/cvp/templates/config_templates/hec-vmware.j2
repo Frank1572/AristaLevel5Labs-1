@@ -1,17 +1,17 @@
 vlan 7
-   name DHCP03
+   name {{vlandb.7.name}}
 !
 vlan 900
-   name NW-MGMT
+   name {{vlandb.900.name}}
 !
 vlan 930
-   name VMWARE-FAULT-TOLERANCE
+   name {{vlandb.930.name}}
 !
 vlan 931
-   name VMWARE-VMOTION
+   name {{vlandb.931.name}}
 !
 vlan 932
-   name VMWARE-VCENTER-HA
+   name {{vlandb.932.name}}
 !
 {#
   The below vlan 7 to vni mapping on int Vxlan1 will be removed for L2 VMWare cells

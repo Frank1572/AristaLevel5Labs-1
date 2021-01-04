@@ -6,8 +6,11 @@ no ntp server {{ hec.ntp2 }}
 ntp server {{ cvp.ntp1 }} prefer
 ntp server {{ cvp.ntp2 }}
 !
-vlan 21,100
+no sflow source-interface loopback900
+sflow source-interface Vlan21
+!
+vlan 21
    name OOB
 !
-enable secret 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 !

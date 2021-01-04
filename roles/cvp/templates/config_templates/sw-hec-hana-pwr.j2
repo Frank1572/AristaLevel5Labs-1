@@ -1,14 +1,47 @@
+username cfmadm privilege 15 role network-admin secret 5 $1$EaZmGCRk$gwoPz3UrfjPwVuK6MQg8l. 
+!
 vlan 30
-   name HEC{{ hec.hec_nr }}-IBM-PWR-MGMT01
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
 vlan 31
-   name HEC{{ hec.hec_nr }}-IBM-PWR-LPM
+   name HEC{{ hec.hec_nr }}-{{vlandb.31.name}}
 vlan 32
-   name HEC{{ hec.hec_nr }}-IBM-PWR-ISCSI
+   name HEC{{ hec.hec_nr }}-{{vlandb.32.name}}
 vlan 33
-   name HEC{{ hec.hec_nr }}-IBM-PWR-RMC01
+   name HEC{{ hec.hec_nr }}-{{vlandb.33.name}}
+vlan 900 
+   name NW-MGMT01 
+vlan 930 
+   name VMWARE-FAULT-TOLERANCE 
+vlan 931 
+   name VMWARE-VMOTION 
+vlan 932 
+   name VMWARE-VCENTER-HA 
+!
+interface Vxlan1
+   vxlan vlan 7 vni 10007 
+   vxlan vlan 30 vni 10030
+   vxlan vlan 31 vni 10031
+   vxlan vlan 32 vni 10032
+   vxlan vlan 33 vni 10033
+!
+!# HANA CFM VLANs (1101-1140->HANA, 1141-1180->GPFS)
+vlan 1101-1180
 !
 {% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
 
+!
+interface Port-Channel900
+   switchport trunk allowed vlan add 30,110
+!
+interface Port-Channel400
+   switchport trunk allowed vlan 10,30,32,40,50,55,110,130,2001-2499
+   switchport mode trunk
+   mlag 400
+!
+interface Port-Channel401
+   switchport trunk allowed vlan 10,30,32,40,50,55,110,130,2001-2499
+   switchport mode trunk
+   mlag 401
 !
 {% for i in range(1, 9) %}
 interface Port-Channel{{ 1100 + i }}
@@ -20,6 +53,7 @@ interface Port-Channel{{ 1100 + i }}
    spanning-tree portfast
    mlag {{ 1100 + i }}
 {% endfor %}
+!
 {% for i in range(1, 9) %}
 interface Port-Channel{{ 1200 + i }}
    switchport trunk native vlan 40
@@ -30,3 +64,17 @@ interface Port-Channel{{ 1200 + i }}
    spanning-tree portfast
    mlag {{ 1200 + i }}
 {% endfor %}
+!
+{% for i in range(1, 9) %}
+interface Port-Channel{{ 1300 + i }}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+   mlag {{ 1300 + i }}
+{% endfor %}
+!
+ip access-list HEC{{ hec.hec_nr }}-L2-HANA
+{{ hec.hana_acl_rules }}

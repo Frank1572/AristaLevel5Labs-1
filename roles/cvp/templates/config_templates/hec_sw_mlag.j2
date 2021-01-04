@@ -1,7 +1,7 @@
 spanning-tree mst configuration
   instance 1 vlan  2-4093
 !
-no spanning-tree vlan 4094
+no {{eos_cmd.c_spanning_tree_vlan}} 4094
 !
 vlan 4094
    trunk group MLAG-PEER

@@ -18,6 +18,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Out of band:
     parent_container: HEC
     configlets:
@@ -36,6 +37,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
       - sw-hec-interdc
   HEC-Backup Routers:
     parent_container: HEC
@@ -46,6 +48,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
@@ -136,6 +139,7 @@ configlet_list:
   sw-hec-switch-snmp: "{{ lookup('file', 'configs/sw-hec-switch-snmp') }}"
   sw-hec-switch-ntp: "{{ lookup('file', 'configs/sw-hec-switch-ntp') }}"
   sw-hec-switch-logging: "{{ lookup('file', 'configs/sw-hec-switch-logging') }}"
+  sw-hec-switch-sflow: "{{ lookup('file', 'configs/sw-hec-switch-sflow') }}"
   mgmt-default: "{{ lookup('file', 'configs/mgmt-default') }}"
   sw-hec-oob-common: "{{ lookup('file', 'configs/sw-hec-oob-common') }}"
   sw-hec-tele-default: "{{ lookup('file', 'configs/sw-hec-tele-default') }}"
@@ -153,15 +157,17 @@ configlet_list:
   hec-xen: "{{ lookup('file', 'configs/hec-xen') }}"
   hec-shs: "{{ lookup('file', 'configs/hec-shs') }}"
   sw-hec-leaf: "{{ lookup('file', 'configs/sw-hec-leaf') }}"
-  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr') }}"
-  sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a') }}"
-  sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b') }}"
+  sw-hec-hana-pwr: "{{ lookup('file', 'configs/sw-hec-hana-pwr', errors='warn') }}"
+  sw-hec-brdr-01a: "{{ lookup('file', 'configs/sw-hec-brdr-01a', errors='warn') }}"
+  sw-hec-brdr-01b: "{{ lookup('file', 'configs/sw-hec-brdr-01b', errors='warn') }}"
   sw-hec-brdr-02a: "{{ lookup('file', 'configs/sw-hec-brdr-02a') }}"
   sw-hec-brdr-02b: "{{ lookup('file', 'configs/sw-hec-brdr-02b') }}"
-  sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a') }}"
-  sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b') }}"
-  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01a') }}"
-  sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b') }}"
+  sw-hec-brdr-03a: "{{ lookup('file', 'configs/sw-hec-brdr-03a', errors='warn') }}"
+  sw-hec-brdr-03b: "{{ lookup('file', 'configs/sw-hec-brdr-03b', errors='warn') }}"
+  sw-hec-brdr-04a: "{{ lookup('file', 'configs/sw-hec-brdr-04a', errors='warn') }}"
+  sw-hec-brdr-04b: "{{ lookup('file', 'configs/sw-hec-brdr-04b', errors='warn') }}"
+  sw-hec-str-01a: "{{ lookup('file', 'configs/sw-hec-str-01a', errors='warn') }}"
+  sw-hec-str-01b: "{{ lookup('file', 'configs/sw-hec-str-01b', errors='warn') }}"
   sw-hec-str-02a: "{{ lookup('file', 'configs/sw-hec-str-02a', errors='warn') }}"
   sw-hec-str-02b: "{{ lookup('file', 'configs/sw-hec-str-02b', errors='warn') }}"
   sw-hec-str-03a: "{{ lookup('file', 'configs/sw-hec-str-03a', errors='warn') }}"
@@ -178,6 +184,7 @@ configlet_list:
   sw-hec-vmware-7150S-64-CL: "{{ lookup('file', 'configs/sw-hec-vmware-7150S-64-CL', errors='warn') }}"
   sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ', errors='warn') }}"
   sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6', errors='warn') }}"
+  sw-hec-hvv-7050CX3-32S: "{{ lookup('file', 'configs/sw-hec-hvv-7050CX3-32S', errors='warn') }}"
   sw-hec-spine-11: "{{ lookup('file', 'configs/sw-hec-spine-11') }}"
   sw-hec-spine-12: "{{ lookup('file', 'configs/sw-hec-spine-12') }}"
   sw-hec-spine-13: "{{ lookup('file', 'configs/sw-hec-spine-13') }}"
@@ -185,7 +192,7 @@ configlet_list:
   sw-hec-oob-01: "{{ lookup('file', 'configs/sw-hec-oob-01') }}"
   sw-hec-oob-01a: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
   sw-hec-oob-01b: "{{ lookup('file', 'configs/sw-hec-oob-01a') }}"
-  sw-hec-oob-02: "{{ lookup('file', 'configs/sw-hec-oob-02') }}"
+  sw-hec-oob-02: "{{ lookup('file', 'configs/sw-hec-oob-02', errors='warn') }}"
   sw-hec-oob-03: "{{ lookup('file', 'configs/sw-hec-oob-03', errors='warn') }}"
   sw-hec-oob-04: "{{ lookup('file', 'configs/sw-hec-oob-04', errors='warn') }}"
   sw-hec-oob-05: "{{ lookup('file', 'configs/sw-hec-oob-05', errors='warn') }}"
@@ -215,6 +222,7 @@ configlet_filter_list_generic:
   - sw-hec-switch-snmp
   - sw-hec-switch-ntp
   - sw-hec-switch-logging
+  - sw-hec-switch-sflow
   - mgmt-default
   - sw-hec-oob-common
   - sw-hec-tele-default
@@ -240,6 +248,8 @@ configlet_filter_list_generic:
   - sw-hec-brdr-02b
   - sw-hec-brdr-03a
   - sw-hec-brdr-03b
+  - sw-hec-brdr-04a
+  - sw-hec-brdr-04b
   - sw-hec-str-01a
   - sw-hec-str-01b
   - sw-hec-str-02a
@@ -258,6 +268,7 @@ configlet_filter_list_generic:
   - sw-hec-vmware-7150S-64-CL
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
+  - sw-hec-hvv-7050CX3-32S
   - sw-hec-spine-11
   - sw-hec-spine-12
   - sw-hec-spine-13

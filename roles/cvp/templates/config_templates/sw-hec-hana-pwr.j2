@@ -20,7 +20,7 @@ vlan 932
 !
 interface Vxlan1
    vxlan vlan 7 vni 10007
-{% for i in [30,31,32,33] %}
+{% for i in (30,31,32,33) %}
    vxlan vlan {{i}} vni 100{{i}}
 {% endfor %}
 !
@@ -33,7 +33,7 @@ vlan 1101-1180
 interface Port-Channel900
    switchport trunk allowed vlan add 30,110
 !
-{% for i in [0,1] %}
+{% for i in (0,1) %}
 interface Port-Channel40{{i}}
    switchport trunk allowed vlan 10,30,32,40,50,55,110,130,2001-2499
    switchport mode trunk

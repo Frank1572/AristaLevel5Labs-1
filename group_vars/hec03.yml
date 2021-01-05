@@ -1448,6 +1448,7 @@ hec:
           description: DCP2Pa:440860683:STL1:ASH3:rt-hec16-ha-core-01a_Et26/1
           ip: 10.254.254.0/31
           mtu: 9100
+          bfd: true
         - id: 922
           description: BACKUP-TRANS
           type: vlan
@@ -1474,6 +1475,7 @@ hec:
           description: DCP2Pa:440673080:STL1:ASH3:rt-hec16-ha-core-01b_Et26/11
           ip: 10.254.254.2/31
           mtu: 9100
+          bfd: true
         - id: 922
           description: BACKUP-TRANS
           type: vlan
@@ -1500,6 +1502,7 @@ hec:
           description: DCP2Pa:FBDK/1140652//ZFS:STL1:ASH3:rt-hec16-ha-core-01c_Et26/1
           ip: 10.254.254.4/31
           mtu: 9100
+          bfd: true
         - id: 922
           description: BACKUP-TRANS
           type: vlan
@@ -1526,6 +1529,7 @@ hec:
           description: DCP2Pa:440514705:STL1:ASH3:rt-hec16-ha-core-01d_Et26/1
           ip: 10.254.254.6/31
           mtu: 9100
+          bfd: true
         - id: 922
           description: BACKUP-TRANS
           type: vlan

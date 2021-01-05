@@ -179,6 +179,7 @@
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
     - sw-hec-autoconf-generate-only
+    - rt-hec-ha-core-customer-builder
   tags:
     - configlets
 
@@ -277,6 +278,28 @@
   tags:
     - configlets
     - interdc
+
+- name: Render rt-hec-ha-shared
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/rt-hec-ha-shared.j2"
+    dest: "{{role_path}}/files/configs/rt-hec-ha-shared"
+  when: hec.ngdr is defined
+  with_items: "{{ hec.ngdr }}"
+  tags:
+    - configlets
+    - ngdr
+
+- name: Render rt-hec-ha-core-01x
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/rt-hec-ha-core-01x.j2"
+    dest: "{{role_path}}/files/configs/rt-hec-ha-core-0{{ item.number }}"
+  when: hec.ngdr is defined
+  with_items: "{{ hec.ngdr }}"
+  tags:
+    - configlets
+    - ngdr
 
 - name: Copy configlet builders to the CVP
   delegate_to: "{{ cvp.ip_eth0 }}"

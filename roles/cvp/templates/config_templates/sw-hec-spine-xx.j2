@@ -1,6 +1,6 @@
 {% import "templates/config_templates/libs.j2" as funcs %}
-{% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000") %}
-{% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.overlay.bgp_maximum_routes|default("12000") %}
+{% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000")|string %}
+{% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.overlay.bgp_maximum_routes|default("12000")|string %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}

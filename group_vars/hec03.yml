@@ -237,7 +237,7 @@ hec:
         snmp:
           location: AMER-US-STL1-Cage4-(01.GH.004)-GK-17-22
           contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1029
-        oob_ip: 10.9.241.41
+        oob_ip: 10.9.241.42
         nwmgmt_ip: 198.19.156.74
         spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
       - id: 33
@@ -251,7 +251,7 @@ hec:
         snmp:
           location: AMER-US-STL1-Cage4-(01.GH.004)-GK-17-29
           contact: xxxxx:ncons-hec03-oob-03.net.sap.corp:1031
-        oob_ip: 10.9.241.43
+        oob_ip: 10.9.241.44
         nwmgmt_ip: 198.19.156.76
         spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
   superspine:

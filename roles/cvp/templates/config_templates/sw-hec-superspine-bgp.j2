@@ -1,5 +1,5 @@
 {% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000")|string %}
-{% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.overlay.bgp_maximum_routes|default("12000")|string %}
+{% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.evpn_maximum_routes|default("12000")|string %}
   bgp asn notation asdot
   no bgp default ipv4-unicast
   distance bgp 20 200 200
@@ -7,7 +7,7 @@
   bgp listen range 10.100.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter AS-RANGE-EVPN-DYNAMIC
   bgp listen range 10.255.0.0/16 peer-group UNDERLAY-DYNAMIC peer-filter AS-RANGE-UNDERLAY-DYNAMIC
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'update-source Loopback1',
-                  'bfd', 'ebgp-multihop', 'send-community standard extended', bgp_overlay_max_routes] %}
+                  eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', bgp_overlay_max_routes] %}
   neighbor EVPN-OVERLAY-DYNAMIC {{ setting }}
 {% endfor %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'send-community standard extended', bgp_underlay_max_routes] %}

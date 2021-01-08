@@ -1,11 +1,24 @@
 {% import "templates/config_templates/libs.j2" as funcs %}
 {% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000")|string %}
 {% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.evpn_maximum_routes|default("12000")|string %}
+{% set hec_spine_model = {'name' : 'none', 'linecards' : 1} %}
+{% if allbrdrs.pod is not defined %}
+{% if hec_spine_model.update({'name':hec.spine.model})%}{% endif %}
+{% if hec_spine_model.update({'linecards':hec.spine.linecards})%}{% endif %}
+{% else %}
+{% for i in hec.spine.pod.number %}
+{% if allbrdrs.pod == i.id %}
+{% if hec_spine_model.update({'name':i.model})%}{% endif %}
+{% if hec_spine_model.update({'linecards':i.linecards})%}{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+! {{hec_spine_model.name}}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
 {% set oob_mgmt_intf = "Management0" %}
-{% if hec.spine.model|string is search('7280.*') %}
+{% if hec_spine_model.name|string is search('7280.*') %}
 {% set oob_mgmt_intf = "Management1" %}
 {% endif %}
 {% set ports_per_lc = 36 %}
@@ -21,16 +34,16 @@ snmp-server location {{a.snmp.location}}
 !
 {% endif %}
 {% endfor %}
-{% if hec.spine.model|string is search('75[01][486].*')  %}
+{% if hec_spine_model.name|string is search('75[01][486].*')  %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec.spine.linecards %}
 {% endif %}
-{% if hec.spine.model|string is search('7280.*') %}
+{% if hec_spine_model.name|string is search('7280.*') %}
 {% set lc_start = 3 %}
 {% set lc_end   = 4 %}
 {% endif %}
-{% if hec.spine.model|string is search('.*-.*') %}
-{% set ports_per_lc = hec.spine.model|string %}
+{% if hec_spine_model.name|string is search('.*-.*') %}
+{% set ports_per_lc = hec_spine_model.name|string %}
 {% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
 {% endif %}
 {% set create_ip_on_interface = "yes" %}

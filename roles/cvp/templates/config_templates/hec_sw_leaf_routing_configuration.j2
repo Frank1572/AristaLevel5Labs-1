@@ -99,8 +99,9 @@ interface Loopback2
 {% endif %}
 {% set link_ip = ip %}
 {% for intf in allbrdrs.uplinks %}
+{% set spine_pod_offset = 10 * allbrdrs.pod|default(1) %}
 interface Ethernet{{ intf }}
-   ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
+   ip address 10.{{ loop.index + spine_pod_offset }}.{{ nextsubnet }}.{{ link_ip }}/31
 !
 {% endfor %}
 ip routing
@@ -177,7 +178,7 @@ router bgp {{ asn_generated }}
    neighbor EVPN-PG update-source Loopback1
    neighbor EVPN-PG send-community standard extended
    neighbor EVPN-PG ebgp-multihop 2
-   neighbor EVPN-PG maximum-routes 0
+   neighbor EVPN-PG maximum-routes {{hec.fabric.evpn_maximum_routes}}
    neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
 {% for i in range(11,15) %}

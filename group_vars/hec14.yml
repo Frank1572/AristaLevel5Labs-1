@@ -188,6 +188,37 @@ hec:
         speed: 40gfull
   ngdr_underlay:
     edge_as: 65194
+  ngdr_overlay:
+    remote_hec_nr: "13"
+    routes:
+      - network: 100.90.0.0/15
+        interface: Vlan922
+        nexthop: 10.255.186.81
+        vrf: INFRA
+      - network: 198.19.227.128/26
+        interface: Vlan922
+        nexthop: 10.255.186.81
+        vrf: INFRA
+      - network: 198.19.227.192/26
+        interface: Vlan922
+        nexthop: 10.255.186.81
+        vrf: INFRA
+    edge_neighbors:
+      - ip: 198.19.251.164
+        hostname: rt-hec14-vpn-01a
+      - ip: 198.19.251.165
+        hostname: rt-hec14-vpn-01b
+      - ip: 198.19.251.158
+        hostname: rt-hec14-cwan-01a
+      - ip: 198.19.251.159
+        hostname: rt-hec14-cwan-01b
+    remote_edge_routers:
+      - ip: 198.19.251.148
+      - ip: 198.19.251.149
+      - ip: 198.19.251.150
+      - ip: 198.19.251.151
+  lrdr_overlay:
+    remote_hec_nr: "00"
   #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   #Are the cwan vlans 3500 to 3599 needed
@@ -867,13 +898,113 @@ hec:
       spine_port_towards_leaf: Et3/2/1
   ngdr:
     - number: 1a
+      oob_ip: 10.9.246.51
+      nwmgmt_ip: 198.19.182.25
+      loopback1_ip: 198.19.251.138
+      remote_ha_ip: 198.19.251.134
+      snmp:
+        location: CA-TOR2-CAGE3-CAB41-23
+        contact: 34696491:ncons-hec14-oob-01.net.sap.corp 1024
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et4/33/1
+      ports:
+        - id: 26/1
+          description: DCP2Pb:OQYX/242833//ZYO:HEC14:HEC13:rt-hec13-ha-core-01a_Et26/1
+          ip: 10.254.254.1/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.186.90/28
+          virtual_router_ip: 10.255.186.94
     - number: 1b
+      oob_ip: 10.9.246.52
+      nwmgmt_ip: 198.19.182.26
+      loopback1_ip: 198.19.251.139
+      remote_ha_ip: 198.19.251.135
+      snmp:
+        location: CA-TOR2-CAGE3-CAB43-24
+        contact: 34696492:ncons-hec14-oob-01.net.sap.corp 1025
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et4/34/1
+      ports:
+        - id: 26/1
+          description: DCP2Pb:OQYX/258161//ZYO:HEC14:HEC13:rt-hec13-ha-core-01b_Et26/1
+          ip: 10.254.254.3/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.186.91/28
+          virtual_router_ip: 10.255.186.94
     - number: 1c
+      oob_ip: 10.9.246.53
+      nwmgmt_ip: 198.19.182.27
+      loopback1_ip: 198.19.251.140
+      remote_ha_ip: 198.19.251.136
+      snmp:
+        location: CA-TOR2-CAGE3-CAB41-28
+        contact: 34696493:ncons-hec14-oob-02.net.sap.corp 1012
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et4/35/1
+      ports:
+        - id: 26/1
+          description: DCP2Pb:OQYX/256571//ZYO:HEC14:HEC13:rt-hec13-ha-core-01c_Et26/1
+          ip: 10.254.254.5/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.186.92/28
+          virtual_router_ip: 10.255.186.94
     - number: 1d
+      oob_ip: 10.9.246.54
+      nwmgmt_ip: 198.19.182.28
+      loopback1_ip: 198.19.251.141
+      remote_ha_ip: 198.19.251.137
+      snmp:
+        location: CA-TOR2-CAGE3-CAB43-28
+        contact: 34696494:ncons-hec14-oob-02.net.sap.corp 1011
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et4/36/1
+      ports:
+        - id: 26/1
+          description: DCP2Pb:CenturyLink_441165153:HEC14:HEC13:rt-hec13-ha-core-01d_Et26/1
+          ip: 10.254.254.7/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.186.93/28
+          virtual_router_ip: 10.255.186.94
 
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any

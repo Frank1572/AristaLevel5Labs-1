@@ -21,3 +21,11 @@
    ip access-group HEC{{ hec_nr }}-L2-APP in
    spanning-tree portfast
 {%- endmacro %}
+{% macro leaf_hana_ports_data(hec_nr) -%}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+{%- endmacro %}

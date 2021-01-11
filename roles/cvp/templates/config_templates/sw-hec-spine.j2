@@ -39,7 +39,7 @@ router bgp 641{{ hec.hec_nr }}.10000
    neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG send-community standard extended
-   neighbor EVPN-PG maximum-routes 0
+   neighbor EVPN-PG maximum-routes {{ hec.fabric.evpn_maximum_routes }}
 {% endif %}
 !
    neighbor LEAF-PG {{eos_cmd.c_neighbor_peer_group}}

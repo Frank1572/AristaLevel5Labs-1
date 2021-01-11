@@ -125,7 +125,7 @@
     - hec-vmware
     - hec-vmware-L2
     - hec-xen
-    - sw-hec-spine
+#    - sw-hec-spine
     - sw-hec-hana-7160-32CQ
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
@@ -180,6 +180,16 @@
   tags:
     - configlets
 
+- name: Render generic spine configlet per POD
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-spine.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}x"
+  with_items: "{{ hec.spine.pod.number }}"
+  tags:
+    - configlets
+    - spines
+
 - name: Render sw-hecxx-spine-xx
   delegate_to: 127.0.0.1
   template:
@@ -188,6 +198,7 @@
   with_items: "{{ hec.spine.number }}"
   tags:
     - configlets
+    - spines
 
 - name: Render sw-hecxx-superspine-xx
   delegate_to: 127.0.0.1

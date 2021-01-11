@@ -1,3 +1,4 @@
+{% set pod=item.id %}
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
 {% set ports_per_lc = 36 %}
 {% if hec.spine.model|string is search('75[01][486].*') %}
@@ -27,7 +28,7 @@ peer-filter LEAF-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
    10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
 !
-router bgp 641{{ hec.hec_nr }}.10000
+router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}

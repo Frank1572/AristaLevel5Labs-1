@@ -57,31 +57,36 @@ snmp-server location {{a.snmp.location}}
     generate the IP address based on the spine numer.
 #}
 {% set interface_loopback1 = '10.100.0.' + item.id|string %} {# this is the default for POD 1 always #}
+{% set pod = 1 %}
 {% if hec.superspine|default(false) %}
 {% if item.id|int > 20 and item.id|int < 30 %}
 {# POD 2 #}
+{% set pod = 2 %}
 {% set interface_loopback1 = '10.110.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 30 and item.id|int < 40 %}
 {# POD 3 #}
+{% set pod = 3 %}
 {% set interface_loopback1 = '10.120.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 40 and item.id|int < 50 %}
 {# POD 4 #}
+{% set pod = 4 %}
 {% set interface_loopback1 = '10.130.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 50 and item.id|int < 60 %}
 {# POD 5 #}
+{% set pod = 5 %}
 {% set interface_loopback1 = '10.140.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 60 and item.id|int < 70 %}
 {# POD 6 #}
+{% set pod = 6 %}
 {% set interface_loopback1 = '10.150.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 70 and item.id|int < 80 %}
 {# POD 7 #}
+{% set pod = 7 %}
 {% set interface_loopback1 = '10.160.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% elif item.id|int > 80 and item.id|int < 90 %}
 {# POD 8 #}
+{% set pod = 8 %}
 {% set interface_loopback1 = '10.170.' + hec.hec_nr|int|string + '.' + item.id|string %}
-{% elif item.id|int > 90 and item.id|int < 100 %}
-{# POD 9 #}
-{% set interface_loopback1 = '10.180.' + hec.hec_nr|int|string + '.' + item.id|string %}
 {% endif %}
 {% endif %}
 interface Loopback1
@@ -97,7 +102,7 @@ interface {{oob_mgmt_intf}}
    {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
    ip address {{ hec.oob_prefix }}.{{ item.id }}/{{ hec.oob_mask }}
 !
-router bgp 641{{ hec.hec_nr }}.10000
+router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    router-id {{interface_loopback1}}
    bgp listen range 10.{{ item.id }}.0.0/16 {{eos_cmd.c_neighbor_peer_group}} LEAF-PG peer-filter LEAF-PF
    network {{interface_loopback1}}/32

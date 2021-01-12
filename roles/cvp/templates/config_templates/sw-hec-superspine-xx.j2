@@ -7,7 +7,7 @@
 {% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.90000' %}
-hostname sw-hec{{ hec.hec_nr }}-uberspine-{{ item.id }}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
 !
 {% for a in hec.superspine.number %}
 {% if a.id == item.id %}

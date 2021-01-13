@@ -197,6 +197,8 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
+      - model: 7050CX3-32S
+        uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-32CQ
         uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-48YC6

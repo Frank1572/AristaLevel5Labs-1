@@ -680,12 +680,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
-          description: rt-hec03-idc-01a, Fo0/0/0 
+          description: rt-hec03-idc-01a, Fo0/0/0
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
-          description: rt-hec03-idc-01b, Fo0/0/0  
+          description: rt-hec03-idc-01b, Fo0/0/0
           po: 1602
           speed: 40gfull
           mtu: 9100
@@ -840,12 +840,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
-          description: rt-hec03-idc-01a, Fo0/0/1  
+          description: rt-hec03-idc-01a, Fo0/0/1
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
-          description: rt-hec03-idc-01b, Fo0/0/1  
+          description: rt-hec03-idc-01b, Fo0/0/1
           po: 1602
           speed: 40gfull
           mtu: 9100
@@ -1101,7 +1101,7 @@ hec:
         - id: 21
           description: hec03fc002cs1 MGMT
           speed: 10000full
-          access_vlan: 110        
+          access_vlan: 110
         - id: 49/1
           description: sw-hec03-str-04b,Et49/1
           po: 42
@@ -1122,7 +1122,7 @@ hec:
           trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec03f0058
-          trunk: 30,40,50,55,130,2001-2499   
+          trunk: 30,40,50,55,130,2001-2499
     - number: 4b
       snmp:
         location: US-STL-1-DC4)-Cage1-(01.HK.004)-IM-23-37
@@ -1186,7 +1186,7 @@ hec:
           trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec03f0058
-          trunk: 30,40,50,55,130,2001-2499          
+          trunk: 30,40,50,55,130,2001-2499
     - number: 5a
       snmp:
         location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-16-39
@@ -1537,7 +1537,11 @@ hec:
           vrf: INFRA
           ip: 10.255.176.93/28
           virtual_router_ip: 10.255.176.94
+<<<<<<< HEAD:group_vars/hec03/hec03.yml
+
+=======
   
+>>>>>>> master:group_vars/hec03.yml
   hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
         20 permit vlan 50 0x000 pim any any

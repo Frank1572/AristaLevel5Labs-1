@@ -25,9 +25,9 @@ cva:
 
 oob1:
   dhcp:
-    prefix: 10.177.250.0 # Correct 
-    mask: 255.255.254.0 # Correct 
-    router: 10.177.250.1 # Correct 
+    prefix: 10.177.250.0 # Correct
+    mask: 255.255.254.0 # Correct
+    router: 10.177.250.1 # Correct
     idrac_ip: 10.177.251.248 # Correct sudo cat /var/lib/dhcpd/dhcpd.leases
     cva_ip: 10.177.251.249 # Correct sudo cat /var/lib/dhcpd/dhcpd.leases
 

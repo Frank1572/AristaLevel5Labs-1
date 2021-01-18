@@ -47,7 +47,7 @@ router bgp 641{{ hec.hec_nr }}.10000
 {% if hec.spine.underlay_bfd %}
    neighbor LEAF-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}
-   neighbor LEAF-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} inbound all
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_soft_reconfiguration}}
    neighbor LEAF-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
 !
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}

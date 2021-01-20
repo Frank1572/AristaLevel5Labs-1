@@ -161,7 +161,7 @@ hec:
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
-    model: 7280
+    model: 7280-60
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1
@@ -1537,11 +1537,6 @@ hec:
           vrf: INFRA
           ip: 10.255.176.93/28
           virtual_router_ip: 10.255.176.94
-<<<<<<< HEAD:group_vars/hec03/hec03.yml
-
-=======
-  
->>>>>>> master:group_vars/hec03.yml
   hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
         20 permit vlan 50 0x000 pim any any

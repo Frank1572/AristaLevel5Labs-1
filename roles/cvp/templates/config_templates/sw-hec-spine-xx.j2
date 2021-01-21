@@ -121,17 +121,6 @@ generate all BGP related settings. #}
 {% endfor %}
 {% for i in range(1,5) %}
    neighbor 10.90.{{ hec.hec_nr|int }}.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-SUPERSPINE
-   ! add per superspine-underlay neighbor here as well
-{% if item.id|string is search('[12345678]1') %}
-{% set num_spine_in_pod = '1' %}
-{% elif item.id|string is search('[12345678]2') %}
-{% set num_spine_in_pod = '2' %}
-{% elif item.id|string is search('[12345678]3') %}
-{% set num_spine_in_pod = '3' %}
-{% elif item.id|string is search('[12345678]4') %}
-{% set num_spine_in_pod = '4' %}
-{% endif %}
-   neighbor 10.255.{{pod}}{{i}}.{{num_spine_in_pod}}
 {% endfor %}
 {% for x in item.spine_port_towards_superspine %}
 {% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index) %}

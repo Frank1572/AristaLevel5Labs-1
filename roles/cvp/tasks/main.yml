@@ -190,7 +190,7 @@
     - configlets
     - spines
 
-- name: Render sw-hecxx-spine-xx
+- name: Render sw-hec-spine-xx
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hec-spine-xx.j2"
@@ -200,7 +200,7 @@
     - configlets
     - spines
 
-- name: Render sw-hecxx-superspine-xx
+- name: Render sw-hec-superspine-xx
   delegate_to: 127.0.0.1
   template:
     src: "templates/config_templates/sw-hec-superspine-xx.j2"

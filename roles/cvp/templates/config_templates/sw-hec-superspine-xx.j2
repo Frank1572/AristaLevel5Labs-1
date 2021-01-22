@@ -1,3 +1,4 @@
+{% import "templates/config_templates/libs.j2" as funcs %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -26,6 +27,13 @@ interface {{oob_mgmt_intf}}
    ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
 !
 {% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
+!
+peer-filter SUPERSPINE-PF
+! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
+! 641{{ hec.hec_nr }}.10000
+{{funcs.asn('64103.70000')}}
+{{funcs.asn('64103.30000')}}
+   10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
 !
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}

@@ -30,9 +30,8 @@ interface {{oob_mgmt_intf}}
 !
 peer-filter SUPERSPINE-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-! 641{{ hec.hec_nr }}.10000
-{{funcs.asn('64103.70000')}}
-{{funcs.asn('64103.30000')}}
+{% set asn = '641' + hec.hec_nr + '.10000' %}
+{{funcs.asdot(asn)}}
    10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
 !
 router bgp {{ asn_generated }}

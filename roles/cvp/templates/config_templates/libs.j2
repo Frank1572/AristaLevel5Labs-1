@@ -79,14 +79,16 @@
    spanning-tree portfast
 {%- endmacro %}
 {% macro asdot(asn) -%}
-{% if asn is search('.') %}{# check if the given value is in asdot or asplain format #}
-{% set bits_high = asn | regex_replace('^(?P<high>[0-9]*)\.*[0-9]$', '\\g<high>') %}
-{% set bits_low = asn | regex_replace('^[0-9]\.(?P<low>[0-9]*)$', '\\g<low>') %}
+{% if asn is search('\.') %}{# check if the given value is in asdot or asplain format #}
+{# asdot notation #}
+{% set bits_high = asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>') %}
+{% set bits_low = asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>') %}
 {% set calc_asplain = bits_high|int * 65536 + bits_low|int %}
 {{calc_asplain}}
 {% else %}
-{% set calc_asplain_high = bits_high|int / 65536 %}
-{% set calc_asplain_low = asn|int - bits_high|int * 65536 %}
+{# asplain notation #}
+{% set calc_asplain_high = asn|int // 65536 %}
+{% set calc_asplain_low = asn|int - calc_asplain_high|int * 65536 %}
 {{calc_asplain_high}}.{{calc_asplain_low}}
 {% endif %}
 {%- endmacro %}

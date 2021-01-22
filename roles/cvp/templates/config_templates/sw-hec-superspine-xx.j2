@@ -1,4 +1,17 @@
-{% import "templates/config_templates/libs.j2" as funcs %}
+{% macro asdot(asn) -%}
+{% if asn is search('\.') %}{# check if the given value is in asdot or asplain format #}
+{# asdot notation #}
+{% set bits_high = asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>') %}
+{% set bits_low = asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>') %}
+{% set calc_asplain = bits_high|int * 65536 + bits_low|int %}
+{{calc_asplain}}
+{% else %}
+{# asplain notation #}
+{% set calc_asplain_high = asn|int // 65536 %}
+{% set calc_asplain_low = asn|int - calc_asplain_high|int * 65536 %}
+{{calc_asplain_high}}.{{calc_asplain_low}}
+{% endif %}
+{%- endmacro %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -8,7 +21,7 @@
 {% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.90000' %}
-hostname sw-hec{{ hec.hec_nr }}-uberspine-{{ item.id }}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
 !
 {% for a in hec.superspine.number %}
 {% if a.id == item.id %}
@@ -29,10 +42,9 @@ interface {{oob_mgmt_intf}}
 {% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
 !
 peer-filter SUPERSPINE-PF
-! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-{% set asn = '641' + hec.hec_nr + '.10000' %}
-{{funcs.asdot(asn)}}
-   10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
+{% for entry in range(1, 9) %}
+   {{ loop.index * 10 }} match as-range {{ asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
+{% endfor %}
 !
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}

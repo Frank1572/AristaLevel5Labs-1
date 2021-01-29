@@ -49,7 +49,6 @@ snmp-server location {{a.snmp.location}}
 {% endif %}
 {% set create_ip_on_interface = "yes" %}
 {% set port_range_end = ports_per_lc|int + 1 %}
-! DEBUG: port_range_end {{port_range_end}}
 {% include "templates/config_templates/sw-hec-spine-ips.j2" %}
 !
 {# the addressing of interface Loopback1 which used as router-id,

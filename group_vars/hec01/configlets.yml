@@ -1,0 +1,17 @@
+---
+configlet_list_dc_specific:
+  sw-hec-oob-04: "{{ lookup('file', 'configs/sw-hec-oob-04', errors='warn') }}"
+  sw-hec-oob-05: "{{ lookup('file', 'configs/sw-hec-oob-05', errors='warn') }}"
+  sw-hec-oob-06: "{{ lookup('file', 'configs/sw-hec-oob-06', errors='warn') }}"
+  sw-hec-str-03a: "{{ lookup('file', 'configs/sw-hec-str-03a', errors='warn') }}"
+  sw-hec-str-03b: "{{ lookup('file', 'configs/sw-hec-str-03b', errors='warn') }}"
+  sw-hec-str-04a: "{{ lookup('file', 'configs/sw-hec-str-04a', errors='warn') }}"
+  sw-hec-str-04b: "{{ lookup('file', 'configs/sw-hec-str-04b', errors='warn') }}"
+configlet_filter_list_dc_specific:
+  - sw-hec-oob-04
+  - sw-hec-oob-05
+  - sw-hec-oob-06
+  - sw-hec-str-03a
+  - sw-hec-str-03b
+  - sw-hec-str-04a
+  - sw-hec-str-04b

@@ -4,6 +4,8 @@ mlag configuration
 vlan 4094
    name MLAG_Vlan
 !
+spanning-tree mst 0-1 priority 28672
+!
 alias dhcp-off
    10 bash sudo service dhcpd stop
    20 bash sudo service dhcpd status

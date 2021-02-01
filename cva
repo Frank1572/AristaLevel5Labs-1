@@ -9,6 +9,12 @@
 [hec12]
 10.177.250.43 # naa-hec12-01.hec.oob.net.sap.
 
+[hec17]
+10.9.232.43 # naa-hec17-01.hec.oob.net.sap.
+
+[hec18]
+10.9.236.43 # naa-hec18-01.hec.oob.net.sap.
+
 [all:vars]
 ansible_connection=paramiko
 ansible_user=root

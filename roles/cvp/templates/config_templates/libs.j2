@@ -78,10 +78,17 @@
    ip access-group HEC{{ hec_nr }}-L2-APP in
    spanning-tree portfast
 {%- endmacro %}
+{% macro leaf_hana_ports_data(hec_nr) -%}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+{%- endmacro %}
 
 {# convert ASN between asdot and asplain notation #}
 {% macro asdot(asn) -%}
 {%- if asn|string is search('\.') %}
 {{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
 {{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
-{%- endmacro %}

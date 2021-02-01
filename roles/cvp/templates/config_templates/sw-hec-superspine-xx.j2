@@ -1,4 +1,4 @@
-{% include "templates/config_templates/libs.inc.j2" %}
+{% import "templates/config_templates/libs.j2" as funcs %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -30,7 +30,7 @@ interface {{oob_mgmt_intf}}
 !
 peer-filter SUPERSPINE-PF
 {% for entry in range(1, 7) %}
-   {{ loop.index * 10 }} match as-range {{ asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
+   {{ loop.index * 10 }} match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
 {% endfor %}
 !
 router bgp {{ asn_generated }}

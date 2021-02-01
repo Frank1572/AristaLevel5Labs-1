@@ -79,13 +79,9 @@
    spanning-tree portfast
 {%- endmacro %}
 
+{# convert ASN between asdot and asplain notation #}
 {% macro asdot(asn) -%}
-{% if asn|string is search('\.') %}
-{# {% set bits_high = asn|regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int %} #}
-{# {% set bits_low = asn|regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int %} #}
-{% set calc_asplain = asn|regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int * 65536 + asn|regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int %}
-{{calc_asplain}}{% else %}
-{% set calc_asplain_high = asn|int // 65536 %}
-{% set calc_asplain_low = asn|int - calc_asplain_high|int * 65536 %}
-{{calc_asplain_high}}.{{calc_asplain_low}}{% endif %}
+{%- if asn|string is search('\.') %}
+{{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
+{{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
 {%- endmacro %}

@@ -1,4 +1,4 @@
-{% include "templates/config_templates/libs.inc.j2" %}
+{% import "templates/config_templates/libs.j2" as funcs %}
 {% set pod=item.id %}
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
 {% set ports_per_lc = 36 %}
@@ -20,12 +20,12 @@
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-   10 match as-range {{ asdot('641' + hec.hec_nr|string + '.10001') }}-{{ asdot('641' + hec.hec_nr|string + '.11199') }} result accept
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.10001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.11199') }} result accept
 !
 {% endif %}
 peer-filter LEAF-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-   10 match as-range {{ asdot('641' + hec.hec_nr|string + '.10001') }}-{{ asdot('641' + hec.hec_nr|string + '.11199') }} result accept
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.10001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.11199') }} result accept
 !
 router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    bgp asn notation asdot

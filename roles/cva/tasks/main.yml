@@ -34,6 +34,7 @@
     - cva
 
 - name: Copy netsnmp tar file to CVA
+  delegate_to: "{{ cva.ip }}"
   copy:
     src: "{{role_path}}/files/centos-7.6.1810-netsnmp_cva.tar.gz"
     dest: /tmp/centos-7.6.1810-netsnmp_cva.tar.gz
@@ -45,6 +46,7 @@
     - snmp_cva
 
 - name: Delete installation directory for netsnmp if already exists
+  delegate_to: "{{ cva.ip }}"
   file:
     path: "/tmp/netsnmp"
     state: absent
@@ -53,6 +55,7 @@
     - snmp_cva
 
 - name: Create directory for netsnmp installation files (/tmp/netsnmp/)
+  delegate_to: "{{ cva.ip }}"
   command: "mkdir /tmp/netsnmp"
   args:
     warn: no
@@ -61,12 +64,14 @@
     - snmp_cva
 
 - name: Extract netsnmp tar file on CVA
+  delegate_to: "{{ cva.ip }}"
   command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp_cva.tar.gz -C /tmp/netsnmp"
   tags:
     - cva
     - snmp_cva
 
 - name: Install netsnmp RPMs on the CVA
+  delegate_to: "{{ cva.ip }}"
   command: "rpm -ivh --force /tmp/netsnmp/*.rpm"
   args:
     warn: false
@@ -78,6 +83,7 @@
     - snmp_cva
 
 - name: Render SNMP config and put the file to the CVA machine
+  delegate_to: "{{ cva.ip }}"
   template:
     src: "templates/snmpd_cva.conf.j2"
     dest: "/etc/snmp/snmpd.conf"
@@ -86,12 +92,14 @@
     - snmp_cva
 
 - name: Set the snmpd to enabled for persistence after reboot
+  delegate_to: "{{ cva.ip }}"
   command: "systemctl enable snmpd"
   tags:
     - cva
     - snmp_cva
 
 - name: Restart snmpd service
+  delegate_to: "{{ cva.ip }}"
   service:
     name: snmpd
     state: restarted

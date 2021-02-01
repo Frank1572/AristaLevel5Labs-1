@@ -1,11 +1,10 @@
+{# check if the given value is in asdot or asplain format #}
 {% macro asdot(asn) -%}
-{% if asn is search('\.') %}{# check if the given value is in asdot or asplain format #}
-{# asdot notation #}
+{% if asn is search('\.') %}
 {% set bits_high = asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>') %}
 {% set bits_low = asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>') %}
 {% set calc_asplain = bits_high|int * 65536 + bits_low|int %}
 {{calc_asplain}}{% else %}
-{# asplain notation #}
 {% set calc_asplain_high = asn|int // 65536 %}
 {% set calc_asplain_low = asn|int - calc_asplain_high|int * 65536 %}
 {{calc_asplain_high}}.{{calc_asplain_low}}{% endif %}

@@ -158,6 +158,11 @@ hec:
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
     model: 7504
+    pod:
+      number:
+        - id: 1
+          model: 7504
+          linecards: 1
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 4

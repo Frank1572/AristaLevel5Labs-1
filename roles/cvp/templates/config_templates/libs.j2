@@ -45,12 +45,6 @@
 {% set podid = 5 %}
 {% elif (spineid|int > 60) and (spineid|int < 70) %}
 {% set podid = 6 %}
-{% elif (spineid|int > 70) and (spineid|int < 80) %}
-{% set podid = 7 %}
-{% elif (spineid|int > 80) and (spineid|int < 90) %}
-{% set podid = 8 %}
-{% elif (spineid|int > 90) and (spineid|int < 100) %}
-{% set podid = 9 %}
 {% endif %}
 {% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
 {{ interface_ipv4 }}

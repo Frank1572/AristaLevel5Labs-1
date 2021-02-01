@@ -1,5 +1,7 @@
 ---
-# file: group_vars/hec01.yml
+eos:
+  new_syntax: True
+
 idrac:
   ip: 10.178.136.254
   mask: 255.255.254.0
@@ -7,7 +9,7 @@ idrac:
   name: naa-hec10-idrac-01
   dns1: 147.204.148.110
   dns2: 147.204.148.111
-  domain: net.sap.corp
+  domain: hec.oob.net.sap
   password: arista
 
 cva:
@@ -18,7 +20,7 @@ cva:
   name: naa-hec01-01
   dns1: 147.204.148.110
   dns2: 147.204.148.111
-  domain: net.sap.corp
+  domain: hec.oob.net.sap
   password: arista
 
 oob2 and oob3:
@@ -39,10 +41,10 @@ cvp:
   mask_eth0: 255.255.254.0
   mask_eth1: 255.255.240.0
   gw: 10.178.136.1
-  name: naa-hec01-cvp-01.net.sap.corp
+  name: naa-hec01-cvp-01.hec.oob.net.sap
   dns1: 10.17.121.30
   dns2: 10.17.122.10
-  domain: net.sap.corp
+  domain: hec.oob.net.sap
   ntp1: 10.17.122.185
   ntp2: 10.33.142.104
   device_int: eth0
@@ -87,7 +89,7 @@ hec:
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
-  ma_domain: "net.sap.corp"
+  ma_domain: "hec.oob.net.sap"
   lo900_domain: "rot.hec.sap.biz"
   vl900_domain: "rot.hec.sap.biz"
   vl900_mask: 24

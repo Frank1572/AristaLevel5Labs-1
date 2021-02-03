@@ -1,7 +1,34 @@
 # cva
 
+[hec01]
+10.178.136.41 # naa-hec01-01.hec.oob.net.sap.
+
+[hec02]
+10.178.140.43 # naa-hec01-02.hec.oob.net.sap.
+ 
+[hec03]
+10.9.240.41 # naa-hec01-03.hec.oob.net.sap.
+ 
 [hec04]
-10.9.242.39
+10.9.242.39 # naa-hec04-01.hec.oob.net.sap.
+
+[hec05]
+10.192.16.19 # naa-hec05-01.hec.oob.net.sap.
+ 
+[hec06]
+10.192.18.22 # naa-hec06-01.hec.oob.net.sap.
+
+[hec07]
+10.192.20.46 # naa-hec07-01.hec.oob.net.sap.
+
+[hec08]
+10.192.22.46 # naa-hec08-01.hec.oob.net.sap.
+
+[hec09]
+# no cva
+
+[hec10]
+10.178.142.43 # naa-hec10-01.hec.oob.net.sap.
 
 [hec11]
 10.177.248.43 # naa-hec11-01.hec.oob.net.sap.
@@ -9,11 +36,29 @@
 [hec12]
 10.177.250.43 # naa-hec12-01.hec.oob.net.sap.
 
+[hec13]
+10.9.244.11  # naa-hec13-01.hec.oob.net.sap.
+
+[hec14]
+10.9.246.20  # naa-hec14-01.hec.oob.net.sap.
+
+[hec15]
+10.178.144.43 # naa-hec15-01.hec.oob.net.sap.
+
+[hec16]
+10.9.227.43 # naa-hec16-01.hec.oob.net.sap.
+
 [hec17]
 10.9.232.43 # naa-hec17-01.hec.oob.net.sap.
 
 [hec18]
 10.9.236.43 # naa-hec18-01.hec.oob.net.sap.
+
+[hec19]
+10.178.146.43 # naa-hec18-01.hec.oob.net.sap.
+
+[hec90]
+# to be created
 
 [all:vars]
 ansible_connection=paramiko

@@ -26,6 +26,7 @@ vlandb:
   140: {name: 'BACKUP-DEVICES'}
   150: {name: 'CUSTOMER_DATA_TRANSFER'}
   900: {name: 'NW-MGMT'}
+  902: {name: 'LB-SYNC'}
   914: {name: 'FW-CORE-TRANS'}
   915: {name: 'FWT-FW-TRANS'}
   916: {name: 'FW-BRDR-TRANS'}
@@ -106,6 +107,8 @@ vlans:
     trans:
       - name: "{{vlandb.900.name}}"
         vid: 900
+      - name: "{{vlandb.902.name}}"
+        vid: 902
       - name: "{{vlandb.914.name}}"
         vid: 914
       - name: "{{vlandb.915.name}}"

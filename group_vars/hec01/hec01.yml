@@ -188,6 +188,35 @@ hec:
           contact: 34344373:ncons5401.wdf.sap.corp:1012
   ngdr_underlay:
     edge_as: 65200
+  ngdr_overlay:
+    remote_hec_nr: "10"
+    routes:
+      - network: 100.64.0.0/15
+        interface: Vlan922
+        nexthop: 198.19.252.124
+        vrf: INFRA
+    edge_neighbors:
+      - ip: 198.19.251.4
+        hostname: rt-hec01-605
+      - ip: 198.19.251.5
+        hostname: rt-hec01-606
+      - ip: 198.19.251.42
+        hostname: rt-hec01-cwan-01a
+      - ip: 198.19.251.43
+        hostname: rt-hec01-cwan-01b
+      - ip: 198.19.251.46
+        hostname: rt-hec01-vpn-01a
+      - ip: 198.19.251.47
+        hostname: rt-hec01-vpn-01b
+    remote_edge_routers:
+      - ip: 198.19.249.160
+      - ip: 198.19.249.161
+      - ip: 198.19.249.162
+      - ip: 198.19.249.163
+      - ip: 198.19.249.164
+      - ip: 198.19.249.165
+  lrdr_overlay:
+    remote_hec_nr: "02"
   # Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:
@@ -1192,6 +1221,115 @@ hec:
         - id: 10
           description: hec01f00501
           trunk: 30,32,40,50,55,130,2001-2499
+  ngdr:
+    - number: 1a
+      oob_ip: 10.178.136.55
+      nwmgmt_ip: 198.19.190.25
+      loopback1_ip: 198.19.251.110
+      remote_ha_ip: 198.19.251.114
+      snmp:
+        location: EMEA-Germany-Rot2(ROT13)-RZ44-R2-3-41
+        contact: 34695819:ncons4402:1001
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et6/33/1
+      ports:
+        - id: 26/1
+          description: rt-hec10-ha-core-01a, et26/1
+          ip: 10.254.254.0/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 198.19.252.120/28
+          virtual_router_ip: 198.19.252.119
+    - number: 1b
+      oob_ip: 10.178.136.56
+      nwmgmt_ip: 198.19.190.26
+      loopback1_ip: 198.19.251.111
+      remote_ha_ip: 198.19.251.115
+      snmp:
+        location: EMEA-Germany-Rot2(ROT13)-RZ44-R2-3-40
+        contact: 34695818:nconsnwt106:1017
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et6/34/1
+      ports:
+        - id: 26/1
+          description: rt-hec10-ha-core-01b, et26/1
+          ip: 10.254.254.2/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 198.19.252.121/28
+          virtual_router_ip: 198.19.252.119
+    - number: 1c
+      oob_ip: 10.178.136.57
+      nwmgmt_ip: 198.19.190.27
+      loopback1_ip: 198.19.251.112
+      remote_ha_ip: 198.19.251.116
+      snmp:
+        location: EMEA-Germany-Rot2(ROT13)-RZ54-R2-4-41
+        contact: 34695821:ncons5401:1031
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et6/35/1
+      ports:
+        - id: 26/1
+          description: rt-hec10-ha-core-01c, et26/1
+          ip: 10.254.254.4/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 198.19.252.122/28
+          virtual_router_ip: 198.19.252.119
+    - number: 1d
+      oob_ip: 10.178.136.58
+      nwmgmt_ip: 198.19.190.28
+      loopback1_ip: 198.19.251.113
+      remote_ha_ip: 198.19.251.117
+      snmp:
+        location: EMEA-Germany-Rot2(ROT13)-RZ54-R2-4-40
+        contact: 34695820:nconsnwt212:1020
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et6/36/1
+      ports:
+        - id: 26/1
+          description: rt-hec10-ha-core-01d, et26/1
+          ip: 10.254.254.6/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 198.19.252.123/28
+          virtual_router_ip: 198.19.252.11
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

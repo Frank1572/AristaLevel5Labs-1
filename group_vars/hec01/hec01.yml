@@ -258,6 +258,8 @@ hec:
       - 10.200.1.34 # hvv-29
       - 10.200.1.37 # hvv-30
       - 10.200.1.38 # hvv-31
+      - 10.200.1.39 # hvv-32
+      - 10.200.1.68 # str04
       - 10.200.1.69
       - 10.200.1.70
       - 10.254.200.1 # vVTEP at rt-hec01-ha-core-01a/b/c/d
@@ -1329,7 +1331,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 198.19.252.123/28
-          virtual_router_ip: 198.19.252.11
+          virtual_router_ip: 198.19.252.119
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

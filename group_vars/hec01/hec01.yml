@@ -1067,6 +1067,76 @@ hec:
         - id: 815
           description: hec01f0084
           trunk: 40,50,55,130,2001-2499
+    - number: 4a
+      snmp:
+        location: EMEA-de-Rot13-rot2-RZ40-5L-11-41
+        contact: 34862456:ncons4012.wdf.sap.corp:1029
+      oob_ip: 10.178.136.150
+      nwmgmt_ip: 198.19.190.101
+      spine_port_towards_leaf: Ethernet6/27/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      ports:
+        - id: 1/1
+          description: hec01f0087
+          po: 5
+        - id: 2/1
+          description: hec01f0087r
+          access_vlan: 110
+        - id: 3/1
+          description: hec01f0088
+          po: 6
+        - id: 49/1
+          description: sw-hec01-str-04b, Et49/1
+          po: 42
+        - id: 50/1
+          description: sw-hec01-str-04b, Et50/1
+          po: 42
+      port_channels:
+        - id: 5
+          description: hec01f0087
+          access_vlan: 110
+        - id: 6
+          description: hec01f0088
+          access_vlan: 110
+    - number: 4b
+      snmp:
+        location: EMEA-de-Rot13-rot2-RZ40-5L-11-41
+        contact: 34862456:ncons4012.wdf.sap.corp:1029
+      oob_ip: 10.178.136.150
+      nwmgmt_ip: 198.19.190.101
+      spine_port_towards_leaf: Ethernet6/27/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      ports:
+        - id: 1/1
+          description: hec01f0087
+          po: 5
+        - id: 2/1
+          description: hec01f0088
+          po: 6
+        - id: 3/1
+          description: hec01f0088r
+          access_vlan: 110
+        - id: 49/1
+          description: sw-hec01-str-04a, Et49/1
+          po: 42
+        - id: 50/1
+          description: sw-hec01-str-04a, Et50/1
+          po: 42
+      port_channels:
+        - id: 5
+          description: hec01f0087
+          access_vlan: 110
+        - id: 6
+          description: hec01f0088
+          access_vlan: 110
   interdc:
     - number: "01"
       ports:

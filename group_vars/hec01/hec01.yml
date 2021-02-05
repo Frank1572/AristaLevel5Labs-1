@@ -1073,7 +1073,7 @@ hec:
         contact: 34862456:ncons4012.wdf.sap.corp:1029
       oob_ip: 10.178.136.150
       nwmgmt_ip: 198.19.190.101
-      spine_port_towards_leaf: Ett6/27/1
+      spine_port_towards_leaf: Et6/27/1
       uplinks:
         - 51/1
         - 52/1

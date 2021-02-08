@@ -1,0 +1,20 @@
+  bgp asn notation asdot
+  no bgp default ipv4-unicast
+  distance bgp 20 200 200
+  maximum-paths 16 ecmp 16
+  bgp listen range 10.100.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter AS-RANGE-EVPN-DYNAMIC
+  bgp listen range 10.255.0.0/16 peer-group UNDERLAY-DYNAMIC peer-filter AS-RANGE-UNDERLAY-DYNAMIC
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'update-source Loopback1',
+                  'bfd', 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0'] %}
+  neighbor EVPN-OVERLAY-DYNAMIC {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'send-community standard extended', 'maximum-routes 0'] %}
+  neighbor UNDERLAY-DYNAMIC {{ setting }}
+{% endfor %}
+  address-family evpn
+    bgp next-hop-unchanged
+    neighbor EVPN-OVERLAY-DYNAMIC activate
+    no neighbor UNDERLAY-DYNAMIC activate
+  address-family ipv4
+    no neighbor EVPN-OVERLAY-DYNAMIC activate
+    neighbor UNDERLAY-DYNAMIC activate

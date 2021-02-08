@@ -6,8 +6,6 @@ vlandb:
   7: {name: 'DHCP03'}
   10: {name: 'IPMI01'}
   20: {name: 'HV-MGMT01'}
-  22: {name: 'VMWARE-MGMT01'}
-  23: {name: 'VMWARE-VMOTION01'}
   30: {name: 'IBM-PWR-MGMT01'}
   31: {name: 'IBM-PWR-LPM'}
   32: {name: 'IBM-PWR-ISCSI'}
@@ -28,11 +26,15 @@ vlandb:
   140: {name: 'BACKUP-DEVICES'}
   150: {name: 'CUSTOMER_DATA_TRANSFER'}
   900: {name: 'NW-MGMT'}
+  902: {name: 'LB-SYNC'}
   914: {name: 'FW-CORE-TRANS'}
   915: {name: 'FWT-FW-TRANS'}
   916: {name: 'FW-BRDR-TRANS'}
   920: {name: 'BGP-TRANS'}
   922: {name: 'BACKUP-TRANS'}
+  930: {name: 'VMWARE-FAULT-TOLERANCE'}
+  931: {name: 'VMWARE-VMOTION'}
+  932: {name: 'VMWARE-VCENTER-HA'}
   940: {name: 'INET'}
   961: {name: 'RT-HEC-CWAN-01A-TRANS'}
   962: {name: 'RT-HEC-CWAN-01A-TRANS'}
@@ -105,6 +107,8 @@ vlans:
     trans:
       - name: "{{vlandb.900.name}}"
         vid: 900
+      - name: "{{vlandb.902.name}}"
+        vid: 902
       - name: "{{vlandb.914.name}}"
         vid: 914
       - name: "{{vlandb.915.name}}"
@@ -122,6 +126,11 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
+  ipmi:
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.900.name}}"
+      vid: 900
   default:
     - name: "{{vlandb.5.name}}"
       vid: 5
@@ -133,10 +142,6 @@ vlans:
       vid: 10
     - name: "{{vlandb.20.name}}"
       vid: 20
-    - name: "{{vlandb.22.name}}"
-      vid: 22
-    - name: "{{vlandb.23.name}}"
-      vid: 23
     - name: "{{vlandb.40.name}}"
       vid: 40
     - name: "{{vlandb.50.name}}"

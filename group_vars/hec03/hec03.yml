@@ -161,7 +161,7 @@ hec:
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
-    model: 7280
+    model: 7280-60
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1
@@ -193,6 +193,47 @@ hec:
       #    speed: 40gfull
   ngdr_underlay:
     edge_as: 65199
+  ngdr_overlay:
+    remote_hec_nr: "16"
+    routes:
+      - network: 100.68.0.0/15
+        interface: Vlan922
+        nexthop: 10.255.176.81
+        vrf: INFRA
+      - network: 198.19.227.0/26
+        interface: Vlan922
+        nexthop: 10.255.176.81
+        vrf: INFRA
+      - network: 198.19.227.64/26
+        interface: Vlan922
+        nexthop: 10.255.176.81
+        vrf: INFRA
+    edge_neighbors:
+      - ip: 198.19.249.112
+        hostname: rt-hec03-cwan-02a
+      - ip: 198.19.249.113
+        hostname: rt-hec03-cwan-02b
+      - ip: 198.19.251.64
+        hostname: rt-hec03-cwan-01a
+      - ip: 198.19.251.65
+        hostname: rt-hec03-cwan-01b
+      - ip: 198.19.251.66
+        hostname: rt-hec03-vpn-01a
+      - ip: 198.19.251.67
+        hostname: rt-hec03-vpn-01b
+      - ip: 198.19.251.68
+        hostname: rt-hec03-idc-01a
+      - ip: 198.19.251.69
+        hostname: rt-hec03-idc-01b
+    remote_edge_routers:
+      - ip: 198.19.249.143
+      - ip: 198.19.249.147
+      - ip: 198.19.249.148
+      - ip: 198.19.249.151
+      - ip: 198.19.249.152
+      - ip: 198.19.249.153
+  lrdr_overlay:
+    remote_hec_nr: "04"
   #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:
@@ -240,6 +281,8 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
+      - model: 7050CX3-32S
+        uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-32CQ
         uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-48YC6
@@ -346,10 +389,10 @@ hec:
         - id: 2/1
           description: rt-hec03-core-01b, Fo0/0/1
           po: 1102
-        - id: 31/1
+        - id: 27/1
           description: sw-hec03-brdr-01a, Et27/1
           po: 42
-        - id: 32/1
+        - id: 28/1
           description: sw-hec03-brdr-01a, Et28/1
           po: 42
       port_channels:
@@ -637,12 +680,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
-          description: rt-hec03-idc-01a, Fo0/0/0 
+          description: rt-hec03-idc-01a, Fo0/0/0
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
-          description: rt-hec03-idc-01b, Fo0/0/0  
+          description: rt-hec03-idc-01b, Fo0/0/0
           po: 1602
           speed: 40gfull
           mtu: 9100
@@ -797,12 +840,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 11/1
-          description: rt-hec03-idc-01a, Fo0/0/1  
+          description: rt-hec03-idc-01a, Fo0/0/1
           po: 1601
           speed: 40gfull
           mtu: 9100
         - id: 12/1
-          description: rt-hec03-idc-01b, Fo0/0/1  
+          description: rt-hec03-idc-01b, Fo0/0/1
           po: 1602
           speed: 40gfull
           mtu: 9100
@@ -1058,7 +1101,7 @@ hec:
         - id: 21
           description: hec03fc002cs1 MGMT
           speed: 10000full
-          access_vlan: 110        
+          access_vlan: 110
         - id: 49/1
           description: sw-hec03-str-04b,Et49/1
           po: 42
@@ -1079,7 +1122,7 @@ hec:
           trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec03f0058
-          trunk: 30,40,50,55,130,2001-2499   
+          trunk: 30,40,50,55,130,2001-2499
     - number: 4b
       snmp:
         location: US-STL-1-DC4)-Cage1-(01.HK.004)-IM-23-37
@@ -1143,7 +1186,7 @@ hec:
           trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec03f0058
-          trunk: 30,40,50,55,130,2001-2499          
+          trunk: 30,40,50,55,130,2001-2499
     - number: 5a
       snmp:
         location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-16-39
@@ -1385,6 +1428,116 @@ hec:
         - id: 10
           description: hec03f00501
           trunk: 30,32,40,50,55,130,2001-2499
+  ngdr:
+    - number: 1a
+      oob_ip: 10.9.240.71
+      nwmgmt_ip: 198.19.156.27
+      loopback1_ip: 198.19.251.118
+      remote_ha_ip: 198.19.251.122
+      snmp:
+        location: US-STL-DC4-Cage5-FG-18-24
+        contact: 34697205:ncons-hec03-oob-01:1022
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et57/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:440860683:STL1:ASH3:rt-hec16-ha-core-01a_Et26/1
+          ip: 10.254.254.0/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.176.90/28
+          virtual_router_ip: 10.255.176.94
+    - number: 1b
+      oob_ip: 10.9.240.72
+      nwmgmt_ip: 198.19.156.28
+      loopback1_ip: 198.19.251.119
+      remote_ha_ip: 198.19.251.123
+      snmp:
+        location: US-STL-DC4-Cage5-FG-20-24
+        contact: 34697204:ncons-hec03-oob-01:1023
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et58/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:440673080:STL1:ASH3:rt-hec16-ha-core-01b_Et26/11
+          ip: 10.254.254.2/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.176.91/28
+          virtual_router_ip: 10.255.176.94
+    - number: 1c
+      oob_ip: 10.9.240.73
+      nwmgmt_ip: 198.19.156.29
+      loopback1_ip: 198.19.251.120
+      remote_ha_ip: 198.19.251.124
+      snmp:
+        location: US-STL-DC4-Cage5-FG-18-28
+        contact: 34697203:ncons-hec03-oob-01:1024
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et59/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:FBDK/1140652//ZFS:STL1:ASH3:rt-hec16-ha-core-01c_Et26/1
+          ip: 10.254.254.4/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.176.92/28
+          virtual_router_ip: 10.255.176.94
+    - number: 1d
+      oob_ip: 10.9.240.74
+      nwmgmt_ip: 198.19.156.30
+      loopback1_ip: 198.19.251.121
+      remote_ha_ip: 198.19.251.125
+      snmp:
+        location: US-STL-DC4-Cage5-FG-20-28
+        contact: 34697202:ncons-hec03-oob-01:1025
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
+      spine_port_towards_leaf: Et60/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:440514705:STL1:ASH3:rt-hec16-ha-core-01d_Et26/1
+          ip: 10.254.254.6/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.176.93/28
+          virtual_router_ip: 10.255.176.94
+
   hvv_hvx_acl_rules: |
         10 permit vlan 50 0x000 icmp any any
         20 permit vlan 50 0x000 pim any any

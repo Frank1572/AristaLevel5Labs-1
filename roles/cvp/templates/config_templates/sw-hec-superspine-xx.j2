@@ -1,0 +1,34 @@
+{#
+  Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
+#}
+{% set oob_mgmt_intf = "Management0" %}
+{% if hec.superspine.model|string is search('7280.*') %}
+{% set oob_mgmt_intf = "Management1" %}
+{% endif %}
+{% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
+{% set asn_generated = '641' + hec.hec_nr + '.90000' %}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
+!
+{% for a in hec.superspine.number %}
+{% if a.id == item.id %}
+snmp-server contact {{a.snmp.contact}}
+snmp-server location {{a.snmp.location}}
+!
+{% endif %}
+{% endfor %}
+interface Loopback900
+   description NW-MGMT
+   ip address {{ item.nwmgmt_ip }}/32
+!
+interface {{oob_mgmt_intf}}
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
+   ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
+!
+{% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
+!
+router bgp {{ asn_generated }}
+  router-id {{ interface_loopback1 }}
+{% include "templates/config_templates/sw-hec-superspine-bgp.j2" %}
+  address-family ipv4
+    network {{ interface_loopback1 }}/32

@@ -1,0 +1,88 @@
+{% macro podid_calculation(number) %}
+{% set podid = 0 %}
+{% if (spineid|int > 10) and (spineid|int < 20) %}
+{% set podid = 1 %}
+{% elif (spineid|int > 20) and (spineid|int < 30) %}
+{% set podid = 2 %}
+{% elif (spineid|int > 30) and (spineid|int < 40) %}
+{% set podid = 3 %}
+{% elif (spineid|int > 40) and (spineid|int < 50) %}
+{% set podid = 4 %}
+{% elif (spineid|int > 50) and (spineid|int < 60) %}
+{% set podid = 5 %}
+{% elif (spineid|int > 60) and (spineid|int < 70) %}
+{% set podid = 6 %}
+{% elif (spineid|int > 70) and (spineid|int < 80) %}
+{% set podid = 7 %}
+{% elif (spineid|int > 80) and (spineid|int < 90) %}
+{% set podid = 8 %}
+{% elif (spineid|int > 90) and (spineid|int < 100) %}
+{% set podid = 9 %}
+{% endif %}
+{% endmacro %}
+
+{% macro spine_superspine_linkip(spineid, superspineid) -%}
+{# DETERMINE INTERFACE'S LAST OCTECT IP-PART #}
+{% set lastoct = "1" %}
+{% if spineid|string is regex('.2$') %}
+{% set lastoct = "3" %}
+{% elif spineid|string is regex('.3$') %}
+{% set lastoct = "5" %}
+{% elif spineid|string is regex('.4$') %}
+{% set lastoct = "7" %}
+{% endif %}
+{# POD ID CALCULATION #}
+{% set podid = 0 %}
+{% if (spineid|int > 10) and (spineid|int < 20) %}
+{% set podid = 1 %}
+{% elif (spineid|int > 20) and (spineid|int < 30) %}
+{% set podid = 2 %}
+{% elif (spineid|int > 30) and (spineid|int < 40) %}
+{% set podid = 3 %}
+{% elif (spineid|int > 40) and (spineid|int < 50) %}
+{% set podid = 4 %}
+{% elif (spineid|int > 50) and (spineid|int < 60) %}
+{% set podid = 5 %}
+{% elif (spineid|int > 60) and (spineid|int < 70) %}
+{% set podid = 6 %}
+{% elif (spineid|int > 70) and (spineid|int < 80) %}
+{% set podid = 7 %}
+{% elif (spineid|int > 80) and (spineid|int < 90) %}
+{% set podid = 8 %}
+{% elif (spineid|int > 90) and (spineid|int < 100) %}
+{% set podid = 9 %}
+{% endif %}
+{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
+{{ interface_ipv4 }}
+{%- endmacro %}
+{% macro leaf_hvv_ports_data(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hvv_ports_vmotion(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hvx_ports_data(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 5
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hana_ports_data(hec_nr) -%}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+{%- endmacro %}

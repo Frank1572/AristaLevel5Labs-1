@@ -202,6 +202,37 @@ hec:
         speed: 40gfull
   ngdr_underlay:
     edge_as: 65195
+  ngdr_overlay:
+    remote_hec_nr: "14"
+    routes:
+      - network: 100.88.0.0/15
+        interface: Vlan922
+        nexthop: 10.255.185.81
+        vrf: INFRA
+      - network: 198.19.227.0/26
+        interface: Vlan922
+        nexthop: 10.255.185.81
+        vrf: INFRA
+      - network: 198.19.227.64/26
+        interface: Vlan922
+        nexthop: 10.255.185.81
+        vrf: INFRA
+    edge_neighbors:
+      - ip: 198.19.251.148
+        hostname: rt-hec13-vpn-01a
+      - ip: 198.19.251.149
+        hostname: rt-hec13-vpn-01b
+      - ip: 198.19.251.150
+        hostname: rt-hec13-cwan-01a
+      - ip: 198.19.251.151
+        hostname: rt-hec13-cwan-01b
+    remote_edge_routers:
+      - ip: 198.19.251.158
+      - ip: 198.19.251.159
+      - ip: 198.19.251.164
+      - ip: 198.19.251.165
+  lrdr_overlay:
+    remote_hec_nr: "00"
   #Are the core vlans 3000 to 3499 needed
   core_vlans: true
   #Are the cwan vlans 3500 to 3599 needed
@@ -221,6 +252,8 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models:
+      - model: 7050CX3-32S
+        uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-32CQ
         uplink_ports: 29/1,30/1,31/1,32/1
       - model: 7160-48YC6
@@ -880,13 +913,113 @@ hec:
           description: mlag peer link
   ngdr:
     - number: 1a
+      oob_ip: 10.9.244.51
+      nwmgmt_ip: 198.19.180.25
+      loopback1_ip: 198.19.251.134
+      remote_ha_ip: 198.19.251.138
+      snmp:
+        location: CA-TOR1-CAGE2-3.1-9-RU24
+        contact: undefined
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et3/33/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:OQYX/242833//ZYO:HEC13:HEC14:rt-hec14-ha-core-01a_Et26/1
+          ip: 10.254.254.0/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.185.90/28
+          virtual_router_ip: 10.255.185.94
     - number: 1b
+      oob_ip: 10.9.244.52
+      nwmgmt_ip: 198.19.180.26
+      loopback1_ip: 198.19.251.135
+      remote_ha_ip: 198.19.251.139
+      snmp:
+        location: CA-TOR1-CAGE3-CAB3.1-9--RU28
+        contact: 34696576:ncons-hec13-oob-01.net.sap.corp:1025
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et3/34/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:OQYX/258161//ZYO:HEC13:HEC14:rt-hec14-ha-core-01b_Et26/1
+          ip: 10.254.254.2/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.185.91/28
+          virtual_router_ip: 10.255.185.94
     - number: 1c
+      oob_ip: 10.9.244.53
+      nwmgmt_ip: 198.19.180.27
+      loopback1_ip: 198.19.251.136
+      remote_ha_ip: 198.19.251.140
+      snmp:
+        location: CA-TOR1-Cage2-3.1-11-RU24
+        contact: 34696577:ncons-hec13-oob-02.net.sap.corp:1010
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et3/35/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:OQYX/256571//ZYO:HEC13:HEC14:rt-hec14-ha-core-01c_Et26/1
+          ip: 10.254.254.4/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.185.92/28
+          virtual_router_ip: 10.255.185.94
     - number: 1d
+      oob_ip: 10.9.244.54
+      nwmgmt_ip: 198.19.180.28
+      loopback1_ip: 198.19.251.137
+      remote_ha_ip: 198.19.251.141
+      snmp:
+        location: CA-TOR1-Cage2-3.1-11-RU28
+        contact: 34696578:ncons-hec13-oob-02.net.sap.corp:1011
+      uplinks:
+        - 27/1
+        - 28/1
+        - 29/1
+        - 30/1
       spine_port_towards_leaf: Et3/36/1
+      ports:
+        - id: 26/1
+          description: DCP2Pa:CenturyLink_441165153:HEC13:HEC14:rt-hec14-ha-core-01d_Et26/1
+          ip: 10.254.254.6/31
+          mtu: 9100
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.185.93/28
+          virtual_router_ip: 10.255.185.94
   hvv_hvx_acl_rules: |
     10 permit vlan 50 0x000 icmp any any
     20 permit vlan 50 0x000 pim any any

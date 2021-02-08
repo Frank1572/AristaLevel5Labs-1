@@ -2,7 +2,7 @@
 tacacs-server key 7 075907641D1A3C323E
 tacacs-server timeout 2
 {% for srv in hec.tacacs.servers %}
-tacacs-server host {{srv}}
+tacacs-server host {{srv.ipv4}}
 {% endfor %}
 {% set order = 'group tacacs+ local' %}
 {% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}

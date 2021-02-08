@@ -1,4 +1,4 @@
-# Copyright (c) 2018 Arista Networks, Inc.  All rights reserved.
+# Copyright (c) 2020 Arista Networks, Inc.  All rights reserved.
 # Arista Networks, Inc. Confidential and Proprietary.
 
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -54,7 +54,7 @@ for configletBuilder in configletBuilder_list:
   file = open(param1+configletBuilder, "r")
   config_string = file.read()
 
-  print "Try adding a configlet builder " + configletBuilder
+  print ("Try adding a configlet builder " + configletBuilder)
 
   # Check if configlet builder already exists
   exists = True
@@ -65,27 +65,27 @@ for configletBuilder in configletBuilder_list:
     exists = False
     pass
    else:
-    print e
+    print (e)
 
   if not exists:
    note_url = "https://%s/cvpservice/configlet/addConfigletBuilder.do?isDraft=false" % CVP_HOST
    note_response = requests.post(note_url, cookies=cookies, data=config_string, verify=False)
 
    if json.loads(note_response.text)["data"] == configletBuilder:
-    print " Configlet builder created successfully."
+    print (" Configlet builder created successfully.")
    else:
-    print "Could not create configlet builder"
+    print ("Could not create configlet builder")
 
   else:
-   print " Configlet builder exists already, updating it."
+   print (" Configlet builder exists already, updating it.")
    note_url = "https://%s/cvpservice/configlet/updateConfigletBuilder.do?isDraft=false&id=%s&action=save" % (CVP_HOST, result["key"])
    note_response = requests.post(note_url, cookies=cookies, data=config_string, verify=False)
 
    if json.loads(note_response.text)["data"] == "success":
-    print " Configlet builder updated successfully."
+    print (" Configlet builder updated successfully.")
    else:
-    print "Could not update configlet builder"
+    print ("Could not update configlet builder")
 
  except Exception as e:
-  print " Could not create/update configlet builder."
-  print e
+  print (" Could not create/update configlet builder.")
+  print (e)

@@ -85,6 +85,8 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
        
        ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
        
+  - Login to the CVP, go to the Provisioning View and change the name of the top container from "Tenant" to "Fabric". This can be done by double-click on the name "Tenant".
+  
   - Set the static IP assigned to the CVP in the file "\<ansible-home\>/cvp" example x.x.x.253
 
        ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX

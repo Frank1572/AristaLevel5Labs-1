@@ -18,6 +18,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Out of band:
     parent_container: HEC
     configlets:
@@ -36,6 +37,8 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
+      - sw-hec-interdc
   HEC-Backup Routers:
     parent_container: HEC
   HEC-Switched Fabric:
@@ -45,6 +48,7 @@ container:
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
+      - sw-hec-switch-sflow
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
@@ -84,6 +88,9 @@ container:
     parent_container: HEC-Routed Fabric
   HEC-NGDR:
     parent_container: HEC-Routed Fabric
+    configlets:
+      - HEC-VLANs
+      - sw-hec-leaf
   HEC-Leaf:
     parent_container: HEC-Routed Fabric
     configlets:
@@ -102,6 +109,11 @@ container:
     configlets:
       - sw-hec-aaa-hana
       - hec-hana
+  HEC-HANA-PWR leaf:
+    parent_container: HEC-Leaf
+    configlets:
+      - sw-hec-aaa-hana
+      - sw-hec-hana-pwr
   HEC-HV leaf:
     parent_container: HEC-Leaf
   HEC-VMWare leaf:

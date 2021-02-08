@@ -85,7 +85,7 @@ vlan {{item.vid}}
 {% endif %}
 {% endif %}
 {% if is_l2l3_transit|default('', true) %}
-{% include "templates/config_templates/HEC-VLANs.j2" %}
+{% include "templates/HEC-VLANs.j2" %}
 
 {% endif %}
 {% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
@@ -226,4 +226,4 @@ ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
 {#
   Above this is the END for borderleaf specific stuff
 #}
-{% include "templates/config_templates/hec_sw_leaf_routing_configuration.j2" %}
+{% include "templates/hec_sw_leaf_routing_configuration.j2" %}

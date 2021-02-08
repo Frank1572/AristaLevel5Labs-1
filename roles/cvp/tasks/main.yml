@@ -99,7 +99,7 @@
 - name: Render all templates
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/{{item}}.j2"
+    src: "templates/{{item}}.j2"
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec
@@ -161,7 +161,7 @@
 - name: Render hana aaa configlet template
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-aaa.j2"
+    src: "templates/sw-hec-aaa.j2"
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec-aaa-hana
@@ -171,7 +171,7 @@
 - name: Render all configlet_builder templates
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/{{item}}.j2"
+    src: "templates/{{item}}.j2"
     dest: "{{role_path}}/files/configlet_builders/{{item}}"
   loop:
     - sw-hec-autoconf
@@ -186,7 +186,7 @@
 - name: Render sw-hecxx-spine-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-spine-xx.j2"
+    src: "templates/sw-hec-spine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}"
   with_items: "{{ hec.spine.number }}"
   tags:
@@ -195,7 +195,7 @@
 - name: Render sw-hecxx-superspine-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-superspine-xx.j2"
+    src: "templates/sw-hec-superspine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-superspine-{{ item.id }}"
   with_items: "{{ hec.superspine.number }}"
   when: hec.superspine|default("") != ""
@@ -206,7 +206,7 @@
 - name: Render sw-hecxx-oob-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-oob-xx.j2"
+    src: "templates/sw-hec-oob-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-oob-0{{ item.number }}"
   with_items: "{{ hec.oobs_2_7 }}"
   tags:
@@ -221,7 +221,7 @@
 - name: "Render Borderleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-brdr-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.brdr }}'
   tags:
@@ -237,7 +237,7 @@
 - name: "Render Storageleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-str-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.str }}'
   tags:
@@ -253,7 +253,7 @@
 - name: "Render Shared Hana Storageleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-shs-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.shs }}'
   tags:
@@ -269,7 +269,7 @@
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/sw-hec-interdc.j2
+    src: templates/sw-hec-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc01"
   tags:
     - configlets
@@ -284,7 +284,7 @@
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/sw-hec-interdc.j2
+    src: templates/sw-hec-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc02"
   tags:
     - configlets
@@ -293,7 +293,7 @@
 - name: Render rt-hec-ha-shared
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/rt-hec-ha-shared.j2"
+    src: "templates/rt-hec-ha-shared.j2"
     dest: "{{role_path}}/files/configs/rt-hec-ha-shared"
   when: hec.ngdr is defined
   with_items: "{{ hec.ngdr }}"
@@ -304,7 +304,7 @@
 - name: Render rt-hec-ha-core-01x
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/rt-hec-ha-core-01x.j2"
+    src: "templates/rt-hec-ha-core-01x.j2"
     dest: "{{role_path}}/files/configs/rt-hec-ha-core-0{{ item.number }}"
   when: hec.ngdr is defined
   with_items: "{{ hec.ngdr }}"

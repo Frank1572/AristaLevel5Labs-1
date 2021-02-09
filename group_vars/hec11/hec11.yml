@@ -122,6 +122,7 @@ hec:
   syslog2: 100.127.5.69 # taken from sw-hec11-101 correct ?
   radius1: 10.17.121.35 # taken from sw-hec11-101 correct ?
   radius2: 10.17.122.21 # taken from sw-hec11-101 correct ?
+  is_tacacs: False
   sflow:
     destination:
       - ipv4: 100.127.4.47 # taken from sw-hec11-101 correct ?

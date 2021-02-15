@@ -82,8 +82,6 @@ container:
       - hec-xen
   HEC-Spine:
     parent_container: HEC-Routed Fabric
-    configlets:
-      - sw-hec-spine
   HEC-Superspine:
     parent_container: HEC-Routed Fabric
   HEC-NGDR:
@@ -180,6 +178,7 @@ configlet_list_global:
   sw-hec-hvx-7160-32CQ: "{{ lookup('file', 'configs/sw-hec-hvx-7160-32CQ', errors='warn') }}"
   sw-hec-hvx-7160-48YC6: "{{ lookup('file', 'configs/sw-hec-hvx-7160-48YC6', errors='warn') }}"
   sw-hec-hvv-7050CX3-32S: "{{ lookup('file', 'configs/sw-hec-hvv-7050CX3-32S', errors='warn') }}"
+  sw-hec-spine-1x: "{{ lookup('file', 'configs/sw-hec-spine-1x') }}"
   sw-hec-spine-11: "{{ lookup('file', 'configs/sw-hec-spine-11') }}"
   sw-hec-spine-12: "{{ lookup('file', 'configs/sw-hec-spine-12') }}"
   sw-hec-spine-13: "{{ lookup('file', 'configs/sw-hec-spine-13') }}"
@@ -251,6 +250,7 @@ configlet_filter_list_global:
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
   - sw-hec-hvv-7050CX3-32S
+  - sw-hec-spine-1x
   - sw-hec-spine-11
   - sw-hec-spine-12
   - sw-hec-spine-13

@@ -128,7 +128,6 @@
     - hec-vmware
     - hec-vmware-L2
     - hec-xen
-#    - sw-hec-spine
     - sw-hec-hana-7160-32CQ
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ

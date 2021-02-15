@@ -124,6 +124,7 @@ hec:
   syslog3: 147.204.146.42
   radius1: 147.204.146.74
   radius2: 147.204.146.75
+  is_tacacs: False
   sflow:
     destination:
       - ipv4: 147.204.148.160

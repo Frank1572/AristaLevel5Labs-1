@@ -132,7 +132,7 @@ container:
 configlet_list_global:
   sw-hec: "{{ lookup('file', 'configs/sw-hec') }}"
   sw-hec-aaa: "{{ lookup('file', 'configs/sw-hec-aaa') }}"
-  sw-hec-aaa-hana: "{{ lookup('file', 'configs/sw-hec-aaa-hana') }}"
+  sw-hec-aaa-hana: "{{ lookup('file', 'configs/sw-hec-aaa-hana', errors='warn') }}"
   CVP-Arista: "{{ lookup('file', 'configs/CVP-Arista') }}"
   sw-hec-oob-vrf: "{{ lookup('file', 'configs/sw-hec-oob-vrf') }}"
   sw-hec-snmp: "{{ lookup('file', 'configs/sw-hec-snmp') }}"

@@ -146,7 +146,6 @@
     - CVP-Arista
     - sw-hec-vtep
     - hec-shs
-    - sw-hec-hana-pwr
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
@@ -291,6 +290,14 @@
   tags:
     - configlets
     - interdc
+
+- name: Render HANA Power
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/config_templates/sw-hec-hana-pwr.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-hana-pwr"
+  tags:
+    - configlets
 
 - name: Render rt-hec-ha-shared
   delegate_to: 127.0.0.1

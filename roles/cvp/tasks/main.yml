@@ -326,11 +326,11 @@
     - reload_TerminAttr
     - upload_configlets
 
-# - name: Upload generated configlet builders
-#   delegate_to: "{{ cvp.ip_eth0 }}"
-#   command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
-#   tags:
-#     - upload_configlets
+- name: Upload generated configlet builders
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+  tags:
+    - upload_configlets
 
 - name: lookup global configlets
   set_fact:
@@ -360,10 +360,10 @@
   tags:
     - upload_configlets
 
-- name: Demonstrate merged lists
-  debug: var=configlet_filter
-  tags:
-    - upload_configlets
+# - name: Demonstrate merged lists
+#   debug: var=configlet_filter
+#   tags:
+#     - upload_configlets
 
 - name: "Upload configlets to {{inventory_hostname}} instance"
   arista.cvp.cv_configlet:
@@ -372,6 +372,7 @@
     configlet_filter: "{{ configlet_filter }}"
     state: present
   register: cvp_configlet
+  ignore_errors: yes
   tags:
     - upload_configlets
 

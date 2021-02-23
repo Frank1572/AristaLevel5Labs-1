@@ -261,32 +261,12 @@
     - configlets
     - storageleafs
 
-- set_fact:
-    id: '01'
-  tags:
-    - configlets
-    - interdc
-
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
     src: templates/config_templates/sw-hec-interdc.j2
-    dest: "{{role_path}}/files/configs/sw-hec-interdc01"
-  tags:
-    - configlets
-    - interdc
-
-- set_fact:
-    id: '02'
-  tags:
-    - configlets
-    - interdc
-
-- name: Render sw-hec-interdc
-  delegate_to: 127.0.0.1
-  template:
-    src: templates/config_templates/sw-hec-interdc.j2
-    dest: "{{role_path}}/files/configs/sw-hec-interdc02"
+    dest: "{{role_path}}/files/configs/sw-hec-interdc{{item.number}}"
+  with_items: "{{ hec.interdc }}"
   tags:
     - configlets
     - interdc
@@ -346,11 +326,11 @@
     - reload_TerminAttr
     - upload_configlets
 
-- name: Upload generated configlet builders
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
-  tags:
-    - upload_configlets
+# - name: Upload generated configlet builders
+#   delegate_to: "{{ cvp.ip_eth0 }}"
+#   command: python tmp/configlet_builder.py "{{role_path}}/files/configlet_builders/" "{{ cvp.ip_eth0 }}" "{{ cvp.password }}"
+#   tags:
+#     - upload_configlets
 
 - name: lookup global configlets
   set_fact:

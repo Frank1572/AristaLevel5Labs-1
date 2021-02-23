@@ -352,29 +352,72 @@
   tags:
     - upload_configlets
 
-- name: "Upload all global configlets to {{inventory_hostname}} instance"
-  arista.cvp.cv_configlet:
-    cvp_facts: "{{ cvp_facts.ansible_facts }}"
-    configlets: "{{ lookup('file', 'configs/'+item) }}"
-    configlet_filter: "{{ configlet_filter_list_global }}"
-    state: present
-  register: cvp_configlet
-  with_items:
-    - configlet_filter_list_global
+- name: lookup global configlets
+  set_fact:
+    configlet_list: "{{ configlet_list|default({}) | combine({item: lookup('file', 'configs/'+item)}) }}"
+  with_items: "{{ configlet_list_global }}"
   tags:
     - upload_configlets
 
-- name: "Upload some DC specific configlets to {{inventory_hostname}} instance"
-  arista.cvp.cv_configlet:
-    cvp_facts: "{{ cvp_facts.ansible_facts }}"
-    configlets: "{{ lookup('file', 'configs/'+item) }}"
-    configlet_filter: "{{ configlet_filter_list_dc_specific }}"
-    state: present
-  register: cvp_configlet
-  with_items:
-    - configlet_filter_list_dc_specific
+- name: lookup DC-specific configlets
+  set_fact:
+    configlet_list: "{{ configlet_list|default({}) | combine({item: lookup('file', 'configs/'+item)}) }}"
+  with_items: "{{ configlet_list_dc_specific }}"
+  when: configlet_list_dc_specific|default(None)
   tags:
     - upload_configlets
+
+- name: Create filter list from global configlet list
+  set_fact:
+    configlet_filter: "{{ configlet_list_global|default({}) }}"
+  tags:
+    - upload_configlets
+
+- name: Add specific configlet lists to global filter list
+  set_fact:
+    configlet_filter: "{{ configlet_filter + configlet_list_dc_specific }}"
+  when: configlet_list_dc_specific|default(None)
+  tags:
+    - upload_configlets
+
+- name: Demonstrate merged lists
+  debug: var=configlet_filter
+  tags:
+    - upload_configlets
+
+- name: "Upload configlets to {{inventory_hostname}} instance"
+  arista.cvp.cv_configlet:
+    cvp_facts: "{{ cvp_facts.ansible_facts }}"
+    configlets: "{{ configlet_list }}"
+    configlet_filter: "{{ configlet_filter }}"
+    state: present
+  register: cvp_configlet
+  tags:
+    - upload_configlets
+
+# - name: "Upload all global configlets to {{inventory_hostname}} instance"
+#   arista.cvp.cv_configlet:
+#     cvp_facts: "{{ cvp_facts.ansible_facts }}"
+#     configlets: "{{ lookup('file', 'configs/'+item) }}"
+#     configlet_filter: "{{ configlet_filter_list_global }}"
+#     state: present
+#   register: cvp_configlet
+#   with_items:
+#     - configlet_filter_list_global
+#   tags:
+#     - upload_configlets
+#
+# - name: "Upload some DC specific configlets to {{inventory_hostname}} instance"
+#   arista.cvp.cv_configlet:
+#     cvp_facts: "{{ cvp_facts.ansible_facts }}"
+#     configlets: "{{ lookup('file', 'configs/'+item) }}"
+#     configlet_filter: "{{ configlet_filter_list_dc_specific }}"
+#     state: present
+#   register: cvp_configlet
+#   with_items:
+#     - configlet_filter_list_dc_specific
+#   tags:
+#     - upload_configlets
 
 - name: "Build Container topology on {{inventory_hostname}} and assign configlets"
   arista.cvp.cv_container:

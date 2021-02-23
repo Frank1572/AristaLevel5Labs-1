@@ -199,7 +199,7 @@ container:
   # rt-hec-ha-core-01c: "{{ lookup('file', 'configs/rt-hec-ha-core-01c', errors='warn') }}"
   # rt-hec-ha-core-01d: "{{ lookup('file', 'configs/rt-hec-ha-core-01d', errors='warn') }}"
 
-configlet_filter_list_global:
+configlet_list_global:
   - sw-hec
   - sw-hec-aaa
   - sw-hec-aaa-hana
@@ -230,8 +230,6 @@ configlet_filter_list_global:
   - hec-vmware
   - hec-vmware-L2
   - hec-xen
-  - sw-hec-interdc
-  - sw-hec-vtep-static
   - sw-hec-hana-pwr
   - hec-shs
   - sw-hec-brdr-01a

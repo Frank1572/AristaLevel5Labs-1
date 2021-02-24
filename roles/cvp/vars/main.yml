@@ -153,7 +153,7 @@ configlet_list_global:
   sw-hec-fab-ntp: "{{ lookup('file', 'configs/sw-hec-fab-ntp') }}"
   sw-hec-fab-snmp: "{{ lookup('file', 'configs/sw-hec-fab-snmp') }}"
   sw-hec-fab-logging: "{{ lookup('file', 'configs/sw-hec-fab-logging') }}"
-  sw-hec-spine: "{{ lookup('file', 'configs/sw-hec-spine') }}"
+#  sw-hec-spine: "{{ lookup('file', 'configs/sw-hec-spine') }}"
   hec-hana: "{{ lookup('file', 'configs/hec-hana') }}"
   hec-vmware: "{{ lookup('file', 'configs/hec-vmware') }}"
   hec-vmware-L2: "{{ lookup('file', 'configs/hec-vmware-L2') }}"
@@ -224,7 +224,7 @@ configlet_filter_list_global:
   - sw-hec-fab-ntp
   - sw-hec-fab-snmp
   - sw-hec-fab-logging
-  - sw-hec-spine
+#  - sw-hec-spine
   - hec-hana
   - hec-vmware
   - hec-vmware-L2

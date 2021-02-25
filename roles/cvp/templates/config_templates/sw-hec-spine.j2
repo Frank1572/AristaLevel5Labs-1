@@ -20,12 +20,12 @@
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
-   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod + '1199') }} result accept
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
 !
 {% endif %}
 peer-filter LEAF-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
-   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod + '1199') }} result accept
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
 !
 router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    bgp asn notation asdot

@@ -1,3 +1,14 @@
+{% if hec.is_tacacs %}
+tacacs-server key 7 075907641D1A3C323E
+tacacs-server timeout 2
+{% for srv in hec.tacacs.servers %}
+tacacs-server host {{srv.ipv4}}
+{% endfor %}
+{% set order = 'group tacacs+ local' %}
+{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
+{% set order = 'local group tacacs+' %}
+{% endif %}
+{% else %}
 radius-server timeout 3
 radius-server deadtime 1
 {% if hec.radius_key is defined %}
@@ -13,9 +24,14 @@ radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 {% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
 {% set order = 'local group radius' %}
 {% endif %}
+{% endif %}
 aaa authentication login default {{order}}
 {{eos_cmd.c_aaa_authorization_console}}
 aaa authorization exec default {{order}}
+{% if hec.is_tacacs %}
+aaa authentication enable default group tacacs+ local
+aaa accounting commands 1,15 default start-stop group tacacs+
+{% endif %}
 !
 {{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 no aaa root

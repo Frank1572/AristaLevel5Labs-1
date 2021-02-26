@@ -62,8 +62,6 @@ router bgp 641{{ hec.hec_nr }}.10000
 {% endif %}
       neighbor LEAF-PG activate
 !
-maintenance
-!
 ! ============= to enable a port, add it to the list of interfaces below =============
 !
 {% if spine_interfaces is defined %}

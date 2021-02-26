@@ -145,6 +145,7 @@ hec:
   # Radius taken from HEC16 / Ashburn
   radius1: 10.4.201.55
   radius2: 169.145.33.70
+  is_tacacs: False
   # Admin MPLS Prefixlist
   admin_mpls:
       # HEC1x-IPMI01 (vlan10)

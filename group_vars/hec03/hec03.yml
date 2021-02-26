@@ -130,6 +130,7 @@ hec:
   radius1: 169.145.33.70
   radius2: 10.4.201.55
   radius_key: 07037265610E0D170E54333D547F3D
+  is_tacacs: False
   sflow:
     destination:
       - ipv4: 169.145.84.67

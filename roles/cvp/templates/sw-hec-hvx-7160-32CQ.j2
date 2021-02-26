@@ -1,22 +1,20 @@
-{% include "templates/config_templates/7160-profile-tcam-acl.j2" %}
-{% import "templates/config_templates/libs.j2" as funcs %}
-{% set p_data={'start': 1, 'end': 22} %}
-{% set p_mlag={'start': 49, 'end': 50} %}
+{% include "templates/7160.j2" %}
+{% import "templates/libs.j2" as funcs %}
+{% set p_data={'start': 1, 'end': 12} %}
+{% set p_vmotion={'start': 13, 'end': 18} %}
+{% set p_mlag={'start': 27, 'end': 28} %}
 {% set intf_spines = {'name' : 'none'} %}
 {% for m in hec.fabric.leaf_models %}
-{% if m.model == "7160-48YC6" %}
+{% if m.model == "7160-32CQ" %}
 {% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
 {% endif %}
 {% endfor %}
 
-interface Ethernet {{p_data['start']}}-{{p_data['end']}}
-   switchport trunk native vlan 5
-   switchport mode trunk
-   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
-   spanning-tree portfast
+interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
+{{ funcs.leaf_hvx_ports_data(hec.hec_nr) }}
 !
 ! === MLAG Peer Link: ===
-interface Ethernet {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
+interface {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    mtu {{hec.fabric.interlink_mtu}}
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
@@ -33,12 +31,16 @@ interface Ethernet {{ intf_spines['name'] }}
    no switchport
 !
 {% for main_intf in range(p_data['start'], p_data['end']+1) %}
-interface Ethernet {{ main_intf }}
-   channel-group {{ main_intf + 100 }} mode active
-{% endfor %}
+interface Ethernet {{ main_intf }}/1-2
+   channel-group {{ main_intf + 100 + loop.index0 }} mode active
 !
-interface Ethernet48
+interface Ethernet {{ main_intf }}/3-4
+   channel-group {{ main_intf + 101 + loop.index0 }} mode active
+!
+{% endfor %}
+interface Ethernet26/1
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   speed forced 10000full
    switchport mode trunk
    channel-group 900 mode active
 !

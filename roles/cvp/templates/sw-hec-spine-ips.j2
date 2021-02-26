@@ -51,7 +51,7 @@ generate the uplink ports towards superspines. #}
 interface {{x}}
   no switchport
   description Uplink to Superspine-{{loop.index}}
-{% import "templates/config_templates/libs.j2" as funcs %}
+{% import "templates/libs.j2" as funcs %}
   ip address {{ funcs.spine_superspine_linkip(item.id, loop.index) }}
 {% endfor %}
 {% else %}

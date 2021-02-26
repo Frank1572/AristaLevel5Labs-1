@@ -1,5 +1,5 @@
-{% import "templates/config_templates/libs.j2" as funcs %}
-{% include "templates/config_templates/hec-hana-generic.j2" %}
+{% import "templates/libs.j2" as funcs %}
+{% include "templates/hec-hana-generic.j2" %}
 
 vlan 30
    name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}

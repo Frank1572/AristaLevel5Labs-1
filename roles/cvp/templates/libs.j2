@@ -87,3 +87,4 @@
 {{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
 {{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
 {%- endmacro %}
+

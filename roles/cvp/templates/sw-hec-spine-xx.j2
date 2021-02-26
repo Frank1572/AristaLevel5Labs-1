@@ -1,4 +1,3 @@
-{% import "templates/config_templates/libs.j2" as funcs %}
 {% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000")|string %}
 {% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.evpn_maximum_routes|default("12000")|string %}
 {% set hec_spine_model = {'name' : 'none', 'linecards' : 1} %}
@@ -15,6 +14,7 @@
 {% endif %}
 ! {{item.id}}
 ! {{hec_spine_model.name}}
+{% import "templates/libs.j2" as funcs %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -49,7 +49,7 @@ snmp-server location {{a.snmp.location}}
 {% endif %}
 {% set create_ip_on_interface = "yes" %}
 {% set port_range_end = ports_per_lc|int + 1 %}
-{% include "templates/config_templates/sw-hec-spine-ips.j2" %}
+{% include "templates/sw-hec-spine-ips.j2" %}
 !
 {# the addressing of interface Loopback1 which used as router-id,
     depends on the POD ID (in superspine deployments).

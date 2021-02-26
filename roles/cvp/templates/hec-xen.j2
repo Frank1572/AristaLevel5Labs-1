@@ -8,7 +8,7 @@ interface Port-Channel{{ 100 + i }}
    spanning-tree portfast
 !
 {% endfor %}
-{% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
+{% include "templates/hec_sw_po900-uplink.j2" %}
 
 !
 ip access-list HEC{{ hec.hec_nr }}-L2-APP

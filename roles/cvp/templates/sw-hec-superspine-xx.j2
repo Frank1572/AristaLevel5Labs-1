@@ -26,7 +26,7 @@ interface {{oob_mgmt_intf}}
    {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
    ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
 !
-{% include "templates/config_templates/sw-hec-superspine-all-interfaces.j2" %}
+{% include "templates/sw-hec-superspine-all-interfaces.j2" %}
 !
 peer-filter SUPERSPINE-PF
 {% for entry in range(1, 7) %}
@@ -35,6 +35,6 @@ peer-filter SUPERSPINE-PF
 !
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}
-{% include "templates/config_templates/sw-hec-superspine-bgp.j2" %}
+{% include "templates/sw-hec-superspine-bgp.j2" %}
   address-family ipv4
     network {{ interface_loopback1 }}/32

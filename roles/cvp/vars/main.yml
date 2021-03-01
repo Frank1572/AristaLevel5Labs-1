@@ -48,15 +48,14 @@ container:
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
       - sw-hec-switch-sflow
+      - mgmt-oob
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
-      - CVP-Arista
       - sw-hec-fab-L900
       - sw-hec-fab-ntp
       - sw-hec-fab-snmp
       - sw-hec-fab-logging
-      - sw-hec-oob-vrf
       - sw-hec-tele-oob
       - mgmt-default
   HEC-Core:

@@ -126,6 +126,7 @@ hec:
   syslog3: 147.204.146.42
   radius1: 10.17.122.21
   radius2: 10.17.121.35
+  is_tacacs: False
   admin_mpls:
     - prefix_mask: "10.178.140.0/23"
       sequence: "20"

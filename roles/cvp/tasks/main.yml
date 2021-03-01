@@ -10,6 +10,8 @@
     - delete_configlets
     - configure_aaa
     - reload_TerminAttr
+    - delete_containers
+
 # start work on configlet (static and dynamic builders), containers
 #  and maintain them on the cvp server itself
 - name: Check if directory for configlet builders exists
@@ -99,7 +101,7 @@
 - name: Render all templates
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/{{item}}.j2"
+    src: "templates/{{item}}.j2"
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec
@@ -144,7 +146,6 @@
     - CVP-Arista
     - sw-hec-vtep
     - hec-shs
-    - sw-hec-hana-pwr
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
@@ -161,7 +162,7 @@
 - name: Render hana aaa configlet template
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-aaa.j2"
+    src: "templates/sw-hec-aaa.j2"
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec-aaa-hana
@@ -171,7 +172,7 @@
 - name: Render all configlet_builder templates
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/{{item}}.j2"
+    src: "templates/{{item}}.j2"
     dest: "{{role_path}}/files/configlet_builders/{{item}}"
   loop:
     - sw-hec-autoconf
@@ -186,7 +187,7 @@
 - name: Render sw-hecxx-spine-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-spine-xx.j2"
+    src: "templates/sw-hec-spine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}"
   with_items: "{{ hec.spine.number }}"
   tags:
@@ -195,7 +196,7 @@
 - name: Render sw-hecxx-superspine-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-superspine-xx.j2"
+    src: "templates/sw-hec-superspine-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-superspine-{{ item.id }}"
   with_items: "{{ hec.superspine.number }}"
   when: hec.superspine|default("") != ""
@@ -206,7 +207,7 @@
 - name: Render sw-hecxx-oob-xx
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-oob-xx.j2"
+    src: "templates/sw-hec-oob-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-oob-0{{ item.number }}"
   with_items: "{{ hec.oobs_2_7 }}"
   tags:
@@ -221,7 +222,7 @@
 - name: "Render Borderleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-brdr-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.brdr }}'
   tags:
@@ -237,7 +238,7 @@
 - name: "Render Storageleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-str-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.str }}'
   tags:
@@ -253,47 +254,35 @@
 - name: "Render Shared Hana Storageleafs"
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/hec_sw_borderleaf.j2
+    src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-shs-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.shs }}'
   tags:
     - configlets
     - storageleafs
 
-- set_fact:
-    id: '01'
-  tags:
-    - configlets
-    - interdc
-
 - name: Render sw-hec-interdc
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/sw-hec-interdc.j2
-    dest: "{{role_path}}/files/configs/sw-hec-interdc01"
+    src: templates/sw-hec-interdc.j2
+    dest: "{{role_path}}/files/configs/sw-hec-interdc{{item.number}}"
+  with_items: "{{ hec.interdc }}"
   tags:
     - configlets
     - interdc
 
-- set_fact:
-    id: '02'
-  tags:
-    - configlets
-    - interdc
-
-- name: Render sw-hec-interdc
+- name: Render HANA Power
   delegate_to: 127.0.0.1
   template:
-    src: templates/config_templates/sw-hec-interdc.j2
-    dest: "{{role_path}}/files/configs/sw-hec-interdc02"
+    src: "templates/sw-hec-hana-pwr.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-hana-pwr"
   tags:
     - configlets
-    - interdc
 
 - name: Render rt-hec-ha-shared
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/rt-hec-ha-shared.j2"
+    src: "templates/rt-hec-ha-shared.j2"
     dest: "{{role_path}}/files/configs/rt-hec-ha-shared"
   when: hec.ngdr is defined
   with_items: "{{ hec.ngdr }}"
@@ -304,7 +293,7 @@
 - name: Render rt-hec-ha-core-01x
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/rt-hec-ha-core-01x.j2"
+    src: "templates/rt-hec-ha-core-01x.j2"
     dest: "{{role_path}}/files/configs/rt-hec-ha-core-0{{ item.number }}"
   when: hec.ngdr is defined
   with_items: "{{ hec.ngdr }}"
@@ -320,27 +309,11 @@
   tags:
     - upload_configlets
 
-- name: Copy configlets to the CVP
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  copy:
-    src: "{{role_path}}/files/configs"
-    dest: tmp
-  tags:
-    - upload_configlets
-
 - name: Copy python upload script for configlet builders to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
     src: "{{role_path}}/files/configlet_builder.py"
     dest: tmp/configlet_builder.py
-  tags:
-    - upload_configlets
-
-- name: Copy python upload script for configlets to CVP
-  delegate_to: "{{ cvp.ip_eth0 }}"
-  copy:
-    src: "{{role_path}}/files/configlets.py"
-    dest: tmp/configlets.py
   tags:
     - upload_configlets
 
@@ -359,25 +332,73 @@
   tags:
     - upload_configlets
 
-- name: "Upload all global configlets to {{inventory_hostname}} instance"
-  arista.cvp.cv_configlet:
-    cvp_facts: "{{ cvp_facts.ansible_facts }}"
-    configlets: "{{ configlet_list_global }}"
-    configlet_filter: "{{ configlet_filter_list_global }}"
-    state: present
-  register: cvp_configlet
+- name: lookup global configlets
+  set_fact:
+    configlet_list: "{{ configlet_list|default({}) | combine({item: lookup('file', 'configs/'+item)}) }}"
+  with_items: "{{ configlet_list_global }}"
   tags:
     - upload_configlets
 
-- name: "Upload some DC specific configlets to {{inventory_hostname}} instance"
-  arista.cvp.cv_configlet:
-    cvp_facts: "{{ cvp_facts.ansible_facts }}"
-    configlets: "{{ configlet_list_dc_specific }}"
-    configlet_filter: "{{ configlet_filter_list_dc_specific }}"
-    state: present
-  register: cvp_configlet
+- name: lookup DC-specific configlets
+  set_fact:
+    configlet_list: "{{ configlet_list|default({}) | combine({item: lookup('file', 'configs/'+item)}) }}"
+  with_items: "{{ configlet_list_dc_specific }}"
+  when: configlet_list_dc_specific|default(None)
   tags:
     - upload_configlets
+
+- name: Create filter list from global configlet list
+  set_fact:
+    configlet_filter: "{{ configlet_list_global|default({}) }}"
+  tags:
+    - upload_configlets
+
+- name: Add specific configlet lists to global filter list
+  set_fact:
+    configlet_filter: "{{ configlet_filter + configlet_list_dc_specific }}"
+  when: configlet_list_dc_specific|default(None)
+  tags:
+    - upload_configlets
+
+# - name: Demonstrate merged lists
+#   debug: var=configlet_filter
+#   tags:
+#     - upload_configlets
+
+- name: "Upload configlets to {{inventory_hostname}} instance"
+  arista.cvp.cv_configlet:
+    cvp_facts: "{{ cvp_facts.ansible_facts }}"
+    configlets: "{{ configlet_list }}"
+    configlet_filter: "{{ configlet_filter }}"
+    state: present
+  register: cvp_configlet
+  ignore_errors: yes
+  tags:
+    - upload_configlets
+
+# - name: "Upload all global configlets to {{inventory_hostname}} instance"
+#   arista.cvp.cv_configlet:
+#     cvp_facts: "{{ cvp_facts.ansible_facts }}"
+#     configlets: "{{ lookup('file', 'configs/'+item) }}"
+#     configlet_filter: "{{ configlet_filter_list_global }}"
+#     state: present
+#   register: cvp_configlet
+#   with_items:
+#     - configlet_filter_list_global
+#   tags:
+#     - upload_configlets
+#
+# - name: "Upload some DC specific configlets to {{inventory_hostname}} instance"
+#   arista.cvp.cv_configlet:
+#     cvp_facts: "{{ cvp_facts.ansible_facts }}"
+#     configlets: "{{ lookup('file', 'configs/'+item) }}"
+#     configlet_filter: "{{ configlet_filter_list_dc_specific }}"
+#     state: present
+#   register: cvp_configlet
+#   with_items:
+#     - configlet_filter_list_dc_specific
+#   tags:
+#     - upload_configlets
 
 - name: "Build Container topology on {{inventory_hostname}} and assign configlets"
   arista.cvp.cv_container:

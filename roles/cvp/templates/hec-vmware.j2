@@ -24,7 +24,7 @@ interface Vxlan1
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 5,7,20,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    port-channel lacp fallback individual
@@ -42,7 +42,7 @@ interface Port-Channel{{ 100 + i }}
    spanning-tree portfast
 !
 {% endfor %}
-{% include "templates/config_templates/hec_sw_po900-uplink.j2" %}
+{% include "templates/hec_sw_po900-uplink.j2" %}
 
 !
 ip access-list HEC{{ hec.hec_nr }}-L2-APP

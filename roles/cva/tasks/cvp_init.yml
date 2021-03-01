@@ -118,9 +118,9 @@
   tags:
     - cvp_init
 
-# Pause for 720 seconds to power up vm
+# Pause for 1200 seconds to power up vm
 - pause:
-    seconds: 720
+    seconds: 1200
   tags:
     - cvp_init
 
@@ -181,15 +181,30 @@
 
 - name: Reset cvpadmin password
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: "/cvpi/tools/update-mgmt-password -auth none -password {{ cvp.password }}"
+  command: "/cvpi/tools/update-mgmt-password -password {{ cvp.password }}"
   tags:
     - cvp_init
+    - pw_reset
+
+- name: Obtain OS version
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  command: "grep -o '[0-9].[0-9].[0-9]*' /etc/centos-release"
+  register: result
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: print OS version
+  debug: var=result.stdout
+  tags:
+    - cvp_init
+    - snmp_cvp
 
 - name: Copy netsnmp tar file to CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
   copy:
-    src: "{{role_path}}/files/centos-7.6.1810-netsnmp.tar.gz"
-    dest: /tmp/centos-7.6.1810-netsnmp.tar.gz
+    src: "{{role_path}}/files/centos-{{ result.stdout }}-netsnmp.tar.gz"
+    dest: /tmp/centos-{{ result.stdout }}-netsnmp.tar.gz
     owner: root
     group: root
     mode: 0755
@@ -217,7 +232,7 @@
 
 - name: Extract netsnmp tar file on CVP
   delegate_to: "{{ cvp.ip_eth0 }}"
-  command: "tar -zxvf /tmp/centos-7.6.1810-netsnmp.tar.gz -C /tmp/netsnmp"
+  command: "tar -zxvf /tmp/centos-{{ result.stdout }}-netsnmp.tar.gz -C /tmp/netsnmp"
   tags:
     - cvp_init
     - snmp_cvp
@@ -254,6 +269,15 @@
   delegate_to: "{{ cvp.ip_eth0 }}"
   service:
     name: snmpd
+    state: restarted
+  tags:
+    - cvp_init
+    - snmp_cvp
+
+- name: Restart firewalld service
+  delegate_to: "{{ cvp.ip_eth0 }}"
+  service:
+    name: firewalld
     state: restarted
   tags:
     - cvp_init

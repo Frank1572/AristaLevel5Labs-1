@@ -1,5 +1,8 @@
 username cfmadm privilege 15 role network-admin secret 5 $1$EaZmGCRk$gwoPz3UrfjPwVuK6MQg8l.
 !
+vlan 900
+   name {{vlandb.900.name}}
+!
 !# HANA CFM VLANs (1101-1180->HANA,GPFS)
 vlan 1101-1180
 !

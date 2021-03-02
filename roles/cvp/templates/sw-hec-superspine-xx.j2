@@ -1,3 +1,4 @@
+{% import "templates/config_templates/libs.j2" as funcs %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -6,7 +7,7 @@
 {% set oob_mgmt_intf = "Management1" %}
 {% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
-{% set asn_generated = '641' + hec.hec_nr + '.90000' %}
+{% set asn_generated = '641' + hec.hec_nr + '.9000' %}
 hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
 !
 {% for a in hec.superspine.number %}
@@ -26,6 +27,11 @@ interface {{oob_mgmt_intf}}
    ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
 !
 {% include "templates/sw-hec-superspine-all-interfaces.j2" %}
+!
+peer-filter SUPERSPINE-PF
+{% for entry in range(1, 7) %}
+   {{ loop.index * 10 }} match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
+{% endfor %}
 !
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}

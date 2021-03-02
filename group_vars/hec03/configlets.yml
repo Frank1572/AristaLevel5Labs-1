@@ -3,10 +3,12 @@ configlet_list_dc_specific:
   - sw-hec-oob-04
   - sw-hec-oob-05
   - sw-hec-oob-06
+  - sw-hec-spine-2x
   - sw-hec-spine-21
   - sw-hec-spine-22
   - sw-hec-spine-23
   - sw-hec-spine-24
+  - sw-hec-spine-3x
   - sw-hec-spine-31
   - sw-hec-spine-32
   - sw-hec-spine-33

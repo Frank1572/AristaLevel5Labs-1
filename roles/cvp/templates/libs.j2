@@ -45,12 +45,6 @@
 {% set podid = 5 %}
 {% elif (spineid|int > 60) and (spineid|int < 70) %}
 {% set podid = 6 %}
-{% elif (spineid|int > 70) and (spineid|int < 80) %}
-{% set podid = 7 %}
-{% elif (spineid|int > 80) and (spineid|int < 90) %}
-{% set podid = 8 %}
-{% elif (spineid|int > 90) and (spineid|int < 100) %}
-{% set podid = 9 %}
 {% endif %}
 {% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
 {{ interface_ipv4 }}
@@ -86,3 +80,11 @@
    port-channel lacp fallback static
    spanning-tree portfast
 {%- endmacro %}
+
+{# convert ASN between asdot and asplain notation #}
+{% macro asdot(asn) -%}
+{%- if asn|string is search('\.') %}
+{{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
+{{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
+{%- endmacro %}
+

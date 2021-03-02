@@ -1,7 +1,7 @@
 {# This is used to create all predefined ports from superspines
    each PODs Spines.
 #}
-{% for pod in range(0,9) %}
+{% for pod in range(0,6) %}
 !! POD {{ pod + 1 }}
 {% for x in [0,2,4,6] %}
 interface Ethernet{{ pod*4 + loop.index }}/1

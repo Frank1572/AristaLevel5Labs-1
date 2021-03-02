@@ -1,3 +1,5 @@
+{% import "templates/config_templates/libs.j2" as funcs %}
+{% set pod=item.id %}
 {########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
 {% set ports_per_lc = 36 %}
 {% if hec.spine.model|string is search('75[01][486].*') %}
@@ -12,22 +14,20 @@
 {% set ports_per_lc = hec.spine.model|string %}
 {% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
 {% endif %}
-{# {% set create_ip_on_interface = "no" %} #}
 {% set port_range_end = ports_per_lc|int + 1 %}
-! DEBUG: port_range_end {{port_range_end}}
-{# {% include "templates/sw-hec-spine-ips.j2" %} #}
+{# {% include "templates/config_templates/sw-hec-spine-ips.j2" %} #}
 {########## BGP CONFIGURATION ##########}
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 peer-filter EVPN-PF
-! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-   10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
+! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
 !
 {% endif %}
 peer-filter LEAF-PF
-! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.10001-641{{ hec.hec_nr }}.11199 #####
-   10 match as-range {{ hec.as_low }}-{{ hec.as_high }} result accept
+! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
 !
-router bgp 641{{ hec.hec_nr }}.10000
+router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
@@ -39,7 +39,7 @@ router bgp 641{{ hec.hec_nr }}.10000
    neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    neighbor EVPN-PG ebgp-multihop 2
    neighbor EVPN-PG send-community standard extended
-   neighbor EVPN-PG maximum-routes 0
+   neighbor EVPN-PG maximum-routes {{ hec.fabric.evpn_maximum_routes }}
 {% endif %}
 !
    neighbor LEAF-PG {{eos_cmd.c_neighbor_peer_group}}

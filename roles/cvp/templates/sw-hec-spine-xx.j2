@@ -104,7 +104,7 @@ interface {{oob_mgmt_intf}}
 !
 router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    router-id {{interface_loopback1}}
-   bgp listen range 10.{{ item.id }}.0.0/16 {{eos_cmd.c_neighbor_peer_group}} LEAF-PG peer-filter LEAF-PF
+   bgp listen range 10.{{ item.id }}.0.0/16 peer-group LEAF-PG peer-filter LEAF-PF
    network {{interface_loopback1}}/32
    network {{ hec.lo900_prefix }}.{{ item.id }}/32
 {# if this location has superspine switches defined in hecXX.yml, then we

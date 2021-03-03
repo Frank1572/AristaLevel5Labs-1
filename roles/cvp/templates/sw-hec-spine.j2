@@ -32,7 +32,7 @@ router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    maximum-paths 8 ecmp 16
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
 {% for listen_range in hec.fabric.bgp_listen_ranges %}
-   bgp listen range {{ listen_range }} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG peer-filter EVPN-PF
+   bgp listen range {{ listen_range }} peer-group EVPN-PG peer-filter EVPN-PF
 {% endfor %}
    neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG update-source Loopback1

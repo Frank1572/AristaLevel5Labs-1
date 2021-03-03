@@ -171,7 +171,7 @@ hec:
     - 14 # okay
   spine:
     # valid models are: 7504, 7508, 7280
-    model: 7280-90 # hec11 does use chassis Arista DCS-7280CR3-96-F spines - correct
+    model: 7280
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     pod:

@@ -1116,13 +1116,13 @@ hec:
         - 53/1
         - 54/1
       ports:
-        - id: 1/1
+        - id: 1
           description: hec01f0087
           po: 5
-        - id: 2/1
+        - id: 2
           description: hec01f0087r
           access_vlan: 110
-        - id: 3/1
+        - id: 3
           description: hec01f0088
           po: 6
         - id: 49/1
@@ -1151,13 +1151,13 @@ hec:
         - 53/1
         - 54/1
       ports:
-        - id: 1/1
+        - id: 1
           description: hec01f0087
           po: 5
-        - id: 2/1
+        - id: 2
           description: hec01f0088
           po: 6
-        - id: 3/1
+        - id: 3
           description: hec01f0088r
           access_vlan: 110
         - id: 49/1

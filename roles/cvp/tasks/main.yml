@@ -186,7 +186,7 @@
 - name: Render generic spine configlet per POD
   delegate_to: 127.0.0.1
   template:
-    src: "templates/config_templates/sw-hec-spine.j2"
+    src: "templates/sw-hec-spine.j2"
     dest: "{{role_path}}/files/configs/sw-hec-spine-{{ item.id }}x"
   with_items: "{{ hec.spine.pod.number }}"
   tags:

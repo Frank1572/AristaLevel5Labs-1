@@ -248,11 +248,11 @@ hec:
   oob02b_snmp_contact: 34847179:ncons-hec11-08.hec.oob.net.sap:1006    # correct
   oob02b_snmp_location: RU-MOW1-CAGE3-13/05/11/35  # correct
   oobs_2_7:   # in real we have oob3 and oob4
-    - number: 03   # correct
+    - number: 02   # correct
       snmp_contact: 34847165:ncons-hec11-07.hec.oob.net.sap:1007 # correct
       snmp_location: RU-MOW1-CAGE3-13/05/08/05  # correct
       ip_last_octett: 6   # ??????????????????
-    - number: 04   # this is not updated as already in place
+    - number: 03   # this is not updated as already in place
       snmp_contact: 34847166:ncons-hec11-08.hec.oob.net.sap:1007   # correct
       snmp_location: RU-MOW1-CAGE3-13/05/11/05   # correct
       ip_last_octett: 7  # ??????????????????

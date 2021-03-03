@@ -142,7 +142,7 @@ hec:
  # !radius1: 169.145.33.70 ! there is no radius
  # !radius2: 10.4.201.55  ! there is no radius
  # !radius_key: 07037265610E0D170E54333D547F3D  ! there is no radius
- # is_tacacs: False!!!!!!!!!!!!!!!!!!!!!!!!to set to true???????????
+  is_tacacs: False 
   sflow:
     destination:
       - ipv4: 169.145.244.40 ! comment ip from sw-hec05-235

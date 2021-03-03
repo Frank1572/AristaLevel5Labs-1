@@ -267,7 +267,7 @@ hec:
           interface: Null0
           metric: 240
   brdr:
-    - number: 4a # updated from 1a to 4a - 4 is the special leaf 7280QR-C36 towards legacy
+    - number: 1a # updated from 1a to 4a - 4 is the special leaf 7280QR-C36 towards legacy
       is_l2l3_transit: true
       snmp:
         location: RU-MOW1-CAGE3-13/05/09/33 # correct
@@ -311,7 +311,7 @@ hec:
         - id: 1102
           description: sw-hec11-102
           trunk: all
-    - number: 4b
+    - number: 1b
       is_l2l3_transit: true
       snmp:
         location: RU-MOW1-CAGE3-13/05/12/33 # correct
@@ -452,6 +452,102 @@ hec:
         - id: 48
           description: naa-hec01-01, in-band
           access_vlan: 916
+    - number: 3a
+      snmp:
+        location: RU-MOW1-CAGE3-13/05/08/33 # correct
+        contact: 34847184:ncons-hec11-07.hec.oob.net.sap:1003 # correct
+      oob_ip: 10.177.248.15 # corect see nslookup
+      nwmgmt_ip: 198.19.188.15 # correct see nslookup
+      uplinks:
+        - 51/1 # 7280SR-48C6
+        - 52/1
+        - 53/1
+        - 54/1
+      spine_port_towards_leaf: Et3/1
+      ports:
+        - id: 1
+          description: lb-hec11-01, eth1.1
+          speed: 10000full
+          trunk: 940
+        - id: 2
+          description: lb-hec11-01, eth1.2
+          speed: 10000full
+          trunk: 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec11-01, eth1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec11-01, eth1.4
+          trunk: 902
+          speed: 10000full
+        - id: 48
+          description: naa-hec01-01, e3 (inband)
+          po: 48
+          access_vlan: 916
+          speed: 1000full
+        - id: 49/1
+          description: sw-hec01-brdr-02b, Et51/1
+          po: 42
+        - id: 50/1
+          description: sw-hec01-brdr-02b, Et52/1
+          po: 42
+        - id: 916
+          description: FW-TRANS
+          type: vlan
+          ip: 10.255.183.76/28 # 183 for hec11
+      port_channels:
+        - id: 48
+          description: naa-hec01-01, in-band
+          access_vlan: 916
+    - number: 3b
+      snmp:
+        location: RU-MOW1-CAGE3-13/05/11/33 # correct
+        contact: 34847185:ncons-hec11-08.hec.oob.net.sap:1003 # correct
+      oob_ip: 10.177.248.16 # corect see nslookup
+      nwmgmt_ip: 198.19.188.16 # correct see nslookup
+      uplinks:
+        - 51/1 # 7280SR-48C6
+        - 52/1
+        - 53/1
+        - 54/1
+      spine_port_towards_leaf: Et4/1 # correct
+      ports:
+        - id: 1
+          description: lb-hec11-02, eth1.1
+          speed: 10000full
+          trunk: 940
+        - id: 2
+          description: lb-hec11-02, eth1.2
+          speed: 10000full
+          trunk: 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec11-02, eth1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec11-02, eth1.4
+          trunk: 902
+          speed: 10000full
+        - id: 48
+          description: naa-hec01-01, e4 (inband)
+          po: 48
+          access_vlan: 916
+          speed: 1000full
+        - id: 49/1
+          description: sw-hec01-brdr-02a, Et51/1
+          po: 42
+        - id: 50/1
+          description: sw-hec01-brdr-02a, Et52/1
+          po: 42
+        - id: 916
+          description: FW-TRANS
+          type: vlan
+          ip: 10.255.183.76/28 # 183 for hec11
+      port_channels:
+        - id: 48
+          description: naa-hec01-01, in-band
+          access_vlan: 916       
   str: # below is for storage but there is no storage in hec11 or hec12
     - number: 1a
       snmp:

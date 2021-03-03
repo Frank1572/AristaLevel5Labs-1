@@ -277,6 +277,7 @@
     src: templates/sw-hec-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc{{item.number}}"
   with_items: "{{ hec.interdc }}"
+  when: hec.interdc is defined
   tags:
     - configlets
     - interdc

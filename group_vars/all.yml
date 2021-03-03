@@ -172,6 +172,8 @@ vlans:
       vid: 140
     - name: "{{vlandb.150.name}}"
       vid: 150
+    - name: "{{vlandb.900.name}}"
+      vid: 900
 # net:
 #   device:
 #     leaf:

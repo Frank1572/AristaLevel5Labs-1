@@ -897,6 +897,75 @@ hec:
       port_channels:
         - id: 42
           description: mlag peer link
+  interdc:
+    - number: "01"
+      ports:
+        - id: 1
+          description: DCP2Pb:W1B11596:HEC02:HEC01:sw-hec02-interDC01:Et1
+          po: 999
+        - id: 2
+          description: -> dc2wanrt01, te0/1/0 (SaaS)
+        - id: 21
+          description: sw-hec02-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec02-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec02-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec02-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec02-interdc02, Et45
+          po: 42
+        - id: 46
+          description: sw-hec02-interdc02, Et46
+          po: 42
+        - id: 47
+          description: sw-hec02-interdc02, Et47
+          po: 42
+        - id: 48
+          description: sw-hec02-interdc02, Et48
+          po: 42
+      port_channels:
+        - id: 999
+          description: ->sw-hec01 Po999
+          trunk: 961,962
+    - number: "02"
+      ports:
+        - id: 1
+          description: DCP2Pb:01-400040-005:HEC02:HEC01:sw-hec02-interDC02:Et1
+          po: 999
+        - id: 21
+          description: sw-hec02-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec02-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec02-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec02-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec02-interdc01, Et45
+          po: 42
+        - id: 46
+          description: sw-hec02-interdc01, Et46
+          po: 42
+        - id: 47
+          description: sw-hec02-interdc01, Et47
+          po: 42
+        - id: 48
+          description: sw-hec02-interdc01, Et48
+          po: 42
+      port_channels:
+        - id: 999
+          description: ->sw-hec01 Po999
+          trunk: 961,962
   shs:
     - number: 1a
       oob_ip: 10.9.240.17

@@ -266,7 +266,7 @@
   template:
     src: templates/sw-hec-interdc.j2
     dest: "{{role_path}}/files/configs/sw-hec-interdc{{item.number}}"
-  with_items: "{{ hec.interdc }}"
+  with_items: "{{ hec.interdc|default(None) }}"
   tags:
     - configlets
     - interdc

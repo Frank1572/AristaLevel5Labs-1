@@ -256,7 +256,7 @@
     - storageleafs
 
 - set_fact:
-    id: 's'
+    id: 'h'
   tags:
     - configlets
     - storageleafs

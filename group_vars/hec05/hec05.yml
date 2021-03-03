@@ -177,7 +177,7 @@ hec:
     pod:
       number:
         - id: 1
-          model: 7280-90
+          model: 7280
           linecards: 1
     linecards: 1
     underlay_bfd: True # not sure ????????????

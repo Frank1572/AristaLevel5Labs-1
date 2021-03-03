@@ -174,8 +174,12 @@ hec:
     model: 7280-90 # hec11 does use chassis Arista DCS-7280CR3-96-F spines - correct
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 1 # hec11 does use chassis spines - correct
-    # Enable or disable Bfd for underlay (true or false)
+    pod:
+      number:
+        - id: 1
+          model: 7280-90
+          linecards: 1
+    linecards: 1
     underlay_bfd: True # not sure ????????????
     # the following list 'port' is a workaround for mixed port speeds in existing
     # Fabric builds.

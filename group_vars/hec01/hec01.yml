@@ -1140,11 +1140,11 @@ hec:
           access_vlan: 110
     - number: 4b
       snmp:
-        location: EMEA-de-Rot13-rot2-RZ40-5L-11-41
-        contact: 34862456:ncons4012.wdf.sap.corp:1029
-      oob_ip: 10.178.136.150
-      nwmgmt_ip: 198.19.190.101
-      spine_port_towards_leaf: Et6/27/1
+        location: EMEA-de-Rot13-rot2-RZ40-5L-11-40
+        contact: 34862457:ncons4012.wdf.sap.corp:1030
+      oob_ip: 10.178.136.151
+      nwmgmt_ip: 198.19.190.102
+      spine_port_towards_leaf: Et6/28/1
       uplinks:
         - 51/1
         - 52/1

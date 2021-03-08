@@ -7,7 +7,11 @@ ip ftp client source-interface Loopback900
 {{eos_cmd.c_ip_http_client_source_interface}} Loopback900
 ip ssh client source-interface Loopback900
 !
+{% if hec.is_tacacs %}
+ip tacacs source-interface Loopback900
+{% else %}
 ip radius source-interface Loopback900
+{% endif %}
 !
 {{eos_cmd.c_ntp_source}} Loopback900
 logging source-interface Loopback900

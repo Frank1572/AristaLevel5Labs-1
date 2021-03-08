@@ -42,5 +42,9 @@ interface Ethernet{{i}}
 interface Ethernet48
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    switchport mode trunk
-   channel-group 900 mode active
 !
+no int port-channel 900
+{% for x in range(16,25) %}
+no int port-channel {{x + 100}}
+no int port-channel {{x + 150}}
+{% endfor %}

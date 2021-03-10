@@ -138,20 +138,22 @@ hec:
     source: Loopback900
   admin_mpls:
     - prefix_mask: "10.178.136.0/23"
+      sequence: "10"
+    - prefix_mask: "10.178.138.0/23"
       sequence: "20"
-  admin_sw_interface: Ethernet49
-  admin_sw_description_oob1a: "amsdc02-adm-01-co Gi1/1/1"
-  admin_sw_description_oob1b: "amsdc02-adm-02-co Gi1/1/1"
-  admin_sw_prefix: 10.255.202
-  admin_sw_mask: 29
+  admin_sw_interface: Ethernet1
+  admin_sw_description_oob1a: "rot13dc02-adm-03-co Et1/13"
+  admin_sw_description_oob1b: "rot06dc01-adm-04-co Et1/13"
+  admin_sw_prefix: 10.255.200
+  admin_sw_mask: 31
   admin_sw_ip_oob1a: 10.255.202.9
   admin_sw_ip_oob1b: 10.255.202.10
-  admin_sw_neig_ip_oob1a: 10.255.202.11
-  admin_sw_neig_as_oob1a: 1.463
-  admin_sw_neig_ip_oob1b: 10.255.202.12
-  admin_sw_neig_as_oob1b: 1.463
+  admin_sw_neig_ip_oob1a: 10.255.200.9
+  admin_sw_neig_as_oob1a: 65535
+  admin_sw_neig_ip_oob1b: 10.255.200.11
+  admin_sw_neig_as_oob1b: 64536
   oob01_lo0_prefix: 198.19.249
-  oob01_as: 64531.2
+  oob01_as: 64531.1
   spine_nr:
     - 11
     - 12
@@ -300,6 +302,31 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
+  oob:
+    - number: 01a
+      type: core
+      snmp:
+        contact: 34368082:ncons-hec02-06.net.sap.corp:1015
+        location: NL-AMS-AM7-Z1C-02-01-39
+      ports:
+        - id: 1
+          description: rot13dc02-adm-03-co, Et1/13
+          ip: 10.255.200.8/31
+      bgp:
+        - peer: 10.255.200.9
+          remote_asn: 65535
+    - number: 01b
+      type: core
+      snmp:
+        contact: 34368083:ncons-hec02-07.net.sap.corp:1015
+        location: NL-AMS-AM7-Z1C-03-01-39
+      ports:
+        - id: 1
+          description: rot06dc01-adm-04-co, Et1/13
+          ip: 10.255.200.10/31
+      bgp:
+        - peer: 10.255.200.11
+          remote_asn: 64536
   oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
   oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
   oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015

@@ -1,3 +1,4 @@
+{% import "templates/libs.j2" as funcs %}
 mlag configuration
    domain-id MLAG-oob
 !
@@ -25,51 +26,22 @@ logging source-interface Vlan21
 !
 {{eos_cmd.c_ntp_source}} Vlan21
 !
-interface Port-Channel102
-   description ->sw-hec{{ hec.hec_nr }}-oob-02,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 102
-!
-interface Port-Channel103
-   description ->sw-hec{{ hec.hec_nr }}-oob-03,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 103
-!
-interface Port-Channel104
-   description ->sw-hec{{ hec.hec_nr }}-oob-04,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 104
-!
-interface Port-Channel105
-   description ->sw-hec{{ hec.hec_nr }}-oob-05,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 105
-!
-interface Port-Channel106
-   description ->sw-hec{{ hec.hec_nr }}-oob-06,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 106
-!
-interface Port-Channel107
-   description ->sw-hec{{ hec.hec_nr }}-oob-07,Po101
-   port-channel lacp fallback individual
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   mlag 107
-!
+{% for switch in hec.oob %}
+{% if switch.type == 'core' %}
 interface Ethernet1-46
    switchport access vlan 21
 !
+{% for item in switch.ports %}
+{{ funcs.switchport(item) }}
+{% endfor %}
+{% if switch.port_channels is defined %}
+{% for item in switch.port_channels %}
+{{ funcs.switchportchannels(item) }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
 interface Ethernet1
    description ->naa-hec{{ hec.hec_nr }}-01 Mgm1
 !
@@ -77,37 +49,12 @@ interface Ethernet47-48
    description ->sw-hec{{ hec.hec_nr }}-oob-01-mlag-peer
    channel-group 42 mode active
 !
-interface Ethernet21
-   channel-group 102 mode active
-!
-interface Ethernet22
-   channel-group 103 mode active
-!
-interface Ethernet23
-   channel-group 104 mode active
-!
-interface Ethernet24
-   channel-group 105 mode active
-!
-interface Ethernet25
-   channel-group 106 mode active
-!
-interface Ethernet26
-   channel-group 107 mode active
-!
-interface {{ hec.admin_sw_interface }}
-   no switchport
-!
 interface Loopback494
    description !!! DO NOT TOUCH - HSRP tracking interface !!!
 !
 track 494 interface Loopback494 line-protocol
 !
 interface Vlan21
-   vrrp 21 preempt delay minimum 180
-   vrrp 21 preempt delay reload 180
-   vrrp 21 {{eos_cmd.c_vrrp_authentication}} text oobnw
-   vrrp 21 {{eos_cmd.c_vrrp_ip}} {{ hec.oob_def_gw }}
    vrrp 21 track 494 decrement 10
 !
 ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}

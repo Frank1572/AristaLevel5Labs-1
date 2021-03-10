@@ -115,7 +115,7 @@ generate all BGP related settings. #}
                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', bgp_overlay_max_routes] %}
    neighbor EVPN-SUPERSPINE {{ setting }}
 {% endfor %}
-{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'send-community standard extended', bgp_underlay_max_routes] %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'send-community standard extended', bgp_underlay_max_routes, eos_cmd.c_neighbor_soft_reconfiguration + 'all'] %}
    neighbor UNDERLAY-SUPERSPINE {{ setting }}
 {% endfor %}
 {% for i in range(1,5) %}

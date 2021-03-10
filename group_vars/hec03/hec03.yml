@@ -1347,16 +1347,16 @@ hec:
           description: MLAG-PEER
         - id: 800
           description: hec03f0053,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 805
           description: hec03f0054,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 810
           description: hec03f0055,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
     - number: 5b
       snmp:
         location: AMER-US-STL1-(DC4)-Cage4-(01.GH.004)-GK-17-39
@@ -1400,16 +1400,16 @@ hec:
           description: MLAG-PEER
         - id: 800
           description: hec03f0053,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 805
           description: hec03f0054,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 810
           description: hec03f0055,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 30,40,50,55,130,140,2001-2499
     - number: 6a
       snmp:
         location: US-STL-1-(DC4)-Cage4-GK-16-37

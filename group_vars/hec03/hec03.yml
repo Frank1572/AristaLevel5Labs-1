@@ -584,16 +584,12 @@ hec:
           speed: 100gfull
         - id: 51/1
           description: sw-hec03-spine-11:Ethernet3/1
-          mtu: 9100
         - id: 52/1
           description: sw-hec03-spine-12:Ethernet3/1
-          mtu: 9100
         - id: 53/1
           description: sw-hec03-spine-13:Ethernet3/1
-          mtu: 9100
         - id: 54/1
           description: sw-hec03-spine-14:Ethernet3/1
-          mtu: 9100
       port_channels:
         - id: 1505
           description: rt-hec03-cwan-02a
@@ -668,16 +664,12 @@ hec:
           po: 42
         - id: 51/1
           description: sw-hec03-spine-11:Ethernet6/1
-          mtu: 9100
         - id: 52/1
           description: sw-hec03-spine-12:Ethernet6/1
-          mtu: 9100
         - id: 53/1
           description: sw-hec03-spine-13:Ethernet6/1
-          mtu: 9100
         - id: 54/1
           description: sw-hec03-spine-14:Ethernet6/1
-          mtu: 9100
       port_channels:
         - id: 1505
           description: rt-hec03-cwan-02a

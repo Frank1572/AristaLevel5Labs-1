@@ -556,6 +556,28 @@ hec:
           description: ->rt-hec03-506/cwan-02b-Te0/1/0
           po: 1506
           speed: 10000full
+        - id: 3
+          description: lb-hec03-01 1.1 NEW LB-external interface (Internet facing, external VLAN 940,950)
+          speed: 10000full        
+          trunk: 940,950
+        - id: 4
+          description: lb-hec03-01 1.2 NEW LB-external interface (customer facing VLANs 2xxx)
+          speed: 10000full
+          trunk: 85,90,95,100,2000-2499 
+        - id: 5
+          description: lb-hec03-01 1.3 NEW LB-external interface (Inband management, internal VLAN 900)
+          speed: 10000full 
+          trunk: 900
+        - id: 6
+          description: lb-hec03-01 1.4 NEW LB-external interface (HA interface, VLAN 902)
+          speed: 10000full 
+          access_vlan: 902
+        - id: 7
+          description: fw-hec03-01-new,eth1-01
+          speed: 10000full
+        - id: 8
+          description: fw-hec03-02-new,eth1-01
+          speed: 10000full    
         - id: 916
           type: vlan
           description: ->Transfer network for inband management
@@ -638,6 +660,28 @@ hec:
           description: ->rt-hec03-506/cwan-02b-Te0/1/1
           po: 1506
           speed: 10000full
+        - id: 3
+          description: lb-hec03-02 1.1 NEW LB-external interface (Internet facing, external VLAN 940,950)
+          speed: 10000full
+          trunk: 940,950
+        - id: 4
+          description: lb-hec03-02 1.2 NEW LB-external interface (customer facing VLANs 2xxx)
+          speed: 10000full
+          trunk: 85,90,95,100,2000-2499
+        - id: 5
+          description: lb-hec03-02 1.3 NEW LB-external interface (Inband management, internal VLAN 900)
+          speed: 10000full
+          trunk: 900
+        - id: 6
+          description: lb-hec03-02 1.4 NEW LB-external interface (HA interface, VLAN 902)
+          speed: 10000full
+          access_vlan: 902
+        - id: 7
+          description: fw-hec03-01-new,eth1-02
+          speed: 10000full
+        - id: 8
+          description: fw-hec03-02-new,eth1-02
+          speed: 10000full        
         - id: 916
           type: vlan
           description: ->Transfer network for inband management

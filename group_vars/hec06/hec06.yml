@@ -105,8 +105,8 @@ hec:
   vl900_mask: 25
   vl900_def_gw: 198.19.245.1
   vl900_net: 198.19.245.0/25  # HEC06-NW-MGMT01
-  # lo900_net: 198.19.156.0/23  # fab mgm not created for hec06 yet --- needs creation
-  # lo900_prefix: 198.19.156 # fab mgm not created for hec05 yet --- needs creation
+  lo900_net: 198.19.156.0/23  # fab mgm not created for hec06 yet --- needs creation
+  lo900_prefix: 198.19.156 # fab mgm not created for hec05 yet --- needs creation
   inband_trans_brdr: 10.255.179.78
   inband_trans_brdr_mac: 00:1c:73:00:00:96
   inband_trans_net: 10.255.179.64/28
@@ -210,7 +210,7 @@ hec:
   ngdr_underlay: # there is no ngdr in hec11 hec05 or hec06 ????
     edge_as: 65200 # there is no ngdr in hec11
   ngdr_overlay: #dummy data as no ngdr
-    remote_hec_nr: "06"
+    remote_hec_nr: "05"
     routes:
       - network: 100.64.0.0/15
         interface: Vlan922

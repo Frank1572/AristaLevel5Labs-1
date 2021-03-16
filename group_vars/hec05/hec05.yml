@@ -130,8 +130,8 @@ hec:
   as_low: 4201195281
   as_high: 4201196479
   cvp_ingest_key: SecureKey05
-  dns1: 169.145.84.8 # !!!!!!!!!!!!!!!!!!!!!????
-  dns2: 169.145.84.9 # !!!!!!!!!!!!!!!!!!!!!????
+  dns1: 169.145.245.6 # HEC05-CIS01-DNS01
+  dns2: 169.145.245.5 # HEC05-CIS01-DNS01
   ntp1: 169.145.245.37 # comment ip from sw-hec05-235
   ntp2: 169.145.245.38 # comment ip from sw-hec05-235
   snmp1: 147.204.148.100 # comment ip from sw-hec05-235

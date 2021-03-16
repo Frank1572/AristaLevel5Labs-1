@@ -151,7 +151,7 @@ hec:
         port: 9995
         # on sw-hec06-227 is a sflow source ip defined
     source: Loopback900  # vlan900 for legacy/non-fab
-    admin_mpls:
+  admin_mpls:
     - prefix_mask: "10.192.18.0/23"
       sequence: "20" # !!!!! what means sequence again?
   admin_sw_interface: Ethernet1

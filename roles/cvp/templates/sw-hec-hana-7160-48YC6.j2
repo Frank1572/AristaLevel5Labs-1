@@ -10,7 +10,7 @@
 {% endfor %}
 
 interface Ethernet {{p_data['start']}}-{{p_data['end']}},{{p_data['start']+24}}-{{p_data['end']+24}}
-   switchport trunk native vlan 5
+   switchport trunk native vlan 40
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    spanning-tree portfast

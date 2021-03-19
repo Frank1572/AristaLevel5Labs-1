@@ -1,7 +1,6 @@
 {# 7150S-64-CL #}
 
 interface Ethernet 1-15,17-31
-   speed forced 10000full
    switchport trunk native vlan 7
    switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
@@ -9,7 +8,6 @@ interface Ethernet 1-15,17-31
    spanning-tree portfast
 !
 interface Ethernet 33-47
-   speed forced 10000full
    switchport trunk native vlan 7
    switchport trunk allowed vlan 7,20,930-931
    switchport mode trunk
@@ -42,5 +40,9 @@ interface Ethernet{{i}}
 interface Ethernet48
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    switchport mode trunk
-   channel-group 900 mode active
 !
+no int port-channel 900
+{% for x in range(16,25) %}
+no int port-channel {{x + 100}}
+no int port-channel {{x + 150}}
+{% endfor %}

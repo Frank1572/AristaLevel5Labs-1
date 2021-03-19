@@ -29,6 +29,13 @@ container:
     parent_container: HEC
   HEC-CWAN:
     parent_container: HEC
+    configlets:
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+      - sw-hec-switch-sflow
+      - mgmt-oob
+      - sw-hec-tele-oob
   HEC-FWT:
     parent_container: HEC
   HEC-InterDC:
@@ -38,6 +45,8 @@ container:
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
       - sw-hec-switch-sflow
+      - mgmt-oob
+      - sw-hec-tele-oob
   HEC-Backup Routers:
     parent_container: HEC
   HEC-Switched Fabric:
@@ -170,6 +179,7 @@ configlet_list_global:
   - sw-hec-str-02b
   - sw-hec-hana-7160-32CQ
   - sw-hec-hana-pwr-7160-32CQ
+  - sw-hec-hana-7160-48YC6
   - sw-hec-hvv-7160-32CQ
   - sw-hec-vmware-7150S-64-CL
   - sw-hec-hvx-7160-32CQ

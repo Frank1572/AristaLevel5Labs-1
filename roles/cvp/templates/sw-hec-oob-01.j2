@@ -20,7 +20,11 @@ alias dhcp-status
    10 bash sudo service dhcpd status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
+{% if hec.is_tacacs %}
+ip tacacs source-interface Vlan21
+{% else %}
 ip radius source-interface Vlan21
+{% endif %}
 !
 logging source-interface Vlan21
 !

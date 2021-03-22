@@ -4,8 +4,9 @@
   no bgp default ipv4-unicast
   distance bgp 20 200 200
   maximum-paths 16 ecmp 16
-{% for entry in range(1, 7) %}
-   bgp listen range 10.{{ ((loop.index - 1) * 10) + 100 }}.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.100.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+{% for entry in range(1, 6) %}
+  bgp listen range 10.{{ ((loop.index) * 10) + 100 }}.{{ hec.hec_nr|int|string }}.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
 {% endfor %}
   bgp listen range 10.255.0.0/16 peer-group UNDERLAY-DYNAMIC peer-filter SUPERSPINE-PF
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'update-source Loopback1',

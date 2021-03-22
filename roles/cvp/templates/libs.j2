@@ -132,9 +132,6 @@ interface Ethernet{{ interface.id }}
    no autostate
 {% endif %}
 {% endif %}
-{% if interface.mtu is defined %}
-   mtu {{ interface.mtu }}
-{% endif %}
 {#
  vrrp group, if any defined
 #}

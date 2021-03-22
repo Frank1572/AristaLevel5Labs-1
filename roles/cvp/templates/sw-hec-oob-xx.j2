@@ -1,10 +1,56 @@
-hostname sw-hec{{ hec.hec_nr }}-oob-0{{ item.number}}
+{# this is to have to macros available that are used for switch port generation #}
+{% import "templates/libs.j2" as funcs with context%}
+hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number}}
 !
 snmp-server contact {{ item.snmp_contact}}
 snmp-server location {{ item.snmp_location}}
 !
+{% if hec.is_tacacs %}
+ip tacacs source-interface Vlan21
+{% else %}
+ip radius source-interface Vlan21
+{% endif %}
+!
+logging source-interface Vlan21
+!
+{{eos_cmd.c_ntp_source}} Vlan21
+!
+{% if item.type == 'core' %}
+mlag configuration
+   domain-id MLAG-oob
+!
+vlan 4094
+   name MLAG_Vlan
+!
+spanning-tree mst 0-1 priority 28672
+!
+alias dhcp-off
+   10 bash sudo service dhcpd stop
+   20 bash sudo service dhcpd status
+!
+alias dhcp-on
+   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+   20 bash sudo service dhcpd start
+   30 bash sudo service dhcpd status
+!
+alias dhcp-status
+   10 bash sudo service dhcpd status
+   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
+!
+{% endif %}{# end of oob-core specific settings #}
+!
+{# setting all ports to default access-port with oob vlan 21 #}
 interface Ethernet1-46
    switchport access vlan 21
+!
+{% for item in switch.ports %}
+{{ funcs.switchport(item) }}
+{% endfor %}
+{% if switch.port_channels is defined %}
+{% for item in switch.port_channels %}
+{{ funcs.switchportchannels(item) }}
+{% endfor %}{# end of port generation #}
+{% endif %}{# end of port-channel generation #}
 !
 ! === Uplinks to the cental OOB Pair (oob01[ab])
 interface Port-Channel1
@@ -22,8 +68,10 @@ interface Ethernet48
    switchport mode trunk
    channel-group 1 mode active
 !
-interface Vlan21
-   ip address {{ hec.oob_prefix }}.{{ item.ip_last_octett}}/{{ hec.oob_mask }}
+!interface Vlan21
+!   ip address {{ hec.oob_prefix }}.{{ item.ip_last_octett}}/{{ hec.oob_mask }}
 !
+{% if item.type != 'core' %}
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !
+{% endif %}

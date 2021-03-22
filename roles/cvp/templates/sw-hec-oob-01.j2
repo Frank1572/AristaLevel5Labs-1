@@ -47,9 +47,6 @@ interface Ethernet1-46
 {% endif %}
 {% endfor %}
 
-interface Ethernet1
-   description ->naa-hec{{ hec.hec_nr }}-01 Mgm1
-!
 interface Ethernet47-48
    description ->sw-hec{{ hec.hec_nr }}-oob-01-mlag-peer
    channel-group 42 mode active

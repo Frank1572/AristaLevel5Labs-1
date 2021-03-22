@@ -15,7 +15,7 @@ logging source-interface Vlan21
 !
 {{eos_cmd.c_ntp_source}} Vlan21
 !
-{% if item.type == 'core' %}
+{% if item.typ is defined and item.type == 'core' %}
 mlag configuration
    domain-id MLAG-oob
 !
@@ -43,13 +43,15 @@ alias dhcp-status
 interface Ethernet1-46
    switchport access vlan 21
 !
+{% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}
 {% endfor %}
+{% endif %}{# end of port generation #}
 {% if item.port_channels is defined %}
 {% for po in item.port_channels %}
 {{ funcs.switchportchannels(po) }}
-{% endfor %}{# end of port generation #}
+{% endfor %}
 {% endif %}{# end of port-channel generation #}
 !
 ! === Uplinks to the cental OOB Pair (oob01[ab])

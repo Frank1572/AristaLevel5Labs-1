@@ -38,7 +38,7 @@ snmp-server location {{a.snmp.location}}
 {% endfor %}
 {% if hec_spine_model.name|string is search('75[01][486].*')  %}
 {% set lc_start = 3 %}
-{% set lc_end   = lc_start + hec.spine.linecards %}
+{% set lc_end   = lc_start + hec_spine_model.linecards %}
 {% endif %}
 {% if hec_spine_model.name|string is search('7280.*') %}
 {% set lc_start = 3 %}

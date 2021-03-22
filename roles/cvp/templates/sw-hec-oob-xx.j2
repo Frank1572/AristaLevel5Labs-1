@@ -70,10 +70,7 @@ interface Ethernet48
    switchport mode trunk
    channel-group 1 mode active
 !
-!interface Vlan21
-!   ip address {{ hec.oob_prefix }}.{{ item.ip_last_octett}}/{{ hec.oob_mask }}
-!
-{% if item.type != 'core' %}
+{% if item.typ is not defined or item.type != 'core' %}
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !
 {% endif %}

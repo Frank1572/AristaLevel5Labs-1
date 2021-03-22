@@ -360,6 +360,9 @@ hec:
         contact: 34340574:ncons-hec02-06.net.sap.corp:1016
         location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
     - number: 06
+      snmp:
+        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
   routes:
     static:
       brdr01:

@@ -1,5 +1,5 @@
 {# this is to have to macros available that are used for switch port generation #}
-{% include "templates/libs.inc.j2" %}
+{% import "templates/libs.j2" as funcs with context%}
 mlag configuration
    domain-id MLAG-oob
 !

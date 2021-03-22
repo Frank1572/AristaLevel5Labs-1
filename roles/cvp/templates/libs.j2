@@ -87,3 +87,94 @@
 {{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
 {{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
 {%- endmacro %}
+
+{% macro switchport(interface) -%}
+{% if interface.type is defined %}
+{% if interface.type != 'Ethernet' %}
+{% if interface.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
+{% if interface.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
+interface {{ inttype }}{{ interface.id }}
+{% endif %}
+{% endif %}
+{% if interface.type is not defined %}
+interface Ethernet{{ interface.id }}
+{% endif %}
+   description ->{{ interface.description }}
+{% if interface.po is defined %}
+   channel-group {{ interface.po }} mode active
+{% endif %}
+{% if interface.trunk is defined %}{# BEGIN port is vlan trunk #}
+   switchport mode trunk
+{% if interface.trunk != "all" %}
+   switchport trunk allowed vlan {{ interface.trunk }}
+{% endif %}
+{% endif %}{# END port is vlan trunk #}
+{% if interface.access_vlan is defined %}{# BEGIN port is access_vlan #}
+   switchport access vlan {{ interface.access_vlan }}
+{% endif %}{# END port is access_vlan #}
+{% if interface.speed is defined %}
+   speed forced {{ interface.speed }}
+{% elif (interface.po is defined) and (interface.po == 42) %}
+   speed forced {{hec.fabric.interlink_speed}}
+   mtu {{hec.fabric.interlink_mtu}}
+{% endif %}
+{% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
+   mtu {{ interface.mtu }}
+{% endif %} {# End MTU shinans #}
+{% if interface.ip is defined %}{# START ip is defined #}
+{% if (interface.type is defined) and (interface.type == "spine_link") %}
+   mtu {{ hec.fabric.interlink_mtu }}
+{% endif %}
+{% if (interface.type is defined) and (interface.type != "vlan") %}
+   no switchport
+{% elif (interface.type is defined) and (interface.type == "vlan") %}
+{% if interface.vrrp is not defined %}
+   no autostate
+{% endif %}
+{% endif %}
+{% if interface.mtu is defined %}
+   mtu {{ interface.mtu }}
+{% endif %}
+{#
+ vrrp group, if any defined
+#}
+{% if interface.vrrp is defined %}{# START vrrp is defined #}
+{% for vrrp_group in interface.vrrp %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group.priority }}
+   vrrp {{vrrp_group.id}} preempt delay minimum 180
+   vrrp {{vrrp_group.id}} preempt delay reload 180
+{% if vrrp_group.auth is defined %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
+{% endif %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{conf_str_ip}}
+{% endfor %}
+{% endif %}{# END vrrp is defined #}
+   ip address {{ interface.ip }}
+{% endif %}{# END ip is defined #}
+!
+{%- endmacro %}
+
+{% macro switchportchannels(portchannel) -%}
+interface Port-Channel{{ portchannel.id }}
+{% if portchannel.id != 42 %}
+{#
+  As we do assign the configlet sw-mlag-a/b
+  to all leafs, the creation of Po42 is not required here.
+  Also it's not required to define it under hec.brdr/str/shs.port-channels
+#}
+   description {{ portchannel.description }}
+   mlag {{ portchannel.id }}
+{% if portchannel.trunk is defined %}
+   switchport mode trunk
+{% if portchannel.trunk != "all" %}
+   switchport trunk allowed vlan {{ portchannel.trunk }}
+{% endif %}
+{% endif %}
+{% if portchannel.access_vlan is defined %}
+   switchport access vlan {{ portchannel.access_vlan }}
+{% endif %}
+{% endif %}
+!
+{%- endmacro %}

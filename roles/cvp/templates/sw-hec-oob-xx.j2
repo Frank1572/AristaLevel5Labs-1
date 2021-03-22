@@ -53,11 +53,41 @@ router bgp {{ item.bgp.local_asn }}
 {% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
-{% for setting in [ 'remote-as ' + peer.remote_asn, 'maximum-routes 12000' ] %}
+{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
 {% endfor %}
 {% endif %}
+!
+interface Loopback494
+   description !!! DO NOT TOUCH - HSRP tracking interface !!!
+!
+track 494 interface Loopback494 line-protocol
+!
+interface Vlan21
+   vrrp 21 track 494 decrement 10
+!
+interface Vlan4094
+   ip ospf network point-to-point
+!
+ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
+!
+ip routing
+!
+ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
+{% for prefix in hec.admin_mpls %}
+ip prefix-list PREF_ADMIN_MPLS seq {{ prefix.sequence }} permit {{ prefix.prefix_mask }}
+{% endfor %}
+!
+route-map ADMIN_MPLS_IN deny 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+route-map ADMIN_MPLS_IN permit 20
+   match ip address prefix-list MATCH_ANY
+!
+route-map ADMIN_MPLS_OUT permit 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
 {% endif %}{# end of oob-core specific settings #}
 !
 {# setting all ports to default access-port with oob vlan 21 #}

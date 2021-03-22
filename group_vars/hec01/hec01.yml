@@ -341,31 +341,23 @@ hec:
       bgp:
         - peer: 10.255.200.11
           remote_asn: 64536
-  oob01a_snmp_contact: 34368082:ncons-hec02-06.net.sap.corp:1015
-  oob01a_snmp_location: NL-AMS-AM7-Z1C-02-01-39
-  oob01b_snmp_contact: 34368083:ncons-hec02-07.net.sap.corp:1015
-  oob01b_snmp_location: NL-AMS-AM7-Z1C-03-01-39
-  oobs_2_7:
     - number: 02
-      snmp_contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
-      ip_last_octett: 4
+      snmp:
+        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
     - number: 03
-      snmp_contact: 34340566:ncons-hec02-07.net.sap.corp:1017
-      snmp_location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-03-01-38
-      ip_last_octett: 5
+      snmp:
+        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
     - number: 04
-      snmp_contact: 34340569:ncons-hec02-08.net.sap.corp:1001
-      snmp_location:  EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z3E)-02-07-32
-      ip_last_octett: 6
+      snmp:
+        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
     - number: 05
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 7
+      snmp:
+        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
+        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
     - number: 06
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 8
   routes:
     static:
       brdr01:

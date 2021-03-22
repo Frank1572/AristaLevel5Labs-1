@@ -181,14 +181,14 @@ hec:
     pod:
       number:
         - id: 1
-          model: 7280
+          model: 7280-60
           linecards: 1
         - id: 2
-          model: 7508
-          linecards: 2
-        - id: 3
           model: 7504
           linecards: 2
+        - id: 3
+          model: 7280-60
+          linecards: 1
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1

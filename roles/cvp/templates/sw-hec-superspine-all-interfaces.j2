@@ -9,6 +9,7 @@ interface Ethernet{{ pod*4 + loop.index }}/1
    no switchport
    ip address 10.255.{{ pod + 1 }}{{ item.id }}.{{ x }}/31
    mtu {{ hec.fabric.interlink_mtu }}
+   speed forced {{ hec.fabric.interlink_speed }}
 !
 {% endfor %}
 !

@@ -15,7 +15,7 @@ logging source-interface Vlan21
 !
 {{eos_cmd.c_ntp_source}} Vlan21
 !
-{% if item.typ is defined and item.type == 'core' %}
+{% if item.type is defined and item.type == 'core' %}
 mlag configuration
    domain-id MLAG-oob
 !
@@ -37,6 +37,27 @@ alias dhcp-status
    10 bash sudo service dhcpd status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
+{% if item.bgp is defined %}
+router ospf 1
+   router-id {{ item.bgp.router_id }}
+   passive-interface default
+   no passive-interface Vlan4094
+   max-lsa 12000
+   network 198.19.224.0/30 area 0.0.0.0
+   network 198.19.251.0/24 area 0.0.0.0
+   network 198.19.249.0/24 area 0.0.0.0
+!   
+router bgp {{ item.bgp.local_asn }}
+   router-id {{ item.bgp.router_id }}
+{% for peer in item.peers %}
+{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'remote-as ' + peer.remote_asn, 'maximum-routes 12000' ] %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% endfor %}
+{% endif %}
 {% endif %}{# end of oob-core specific settings #}
 !
 {# setting all ports to default access-port with oob vlan 21 #}
@@ -54,7 +75,8 @@ interface Ethernet1-46
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
 !
-! === Uplinks to the cental OOB Pair (oob01[ab])
+{% if item.type is not defined or item.type != 'core' %}
+! === Uplinks to the OOB core switch pair
 interface Port-Channel1
    switchport trunk allowed vlan 21
    switchport mode trunk
@@ -70,7 +92,6 @@ interface Ethernet48
    switchport mode trunk
    channel-group 1 mode active
 !
-{% if item.typ is not defined or item.type != 'core' %}
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !
 {% endif %}

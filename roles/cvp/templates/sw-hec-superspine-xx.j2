@@ -37,6 +37,11 @@ peer-filter SUPERSPINE-PF
    {{ loop.index * 10 }} match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
 {% endfor %}
 !
+router bfd 
+   slow-timer 5000 
+   interval 200 min-rx 200 multiplier 3 default 
+   multihop interval 1000 min-rx 1000 multiplier 5 
+!
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}
 {% include "templates/sw-hec-superspine-bgp.j2" %}

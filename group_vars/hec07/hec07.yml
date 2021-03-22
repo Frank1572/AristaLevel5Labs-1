@@ -2,30 +2,30 @@
 eos:
   new_syntax: true
 #
-# HEC06-NW-MGMT01 - 198.19.245.0/25 (vlan900/lb/rt/sw)
-# HEC06-NW-MGMT02 - 198.19.245.128/27 (vlan900/lb/rt/sw)
-# HEC06-NW-OOB-MGMT01 - 10.192.18.0/23
-# d068207@ls5599 CLUSTER :~ $> grep naa-hec06 /ens/docu/exports/dns/hosts
-# 10.192.18.22;naa-hec06-01.net.sap.corp.;
-# 10.192.19.253;naa-hec06-cvp-01.net.sap.corp.;
-# 10.192.19.254;naa-hec06-01-idrac.net.sap.corp.;
+# HEC07-NW-MGMT01 - 198.19.246.0/25 (vlan900/lb/rt/sw)
+# HEC07-NW-MGMT02 - 198.19.246.128/28 (vlan900/lb/rt/sw)
+# HEC07-NW-MGMT?? - x.x.x.x (fab managment)
+# HEC07-NW-OOB-MGMT01 - 10.192.20.0/23
+# grep naa-hec07 /ens/docu/exports/dns/hosts
+# 10.192.20.46 naa-hec07-01.hec.oob.net.sap
+# 10.192.21.254 naa-hec07-idrac-01.hec.oob.net.sap
+# 10.192.21.253 naa-hec07-cvp-01.hec.oob.net.sap
 # 
 idrac:
-  ip: 10.192.19.254 # naa-hec06-01-idrac OKAY
+  ip: 10.192.21.254 # naa-hec07-idrac-01
   mask: 255.255.254.0 # OKAY
-  # oob1a p44 and oob1b p44 at hec06 10.192.18.0/23 (Osaka HEC OOB) 
-  gw: 10.192.18.1 # OKAY
-  name: naa-hec06-01-idrac # OKAY
+  gw: 10.192.2.1 # OKAY
+  name: naa-hec06-idrac-01 # OKAY
   # global dns IP's
-  dns1: 10.17.121.30
-  dns2: 10.17.122.10
+  dns1: 10.17.121.30 # OKAY
+  dns2: 10.17.122.10 - OKAY
   domain: hec.oob.net.sap
   password: arista
 #
 cva:
-  ip: 10.192.18.22 # naa-hec06-01 okay
+  ip: 10.192.20.46 # naa-hec06-01 okay
   mask: 255.255.254.0 # OKAY
-  gw: 10.192.18.1 # OKAY
+  gw: 10.192.20.1 # OKAY
   name: naa-hec06-01 # OKAY
   # global dns IP's
   dns1: 10.17.121.30
@@ -35,21 +35,21 @@ cva:
 #
 oob1:
   dhcp:
-    prefix: 10.192.18.0 # OKAY
+    prefix: 10.192.20.1 # OKAY
     mask: 255.255.254.0 # OKAY
-    router: 10.192.18.1 # OKAY
-    idrac_ip: 10.192.19.248 # sudo cat /var/lib/dhcpd/dhcpd.leases
-    cva_ip: 10.192.19.249 # sudo cat /var/lib/dhcpd/dhcpd.leases
+    router: 10.192.20.1 # OKAY
+    idrac_ip: 10.192.21.248 # sudo cat /var/lib/dhcpd/dhcpd.leases
+    cva_ip: 10.192.20.249 # sudo cat /var/lib/dhcpd/dhcpd.leases
 #
 cvp:
   version: cvp-2020.2.4-kvm.tgz # new Golden Release 2021 OKAY
   path_to_cvp_file: /data/ # file is on nw-admin-02.rot /data OKAY
-  ip_eth0: 10.192.19.253 # naa-hec05-cvp-01 OKAY
-  ip_eth1: 10.255.179.69 # xls HEC Transit hec05 178 and hec06 179
+  ip_eth0: 10.192.21.253 # naa-hec07-cvp-01 OKAY
+  ip_eth1: 10.255.180.69 # xls HEC Transit hec07 180 and hec08 181
   mask_eth0: 255.255.254.0 # OKAY
   mask_eth1: 255.255.255.240 # OKAY
-  gw: 10.192.18.1 # OKAY
-  name: naa-hec06-cvp-01.hec.oob.net.sap # to be created on TIC
+  gw: 10.192.20.1 # OKAY
+  name: naa-hec07-cvp-01.hec.oob.net.sap # to be created on TIC
   dns1: 10.17.121.30 # global dns server for non fab devices like oob OKAY
   dns2: 10.17.122.10 # global dns server for non fab devices like oob OKAY
   domain: hec.oob.net.sap # new domain OKAY
@@ -57,25 +57,25 @@ cvp:
   ntp2: 10.17.122.185 # timehost1 WDF OKAY
   device_int: eth0 # OKAY
   cluster_int: eth1 # OKAY
-  ingest_key: SecureKey06 # OKAY
-  vmname: cvp-hec06 # OKAY
+  ingest_key: SecureKey07 # OKAY
+  vmname: cvp-hec07 # OKAY
   KvmDomain: cvp # OKAY
   password: arista  # OKAY
   backupuser: cvpbkp  # OKAY
   eth1_routes:
-   # HEC06-NW-MGMT01 198.19.245.0/25 (all router and ipmi's also legacy inband)
-    - prefix: 198.19.245.0 # OKAY
-      mask: 25 # OKAY
-      nexthop: 198.19.245.1 # OKAY
-    # HEC06-NW-MGMT02 (all router and ipmi's also legacy inband)
-    - prefix: 198.19.245.128
-      mask: 27 
-      nexthop: 198.19.245.129
+   # HEC07-NW-MGMT01 198.19.245.0/25 (all router and ipmi's also legacy inband)
+   # - prefix: 198.19.245.0 # OKAY
+   #   mask: 25 # OKAY
+   #   nexthop: 198.19.245.1 # OKAY
+    # HEC07-NW-MGMT02 (all router and ipmi's also legacy inband)
+   # - prefix: 198.19.245.128
+   #   mask: 27 
+   #   nexthop: 198.19.245.129
   dhcp:
-    prefix: 10.192.18.0 # OKAY
+    prefix: 10.192.20.0 # OKAY
     mask: 255.255.254.0  # OKAY
-    range_low: 10.192.19.224  # to be created in TIC
-    range_high: 10.192.19.247  # to be created in TIC
+    range_low: 10.192.21.224  # to be created in TIC
+    range_high: 10.192.21.247  # to be created in TIC
   aaa_config:
     aaa_type: RADIUS
     servers:

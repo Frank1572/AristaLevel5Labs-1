@@ -1,6 +1,6 @@
 {# this is to have to macros available that are used for switch port generation #}
 {% import "templates/libs.j2" as funcs with context%}
-hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number}}
+hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number|string}}
 !
 snmp-server contact {{ item.snmp.contact}}
 snmp-server location {{ item.snmp.location}}
@@ -38,6 +38,9 @@ alias dhcp-status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
 {% if item.bgp is defined %}
+interface Loopback0
+   ip address {{ item.bgp.router_id | ipaddr('address') }}/32
+!
 router ospf 1
    router-id {{ item.bgp.router_id }}
    passive-interface default

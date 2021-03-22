@@ -8,7 +8,7 @@
 {% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.9000' %}
-hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{% if item.id < 10 %}0{% endif %}{{ item.id }}
 !
 {% for a in hec.superspine.number %}
 {% if a.id == item.id %}
@@ -17,6 +17,10 @@ snmp-server location {{a.snmp.location}}
 !
 {% endif %}
 {% endfor %}
+interface Loopback1
+   description Router-ID
+   ip address {{interface_loopback1}}/32
+!
 interface Loopback900
    description NW-MGMT
    ip address {{ item.nwmgmt_ip }}/32
@@ -36,5 +40,6 @@ peer-filter SUPERSPINE-PF
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}
 {% include "templates/sw-hec-superspine-bgp.j2" %}
+
   address-family ipv4
     network {{ interface_loopback1 }}/32

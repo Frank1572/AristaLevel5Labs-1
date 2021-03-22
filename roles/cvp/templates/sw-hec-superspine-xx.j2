@@ -48,3 +48,4 @@ router bgp {{ asn_generated }}
 
   address-family ipv4
     network {{ interface_loopback1 }}/32
+    network {{ item.nwmgmt_ip }}/32

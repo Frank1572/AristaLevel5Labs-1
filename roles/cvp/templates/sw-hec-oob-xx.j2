@@ -2,8 +2,8 @@
 {% import "templates/libs.j2" as funcs with context%}
 hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number}}
 !
-snmp-server contact {{ item.snmp_contact}}
-snmp-server location {{ item.snmp_location}}
+snmp-server contact {{ item.snmp.contact}}
+snmp-server location {{ item.snmp.location}}
 !
 {% if hec.is_tacacs %}
 ip tacacs source-interface Vlan21
@@ -43,12 +43,12 @@ alias dhcp-status
 interface Ethernet1-46
    switchport access vlan 21
 !
-{% for item in switch.ports %}
-{{ funcs.switchport(item) }}
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
 {% endfor %}
-{% if switch.port_channels is defined %}
-{% for item in switch.port_channels %}
-{{ funcs.switchportchannels(item) }}
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
 {% endfor %}{# end of port generation #}
 {% endif %}{# end of port-channel generation #}
 !

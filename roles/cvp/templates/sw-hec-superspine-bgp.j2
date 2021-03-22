@@ -5,12 +5,15 @@
   distance bgp 20 200 200
   maximum-paths 16 ecmp 16
   bgp listen range 10.100.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+{% for entry in range(1, 6) %}
+  bgp listen range 10.{{ ((loop.index) * 10) + 100 }}.{{ hec.hec_nr|int|string }}.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+{% endfor %}
   bgp listen range 10.255.0.0/16 peer-group UNDERLAY-DYNAMIC peer-filter SUPERSPINE-PF
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'update-source Loopback1',
                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', bgp_overlay_max_routes] %}
   neighbor EVPN-OVERLAY-DYNAMIC {{ setting }}
 {% endfor %}
-{% for setting in [eos_cmd.c_neighbor_peer_group, 'send-community standard extended', bgp_underlay_max_routes] %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'send-community standard extended', bgp_underlay_max_routes, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
   neighbor UNDERLAY-DYNAMIC {{ setting }}
 {% endfor %}
   address-family evpn

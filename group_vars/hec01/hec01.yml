@@ -184,18 +184,26 @@ hec:
         snmp:
           location: ROT02-RZ44-R1-8-RU2
           contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
       - id: 12
         snmp:
           location: ROT02-RZ44-R1-8-RU9
           contact: 34344371:ncons4402.wdf.sap.corp:1011
+        oob_ip: 10.178.136.12
+        nwmgmt_ip: 198.19.190.12
       - id: 13
         snmp:
           location: ROT02-RZ54-R1-8-RU14
           contact: 34344372:ncons5401.wdf.sap.corp:1011
+        oob_ip: 10.178.136.13
+        nwmgmt_ip: 198.19.190.13
       - id: 14
         snmp:
           location: ROT02-RZ54-R1-8-RU22
           contact: 34344373:ncons5401.wdf.sap.corp:1012
+        oob_ip: 10.178.136.14
+        nwmgmt_ip: 198.19.190.14
   ngdr_underlay:
     edge_as: 65200
   ngdr_overlay:

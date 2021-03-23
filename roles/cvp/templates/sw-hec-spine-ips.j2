@@ -1,5 +1,17 @@
 {# below lines get included by sw-hec-spine-xx.j2 and sw-hec-spine.j2 #}
 {# ! DEBUG: inside sw-hec-spine-ips.j2 #}
+{% set id_string = item.id|string %}
+{% set pod = id_string[0] %}
+{% set hec_pod_spine_fortygig = {'ports' : []} %}
+{% if hec.spine.pod is defined %}
+{% for i in hec.spine.pod.number %}
+{% if pod == i.id|string %}
+{% if i.fortygig is defined %}
+{% if hec_pod_spine_fortygig.update({'ports':i.fortygig})%}{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% for lc in range(lc_start, lc_end ) %}
 {% for subintf in range(1,port_range_end) %}
 {% set ip = loop.index * 2 - 2 %}
@@ -17,10 +29,10 @@
 {#
   determine the correct interface name based on the spine model
 #}
-{% if hec.spine.model|string is search('7280.*') %}
+{% if hec_spine_model|string is search('7280.*') %}
 {% set intf_name = subintf|string+'/1' %}
 {% endif %}
-{% if hec.spine.model|string is search('75[01][486].*')  %}
+{% if hec_spine_model|string is search('75[01][486].*')  %}
 {% set intf_name = lc|string+'/'+subintf|string+'/1' %}
 {% endif %}
 interface Ethernet {{intf_name}}
@@ -32,7 +44,13 @@ interface Ethernet {{intf_name}}
 {#
    let's see if we are in need to configure some links with different speed settings
 #}
-{% if hec.spine.fortygig is defined and intf_name in hec.spine.fortygig %}
+{% if hec_pod_spine_fortygig.ports|length > 0 %}
+{% if intf_name in hec_pod_spine_fortygig.ports %}
+ speed forced 40gfull
+{% else %}
+ speed forced {{ hec.fabric.interlink_speed }}
+{% endif %}
+{% elif hec.spine.fortygig is defined and pod|int == 1 and intf_name in hec.spine.fortygig %}
  speed forced 40gfull
 {#
    otherwise we take the default speed.

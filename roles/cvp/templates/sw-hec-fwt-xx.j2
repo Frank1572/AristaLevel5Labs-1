@@ -88,5 +88,5 @@ route-map ADMIN_MPLS_OUT permit 10
 !
 {# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
    but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
-{% set id_short = item.number | regex_replace('^.*fwt-(?P<id>[0123456]+)[ab]$', '\\g<id>') %}
+{% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
 {{ hec.routes.static['fwt'+id_short] }}

@@ -220,6 +220,17 @@
   with_items: "{{ hec.oob }}"
   tags:
     - configlets
+    - oob
+
+- name: Render sw-hec-fwt-xx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/sw-hec-fwt-xx.j2"
+    dest: "{{role_path}}/files/configs/sw-hec-fwt-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{ item.number }}"
+  with_items: "{{ hec.fwt }}"
+  tags:
+    - configlets
+    - fwt
 
 - set_fact:
     id: 'b'

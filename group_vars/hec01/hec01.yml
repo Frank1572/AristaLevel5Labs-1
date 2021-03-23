@@ -903,21 +903,27 @@ hec:
         - id: 1/1
           description: hec01f0065,Data
           po: 800
+          speed: 40gfull
         - id: 2/1
           description: hec01f0066,Data
           po: 805
+          speed: 40gfull
         - id: 3/1
           description: hec01f0067,Data
           po: 810
+          speed: 40gfull
         - id: 4/1
           description: hec01f0068,Data
           po: 815
+          speed: 40gfull
         - id: 5/1
           description: hec01f0087
-          po: 50
+          po: 50     
+          speed: 40gfull
         - id: 6/1
           description: hec01f0088
-          po: 60        
+          po: 60     
+          speed: 40gfull   
         - id: 30/1
           description: sw-hec01-str-01b, Et30
           po: 42
@@ -927,16 +933,22 @@ hec:
       port_channels:
         - id: 800
           description: hec01f0065,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 50
           description: hec01f0087
+          trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
+          trunk: 30,40,50,55,130,2001-2499
     - number: 1b
       snmp:
         location: RZ40-3L-6-40
@@ -953,21 +965,27 @@ hec:
         - id: 1/1
           description: hec01f0065,Data
           po: 800
+          speed: 40gfull
         - id: 2/1
           description: hec01f0066,Data
           po: 805
+          speed: 40gfull
         - id: 3/1
           description: hec01f0067,Data
           po: 810
+          speed: 40gfull
         - id: 4/1
           description: hec01f0068,Data
           po: 815
+          speed: 40gfull
         - id: 5/1
           description: hec01f0087
           po: 50
+          speed: 40gfull
         - id: 6/1
           description: hec01f0088
           po: 60
+          speed: 40gfull
         - id: 30/1
           description: sw-hec01-str-01a, Et30
           po: 42
@@ -977,16 +995,22 @@ hec:
       port_channels:
         - id: 50
           description: hec01f0087
+          trunk: 30,40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
+          trunk: 30,40,50,55,130,2001-2499
         - id: 800
           description: hec01f0065,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
+          trunk: 30,40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
+          trunk: 30,40,50,55,130,2001-2499
     - number: 2a
       snmp:
         location: DE-ROT2-RZ43-5L-9-39
@@ -1018,12 +1042,14 @@ hec:
         - id: 6
           description: hec01f0085r, BMC
           access_vlan: 10
+          speed: 100full
         - id: 7
           description: hec01f0089, e0M
           access_vlan: 110
         - id: 8
           description: hec01f0089r, BMC
           access_vlan: 10
+          speed: 100full
         - id: 9
           description: hec01b0019
           po: 401
@@ -1072,16 +1098,22 @@ hec:
       port_channels:
         - id: 401
           description: hec01b0019
+          trunk: 40,50,55,110,140
         - id: 402
           description: hec01coh01a1
+          trunk: 140
         - id: 403
           description: hec01coh01a2
+          trunk: 140
         - id: 404
           description: hec01coh01a3
+          trunk: 140
         - id: 405
           description: hec01coh01a4
+          trunk: 140
         - id: 406
-          description: hec01coh01a5 
+          description: hec01coh01a5
+          trunk: 140 
     - number: 2b
       snmp:
         location: DE-ROT2-RZ43-5L-9-37
@@ -1113,12 +1145,14 @@ hec:
         - id: 6
           description: hec01f0086r, BMC
           access_vlan: 10
+          speed: 100full
         - id: 7
           description: hec01f0090, e0M
           access_vlan: 110
         - id: 8
           description: hec01f0090r, BMC
           access_vlan: 10
+          speed: 100full
         - id: 9
           description: hec01b0019
           po: 401
@@ -1167,16 +1201,22 @@ hec:
       port_channels:
         - id: 401
           description: hec01b0019
+          trunk: 40,50,55,110,140
         - id: 402
           description: hec01coh01a1
+          trunk: 140
         - id: 403
           description: hec01coh01a2
+          trunk: 140
         - id: 404
           description: hec01coh01a3
+          trunk: 140
         - id: 405
           description: hec01coh01a4
+          trunk: 140
         - id: 406
           description: hec01coh01a5
+          trunk: 140
     - number: 3a
       snmp:
         location: EMEA-DE-ROT-RZ43-5L-9-35

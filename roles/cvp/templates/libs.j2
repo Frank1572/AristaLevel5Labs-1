@@ -143,6 +143,9 @@ interface Ethernet{{ interface.id }}
 {% if vrrp_group.auth is defined %}
    vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
 {% endif %}
+{% if vrrp_group.track is defined %}
+   vrrp {{vrrp_group.id}} track {{ vrrp_group.track.object }} decrement {{ vrrp_group.track.weight }}
+{% endif %}
 {% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
@@ -174,4 +177,34 @@ interface Port-Channel{{ portchannel.id }}
 {% endif %}
 {% endif %}
 !
+{%- endmacro %}
+
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
+{% set route_statement = 'ip route' %}
+{% if vrf != '' %}
+{% set route_statement = route_statement + ' vrf ' + vrf %}
+{% endif %}
+{% set route_statement = route_statement + ' ' + dest %}
+{% if intf != '' %}
+{% set route_statement = route_statement + ' ' + intf %}
+{% endif %}
+{% if gw != '' %}
+{% set route_statement = route_statement + ' ' + gw %}
+{% endif %}
+{% if met != '' %}
+{% set route_statement = route_statement + ' ' + met %}
+{% endif %}
+{{ route_statement }}
+{% if red_bgp == True %}
+router bgp {{ asn_generated_global[0]|string }}
+{% if vrf != '' %}
+   vrf {{ vrf }}
+     redistribute static
+{% else %}
+   redistribute static
+{% if dest == '0.0.0.0/0' %}
+   neighbor SPINE-PG default-originate
+{% endif %}
+{% endif %}
+{% endif %}
 {%- endmacro %}

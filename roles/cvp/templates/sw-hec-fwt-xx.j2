@@ -1,6 +1,6 @@
 {# this is to have to macros available that are used for switch port generation #}
 {% import "templates/libs.j2" as funcs with context%}
-hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number|string}}
+hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number|string}}
 !
 snmp-server contact {{ item.snmp.contact}}
 snmp-server location {{ item.snmp.location}}
@@ -15,27 +15,13 @@ logging source-interface Vlan21
 !
 {{eos_cmd.c_ntp_source}} Vlan21
 !
-{% if item.type is defined and item.type == 'core' %}
 mlag configuration
-   domain-id MLAG-oob
+   domain-id MLAG-fwt
 !
 vlan 4094
    name MLAG_Vlan
 !
 spanning-tree mst 0-1 priority 28672
-!
-alias dhcp-off
-   10 bash sudo service dhcpd stop
-   20 bash sudo service dhcpd status
-!
-alias dhcp-on
-   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
-   20 bash sudo service dhcpd start
-   30 bash sudo service dhcpd status
-!
-alias dhcp-status
-   10 bash sudo service dhcpd status
-   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
 {% if item.bgp is defined %}
 interface Loopback0
@@ -67,15 +53,13 @@ interface Loopback494
 !
 track 494 interface Loopback494 line-protocol
 !
-interface Vlan21
-   vrrp 21 track 494 decrement 10
-!
 interface Vlan4094
    ip ospf network point-to-point
 !
 ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 !
 ip routing
+no ip routing vrf OOB
 !
 ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
 {% for prefix in hec.admin_mpls %}
@@ -91,12 +75,6 @@ route-map ADMIN_MPLS_IN permit 20
 route-map ADMIN_MPLS_OUT permit 10
    match ip address prefix-list PREF_ADMIN_MPLS
 !
-{% endif %}{# end of oob-core specific settings #}
-!
-{# setting all ports to default access-port with oob vlan 21 #}
-interface Ethernet1-46
-   switchport access vlan 21
-!
 {% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}
@@ -108,23 +86,7 @@ interface Ethernet1-46
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
 !
-{% if item.type is not defined or item.type != 'core' %}
-! === Uplinks to the OOB core switch pair
-interface Port-Channel1
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   port-channel lacp fallback individual
-!
-interface Ethernet47
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   channel-group 1 mode active
-!
-interface Ethernet48
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   channel-group 1 mode active
-!
-ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
-!
-{% endif %}
+{# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
+   but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
+{% set id_short = item.number | regex_replace('^.*fwt-(?P<id>[0123456]+)[ab]$', '\\g<id>') %}
+{{ hec.routes.static['fwt'+id_short] }}

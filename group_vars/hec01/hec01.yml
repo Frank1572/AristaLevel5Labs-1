@@ -137,10 +137,29 @@ hec:
         port: 9995
     source: Loopback900
   admin_mpls:
-    - prefix_mask: "10.178.136.0/23"
-      sequence: "10"
-    - prefix_mask: "10.178.138.0/23"
-      sequence: "20"
+    prefix_mask:
+      - 10.178.136.0/23
+      - 10.178.138.0/23
+      - 10.255.241.0/24
+      - 100.124.0.0/19
+      - 147.204.24.0/22
+      - 147.204.144.0/21
+      - 198.18.0.0/19
+      - 198.19.190.0/24
+      - 198.19.192.0/23
+      - 198.19.196.0/23
+      - 198.19.198.0/24
+      - 198.19.208.0/20
+      - 198.19.224.208/28
+      - 198.19.226.0/24
+      - 198.19.234.0/24
+      - 198.19.240.0/24
+      - 198.19.0.0/19
+      - 198.19.228.0/24
+      - 198.19.224.128/28
+      - 100.127.16.0/21
+      - 100.124.254.0/23
+      - 10.255.241.0/28
   admin_sw_interface: Ethernet1
   admin_sw_description_oob1a: "rot13dc02-adm-03-co Et1/13"
   admin_sw_description_oob1b: "rot06dc01-adm-04-co Et1/13"
@@ -381,6 +400,73 @@ hec:
       snmp:
         contact: 34340574:ncons-hec02-06.net.sap.corp:1016
         location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+  fwt:
+    - number: 01a
+      snmp:
+        contact: 34677795:ncons4407.wdf.sap.corp:1026
+        location: DE-ROT2-RZ44-R1-3-41
+      ports:
+        - id: 1
+          description: rot13dc02-adm-03-co , Et1/14
+          ip: 10.255.200.12/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec01-01, eth1-03
+          po: 1
+        - id: 3
+          description: fw-hec01-02, eth1-03
+          po: 2
+        - id: 4
+          description: nw147-204-5-246_gi1/0/19
+          ip: 147.204.5.206/24
+          vrrp:
+            - id: 200
+              priority: 105
+              ip: 147.204.5.200
+        - id: 47
+          description: fw-hec09-01, eth1-04
+          po: 3
+        - id: 48
+          description: fw-hec09-02, eth1-04
+          po: 4
+        - id: 55/1
+          po: 42
+        - id: 56/1
+          po: 42
+        - id: 915
+          type: vlan
+          ip: 10.255.241.2/28
+          vrrp:
+            - id: 115
+              priority: 105
+              ip: 10.255.241.1
+              auth: fwtnw
+              track:
+                - object: 494
+                  weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec01-01
+          trunk: 915
+        - id: 2
+          description: fw-hec01-02
+          trunk: 915
+        - id: 3
+          description: fw-hec09-01
+          trunk: 915
+        - id: 4
+          description: fw-hec09-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.34
+        local_asn: 64531.1
+        peers:
+          - ipv4: 10.255.200.13
+            remote_asn: 65535
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.1
   routes:
     static:
       brdr01:
@@ -429,6 +515,10 @@ hec:
         - destination: 198.19.251.113/32
           interface: Null0
           metric: 240
+      fwt01:
+        - destination: 100.124.0.0/19
+          nexthop: 10.255.241.12
+          interface: Vlan915
   brdr:
     - number: 1a
       snmp:

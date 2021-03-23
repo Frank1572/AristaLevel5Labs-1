@@ -17,6 +17,8 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
+ 	- Use dhcp-4.2.5-15.fc18.i686.rpm for EOS versions prior to 4.23.x 
+	- Use dhcp-4.2.5-68.el7.centos.1.i686.rpm for EOS 4.23.x 
 
 		1) Copy the DHCP RPM and the dhcpd.conf to the switch in the /mnt/flash/ directory, by issuing the following command
 		Example for Windows using pscp:

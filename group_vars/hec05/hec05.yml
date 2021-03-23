@@ -142,7 +142,7 @@ hec:
   radius1: 169.145.33.70 # there is no radius
   radius2: 10.4.201.55  #  there is no radius
   radius_key: 07037265610E0D170E54333D547F3D  # there is no radius
-  is_tacacs: True 
+  is_tacacs: True
   tacacs:
     servers:
       - ipv4: 169.145.242.181
@@ -263,6 +263,12 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6 # brdr2ab
         uplink_ports: 51/1,52/1,53/1,54/1
+  oob:
+    - number: 01a
+      type: core
+      snmp:
+        contact: incorrect
+        location: incorrect
   # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008
   # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37
   # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008
@@ -575,7 +581,7 @@ hec:
       port_channels:
         - id: 48
           description: naa-hec01-01, in-band
-          access_vlan: 916       
+          access_vlan: 916
   str: # below is for storage but there is no storage in hec11 or hec12
     - number: 1a
       snmp:
@@ -1261,7 +1267,7 @@ hec:
       200 deny vlan 60 0x000 ip 198.18.152.0/21 198.18.152.0/21 log
       210 permit vlan 60 0x000 ip 198.18.152.0/21 any
       220 permit vlan 60 0x000 ip any any log
-      230 permit ip any any      
+      230 permit ip any any
 #       ip access-list sw-hec05-235#
   hana_acl_rules: |
       10 permit icmp any any

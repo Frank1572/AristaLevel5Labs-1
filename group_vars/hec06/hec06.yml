@@ -9,11 +9,11 @@ eos:
 # 10.192.18.22;naa-hec06-01.net.sap.corp.;
 # 10.192.19.253;naa-hec06-cvp-01.net.sap.corp.;
 # 10.192.19.254;naa-hec06-01-idrac.net.sap.corp.;
-# 
+#
 idrac:
   ip: 10.192.19.254 # naa-hec06-01-idrac OKAY
   mask: 255.255.254.0 # OKAY
-  # oob1a p44 and oob1b p44 at hec06 10.192.18.0/23 (Osaka HEC OOB) 
+  # oob1a p44 and oob1b p44 at hec06 10.192.18.0/23 (Osaka HEC OOB)
   gw: 10.192.18.1 # OKAY
   name: naa-hec06-01-idrac # OKAY
   # global dns IP's
@@ -69,7 +69,7 @@ cvp:
       nexthop: 198.19.245.1 # OKAY
     # HEC06-NW-MGMT02 (all router and ipmi's also legacy inband)
     - prefix: 198.19.245.128
-      mask: 27 
+      mask: 27
       nexthop: 198.19.245.129
   dhcp:
     prefix: 10.192.18.0 # OKAY
@@ -122,9 +122,9 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.192.19.252
   oob_cvp: 10.192.19.253
-  as_low: 4201260817 
+  as_low: 4201260817
   # 64106.10001 converted
-  as_high: 4201262015 
+  as_high: 4201262015
   # 64106.11199 converted
   cvp_ingest_key: SecureKey06
   dns1: 169.145.253.6 # dns01-osa HEC06-CIS01-DNS01
@@ -139,10 +139,10 @@ hec:
   radius1: 169.145.33.70 # there is no radius
   radius2: 10.4.201.55  #  there is no radius
   radius_key: 07037265610E0D170E54333D547F3D  # there is no radius
-  is_tacacs: True 
+  is_tacacs: True
   tacacs:
     servers:
-      - ipv4: 169.145.250.181 
+      - ipv4: 169.145.250.181
       - ipv4: 169.145.250.182
       - ipv4: 169.145.250.183
   sflow:
@@ -261,6 +261,12 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6 # brdr2ab
         uplink_ports: 51/1,52/1,53/1,54/1
+  oob:
+    - number: 01a
+      type: core
+      snmp:
+        contact: incorrect
+        location: incorrect
   # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008
   # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37
   # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008
@@ -573,7 +579,7 @@ hec:
       port_channels:
         - id: 48
           description: naa-hec01-01, in-band
-          access_vlan: 916       
+          access_vlan: 916
   str: # below is for storage but there is no storage in hec11 or hec12
     - number: 1a
       snmp:
@@ -1259,8 +1265,8 @@ hec:
       210 permit vlan 60 0x000 ip 198.18.184.0/22 any
       220 permit vlan 60 0x000 ip any any log
       230 permit ip any any
-      
-      
+
+
 #       ip access-list sw-hec06-227#
   hana_acl_rules: |
       10 permit icmp any any

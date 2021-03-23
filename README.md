@@ -20,6 +20,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
  	- Use dhcp-4.2.5-15.fc18.i686.rpm for EOS versions prior to 4.23.x 
 	- Use dhcp-4.2.5-68.el7.centos.1.i686.rpm for EOS 4.23.x 
 
+
 		1) Copy the DHCP RPM and the dhcpd.conf to the switch in the /mnt/flash/ directory, by issuing the following command
 		Example for Windows using pscp:
 		pscp.exe -scp roles\oob01\files\dhcp-4.2.5-15.fc18.i686.rpm <user>@<sw-hecXX-OOB01a/b-IP>:/mnt/flash/

@@ -4,7 +4,7 @@ These ansible playbooks are used to configure the cloud vision appliance (CVA), 
 
 It is required to install data from repository "repo_hec_globals". Run the following after cloning this repository:
 
- - ansible-galaxy install -r roles/requirements.yml -c --force
+ 	ansible-galaxy install -r roles/requirements.yml -c --force
 
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 
@@ -17,7 +17,10 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
-
+ 	- Use dhcp-4.2.5-15.fc18.i686.rpm for EOS versions prior to 4.23.x 
+	- Use dhcp-4.2.5-68.el7.centos.1.i686.rpm for EOS 4.23.x 
+                
+		```
 		1) Copy the DHCP RPM and the dhcpd.conf to the switch in the /mnt/flash/ directory, by issuing the following command
 		Example for Windows using pscp:
 		pscp.exe -scp roles\oob01\files\dhcp-4.2.5-15.fc18.i686.rpm <user>@<sw-hecXX-OOB01a/b-IP>:/mnt/flash/
@@ -34,6 +37,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 
 		4) On the OOB switch: Make the extension persist over reboots
 		copy installed-extensions boot-extensions
+		```
 
   - Put the following alias configuration snippet on OOB01 a/b to be able to enable and disable the DHCP service
 		
@@ -89,7 +93,12 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
   
   - Set the static IP assigned to the CVP in the file "\<ansible-home\>/cvp" example x.x.x.253
 
-       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
+       ```
+       ansible-playbook cvp.yml -i cvp --tags "configlets" --timeout 240  --limit hecXX
+       
+       ansible-playbook cvp.yml -i cvp --tags "upload_configlets" --timeout 240  --limit hecXX
+       
+       ansible-playbook cvp.yml -i cvp --tags "create_containers" --timeout 240  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 

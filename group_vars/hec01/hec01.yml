@@ -1081,10 +1081,10 @@ hec:
   str:
     - number: 1a
       snmp:
-        location: foo
-        contact: bar
+        location: RZ40-3L-5-40
+        contact: 34358968:ncons4012.wdf.sap.corp:1023
       oob_ip: 10.178.136.42
-      nwmgmt_ip: 198.19.190.15
+      nwmgmt_ip: 198.19.190.42
       spine_port_towards_leaf: Et3/5/1
       uplinks:
         - 25/1
@@ -1094,17 +1094,27 @@ hec:
       ports:
         - id: 1/1
           description: hec01f0065,Data
+          po: 800
         - id: 2/1
           description: hec01f0066,Data
+          po: 805
         - id: 3/1
           description: hec01f0067,Data
+          po: 810
         - id: 4/1
           description: hec01f0068,Data
-        - id: 27/1
-          description: sw-hec01-str-01b, Et27
+          po: 815
+        - id: 5/1
+          description: hec01f0087
+          po: 50
+        - id: 6/1
+          description: hec01f0088
+          po: 60        
+        - id: 30/1
+          description: sw-hec01-str-01b, Et30
           po: 42
-        - id: 28/1
-          description: sw-hec01-str-01b, Et28
+        - id: 31/1
+          description: sw-hec01-str-01b, Et31
           po: 42
       port_channels:
         - id: 800
@@ -1115,16 +1125,16 @@ hec:
           description: hec01f0067,Data
         - id: 815
           description: hec01f0068,Data
-        - id: 1605
-          description: rt-hec01-605, Po10
-        - id: 1606
-          description: rt-hec01-606, Po10
+        - id: 50
+          description: hec01f0087
+        - id: 60
+          description: hec01f0088
     - number: 1b
       snmp:
-        location: foo
-        contact: bar
+        location: RZ40-3L-6-40
+        contact: 34358969:ncons4012.wdf.sap.corp:1024
       oob_ip: 10.178.136.43
-      nwmgmt_ip: 198.19.190.15
+      nwmgmt_ip: 198.19.190.43
       spine_port_towards_leaf: Et3/6/1
       uplinks:
         - 25/1
@@ -1134,19 +1144,33 @@ hec:
       ports:
         - id: 1/1
           description: hec01f0065,Data
+          po: 800
         - id: 2/1
           description: hec01f0066,Data
+          po: 805
         - id: 3/1
           description: hec01f0067,Data
+          po: 810
         - id: 4/1
           description: hec01f0068,Data
-        - id: 27/1
-          description: sw-hec01-str-01a, Et27
+          po: 815
+        - id: 5/1
+          description: hec01f0087
+          po: 50
+        - id: 6/1
+          description: hec01f0088
+          po: 60
+        - id: 30/1
+          description: sw-hec01-str-01a, Et30
           po: 42
-        - id: 28/1
-          description: sw-hec01-str-01a, Et28
+        - id: 31/1
+          description: sw-hec01-str-01a, Et31
           po: 42
       port_channels:
+        - id: 50
+          description: hec01f0087
+        - id: 60
+          description: hec01f0088
         - id: 800
           description: hec01f0065,Data
         - id: 805
@@ -1155,23 +1179,82 @@ hec:
           description: hec01f0067,Data
         - id: 815
           description: hec01f0068,Data
-        - id: 1605
-          description: rt-hec01-605, Po10
-        - id: 1606
-          description: rt-hec01-606, Po10
     - number: 2a
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ43-5L-9-39
+        contact: 34413795:ncons4317.wdf.sap.corp:1023
       oob_ip: 10.178.136.23
-      nwmgmt_ip: 198.19.190.15
-      spine_port_towards_leaf: Et3/5/1
+      nwmgmt_ip: 198.19.190.23
+      spine_port_towards_leaf: Et6/31/1
       uplinks:
         - 51/1
         - 52/1
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec01f0081, e0M
+          access_vlan: 110
+        - id: 2
+          description: hec01f0081r, BMC
+          access_vlan: 10
+        - id: 3
+          description: hec01f0083, e0M
+          access_vlan: 110
+        - id: 4
+          description: hec01f0083r, BMC
+          access_vlan: 10
+        - id: 5
+          description: hec01f0085, e0M
+          access_vlan: 110
+        - id: 6
+          description: hec01f0085r, BMC
+          access_vlan: 10
+        - id: 7
+          description: hec01f0089, e0M
+          access_vlan: 110
+        - id: 8
+          description: hec01f0089r, BMC
+          access_vlan: 10
+        - id: 9
+          description: hec01b0019
+          po: 401
+        - id: 10
+          description: hec01bb019
+          po: 401
+        - id: 11
+          description: hec19b001,mgmt
+          access_vlan: 110
+        - id: 12 
+          description: hec01coh01a1,Sfp1
+          po: 402
+        - id: 13
+          description: hec01coh01a2,Sfp1
+          po: 403
+        - id: 14
+          description: hec01coh01a3,Sfp1
+          po: 404
+        - id: 15
+          description: hec01coh01a4,Sfp1
+          po: 405
+        - id: 16
+          description: hec01coh01a5,Sfp1
+          po: 406
+        - id: 17
+          description: hec01coh01a1,ET1
+          access_vlan: 110
+        - id: 18
+          description: hec01coh01a2,ET1
+          access_vlan: 110
+        - id: 19
+          description: hec01coh01a3,ET1
+          access_vlan: 110
+        - id: 20
+          description: hec01coh01a4,ET1
+          access_vlan: 110
+        - id: 21
+          description: hec01coh01a5,ET1
+          access_vlan: 110
         - id: 49/1
           description: sw-hec01-str-02b, Et49/1
           po: 42
@@ -1179,21 +1262,94 @@ hec:
           description: sw-hec01-str-02b, Et50/1
           po: 42
       port_channels:
-        - id: 800
-          description: hec01f
+        - id: 401
+          description: hec01b0019
+        - id: 402
+          description: hec01coh01a1
+        - id: 403
+          description: hec01coh01a2
+        - id: 404
+          description: hec01coh01a3
+        - id: 405
+          description: hec01coh01a4
+        - id: 406
+          description: hec01coh01a5 
     - number: 2b
       snmp:
-        location: foo
-        contact: bar
+        location: DE-ROT2-RZ43-5L-9-37
+        contact: 34413794:ncons4317.wdf.sap.corp:1023
       oob_ip: 10.178.136.24
-      nwmgmt_ip: 198.19.190.15
-      spine_port_towards_leaf: Et3/5/1
+      nwmgmt_ip: 198.19.190.24
+      spine_port_towards_leaf: Et6/32/1
       uplinks:
         - 51/1
         - 52/1
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec01f0082, e0M
+          access_vlan: 110
+        - id: 2
+          description: hec01f0082r, BMC
+          access_vlan: 10
+        - id: 3
+          description: hec01f0084, e0M
+          access_vlan: 110
+        - id: 4
+          description: hec01f0084r, BMC
+          access_vlan: 10
+        - id: 5
+          description: hec01f0086, e0M
+          access_vlan: 110
+        - id: 6
+          description: hec01f0086r, BMC
+          access_vlan: 10
+        - id: 7
+          description: hec01f0090, e0M
+          access_vlan: 110
+        - id: 8
+          description: hec01f0090r, BMC
+          access_vlan: 10
+        - id: 9
+          description: hec01b0019
+          po: 401
+        - id: 10
+          description: hec01bb019
+          po: 401
+        - id: 11
+          description: hec19b001,mgmt
+          access_vlan: 110
+        - id: 12
+          description: hec01coh01a1,Sfp2
+          po: 402
+        - id: 13
+          description: hec01coh01a2,Sfp2
+          po: 403
+        - id: 14
+          description: hec01coh01a3,Sfp2
+          po: 404
+        - id: 15
+          description: hec01coh01a4,Sfp2
+          po: 405
+        - id: 16
+          description: hec01coh01a5,Sfp2
+          po: 406
+        - id: 17
+          description: hec01coh01a1,IPMI
+          access_vlan: 10
+        - id: 18
+          description: hec01coh01a2,IPMI
+          access_vlan: 10
+        - id: 19
+          description: hec01coh01a3,IPMI
+          access_vlan: 10
+        - id: 20
+          description: hec01coh01a4,IPMI
+          access_vlan: 10
+        - id: 21
+          description: hec01coh01a5,IPMI
+          access_vlan: 10
         - id: 49/1
           description: sw-hec01-str-02a, Et49/1
           po: 42
@@ -1201,8 +1357,18 @@ hec:
           description: sw-hec01-str-02a, Et50/1
           po: 42
       port_channels:
-        - id: 800
-          description: hec01f
+        - id: 401
+          description: hec01b0019
+        - id: 402
+          description: hec01coh01a1
+        - id: 403
+          description: hec01coh01a2
+        - id: 404
+          description: hec01coh01a3
+        - id: 405
+          description: hec01coh01a4
+        - id: 406
+          description: hec01coh01a5
     - number: 3a
       snmp:
         location: EMEA-DE-ROT-RZ43-5L-9-35

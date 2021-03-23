@@ -183,18 +183,20 @@ hec:
         - id: 1
           model: 7280-60
           linecards: 1
+          fortygig: [1/1, 2/1, 9/1, 10/1, 11/1, 12/1, 13/1, 14/1]
         - id: 2
           model: 7504
           linecards: 2
+          fortygig: []
         - id: 3
           model: 7280-60
           linecards: 1
+          fortygig: []
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1
     # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
-    fortygig: [1/1, 2/1, 9/1, 10/1, 11/1, 12/1, 13/1, 14/1]
     # list the snmp contact and location for spines in this order
     number:
       - id: 11

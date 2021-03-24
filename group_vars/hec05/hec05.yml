@@ -125,8 +125,8 @@ hec:
   oob_prefix: 10.192.16
   oob_mask: 23
   oob_vrf: OOB
-  oob_cvx: 10.192.16.252
-  oob_cvp: 10.192.16.253
+  oob_cvx: 10.192.17.252
+  oob_cvp: 10.192.17.253
   as_low: 4201195281
   as_high: 4201196479
   cvp_ingest_key: SecureKey05

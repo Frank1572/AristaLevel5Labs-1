@@ -1,8 +1,10 @@
 # Configure and Install/ Upgrade TerminAttr daemon
 
-For information about variables for the agent, please see the README.md in https://github.wdf.sap.corp/thecoolkids/arista_terminattr/README.md
+For information about variables for the agent, please see the README.md in https://github.wdf.sap.corp/thecoolkids/arista_terminattr/blob/master/README.md
 
 # Run the playbook
+
+The following playbook "pb_telemetry.yml" is just a non-existing example. In order to create a playbook and use the role "arista_terminattr", please follow the information mentioned in the above paragraph.
 
 To maintain the daemon configuration on a device, just run
 

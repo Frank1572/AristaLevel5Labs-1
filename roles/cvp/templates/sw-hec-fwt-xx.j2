@@ -89,6 +89,35 @@ route-map ADMIN_MPLS_OUT permit 10
 {# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
    but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
 {% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
-{% for rt_entry in hec.routes.static['fwt'+id_short] %}
-{{ rt_entry }}
+{% for route in hec.routes.static['fwt'+id_short] %}
+{{ route }}
+{% if route.vrf is not defined %}
+{% set vrf = '' %}
+{% else %}
+{% set vrf = route.vrf %}
+{% endif %}
+{% if route.interface is not defined %}
+{% set interface = '' %}
+{% else %}
+{% set interface = route.interface %}
+{% endif %}
+{% if route.nexthop is not defined %}
+{% set nexthop = '' %}
+{% else %}
+{% set nexthop = route.nexthop %}
+{% endif %}
+{% if route.metric is not defined %}
+{% set metric = '' %}
+{% else %}
+{% set metric = route.metric|string %}
+{% endif %}
+{% if route.redist_bgp is not defined %}
+{% set redist_bgp = False %}
+{% else %}
+{% set redist_bgp = route.redist_bgp %}
+{% endif %}
+{#
+  call the macro to render the route statement
+#}
+{{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}

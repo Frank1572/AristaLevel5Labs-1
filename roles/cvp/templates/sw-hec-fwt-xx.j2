@@ -1,6 +1,6 @@
 {# this is to have to macros available that are used for switch port generation #}
 {% import "templates/libs.j2" as funcs with context%}
-hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number|string}}
+hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number }}
 !
 snmp-server contact {{ item.snmp.contact}}
 snmp-server location {{ item.snmp.location}}

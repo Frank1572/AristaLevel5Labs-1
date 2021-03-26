@@ -143,24 +143,13 @@ hec:
   is_tacacs: False
   # Admin MPLS Prefixlist
   admin_mpls:
-      # HEC1x-IPMI01 (vlan10)
-    - prefix_mask: "100.96.160.0/23"
-      sequence: "5"
-      # HEC1x-TS01 (vlan70) and HEC1x-TIC1 (vlan75)
-    - prefix_mask: "100.127.128.0/21"
-      sequence: "10"
-      # HEC1x-NW-MGMT01 (vlan900)
-    - prefix_mask: "198.19.170.0/24"
-      sequence: "15"
-      # HEC18-NW-MGMT02 (fabric/loopback900)
-    - prefix_mask: "198.19.171.0/24"
-      sequence: "20"
-      # HEC18-NW-MGMT03 (wan)
-    - prefix_mask: "198.19.224.64/24"
-      sequence: "25"
-      # vlan915 (transport)
-    - prefix_mask: "10.255.244.0/28"
-      sequence: "30"
+    prefix_mask:
+      - 100.96.160.0/23
+      - 100.127.128.0/21
+      - 198.19.170.0/24
+      - 198.19.171.0/24
+      - 198.19.224.64/24
+      - 10.255.244.0/28
   admin_sw_interface: Ethernet45
   admin_sw_description_oob1a: "cosdc02-adm-03-co P1/13"
   admin_sw_description_oob1b: "cosdc02-adm-04-co P1/13"
@@ -203,7 +192,7 @@ hec:
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
   oob:
-    - number: 01a
+    - number: "01a"
       type: core
       snmp:
         contact: incorrect

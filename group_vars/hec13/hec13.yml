@@ -144,8 +144,8 @@ hec:
         port: 9995
     source: Loopback900
   admin_mpls:
-    - prefix_mask: "10.9.244.0/23"
-      sequence: "20"
+    prefix_mask:
+      - 10.9.244.0/23
   admin_sw_interface: Ethernet1
   admin_sw_description_oob1a: tordc01-adm-03-co, Et1/18
   admin_sw_description_oob1b: tordc01-adm-04-co, Et1/18
@@ -264,7 +264,7 @@ hec:
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
   oob:
-    - number: 01a
+    - number: "01a"
       type: core
       snmp:
         contact: incorrect

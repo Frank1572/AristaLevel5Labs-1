@@ -1,4 +1,5 @@
 {# hec_sw_leaf_routing_configuration.j2 #}
+{% set asn_generated_global = [] %}
 {% import "templates/libs.j2" as funcs with context %}
 {#
  first, let's find out the leaf's purpose.
@@ -25,7 +26,6 @@
 {% if leafpurpose == 'h' %}
 {% set loop_items = hec.shs %}
 {% endif %}
-{% set asn_generated_global = [] %}
 {#
  what we do next is to check for the "sub type" of the give leaf purpose.
  this just means we will not generate for each and every borderleaf listed under

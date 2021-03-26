@@ -137,7 +137,12 @@ interface Ethernet{{ interface.id }}
 #}
 {% if interface.vrrp is defined %}{# START vrrp is defined #}
 {% for vrrp_group in interface.vrrp %}
-   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group.priority }}
+{% if vrrp_group.priority is not defined %}
+{% set vrrp_group_priority = "100" %}
+{% else %}
+{% set vrrp_group_priority = vrrp_group.priority %}
+{% endif %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group_priority }}
    vrrp {{vrrp_group.id}} preempt delay minimum 180
    vrrp {{vrrp_group.id}} preempt delay reload 180
 {% if vrrp_group.auth is defined %}

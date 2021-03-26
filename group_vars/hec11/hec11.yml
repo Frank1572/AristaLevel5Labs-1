@@ -211,6 +211,12 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6 # brdr2ab
         uplink_ports: 51/1,52/1,53/1,54/1
+  oob:
+    - number: 01a
+      type: core
+      snmp:
+        contact: incorrect
+        location: incorrect
   # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008   #  correct
   # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37 # correct
   # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008  # correct

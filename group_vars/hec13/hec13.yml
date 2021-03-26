@@ -263,6 +263,12 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
+  oob:
+    - number: 01a
+      type: core
+      snmp:
+        contact: incorrect
+        location: incorrect
   oob01a_snmp_contact: 34672518:ncons-hec13-oob-02.net.sap.corp:1006
   oob01a_snmp_location: Toronto1-(TR3)-Cage2-3.1-12-39
   oob01b_snmp_contact: 34672517:ncons-hec13-oob-02.net.sap.corp:1007

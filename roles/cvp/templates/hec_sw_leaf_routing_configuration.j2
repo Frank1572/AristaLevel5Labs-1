@@ -1,4 +1,6 @@
 {# hec_sw_leaf_routing_configuration.j2 #}
+{% set asn_generated_global = [] %}
+{% import "templates/libs.j2" as funcs with context %}
 {#
  first, let's find out the leaf's purpose.
   - 'b' is a borderleaf
@@ -24,7 +26,6 @@
 {% if leafpurpose == 'h' %}
 {% set loop_items = hec.shs %}
 {% endif %}
-{% set asn_generated_global = [] %}
 {#
  what we do next is to check for the "sub type" of the give leaf purpose.
  this just means we will not generate for each and every borderleaf listed under
@@ -247,35 +248,6 @@ interface Vxlan1
   Depending on the type of leaf we will check for existance of the
   dictionary "hec.routes.static.$LEAFTYPE".
 #}
-{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
-{% set route_statement = 'ip route' %}
-{% if vrf != '' %}
-{% set route_statement = route_statement + ' vrf ' + vrf %}
-{% endif %}
-{% set route_statement = route_statement + ' ' + dest %}
-{% if intf != '' %}
-{% set route_statement = route_statement + ' ' + intf %}
-{% endif %}
-{% if gw != '' %}
-{% set route_statement = route_statement + ' ' + gw %}
-{% endif %}
-{% if met != '' %}
-{% set route_statement = route_statement + ' ' + met %}
-{% endif %}
-{{ route_statement }}
-{% if red_bgp == True %}
-router bgp {{ asn_generated_global[0]|string }}
-{% if vrf != '' %}
-   vrf {{ vrf }}
-     redistribute static
-{% else %}
-   redistribute static
-{% if dest == '0.0.0.0/0' %}
-   neighbor SPINE-PG default-originate
-{% endif %}
-{% endif %}
-{% endif %}
-{%- endmacro %}
 {#
   Create empty list first. Only for non-empty route_dictionary
   the macro will be called.
@@ -350,6 +322,6 @@ router bgp {{ asn_generated_global[0]|string }}
 {#
   call the macro to render the route statement
 #}
-{{ render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
+{{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}
 {% endif %}

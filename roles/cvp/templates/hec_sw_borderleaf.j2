@@ -1,4 +1,5 @@
 {# hec_sw_borderleaf.j2 #}
+{% import "templates/libs.j2" as funcs with context %}
 {% set id = id + item.number %}
 {#
  first, let's find out the leaf's purpose.
@@ -114,94 +115,14 @@ interface Ethernet{{ item }}
 {% endfor %}
 ! ===== End device ports =====
 {% for item in allbrdrs.ports %}
-{% if item.type is defined %}
-{% if item.type != 'Ethernet' %}
-{% if item.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
-{% if item.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
-interface {{ inttype }}{{ item.id }}
-{% endif %}
-{% endif %}
-{% if item.type is not defined %}
-interface Ethernet{{ item.id }}
-{% endif %}
-   description ->{{ item.description }}
-{% if item.po is defined %}
-   channel-group {{ item.po }} mode active
-{% endif %}
-{% if item.trunk is defined %}{# BEGIN port is vlan trunk #}
-   switchport mode trunk
-{% if item.trunk != "all" %}
-   switchport trunk allowed vlan {{ item.trunk }}
-{% endif %}
-{% endif %}{# END port is vlan trunk #}
-{% if item.access_vlan is defined %}{# BEGIN port is access_vlan #}
-   switchport access vlan {{ item.access_vlan }}
-{% endif %}{# END port is access_vlan #}
-{% if item.speed is defined %}
-   speed forced {{ item.speed }}
-{% elif (item.po is defined) and (item.po == 42) %}
-   speed forced {{hec.fabric.interlink_speed}}
-   mtu {{hec.fabric.interlink_mtu}}
-{% endif %}
-{% if item.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
-   mtu {{ item.mtu }}
-{% endif %} {# End MTU shinans #}
-{% if item.ip is defined %}{# START ip is defined #}
-{% if (item.type is defined) and (item.type == "spine_link") %}
-   mtu {{ hec.fabric.interlink_mtu }}
-{% endif %}
-{% if (item.type is defined) and (item.type != "vlan") %}
-   no switchport
-{% elif (item.type is defined) and (item.type == "vlan") %}
-{% if item.vrrp is not defined %}
-   no autostate
-{% endif %}
-{% endif %}
-{% if item.mtu is defined %}
-   mtu {{ item.mtu }}
-{% endif %}
-{#
- vrrp group, if any defined
-#}
-{% if item.vrrp is defined %}{# START vrrp is defined #}
-{% for vrrp_group in item.vrrp %}
-   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group.priority }}
-   vrrp {{vrrp_group.id}} preempt delay minimum 180
-   vrrp {{vrrp_group.id}} preempt delay reload 180
-{% if vrrp_group.auth is defined %}
-   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
-{% endif %}
-{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
-{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
-   {{conf_str_ip}}
-{% endfor %}
-{% endif %}{# END vrrp is defined #}
-   ip address {{ item.ip }}
-{% endif %}{# END ip is defined #}
-!
+{# call macro 'switchport' to create all defined individual ports #}
+{{ funcs.switchport(item) }}
 {% endfor %}
 ! ===== Port-channels =====
 {% if allbrdrs.port_channels is defined %}
 {% for po in allbrdrs.port_channels %}
-interface Port-Channel{{ po.id }}
-{% if po.id != 42 %}
-{#
-  As we do assign the configlet sw-mlag-a/b
-  to all leafs, the creation of Po42 is not required here.
-  Also it's not required to define it under hec.brdr/str/shs.port-channels
-#}
-   description {{ po.description }}
-   mlag {{ po.id }}
-{% if po.trunk is defined %}
-   switchport mode trunk
-{% if po.trunk != "all" %}
-   switchport trunk allowed vlan {{ po.trunk }}
-{% endif %}
-{% endif %}
-{% if po.access_vlan is defined %}
-   switchport access vlan {{ po.access_vlan }}
-{% endif %}
-{% endif %}
+{# call macro 'switchportchannels' to create all defined port-channel interfaces #}
+{{ funcs.switchportchannels(po) }}
 {% endfor %}
 !
 {% endif %}
@@ -227,4 +148,3 @@ ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
   Above this is the END for borderleaf specific stuff
 #}
 {% include "templates/hec_sw_leaf_routing_configuration.j2" %}
-

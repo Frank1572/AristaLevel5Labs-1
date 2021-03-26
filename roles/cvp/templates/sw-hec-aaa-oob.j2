@@ -1,0 +1,49 @@
+{% if hec.is_tacacs %}
+tacacs-server key 7 075907641D1A3C323E
+tacacs-server timeout 2
+{% for srv in hec.tacacs.servers %}
+tacacs-server host {{srv.ipv4}}
+{% endfor %}
+{% set order = 'group tacacs+ local' %}
+{% else %}
+radius-server timeout 3
+radius-server deadtime 1
+{% if hec.radius_key is defined %}
+radius-server key 7 {{ hec.radius_key }}
+{% else %}
+radius-server key 7 11061A161E115E5951
+{% endif %}
+!
+{% for srv in hec.radius.oob.servers if hec.radius.oob.servers is defined %}
+radius-server host {{ srv.ipv4 }} auth-port 1645 acct-port 1646
+{% endfor %}
+!
+{% set order = 'group radius local' %}
+{% endif %}
+aaa authentication login default {{order}}
+{{eos_cmd.c_aaa_authorization_console}}
+aaa authorization exec default {{order}}
+{% if hec.is_tacacs %}
+aaa authentication enable default group tacacs+ local
+aaa accounting commands 1,15 default start-stop group tacacs+
+{% endif %}
+!
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
+!
+management api http-commands
+   no shutdown
+   vrf default
+      ip access-group ACL_SNMP_VTY
+!
+management console
+   idle-timeout 30
+!
+management telnet
+   shutdown
+!
+management ssh
+   ip access-group ACL_SNMP_VTY in
+   idle-timeout 30

@@ -126,6 +126,11 @@ hec:
   syslog3: 147.204.146.42
   radius1: 147.204.146.74
   radius2: 147.204.146.75
+  radius:
+    oob:
+      servers:
+        - ipv4: 10.17.122.21
+        - ipv4: 10.17.121.35
   is_tacacs: False
   tacacs:
     servers:

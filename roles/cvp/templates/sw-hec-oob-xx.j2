@@ -67,9 +67,6 @@ interface Loopback494
 !
 track 494 interface Loopback494 line-protocol
 !
-interface Vlan21
-   vrrp 21 track 494 decrement 10
-!
 interface Vlan4094
    ip ospf network point-to-point
 !
@@ -110,17 +107,17 @@ interface Ethernet1-46
 !
 {% if item.type is not defined or item.type != 'core' %}
 ! === Uplinks to the OOB core switch pair
-interface Port-Channel1
+interface Port-Channel101
    switchport trunk allowed vlan 21
    switchport mode trunk
    port-channel lacp fallback individual
 !
-interface Ethernet47
+interface Ethernet51
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 1 mode active
 !
-interface Ethernet48
+interface Ethernet52
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 1 mode active

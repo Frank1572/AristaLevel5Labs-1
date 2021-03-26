@@ -338,12 +338,63 @@ hec:
     - number: "01a"
       type: core
       snmp:
-        contact: 34368082:ncons-hec02-06.net.sap.corp:1015
+        contact: 34413767:ncons4409.wdf.sap.corp:1018
         location: NL-AMS-AM7-Z1C-02-01-39
       ports:
         - id: 1
           description: rot13dc02-adm-03-co, Et1/13
           ip: 10.255.200.8/31
+        - id: 2
+          description: sw-hec01-oob-02
+          po: 102
+        - id: 3
+          description: sw-hec01-oob-03
+          po: 103
+        - id: 4
+          description: sw-hec01-oob-04
+          po: 104
+        - id: 5
+          description: sw-hec01-oob-05
+          po: 105
+        - id: 6
+          description: sw-hec01-oob-06
+          po: 106
+        - id: 7
+          description: sw-hec01-oob-07
+          po: 107
+        - id: 8
+          description: sw-hec01-oob-08
+          po: 108
+        - id: 9
+          description: sw-hec01-oob-09
+          po: 109
+        - id: 10
+          description: sw-hec01-oob-10
+          po: 110
+        - id: 11
+          description: sw-hec01-oob-11
+          po: 111
+        - id: 12
+          description: sw-hec01-oob-12
+          po: 112
+        - id: 13
+          description: sw-hec01-oob-13
+          po: 113
+        - id: 14
+          description: sw-hec01-oob-14
+          po: 114
+        - id: 15
+          description: sw-hec01-oob-15
+          po: 115
+        - id: 16
+          description: sw-hec01-oob-16
+          po: 116
+        - id: 17
+          description: sw-hec01-oob-17
+          po: 117
+        - id: 18
+          description: sw-hec01-oob-18
+          po: 118
         - id: 21
           type: vlan
           description: OOB Access Vlan
@@ -352,6 +403,60 @@ hec:
             - id: 21
               ip: 10.178.136.1
               priority: 105
+              track: 494
+              weight: 10
+        port_channels:
+          - id: 102
+            description: sw-hec01-oob-02
+            trunk: 21
+          - id: 103
+            description: sw-hec01-oob-03
+            trunk: 21
+          - id: 104
+            description: sw-hec01-oob-04
+            trunk: 21
+          - id: 105
+            description: sw-hec01-oob-05
+            trunk: 21
+          - id: 106
+            description: sw-hec01-oob-06
+            trunk: 21
+          - id: 107
+            description: sw-hec01-oob-07
+            trunk: 21
+          - id: 108
+            description: sw-hec01-oob-08
+            trunk: 21
+          - id: 109
+            description: sw-hec01-oob-09
+            trunk: 21
+          - id: 110
+            description: sw-hec01-oob-10
+            trunk: 21
+          - id: 111
+            description: sw-hec01-oob-11
+            trunk: 21
+          - id: 112
+            description: sw-hec01-oob-12
+            trunk: 21
+          - id: 113
+            description: sw-hec01-oob-13
+            trunk: 21
+          - id: 114
+            description: sw-hec01-oob-14
+            trunk: 21
+          - id: 115
+            description: sw-hec01-oob-15
+            trunk: 21
+          - id: 116
+            description: sw-hec01-oob-16
+            trunk: 21
+          - id: 117
+            description: sw-hec01-oob-17
+            trunk: 21
+          - id: 118
+            description: sw-hec01-oob-18
+            trunk: 21
       bgp:
         router_id: 198.19.251.32
         local_asn: 64531.1
@@ -377,6 +482,8 @@ hec:
             - id: 21
               ip: 10.178.136.1
               priority: 100
+              track: 494
+              weight: 10
       bgp:
         router_id: 198.19.251.32
         local_asn: 64531.1
@@ -386,25 +493,50 @@ hec:
           - ipv4: 198.19.224.1
             remote_asn: 64531.1
     - number: "02"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.202/23
       snmp:
-        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+        contact: 34413655:ncons-4408.wdf.sap.corp:1009
+        location: DE-ROT2-RZ44-R1-3-32
     - number: "03"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.203/23
       snmp:
-        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+        contact: 34413766:ncons5402.wdf.sap.corp:1010
+        location: DE-ROT2-RZ54-R2-2-32
     - number: "04"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.204/23
       snmp:
-        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+        contact: 34413767:ncons4409.wdf.sap.corp:1018
+        location: DE-ROT2-RZ40-5R-9-41
     - number: "05"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.205/23
       snmp:
-        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+        contact: 34413768:ncons4409.wdf.sap.corp:1019
+        location: DE-ROT2-RZ40-L5-5-41
     - number: "06"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.206/23
       snmp:
-        contact: 34340574:ncons-hec02-06.net.sap.corp:1016
-        location: EMEA-Netherlands-Amsterdam-Amsterdam7(AM6)-Cage2(Z1C)-02-01-38
+        contact: 34413769:nconsXXXX.wdf.sap.corp:10XX
+        location: DE-ROT2-RZ41-R3-9-41
   fwt:
     - number: "01a"
       snmp:

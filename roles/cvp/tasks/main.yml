@@ -106,6 +106,7 @@
   loop:
     - sw-hec
     - sw-hec-aaa
+    - sw-hec-aaa-oob
     - sw-hec-snmp
     - sw-hec-fab-snmp
     - sw-hec-switch-snmp

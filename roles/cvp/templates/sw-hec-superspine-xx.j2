@@ -1,4 +1,4 @@
-{% import "templates/libs.j2" as funcs %}
+{% import "templates/libs.j2" as funcs with context %}
 {#
   Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
 #}
@@ -8,7 +8,7 @@
 {% endif %}
 {% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
 {% set asn_generated = '641' + hec.hec_nr + '.9000' %}
-hostname sw-hec{{ hec.hec_nr }}-superspine-{{ item.id }}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{% if item.id < 10 %}0{% endif %}{{ item.id }}
 !
 {% for a in hec.superspine.number %}
 {% if a.id == item.id %}
@@ -37,10 +37,10 @@ peer-filter SUPERSPINE-PF
    {{ loop.index * 10 }} match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
 {% endfor %}
 !
-router bfd 
-   slow-timer 5000 
-   interval 200 min-rx 200 multiplier 3 default 
-   multihop interval 1000 min-rx 1000 multiplier 5 
+router bfd
+   slow-timer 5000
+   interval 200 min-rx 200 multiplier 3 default
+   multihop interval 1000 min-rx 1000 multiplier 5
 !
 router bgp {{ asn_generated }}
   router-id {{ interface_loopback1 }}

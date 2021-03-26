@@ -208,7 +208,7 @@
   delegate_to: 127.0.0.1
   template:
     src: "templates/sw-hec-superspine-xx.j2"
-    dest: "{{role_path}}/files/configs/sw-hec-superspine-{{ item.id }}"
+    dest: "{{role_path}}/files/configs/sw-hec-superspine-{% if item.id < 10 %}0{% endif %}{{ item.id }}"
   with_items: "{{ hec.superspine.number }}"
   when: hec.superspine|default("") != ""
   tags:

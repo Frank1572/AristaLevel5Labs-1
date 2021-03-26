@@ -152,8 +152,8 @@ hec:
         # on sw-hec06-227 is a sflow source ip defined
     source: Loopback900  # vlan900 for legacy/non-fab
   admin_mpls:
-    - prefix_mask: "10.192.18.0/23"
-      sequence: "20" # !!!!! what means sequence again?
+    prefix_mask:
+      - 10.192.18.0/23
   admin_sw_interface: Ethernet1
   admin_sw_description_oob1a: "tyodc01-wan-01-admin Gi1/0/19"
   admin_sw_description_oob1b: "tyodc01-wan-02-admin Gi1/0/19"
@@ -262,7 +262,7 @@ hec:
       - model: 7280SR-48C6 # brdr2ab
         uplink_ports: 51/1,52/1,53/1,54/1
   oob:
-    - number: 01a
+    - number: "01a"
       type: core
       snmp:
         contact: incorrect

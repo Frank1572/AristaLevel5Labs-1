@@ -121,14 +121,11 @@ hec:
   radius2: 10.17.121.35
   is_tacacs: False
   admin_mpls:
-    - prefix_mask: "100.96.192.0/19"
-      sequence: "5"
-    - prefix_mask: "100.127.136.0/21"
-      sequence: "10"
-    - prefix_mask: "10.178.146.0/23"
-      sequence: "15"
-    - prefix_mask: "198.19.194.0/24"
-      sequence: "20"
+    prefix_mask:
+      - 100.96.192.0/19
+      - 100.127.136.0/21
+      - 10.178.146.0/23
+      - 198.19.194.0/24
   admin_sw_interface: Ethernet49
   admin_sw_description_oob1a: "fra3dc01-adm-03-co P1/13"
   admin_sw_description_oob1b: "fra3dc01-adm-04-co P1/13"
@@ -169,7 +166,7 @@ hec:
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1
   oob:
-    - number: 01a
+    - number: "01a"
       type: core
       snmp:
         contact: incorrect

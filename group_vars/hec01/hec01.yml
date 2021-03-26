@@ -470,6 +470,73 @@ hec:
             remote_asn: 65535
           - ipv4: 198.19.224.2
             remote_asn: 64531.1
+    - number: 01b
+      snmp:
+        contact: 34677794:ncons5402.wdf.sap.corp:1009
+        location: DE-ROT2-RZ54-R2-2-34
+      ports:
+        - id: 1
+          description: rot06dc01-adm-04-co, Et1/14
+          ip: 10.255.200.14/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec01-01, eth1-04
+          po: 1
+        - id: 3
+          description: fw-hec01-02, eth1-04
+          po: 2
+        - id: 4
+          description: nw147-204-5-250_gi2/9
+          ip: 147.204.5.207/24
+          vrrp:
+            - id: 200
+              ip: 147.204.5.200
+        - id: 47
+          description: fw-hec09-01, eth1-03
+          po: 3
+        - id: 48
+          description: fw-hec09-02, eth1-03
+          po: 4
+        - id: 55/1
+          description: MLAG
+          po: 42
+        - id: 56/1
+          description: MLAG
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.241.3/28
+          vrrp:
+            - id: 115
+              ip: 10.255.241.1
+              auth: fwtnw
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec01-01
+          trunk: 915
+        - id: 2
+          description: fw-hec01-02
+          trunk: 915
+        - id: 3
+          description: fw-hec09-01
+          trunk: 915
+        - id: 4
+          description: fw-hec09-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.35
+        local_asn: 64531.1
+        peers:
+          - ipv4: 10.255.200.15
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531.1
   routes:
     static:
       brdr01:
@@ -1110,12 +1177,12 @@ hec:
           speed: 40gfull
         - id: 5/1
           description: hec01f0087
-          po: 50     
+          po: 50
           speed: 40gfull
         - id: 6/1
           description: hec01f0088
-          po: 60     
-          speed: 40gfull   
+          po: 60
+          speed: 40gfull
         - id: 30/1
           description: sw-hec01-str-01b, Et30
           po: 42
@@ -1251,7 +1318,7 @@ hec:
         - id: 11
           description: hec19b001,mgmt
           access_vlan: 110
-        - id: 12 
+        - id: 12
           description: hec01coh01a1,Sfp1
           po: 402
         - id: 13
@@ -1305,7 +1372,7 @@ hec:
           trunk: 140
         - id: 406
           description: hec01coh01a5
-          trunk: 140 
+          trunk: 140
     - number: 2b
       snmp:
         location: DE-ROT2-RZ43-5L-9-37

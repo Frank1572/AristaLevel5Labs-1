@@ -1524,11 +1524,9 @@ hec:
         - id: 30/1
           description: sw-hec01-str-03b, Et30/1
           po: 42
-          speed: 100gfull
         - id: 31/1
           description: sw-hec01-str-03b, Et31/1
           po: 42
-          speed: 100gfull
       port_channels:
         - id: 800
           description: hec01f0081

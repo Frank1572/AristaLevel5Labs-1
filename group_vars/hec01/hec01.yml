@@ -537,6 +537,114 @@ hec:
       snmp:
         contact: 34413769:nconsXXXX.wdf.sap.corp:10XX
         location: DE-ROT2-RZ41-R3-9-41
+    - number: "07"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.207/23
+      snmp:
+        contact: 34413770:ncons4206.wdf.sap.corp:1025
+        location: DE-ROT2-RZ42-5R-6-41
+    - number: "08"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.208/23
+      snmp:
+        contact: 34413771:ncons4206.wdf.sap.corp:1026
+        location: DE-ROT2-RZ42-5L-9-41
+    - number: "09"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.209/23
+      snmp:
+        contact: 34413772:ncons4317.wdf.sap.corp:1021
+        location: DE-ROT2-RZ43-5R-5-41
+    - number: "10"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.210/23
+      snmp:
+        contact: 34413773:ncons4317.wdf.sap.corp:1022
+        location: DE-ROT2-RZ43-5L-8-40
+    - number: "11"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.211/23
+      snmp:
+        contact: 34413774:ncons5012.wdf.sap.corp:1010
+        location: DE-ROT2-RZ50-5R-9-41
+    - number: "12"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.212/23
+      snmp:
+        contact: 34413775:ncons5306.wdf.sap.corp:1021
+        location: DE-ROT2-RZ53-3R-6-41
+    - number: "13"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.213/23
+      snmp:
+        contact: 34413776:ncons6009.wdf.sap.corp:1026
+        location: DE-ROT2-RZ60-3R-9-41
+    - number: "14"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.214/23
+      snmp:
+        contact: 34413777:ncons6009.wdf.sap.corp:1026
+        location: DE-ROT2-RZ60-3L-4-39
+    - number: "15"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.215/23
+      snmp:
+        contact: 34413778:nconsXXXX.wdf.sap.corp:XXXX
+        location: DE-ROT2-RZ61-5R-8-40
+    - number: "16"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.216/23
+      snmp:
+        contact: 34413779:nconsXXXX.wdf.sap.corp:XXXX
+        location: DE-ROT2-RZ61-5L-4-41
+    - number: "17"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.217/23
+      snmp:
+        contact: 34413780:ncons6206.wdf.sap.corp:1029
+        location: DE-ROT2-RZ62-5R-5-38
+    - number: "18"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.178.137.218/23
+      snmp:
+        contact: 34413781:ncons6303.wdf.sap.corp:1016
+        location: DE-ROT2-RZ63-5L-9-41
   fwt:
     - number: "01a"
       snmp:

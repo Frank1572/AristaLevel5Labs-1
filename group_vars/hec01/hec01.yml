@@ -1192,22 +1192,22 @@ hec:
       port_channels:
         - id: 800
           description: hec01f0065,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 50
           description: hec01f0087
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
     - number: 1b
       snmp:
         location: RZ40-3L-6-40
@@ -1254,22 +1254,22 @@ hec:
       port_channels:
         - id: 50
           description: hec01f0087
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 800
           description: hec01f0065,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
     - number: 2a
       snmp:
         location: DE-ROT2-RZ43-5L-9-39

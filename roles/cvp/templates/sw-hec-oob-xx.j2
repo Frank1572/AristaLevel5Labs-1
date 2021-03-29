@@ -24,6 +24,8 @@ vlan 4094
 !
 spanning-tree mst 0-1 priority 28672
 !
+{# we want the CVA & iDRAC serving DHCP server to only be on the first core switch #}
+{% if item.number == '01a' %}
 alias dhcp-off
    10 bash sudo service dhcpd stop
    20 bash sudo service dhcpd status
@@ -37,6 +39,7 @@ alias dhcp-status
    10 bash sudo service dhcpd status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
+{% endif %}
 {% if item.bgp is defined %}
 interface Loopback0
    ip address {{ item.bgp.router_id | ipaddr('address') }}/32

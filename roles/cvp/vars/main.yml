@@ -190,7 +190,6 @@ configlet_list_global:
   - sw-hec-spine-12
   - sw-hec-spine-13
   - sw-hec-spine-14
-  - sw-hec-oob-01
   - sw-hec-oob-01a
   - sw-hec-oob-01b
   - sw-hec-oob-02

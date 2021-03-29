@@ -91,7 +91,7 @@ route-map ADMIN_MPLS_OUT permit 10
 {% endif %}{# end of oob-core specific settings #}
 !
 {# setting all ports to default access-port with oob vlan 21 #}
-interface Ethernet1-46
+interface Ethernet1-48
    switchport access vlan 21
 !
 {% if item.ports is defined %}

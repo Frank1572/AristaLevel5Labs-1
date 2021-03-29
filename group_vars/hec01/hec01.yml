@@ -403,7 +403,7 @@ hec:
             - id: 21
               ip: 10.178.136.1
               priority: 105
-              track: 494
+              object: 494
               weight: 10
       port_channels:
         - id: 102
@@ -482,7 +482,7 @@ hec:
             - id: 21
               ip: 10.178.136.1
               priority: 100
-              track: 494
+              object: 494
               weight: 10
       bgp:
         router_id: 198.19.251.32

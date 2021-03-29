@@ -115,12 +115,12 @@ interface Port-Channel101
 interface Ethernet51
    switchport trunk allowed vlan 21
    switchport mode trunk
-   channel-group 1 mode active
+   channel-group 101 mode active
 !
 interface Ethernet52
    switchport trunk allowed vlan 21
    switchport mode trunk
-   channel-group 1 mode active
+   channel-group 101 mode active
 !
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !

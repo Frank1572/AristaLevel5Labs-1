@@ -29,7 +29,7 @@ radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 !
 {% endif %}
 {% set order = 'group radius local' %}
-{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
+{% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
 {% set order = 'local group radius' %}
 {% endif %}
 {% endif %}

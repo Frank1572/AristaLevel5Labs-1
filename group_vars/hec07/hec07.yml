@@ -18,7 +18,7 @@ idrac:
   name: naa-hec07-idrac-01 # OKAY
   # global dns IP's
   dns1: 10.17.121.30 # OKAY
-  dns2: 10.17.122.10 - OKAY
+  dns2: 10.17.122.10 # OKAY
   domain: hec.oob.net.sap
   password: arista
 #

@@ -105,6 +105,7 @@
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec
+    - sw-hec-oob
     - sw-hec-aaa
     - sw-hec-snmp
     - sw-hec-fab-snmp

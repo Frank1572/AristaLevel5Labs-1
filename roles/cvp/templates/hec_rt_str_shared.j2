@@ -12,7 +12,7 @@ vlan {{ vlanid }}
 !
 interface Vlan{{ vlanid }}
    ip access-group 2300 in
-{% for net in customer.backup %}
+{% for net in customer.backup if customer.backup is defined %}
 {% set conf_str_ip = 'ip virtual-router address ' . net|ipaddr('1')|ipaddr('address') %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{ conf_str_ip }}

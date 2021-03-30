@@ -1,7 +1,0 @@
-{% if hec.radius.oob.servers is defined %}
-no radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
-no radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
-{% for srv in hec.radius.oob.servers %}
-radius-server host {{ srv.ipv4 }} auth-port 1645 acct-port 1646
-{% endfor %}
-{% endif %}

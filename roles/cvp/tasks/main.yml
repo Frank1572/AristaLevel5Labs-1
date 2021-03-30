@@ -106,7 +106,6 @@
   loop:
     - sw-hec
     - sw-hec-aaa
-    - sw-hec-aaa-oob
     - sw-hec-snmp
     - sw-hec-fab-snmp
     - sw-hec-switch-snmp
@@ -151,7 +150,7 @@
   tags:
     - configlets
 
-# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific radius strings.
+# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific authentication settings.
 - set_fact:
     aaa_purpose: 'hana'
   tags:
@@ -164,6 +163,25 @@
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec-aaa-hana
+  tags:
+    - configlets
+
+# next task is to reuse the sw-hec-aaa.j2 template but generate the oob- & fwt-specific authentication settings.
+- set_fact:
+    aaa_purpose: 'oob'
+  tags:
+    - oob
+    - fwt
+    - configlets
+
+- name: Render oob & fwt aaa configlet template
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/sw-hec-aaa.j2"
+    dest: "{{role_path}}/files/configs/{{item}}"
+  loop:
+    - sw-hec-aaa-oob
+    - sw-hec-aaa-fwt
   tags:
     - configlets
 

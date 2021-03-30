@@ -1,0 +1,21 @@
+interface Et1-48
+   shutdown
+!
+vrf definition MGMT
+   description Inband management
+   rd {{ hec.hec_nr|int }}:900
+!
+{% for customer in customers %}
+{% set vlanid = customer.id + 2000 %}
+vlan {{ vlanid }}
+   name HEC{{ hec.hec_nr }}-Customer-{{ customer.name|upper}}-{{ vlanid }}
+!
+interface Vlan{{ vlanid }}
+   ip access-group 2300 in
+{% for net in customer.backup %}
+{% set conf_str_ip = 'ip virtual-router address ' . net|ipaddr('1')|ipaddr('address') %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{ conf_str_ip }}
+{% endfor %}
+{% endfor %}
+!

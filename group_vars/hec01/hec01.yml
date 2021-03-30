@@ -1828,6 +1828,53 @@ hec:
         - id: 10
           description: hec01f00501
           trunk: 30,32,40,50,55,130,2001-2499
+  strrt:
+    - number: "01a"
+      oob_ip: 10.178.138.xx
+      nwmgmt_ip: 198.19.234.xx
+      snmp:
+        location: incorrect
+        contact: XXXX:ncons:10XX
+      ports:
+        - id: 51/1
+          description: rt-hec01-str-01b
+          po: 42
+        - id: 52/1
+          description: rt-hec01-str-01b
+          po: 42
+        - id: 53/1
+          description: sw-hec01-str-04a
+          po: 700
+        - id: 54/1
+          description: sw-hec01-str-04b
+          po: 700
+      port_channels:
+        - id: 700
+          description: sw-hec01-str-04a/b
+          trunk: 40,50,130,140,900,920,922,2001-2999
+    - number: "01b"
+      oob_ip: 10.178.138.xx
+      nwmgmt_ip: 198.19.234.xx
+      snmp:
+        location: incorrect
+        contact: XXXX:ncons:10XX
+      ports:
+        - id: 51/1
+          description: rt-hec01-str-01a
+          po: 42
+        - id: 52/1
+          description: rt-hec01-str-01a
+          po: 42
+        - id: 53/1
+          description: sw-hec01-str-04a
+          po: 700
+        - id: 54/1
+          description: sw-hec01-str-04b
+          po: 700
+      port_channels:
+        - id: 700
+          description: sw-hec01-str-04a/b
+          trunk: 40,50,130,140,900,920,922,2001-2999
   ngdr:
     - number: 1a
       oob_ip: 10.178.136.55

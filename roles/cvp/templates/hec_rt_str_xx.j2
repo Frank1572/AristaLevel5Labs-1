@@ -1,0 +1,12 @@
+{% import "templates/libs.j2" as funcs with context %}
+{% if item.ports is defined %}
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
+{% endfor %}
+{% endif %}{# end of port generation #}
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
+!

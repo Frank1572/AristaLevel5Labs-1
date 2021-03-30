@@ -787,7 +787,7 @@ hec:
       brdr01:
         - destination: 0.0.0.0/0
           nexthop: 198.19.240.1
-          interface: Vlan916
+          interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24
           interface: Null0
@@ -1437,22 +1437,22 @@ hec:
       port_channels:
         - id: 800
           description: hec01f0065,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 50
           description: hec01f0087
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
     - number: 1b
       snmp:
         location: RZ40-3L-6-40
@@ -1499,22 +1499,22 @@ hec:
       port_channels:
         - id: 50
           description: hec01f0087
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 60
           description: hec01f0088
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 800
           description: hec01f0065,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 805
           description: hec01f0066,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 810
           description: hec01f0067,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0068,Data
-          trunk: 30,40,50,55,130,2001-2499
+          trunk: 40,50,55,130,2001-2499
     - number: 2a
       snmp:
         location: DE-ROT2-RZ43-5L-9-39
@@ -1738,22 +1738,34 @@ hec:
           description: hec01f0081
           po: 800
           speed: 40gfull
-          mtu: 9100
         - id: 2/1
           description: hec01f0082
           po: 805
           speed: 40gfull
-          mtu: 9100
         - id: 3/1
           description: hec01f0083
           po: 810
           speed: 40gfull
-          mtu: 9100
         - id: 4/1
           description: hec01f0084
           po: 815
           speed: 40gfull
-          mtu: 9100
+        - id: 5/1
+          description: hec01f0085
+          po: 820
+          speed: 40gfull
+        - id: 6/1
+          description: hec01f0086
+          po: 825
+          speed: 40gfull
+        - id: 7/1
+          description: hec01f0089
+          po: 830
+          speed: 40gfull
+        - id: 8/1
+          description: hec01f0090
+          po: 835
+          speed: 40gfull
         - id: 30/1
           description: sw-hec01-str-03b, Et30/1
           po: 42
@@ -1763,12 +1775,28 @@ hec:
       port_channels:
         - id: 800
           description: hec01f0081
+          trunk: 40,50,55,130,2001-2499
         - id: 805
           description: hec01f0082
+          trunk: 40,50,55,130,2001-2499
         - id: 810
           description: hec01f0083
+          trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0084
+          trunk: 40,50,55,130,2001-2499
+        - id: 820
+          description: hec01f0085
+          trunk: 40,50,55,130,2001-2499
+        - id: 825
+          description: hec01f0086
+          trunk: 40,50,55,130,2001-2499
+        - id: 830
+          description: hec01f0089
+          trunk: 40,50,55,130,2001-2499
+        - id: 835
+          description: hec01f0090
+          trunk: 40,50,55,130,2001-2499
     - number: 3b
       snmp:
         location: EMEA-DE-ROT-RZ43-5L-9-34
@@ -1786,22 +1814,34 @@ hec:
           description: hec01f0081
           po: 800
           speed: 40gfull
-          mtu: 9100
         - id: 2/1
           description: hec01f0082
           po: 805
           speed: 40gfull
-          mtu: 9100
         - id: 3/1
           description: hec01f0083
           po: 810
           speed: 40gfull
-          mtu: 9100
         - id: 4/1
           description: hec01f0084
           po: 815
           speed: 40gfull
-          mtu: 9100
+        - id: 5/1
+          description: hec01f0085
+          po: 820
+          speed: 40gfull
+        - id: 6/1
+          description: hec01f0086
+          po: 825
+          speed: 40gfull
+        - id: 7/1
+          description: hec01f0089
+          po: 830
+          speed: 40gfull
+        - id: 8/1
+          description: hec01f0090
+          po: 835
+          speed: 40gfull
         - id: 30/1
           description: sw-hec01-str-03a, Et30/1
           po: 42
@@ -1820,6 +1860,18 @@ hec:
           trunk: 40,50,55,130,2001-2499
         - id: 815
           description: hec01f0084
+          trunk: 40,50,55,130,2001-2499
+        - id: 820
+          description: hec01f0085
+          trunk: 40,50,55,130,2001-2499
+        - id: 825
+          description: hec01f0086
+          trunk: 40,50,55,130,2001-2499
+        - id: 830
+          description: hec01f0089
+          trunk: 40,50,55,130,2001-2499
+        - id: 835
+          description: hec01f0090
           trunk: 40,50,55,130,2001-2499
     - number: 4a
       snmp:

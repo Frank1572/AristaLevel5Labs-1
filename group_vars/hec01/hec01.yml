@@ -686,27 +686,22 @@ hec:
           description: rt-hec01-core-01a, Fo0/2/0
           po: 1101
           speed: 40gfull
-          mtu: 9100
         - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/0
           po: 1102
           speed: 40gfull
-          mtu: 9100
         - id: 4/1
           description: rt-hec01-cwan-01a, Fo0/0/0
           po: 1501
           speed: 40gfull
-          mtu: 9100
         - id: 5/1
           description: rt-hec01-vpn-01a, Fo0/2/0
           po: 1503
           speed: 40gfull
-          mtu: 9100
         - id: 6/1
           description: rt-hec01-inet-01a, Fo0/2/0
           po: 1401
           speed: 40gfull
-          mtu: 9100
         - id: 7/1
           description: rt-hec01-605, Fo0/0/0
           po: 1605
@@ -721,7 +716,6 @@ hec:
           description: fw-hec01-01
           po: 10
           speed: 40gfull
-          mtu: 9100
       port_channels:
         - id: 10
           description: fw-hec01-01
@@ -790,27 +784,22 @@ hec:
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101
           speed: 40gfull
-          mtu: 9100
-        - id: 2/1
+         - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/1
           po: 1102
           speed: 40gfull
-          mtu: 9100
         - id: 4/1
           description: rt-hec01-cwan-01a, Fo0/0/0
           po: 1501
           speed: 40gfull
-          mtu: 9100
         - id: 5/1
           description: rt-hec01-vpn-01a, Fo0/2/0
           po: 1503
           speed: 40gfull
-          mtu: 9100
         - id: 6/1
           description: rt-hec01-inet-01a, Fo0/2/0
           po: 1401
           speed: 40gfull
-          mtu: 9100
         - id: 7/1
           description: rt-hec01-605, Fo1/0/0
           po: 1605
@@ -825,7 +814,6 @@ hec:
           description: fw-hec01-01
           po: 10
           speed: 40gfull
-          mtu: 9100
       port_channels:
         - id: 10
           description: fw-hec01-01

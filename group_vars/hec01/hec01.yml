@@ -708,6 +708,10 @@ hec:
           po: 1401
           speed: 40gfull
           mtu: 9100
+        - id: 7/1
+          description: rt-hec01-605, Fo0/0/0
+          po: 1605
+          speed: 40gfull
         - id: 27/1
           description: sw-hec01-brdr-01b, Et27/1
           po: 42
@@ -737,6 +741,9 @@ hec:
           trunk: all
         - id: 1503
           description: rt-hec01-vpn-01a
+          trunk: all
+        - id: 1605
+          description: rt-hec01-605
           trunk: all
     - number: 1b
       snmp:
@@ -774,6 +781,13 @@ hec:
           ip: 10.254.253.11/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.10
+        - id: 970
+          type: vlan
+          description: Transfer to rt-hec01-605
+          mtu: 9100
+          ip: 10.254.253.19/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.18
         - id: 1/1
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101
@@ -799,6 +813,10 @@ hec:
           po: 1401
           speed: 40gfull
           mtu: 9100
+        - id: 7/1
+          description: rt-hec01-605, Fo1/0/0
+          po: 1605
+          speed: 40gfull
         - id: 27/1
           description: sw-hec01-brdr-01a, Et27/1
           po: 42
@@ -828,6 +846,9 @@ hec:
           trunk: all
         - id: 1503
           description: rt-hec01-vpn-01a
+          trunk: all
+        - id: 1605
+          description: rt-hec01-605
           trunk: all
     - number: 2a
       snmp:

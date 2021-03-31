@@ -662,7 +662,6 @@ hec:
             - id: 250
               priority: 120
               ip: 198.19.240.43
-              auth: FWTTRANS
         - id: 961
           type: vlan
           description: Transfer to rt-hec01-cwan-01a
@@ -766,7 +765,6 @@ hec:
             - id: 250
               priority: 110
               ip: 198.19.240.43
-              auth: FWTTRANS
         - id: 962
           type: vlan
           description: Transfer to rt-hec01-cwan-01a
@@ -963,7 +961,6 @@ hec:
             - id: 250
               priority: 120
               ip: 198.19.240.216
-              auth: FWTTRANS
         - id: 963
           type: vlan
           description: ->Transfer to rt-hec01-cwan-01b
@@ -1075,7 +1072,6 @@ hec:
             - id: 250
               priority: 120
               ip: 198.19.240.216
-              auth: FWTTRANS
         - id: 964
           type: vlan
           description: ->Transfer to rt-hec01-cwan-01b

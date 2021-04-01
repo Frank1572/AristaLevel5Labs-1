@@ -17,21 +17,21 @@ radius-server key 7 {{ hec.radius_key }}
 radius-server key 7 11061A161E115E5951
 {% endif %}
 !
+radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
+radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
+!
 {% if (aaa_purpose is defined) and (aaa_purpose == 'oob') %}
 {% if hec.radius.oob.servers is defined %}
 {% for srv in hec.radius.oob.servers %}
 radius-server host {{ srv.ipv4 }} auth-port 1645 acct-port 1646
 {% endfor %}
+no radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
+no radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 {% endif %}
-{% else %}
-radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
-radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
-!
 {% endif %}
 {% set order = 'group radius local' %}
 {% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
 {% set order = 'local group radius' %}
-{% endif %}
 {% endif %}
 aaa authentication login default {{order}}
 {{eos_cmd.c_aaa_authorization_console}}

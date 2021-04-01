@@ -188,7 +188,7 @@ hec:
       number:
         - id: 1
           model: 7504
-          linecards: 1
+          linecards: 4
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 4

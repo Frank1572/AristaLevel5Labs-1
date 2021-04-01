@@ -784,7 +784,7 @@ hec:
           description: rt-hec01-core-01a, Fo0/2/1
           po: 1101
           speed: 40gfull
-         - id: 2/1
+        - id: 2/1
           description: rt-hec01-core-01b, Fo0/2/1
           po: 1102
           speed: 40gfull

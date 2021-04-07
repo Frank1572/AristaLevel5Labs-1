@@ -161,6 +161,9 @@ interface Ethernet{{ interface.id }}
 {% endif %}
 {% endfor %}
 {% endif %}{# END vrrp is defined #}
+{% if interface.type is not defined %}
+   no switchport
+{% endif %}
    ip address {{ interface.ip }}
 {% if interface.secondary is defined %}
 {% for sec_ip in interface.secondary %}

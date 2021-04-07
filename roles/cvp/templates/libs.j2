@@ -154,9 +154,19 @@ interface Ethernet{{ interface.id }}
 {% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{conf_str_ip}}
+{% if vrrp_group.secondary is defined %}
+{% for sec_ip in vrrp_group.secondary %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_ip}} {{ sec_ip }} secondary
+{% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}{# END vrrp is defined #}
    ip address {{ interface.ip }}
+{% if interface.secondary is defined %}
+{% for sec_ip in interface.secondary %}
+   ip address {{ sec_ip }} secondary
+{% endfor %}
+{% endif %}
 {% endif %}{# END ip is defined #}
 !
 {%- endmacro %}

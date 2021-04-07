@@ -33,6 +33,7 @@ no radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 {% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
 {% set order = 'local group radius' %}
 {% endif %}
+{% endif %}
 aaa authentication login default {{order}}
 {{eos_cmd.c_aaa_authorization_console}}
 aaa authorization exec default {{order}}

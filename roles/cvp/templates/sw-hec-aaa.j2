@@ -14,8 +14,6 @@ tacacs-server host {{ srv.ipv4 }}
 no tacacs-server host {{ hec.tacacs1 }} 
 no tacacs-server host {{ hec.tacacs2 }} 
 no tacacs-server host {{ hec.tacacs3 }}
-!
-ip tacacs source-interface Vlan21
 {% endif %}
 {% endif %}
 !
@@ -55,8 +53,6 @@ aaa authorization exec default {{order}}
 {% if hec.is_tacacs %}
 aaa authentication enable default group tacacs+ local
 aaa accounting commands 1,15 default start-stop group tacacs+
-!
-ip tacacs source-interface Loopback900
 {% endif %}
 !
 {{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1

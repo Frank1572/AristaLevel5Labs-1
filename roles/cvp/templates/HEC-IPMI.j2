@@ -17,4 +17,6 @@ ip route 0.0.0.0/0 {{ hec.vl900_def_gw }}
 !
 {% if hec.is_tacacs %}
 ip tacacs source-interface Vlan900
-{% endif%}
+{% else %}
+ip radius source-interface Vlan900
+{% endif %} 

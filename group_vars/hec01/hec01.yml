@@ -131,11 +131,12 @@ hec:
       servers:
         - ipv4: 10.17.122.21
         - ipv4: 10.17.121.35
-  is_tacacs: False
+  is_tacacs: True
   tacacs:
     servers:
-      - ipv4: 147.204.146.74
-      - ipv4: 147.204.146.75
+      - ipv4: 147.204.146.181
+      - ipv4: 147.204.146.182
+      - ipv4: 147.204.146.183
   sflow:
     destination:
       - ipv4: 147.204.148.160
@@ -2511,6 +2512,8 @@ hec:
       160 permit ip 198.18.9.224/27 198.18.11.192/26
       170 permit ip 198.18.11.192/26 198.18.9.224/27
       180 permit ip 198.18.8.0/22 host 198.18.8.1
-      190 deny ip 198.18.8.0/22 198.18.8.0/22
-      200 permit ip 198.18.8.0/22 any
-      210 permit ip any any
+      190 permit ip 198.18.8.0/22 198.18.9.104/29
+      200 permit ip 198.18.9.104/29 198.18.8.0/22
+      210 deny ip 198.18.8.0/22 198.18.8.0/22
+      220 permit ip 198.18.8.0/22 any
+      230 permit ip any any

@@ -431,6 +431,22 @@ hec:
           trunk: 21
           speed: 10000full
         - id: 21
+          description: fw-hec01-01-NEW, Mgmt
+          access_vlan: 21
+          speed: 1000full
+        - id: 22
+          description: lb-hec01-01-NEW-2021-MGMT
+          access_vlan: 21
+          speed: 1000full
+        - id: 55
+          description: sw-hec01-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 56
+          description: sw-hec01-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 21
           type: vlan
           description: OOB Access Vlan
           ip: 10.178.136.2/23
@@ -440,6 +456,7 @@ hec:
               priority: 105
               object: 494
               weight: 10
+              auth: oobnw
       port_channels:
         - id: 102
           description: sw-hec01-oob-02
@@ -497,7 +514,7 @@ hec:
         local_asn: 64531.1
         peers:
           - ipv4: 10.255.200.9
-            remote_asn: 64536
+            remote_asn: 65535
           - ipv4: 198.19.224.2
             remote_asn: 64531.1
     - number: "01b"

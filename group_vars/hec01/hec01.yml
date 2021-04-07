@@ -461,54 +461,71 @@ hec:
         - id: 102
           description: sw-hec01-oob-02
           trunk: 21
+          lacp_fallback: individual
         - id: 103
           description: sw-hec01-oob-03
           trunk: 21
+          lacp_fallback: individual
         - id: 104
           description: sw-hec01-oob-04
           trunk: 21
+          lacp_fallback: individual
         - id: 105
           description: sw-hec01-oob-05
           trunk: 21
+          lacp_fallback: individual
         - id: 106
           description: sw-hec01-oob-06
           trunk: 21
+          lacp_fallback: individual
         - id: 107
           description: sw-hec01-oob-07
           trunk: 21
+          lacp_fallback: individual
         - id: 108
           description: sw-hec01-oob-08
           trunk: 21
+          lacp_fallback: individual
         - id: 109
           description: sw-hec01-oob-09
           trunk: 21
+          lacp_fallback: individual
         - id: 110
           description: sw-hec01-oob-10
           trunk: 21
+          lacp_fallback: individual
         - id: 111
           description: sw-hec01-oob-11
           trunk: 21
+          lacp_fallback: individual
         - id: 112
           description: sw-hec01-oob-12
           trunk: 21
+          lacp_fallback: individual
         - id: 113
           description: sw-hec01-oob-13
           trunk: 21
+          lacp_fallback: individual
         - id: 114
           description: sw-hec01-oob-14
           trunk: 21
+          lacp_fallback: individual
         - id: 115
           description: sw-hec01-oob-15
           trunk: 21
+          lacp_fallback: individual
         - id: 116
           description: sw-hec01-oob-16
           trunk: 21
+          lacp_fallback: individual
         - id: 117
           description: sw-hec01-oob-17
           trunk: 21
+          lacp_fallback: individual
         - id: 118
           description: sw-hec01-oob-18
           trunk: 21
+          lacp_fallback: individual
       bgp:
         router_id: 198.19.251.32
         local_asn: 64531.1

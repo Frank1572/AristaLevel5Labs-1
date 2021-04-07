@@ -450,9 +450,13 @@ hec:
           type: vlan
           description: OOB Access Vlan
           ip: 10.178.136.2/23
+          secondary: 
+            - 10.178.138.2/23
           vrrp:
             - id: 21
               ip: 10.178.136.1
+              secondary: 
+                - 10.178.138.1
               priority: 105
               object: 494
               weight: 10

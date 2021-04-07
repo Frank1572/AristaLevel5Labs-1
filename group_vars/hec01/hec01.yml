@@ -541,8 +541,8 @@ hec:
     - number: "01b"
       type: core
       snmp:
-        contact: 34679366:ncons4407.wdf.sap.corp:1027
-        location: DE-ROT2-RZ44-R1-3-40
+        contact: 34679368:ncons-5401.wdf.sap.corp:1027
+        location: DE-ROT2-RZ54-R2-2-35
       ports:
         - id: 1
           description: rot06dc01-adm-04-co, Et1/13

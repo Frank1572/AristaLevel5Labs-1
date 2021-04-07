@@ -734,7 +734,7 @@ hec:
           trunk: 21
           lacp_fallback: individual
       bgp:
-        router_id: 198.19.251.32
+        router_id: 198.19.251.33
         local_asn: 64531.1
         peers:
           - ipv4: 10.255.200.9

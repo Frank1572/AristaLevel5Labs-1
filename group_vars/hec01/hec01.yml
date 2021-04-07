@@ -459,8 +459,9 @@ hec:
               secondary: 
                 - 10.178.138.1
               priority: 105
-              object: 494
-              weight: 10
+              track:
+                object: 494
+                weight: 10
               auth: oobnw
       port_channels:
         - id: 102
@@ -662,8 +663,9 @@ hec:
               secondary: 
                 - 10.178.138.1
               priority: 100
-              object: 494
-              weight: 10
+              track:
+                object: 494
+                weight: 10
               auth: oobnw
       port_channels:
         - id: 102

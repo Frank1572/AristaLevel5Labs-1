@@ -180,6 +180,9 @@ interface Port-Channel{{ portchannel.id }}
 {% if portchannel.access_vlan is defined %}
    switchport access vlan {{ portchannel.access_vlan }}
 {% endif %}
+{% if portchannel.lacp_fallback is defined %}
+   port-channel lacp fallback {{ portchannel.lacp_fallback }}
+{% endif %}
 {% endif %}
 !
 {%- endmacro %}

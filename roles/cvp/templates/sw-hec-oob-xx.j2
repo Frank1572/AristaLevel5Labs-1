@@ -95,6 +95,12 @@ route-map ADMIN_MPLS_OUT permit 10
 !
 {% endif %}{# end of oob-core specific settings #}
 !
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
+!
 {# setting all ports to default access-port with oob vlan 21 #}
 interface Ethernet1-48
    switchport access vlan 21
@@ -104,11 +110,6 @@ interface Ethernet1-48
 {{ funcs.switchport(port) }}
 {% endfor %}
 {% endif %}{# end of port generation #}
-{% if item.port_channels is defined %}
-{% for po in item.port_channels %}
-{{ funcs.switchportchannels(po) }}
-{% endfor %}
-{% endif %}{# end of port-channel generation #}
 !
 {% if item.type is not defined or item.type != 'core' %}
 ! === Uplinks to the OOB core switch pair

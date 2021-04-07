@@ -338,8 +338,8 @@ hec:
     - number: "01a"
       type: core
       snmp:
-        contact: 34413767:ncons4409.wdf.sap.corp:1018
-        location: NL-AMS-AM7-Z1C-02-01-39
+        contact: 34679366:ncons4407.wdf.sap.corp:1027
+        location: DE-ROT2-RZ44-R1-3-40
       ports:
         - id: 1
           description: rot13dc02-adm-03-co, Et1/13

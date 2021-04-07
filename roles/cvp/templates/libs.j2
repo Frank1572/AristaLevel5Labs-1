@@ -149,7 +149,7 @@ interface Ethernet{{ interface.id }}
    vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
 {% endif %}
 {% if vrrp_group.track is defined %}
-   vrrp {{vrrp_group.id}} track {{ vrrp_group.track.object }} decrement {{ vrrp_group.track.weight }}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_track}} {{ vrrp_group.track.object }} decrement {{ vrrp_group.track.weight }}
 {% endif %}
 {% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}

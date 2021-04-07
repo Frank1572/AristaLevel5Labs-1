@@ -431,18 +431,18 @@ hec:
           trunk: 21
           speed: 10000full
         - id: 21
-          description: fw-hec01-01-NEW, Mgmt
+          description: fw-hec01-01-NEW
           access_vlan: 21
           speed: 1000full
         - id: 22
           description: lb-hec01-01-NEW-2021-MGMT
           access_vlan: 21
           speed: 1000full
-        - id: 55
+        - id: 55/1
           description: sw-hec01-oob-01b-mlag-peer
           po: 42
           trunk: all
-        - id: 56
+        - id: 56/1
           description: sw-hec01-oob-01b-mlag-peer
           po: 42
           trunk: all

@@ -348,54 +348,88 @@ hec:
         - id: 2
           description: sw-hec01-oob-02
           po: 102
+          trunk: 21
+          speed: 10000full
         - id: 3
           description: sw-hec01-oob-03
           po: 103
+          trunk: 21
+          speed: 10000full
         - id: 4
           description: sw-hec01-oob-04
           po: 104
+          trunk: 21
+          speed: 10000full
         - id: 5
           description: sw-hec01-oob-05
           po: 105
+          trunk: 21
+          speed: 10000full
         - id: 6
           description: sw-hec01-oob-06
           po: 106
+          trunk: 21
+          speed: 10000full
         - id: 7
           description: sw-hec01-oob-07
           po: 107
+          trunk: 21
+          speed: 10000full
         - id: 8
           description: sw-hec01-oob-08
           po: 108
+          trunk: 21
+          speed: 10000full
         - id: 9
           description: sw-hec01-oob-09
           po: 109
+          trunk: 21
+          speed: 10000full
         - id: 10
           description: sw-hec01-oob-10
           po: 110
+          trunk: 21
+          speed: 10000full
         - id: 11
           description: sw-hec01-oob-11
           po: 111
+          trunk: 21
+          speed: 10000full
         - id: 12
           description: sw-hec01-oob-12
           po: 112
+          trunk: 21
+          speed: 10000full
         - id: 13
           description: sw-hec01-oob-13
           po: 113
+          trunk: 21
+          speed: 10000full
         - id: 14
           description: sw-hec01-oob-14
           po: 114
+          trunk: 21
+          speed: 10000full
         - id: 15
           description: sw-hec01-oob-15
           po: 115
+          trunk: 21
+          speed: 10000full
         - id: 16
           description: sw-hec01-oob-16
           po: 116
+          trunk: 21
+          speed: 10000full
         - id: 17
           description: sw-hec01-oob-17
           po: 117
+          trunk: 21
+          speed: 10000full
         - id: 18
           description: sw-hec01-oob-18
           po: 118
+          trunk: 21
+          speed: 10000full
         - id: 21
           type: vlan
           description: OOB Access Vlan

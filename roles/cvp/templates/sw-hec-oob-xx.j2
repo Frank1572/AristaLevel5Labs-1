@@ -64,6 +64,11 @@ router bgp {{ item.bgp.local_asn }}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
 {% endfor %}
+{% for prefix in hec.admin_mpls.prefix_mask %}
+{% if loop.index <= 2 %}
+   network {{ prefix }}
+{% endif %}
+{% endfor %}
 {% endif %}
 !
 interface Loopback494

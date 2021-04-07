@@ -344,6 +344,7 @@ hec:
         - id: 1
           description: rot13dc02-adm-03-co, Et1/13
           ip: 10.255.200.8/31
+          speed: 10000full
         - id: 2
           description: sw-hec01-oob-02
           po: 102

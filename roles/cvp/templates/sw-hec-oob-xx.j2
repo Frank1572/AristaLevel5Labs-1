@@ -41,11 +41,15 @@ alias dhcp-status
 !
 {% endif %}
 {% if item.bgp is defined %}
+{% if item.bgp.router_id is defined %}
 interface Loopback0
    ip address {{ item.bgp.router_id | ipaddr('address') }}/32
+{% endif %}
 !
 router ospf 1
+{% if item.bgp.router_id is defined %}
    router-id {{ item.bgp.router_id }}
+{% endif %}
    passive-interface default
    no passive-interface Vlan4094
    max-lsa 12000
@@ -55,7 +59,9 @@ router ospf 1
 !
 router bgp {{ item.bgp.local_asn }}
    bgp asn notation asdot 
+{% if item.bgp.router_id is defined %}
    router-id {{ item.bgp.router_id }}
+{% endif %}
 {% for peer in item.bgp.peers %}
 {% for setting in [ 'next-hop-self', 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}

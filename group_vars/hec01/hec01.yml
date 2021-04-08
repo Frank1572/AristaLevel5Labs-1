@@ -1419,7 +1419,7 @@ hec:
           trunk: 1100
           speed: 10000full
         - id: 2
-          description: lb-hec01-2 1.2
+          description: lb-hec01-02 1.2
           trunk: 85,90,95,100,2000-2499
           speed: 10000full
         - id: 3

@@ -1179,7 +1179,8 @@ hec:
           ngdr_underlay_neighbor: 10.254.253.8
         - id: 969
           type: vlan
-          description: ->Transfer to rt-hec01-605
+          description: Transfer to rt-hec01-605
+          mtu: 9100
           ip: 10.254.253.17/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.16
@@ -1276,6 +1277,7 @@ hec:
           ngdr_underlay_neighbor: 10.254.253.10
         - id: 970
           type: vlan
+          mtu: 9100
           description: Transfer to rt-hec01-605
           mtu: 9100
           ip: 10.254.253.19/31

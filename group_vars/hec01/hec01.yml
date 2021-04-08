@@ -1429,6 +1429,7 @@ hec:
         - id: 4
           description: lb-hec01-02 1.4
           access_vlan: 902
+          peed: 10000full
         - id: 6
           description: fw-hec01-01, eth2
           po: 10

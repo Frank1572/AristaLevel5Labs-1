@@ -197,6 +197,7 @@
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
     - sw-hec-autoconf-generate-only
+    - sw-hec-autoconf-ipmi-generate-only
     - rt-hec-ha-core-customer-builder
   tags:
     - configlets

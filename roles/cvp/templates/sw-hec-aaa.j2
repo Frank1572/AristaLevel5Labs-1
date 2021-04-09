@@ -51,7 +51,7 @@ aaa authentication login default {{order}}
 {{eos_cmd.c_aaa_authorization_console}}
 aaa authorization exec default {{order}}
 {% if hec.is_tacacs %}
-aaa authentication enable default group tacacs+ local
+aaa authentication enable default {{order}}
 aaa accounting commands 1,15 default start-stop group tacacs+
 {% endif %}
 !

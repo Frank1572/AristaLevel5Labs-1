@@ -1,11 +1,24 @@
 {% if hec.is_tacacs %}
 tacacs-server key 7 075907641D1A3C323E
 tacacs-server timeout 2
-{% for srv in hec.tacacs.servers %}
-tacacs-server host {{srv.ipv4}}
+!
+tacacs-server host {{ hec.tacacs1 }}
+tacacs-server host {{ hec.tacacs2 }}
+tacacs-server host {{ hec.tacacs3 }}
+!
+{% if (aaa_purpose is defined) and (aaa_purpose == 'oob') %}
+{% if hec.tacacs.oob.servers is defined %}
+{% for srv in hec.tacacs.oob.servers %}
+tacacs-server host {{ srv.ipv4 }} 
 {% endfor %}
+no tacacs-server host {{ hec.tacacs1 }} 
+no tacacs-server host {{ hec.tacacs2 }} 
+no tacacs-server host {{ hec.tacacs3 }}
+{% endif %}
+{% endif %}
+!
 {% set order = 'group tacacs+ local' %}
-{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
+{% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
 {% set order = 'local group tacacs+' %}
 {% endif %}
 {% else %}
@@ -20,8 +33,17 @@ radius-server key 7 11061A161E115E5951
 radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
 radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
 !
+{% if (aaa_purpose is defined) and (aaa_purpose == 'oob') %}
+{% if hec.radius.oob.servers is defined %}
+{% for srv in hec.radius.oob.servers %}
+radius-server host {{ srv.ipv4 }} auth-port 1645 acct-port 1646
+{% endfor %}
+no radius-server host {{ hec.radius1 }} auth-port 1645 acct-port 1646
+no radius-server host {{ hec.radius2 }} auth-port 1645 acct-port 1646
+{% endif %}
+{% endif %}
 {% set order = 'group radius local' %}
-{% if (aaa_purpose is defined) and (aaa_purpose != '*hana*') %}
+{% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
 {% set order = 'local group radius' %}
 {% endif %}
 {% endif %}

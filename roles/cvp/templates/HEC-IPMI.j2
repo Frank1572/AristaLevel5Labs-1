@@ -14,3 +14,9 @@ interface Ethernet49,50
    channel-group 900 mode active
 !
 ip route 0.0.0.0/0 {{ hec.vl900_def_gw }}
+!
+{% if hec.is_tacacs %}
+ip tacacs source-interface Vlan900
+{% else %}
+ip radius source-interface Vlan900
+{% endif %} 

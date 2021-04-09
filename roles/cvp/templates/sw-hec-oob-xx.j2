@@ -24,6 +24,8 @@ vlan 4094
 !
 spanning-tree mst 0-1 priority 28672
 !
+{# we want the CVA & iDRAC serving DHCP server to only be on the first core switch #}
+{% if item.number == '01a' %}
 alias dhcp-off
    10 bash sudo service dhcpd stop
    20 bash sudo service dhcpd status
@@ -37,12 +39,17 @@ alias dhcp-status
    10 bash sudo service dhcpd status
    20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
 !
+{% endif %}
 {% if item.bgp is defined %}
+{% if item.bgp.router_id is defined %}
 interface Loopback0
    ip address {{ item.bgp.router_id | ipaddr('address') }}/32
+{% endif %}
 !
 router ospf 1
+{% if item.bgp.router_id is defined %}
    router-id {{ item.bgp.router_id }}
+{% endif %}
    passive-interface default
    no passive-interface Vlan4094
    max-lsa 12000
@@ -51,14 +58,22 @@ router ospf 1
    network 198.19.249.0/24 area 0.0.0.0
 !
 router bgp {{ item.bgp.local_asn }}
+   bgp asn notation asdot 
+{% if item.bgp.router_id is defined %}
    router-id {{ item.bgp.router_id }}
+{% endif %}
 {% for peer in item.bgp.peers %}
-{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+{% for setting in [ 'next-hop-self', 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
 {% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
+{% endfor %}
+{% for prefix in hec.admin_mpls.prefix_mask %}
+{% if loop.index <= 2 %}
+   network {{ prefix }}
+{% endif %}
 {% endfor %}
 {% endif %}
 !
@@ -66,9 +81,6 @@ interface Loopback494
    description !!! DO NOT TOUCH - HSRP tracking interface !!!
 !
 track 494 interface Loopback494 line-protocol
-!
-interface Vlan21
-   vrrp 21 track 494 decrement 10
 !
 interface Vlan4094
    ip ospf network point-to-point
@@ -78,8 +90,10 @@ ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 ip routing
 !
 ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
-{% for prefix in hec.admin_mpls %}
+{% for prefix in hec.admin_mpls.prefix_mask %}
+{% if loop.index <= 2 %}
 ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
+{% endif %}
 {% endfor %}
 !
 route-map ADMIN_MPLS_IN deny 10
@@ -94,7 +108,7 @@ route-map ADMIN_MPLS_OUT permit 10
 {% endif %}{# end of oob-core specific settings #}
 !
 {# setting all ports to default access-port with oob vlan 21 #}
-interface Ethernet1-46
+interface Ethernet1-48
    switchport access vlan 21
 !
 {% if item.ports is defined %}
@@ -102,6 +116,7 @@ interface Ethernet1-46
 {{ funcs.switchport(port) }}
 {% endfor %}
 {% endif %}{# end of port generation #}
+!
 {% if item.port_channels is defined %}
 {% for po in item.port_channels %}
 {{ funcs.switchportchannels(po) }}
@@ -110,20 +125,20 @@ interface Ethernet1-46
 !
 {% if item.type is not defined or item.type != 'core' %}
 ! === Uplinks to the OOB core switch pair
-interface Port-Channel1
+interface Port-Channel101
    switchport trunk allowed vlan 21
    switchport mode trunk
    port-channel lacp fallback individual
 !
-interface Ethernet47
+interface Ethernet51
    switchport trunk allowed vlan 21
    switchport mode trunk
-   channel-group 1 mode active
+   channel-group 101 mode active
 !
-interface Ethernet48
+interface Ethernet52
    switchport trunk allowed vlan 21
    switchport mode trunk
-   channel-group 1 mode active
+   channel-group 101 mode active
 !
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !

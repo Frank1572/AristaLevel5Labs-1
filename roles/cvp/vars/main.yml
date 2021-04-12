@@ -210,3 +210,5 @@ configlet_list_global:
   - rt-hec-ha-core-01b
   - rt-hec-ha-core-01c
   - rt-hec-ha-core-01d
+  - sw-hec-fwt-01a
+  - sw-hec-fwt-01b

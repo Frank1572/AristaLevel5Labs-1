@@ -2,18 +2,18 @@
 tacacs-server key 7 075907641D1A3C323E
 tacacs-server timeout 2
 !
-tacacs-server host {{ hec.tacacs1 }}
-tacacs-server host {{ hec.tacacs2 }}
-tacacs-server host {{ hec.tacacs3 }}
+{% for srv in hec.tacacs.nat.servers %}
+tacacs-server host {{ srv.ipv4 }}
+{% endfor %}
 !
 {% if (aaa_purpose is defined) and (aaa_purpose == 'oob') %}
 {% if hec.tacacs.oob.servers is defined %}
 {% for srv in hec.tacacs.oob.servers %}
 tacacs-server host {{ srv.ipv4 }} 
 {% endfor %}
-no tacacs-server host {{ hec.tacacs1 }} 
-no tacacs-server host {{ hec.tacacs2 }} 
-no tacacs-server host {{ hec.tacacs3 }}
+{% for srv in hec.tacacs.nat.servers %}
+no tacacs-server host {{ srv.ipv4 }}
+{% endfor %}
 {% endif %}
 {% endif %}
 !

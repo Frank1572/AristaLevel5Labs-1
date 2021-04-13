@@ -141,10 +141,12 @@ hec:
   radius2: 10.4.201.55
   radius_key: 07037265610E0D170E54333D547F3D
   is_tacacs: True
-  tacacs1: 169.145.82.181
-  tacacs2: 169.145.82.181
-  tacacs3: 169.145.82.183
   tacacs:
+    nat:
+      servers:
+        - ipv4: 169.145.82.181
+        - ipv4: 169.145.82.182
+        - ipv4: 169.145.82.183
     oob:
       servers:
         - ipv4: 169.145.33.51

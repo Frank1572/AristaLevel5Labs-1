@@ -36,7 +36,7 @@ mlag configuration
 !
 {% if leafpurpose == 'b' %}
 ! Start: Remove config which can't be used on BRDRs 
-no vlan internal allocation policy descending range 3100 3999
+no {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999
 ! End: Remove config which can't be used on BRDRs 
 !
 vlan 30

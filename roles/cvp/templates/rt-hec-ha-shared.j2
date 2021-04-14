@@ -5,7 +5,7 @@ no route-map MLPEER-RM permit 10
 no route-map MLPEER-RM permit 20
 no ip prefix-list ANY-PL seq 10 permit 0.0.0.0/0 le 32 
 no interface Loopback2 
-no vlan internal allocation policy descending range 3100 3999
+no {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999
 ! 
 ! End: Remove config not needed for NGDR 
 !

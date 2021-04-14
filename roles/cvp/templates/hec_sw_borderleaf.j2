@@ -35,6 +35,10 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
+! Start: Remove config which can't be used on BRDRs 
+no {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999
+! End: Remove config which can't be used on BRDRs 
+!
 vlan 30
    name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
 !

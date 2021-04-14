@@ -1595,7 +1595,7 @@ hec:
           ip: 198.19.240.218/25
           vrrp:
             - id: 250
-              priority: 120
+              priority: 110
               ip: 198.19.240.216
         - id: 964
           type: vlan

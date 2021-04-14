@@ -102,7 +102,7 @@ hec:
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
-  ma_domain: "net.sap.corp"
+  ma_domain: "hec.oob.net.sap"
   lo900_domain: "stl.hec.sap.biz"
   vl900_domain: "stl.hec.sap.biz"
   vl900_mask: 23

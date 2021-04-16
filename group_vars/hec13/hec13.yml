@@ -547,25 +547,16 @@ hec:
           nexthop: 198.19.232.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 0.0.0.0/0
-          nexthop: 10.9.244.1
-          vrf: OOB
       brdr02:
         - destination: 10.9.245.253/32
           nexthop: 10.255.185.69
           interface: Vlan916
           redist_bgp: true
-        - destination: 0.0.0.0/0
-          nexthop: 10.9.244.1
-          vrf: OOB
       brdr03:
         - destination: 0.0.0.0/0
           nexthop: 198.19.232.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 0.0.0.0/0
-          nexthop: 10.9.244.1
-          vrf: OOB
   brdr:
     - number: 1a
       snmp:

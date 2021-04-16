@@ -1,30 +1,33 @@
 ---
+eos:
+  new_syntax: True
+
 # file: group_vars/hec13 YAML File
 idrac:
   # IDRAC IP reserved in IPAM :
-  ip: "10.9.245.254"
-  mask: "255.255.254.0"
-  gw: "10.9.244.1"
+  ip: 10.9.245.254
+  mask: 255.255.254.0
+  gw: 10.9.244.1
   # IDRAC Hostname reserved in IPAM :
-  name: "naa-hec13-01-idrac"
+  name: naa-hec13-01-idrac
   # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:
-  dns1: "100.127.37.1"
-  dns2: "100.127.37.2"
-  domain: "net.sap.corp"
-  password: "arista"
+  dns1: 100.127.37.1
+  dns2: 100.127.37.2
+  domain: hec.oob.net.sap
+  password: arista
 
 cva:
   # CVA IP reserved in IPAM :
-  ip: "10.9.244.11"
-  mask: "255.255.254.0"
-  gw: "10.9.244.1"
+  ip: 10.9.244.11
+  mask: 255.255.254.0
+  gw: 10.9.244.1
   # CVA Hostname reserved in IPAM :
-  name: "naa-hec13-01"
+  name: naa-hec13-01
   # dns not required but set to the landscape dns1 and dns2 reserved in TIC HECxx-CIS01-DNS01:
-  dns1: "100.127.37.1"
-  dns2: "100.127.37.2"
-  domain: "net.sap.corp"
-  password: "arista"
+  dns1: 100.127.37.1
+  dns2: 100.127.37.2
+  domain: hec.oob.net.sap
+  password: arista
 
 oob01:
   dhcp:
@@ -36,62 +39,62 @@ oob01:
     cva_ip: "10.9.245.249"
 
 cvp:
-  version: "cvp-2019.1.2-kvm.tar"
-  path_to_cvp_file: "/ens/bin/images/arista/"
-  ip_eth0: "10.9.245.253"
+  version: cvp-2019.1.2-kvm.tar
+  path_to_cvp_file: /ens/bin/images/arista/
+  ip_eth0: 10.9.245.253
   # inband transport ip for cvp (for configuration purpose) reserved in TIC
-  ip_eth1: "10.255.185.69"
-  mask_eth0: "255.255.254.0"
-  mask_eth1: "255.255.255.240"
-  gw: "10.9.244.1"
-  name: "naa-hec13-cvp-01.net.sap.corp"
+  ip_eth1: 10.255.185.69
+  mask_eth0: 255.255.254.0
+  mask_eth1: 255.255.255.240
+  gw: 10.9.244.1
+  name: naa-hec13-cvp-01.net.sap.corp
   # nsq-dns-01 and dns-02 :
-  dns1: "10.4.202.200"
-  dns2: "10.4.12.200"
-  domain: "net.sap.corp"
+  dns1: 10.4.202.200
+  dns2: 10.4.12.200
+  domain: net.sap.corp
   # ntp as used for hec16 - Ashburn
-  ntp1: "10.4.12.100"
-  ntp2: "10.4.12.102"
+  ntp1: 10.4.12.100
+  ntp2: 10.4.12.102
   device_int: eth0
   cluster_int: eth1
-  ingest_key: "SecureKey13"
-  vmname: "cvp-hec13"
-  KvmDomain: "cvp"
-  password: "arista"
-  backupuser: "cvpbkp"
+  ingest_key: SecureKey13
+  vmname: cvp-hec13
+  KvmDomain: cvp
+  password: arista
+  backupuser: cvpbkp
   eth1_routes:
     # HEC1x-NW-MGMT01 (VLAN900)
-    - prefix: "198.19.232.0"
-      mask: "24"
+    - prefix: 198.19.232.0
+      mask: 24
       # This IP is the Firewall but for the begining we bypass the firewall
-      nexthop: "10.255.185.78"
+      nexthop: 10.255.185.78
       # HEC1x-NW-MGMT05 (Lo900)
-    - prefix: "198.19.180.0"
-      mask: "24"
+    - prefix: 198.19.180.0
+      mask: 24
       # This IP is the Firewall but for the begining we bypass the firewall
-      nexthop: "10.255.185.78"
+      nexthop: 10.255.185.78
   dhcp:
-    prefix: "10.9.244.0"
-    mask: "255.255.254.0"
-    range_low: "10.9.245.224"
-    range_high: "10.9.245.247"
+    prefix: 10.9.244.0
+    mask: 255.255.254.0
+    range_low: 10.9.245.224
+    range_high: 10.9.245.247
   aaa_config:
-    aaa_type: "RADIUS"
+    aaa_type: RADIUS
     servers:
       # Below IP is the same as for Ashburn
-      - ip: "10.4.201.55"
+      - ip: 10.4.201.55
         secret: secretRadPw
-        authMode: "PAP"
+        authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: "Enabled"
+        status: Enabled
         # Below IP is the same as for Ashburn
-      - ip: "169.145.33.70"
+      - ip: 169.145.33.70
         secret: secretRadPw
-        authMode: "PAP"
+        authMode: PAP
         authPort: 1645
         accPort: 1646
-        status: "Enabled"
+        status: Enabled
 
 hec:
   hec_nr: "13"
@@ -99,7 +102,7 @@ hec:
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
-  ma_domain: "net.sap.corp"
+  ma_domain: "hec.oob.net.sap"
   lo900_domain: "yyz.hec.sap.biz"
   vl900_domain: "yyz.hec.sap.biz"
   vl900_mask: 24
@@ -122,8 +125,8 @@ hec:
   oob_vrf: OOB
   oob_cvx: 10.9.245.252
   oob_cvp: 10.9.245.253
-  as_low: 4201719569
-  as_high: 4201720767
+  as_low: 4201709568
+  as_high: 4201775103
   cvp_ingest_key: SecureKey13
   dns1: 100.127.37.1
   dns2: 100.127.37.2
@@ -131,13 +134,23 @@ hec:
   ntp2: 100.127.37.38
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 100.127.37.69
-  syslog2: 169.145.84.91
-  syslog3: 147.204.146.42
+  syslog1: 100.127.34.65
+  syslog2: 100.127.37.69
   radius1: 10.4.201.55
   radius2: 169.145.33.70
-  is_tacacs: False
   radius_key: 07037265610E0D170E54333D547F3D
+  is_tacacs: True
+  tacacs:
+    nat:
+      servers:
+        - ipv4: 100.127.34.181
+        - ipv4: 100.127.34.182
+        - ipv4: 100.127.34.183
+    oob:
+      servers:
+        - ipv4: 169.145.33.51
+        - ipv4: 169.145.33.52
+        - ipv4: 10.16.8.142
   sflow:
     destination:
       - ipv4: 100.127.36.22
@@ -146,19 +159,6 @@ hec:
   admin_mpls:
     prefix_mask:
       - 10.9.244.0/23
-  admin_sw_interface: Ethernet1
-  admin_sw_description_oob1a: tordc01-adm-03-co, Et1/18
-  admin_sw_description_oob1b: tordc01-adm-04-co, Et1/18
-  admin_sw_prefix: 10.255.194
-  admin_sw_mask: 31
-  admin_sw_ip_oob1a: 10.255.194.8
-  admin_sw_ip_oob1b: 10.255.194.10
-  admin_sw_neig_ip_oob1a: 10.255.194.9
-  admin_sw_neig_as_oob1a: 1.463
-  admin_sw_neig_ip_oob1b: 10.255.194.11
-  admin_sw_neig_as_oob1b: 64536
-  oob01_lo0_prefix: 198.19.251
-  oob01_as: 64531.13
   spine_nr:
     - 11
     - 12
@@ -170,37 +170,47 @@ hec:
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
     model: 7504
+    pod:
+      number:
+        - id: 1
+          model: 7504
+          linecards: 2
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 2
+    # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
     # the following list 'port' is a workaround for mixed port speeds in existing
     # Fabric builds.
     # list every port and it's speed if it is different from the value
     # provided in dictionary 'hec.fabric.interlink_speed'!!
     fortygig: [Et3/1/1, Et3/2/1]
+    # list the snmp contact and location for spines in this order
     number:
       - id: 11
         snmp:
           location: Toronto1-(TR3)-Cage2-3.1-8-3
           contact: 34672533:ncons-hec13-oob-01.net.sap.corp:1009
+        oob_ip: 10.9.244.12
+        nwmgmt_ip: 198.19.180.11
       - id: 12
         snmp:
           location: Toronto1-(TR3)-Cage2-3.1-9-3
           contact: 34672534:ncons-hec13-oob-01.net.sap.corp:1010
+        oob_ip: 10.9.244.13
+        nwmgmt_ip: 198.19.180.12
       - id: 13
         snmp:
           location: Toronto1-(TR3)-Cage2-3.1-10-3
           contact: 34672535:ncons-hec13-oob-01.net.sap.corp:1022
+        oob_ip: 10.9.244.14
+        nwmgmt_ip: 198.19.180.13
       - id: 14
         snmp:
           location: Toronto1-(TR3)-Cage2-3.1-11-3
           contact: 34672536:ncons-hec13-oob-02.net.sap.corp:1001
-    ports_with_non_default_speed:
-      - port: Et3/1/1
-        speed: 40gfull
-      - port: Et3/2/1
-        speed: 40gfull
+        oob_ip: 10.9.244.15
+        nwmgmt_ip: 198.19.180.14
   ngdr_underlay:
     edge_as: 65195
   ngdr_overlay:
@@ -240,10 +250,27 @@ hec:
   cwan_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn, manual
-    vtep_distribution_mode: evpn
+    vtep_distribution_mode: manual
+    vtep_ips:
+      - 10.200.1.1
+      - 10.200.1.2
+      - 10.200.1.3
+      - 10.200.1.4
+      - 10.200.1.5
+      - 10.200.1.6
+      - 10.200.1.7
+      - 10.200.1.8
+      - 10.200.1.9
+      - 10.200.1.10
+      - 10.254.200.1
+      - 198.19.251.134
+      - 198.19.251.135
+      - 198.19.251.136
+      - 198.19.251.137   
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
+    # Spine BGP Listen ranges for EVPN
     bgp_listen_ranges:
       - 10.100.0.0/16
       - 198.19.249.0/24
@@ -267,33 +294,252 @@ hec:
     - number: "01a"
       type: core
       snmp:
-        contact: incorrect
-        location: incorrect
-  oob01a_snmp_contact: 34672518:ncons-hec13-oob-02.net.sap.corp:1006
-  oob01a_snmp_location: Toronto1-(TR3)-Cage2-3.1-12-39
-  oob01b_snmp_contact: 34672517:ncons-hec13-oob-02.net.sap.corp:1007
-  oob01b_snmp_location: Toronto1-(TR3)-Cage2-3.1-12-38
-  oobs_2_7:
-    - number: 02
-      snmp_contact: 34672508:ncons-hec13-oob-01.net.sap.corp:1023
-      snmp_location: Toronto1-(TR3)-Cage2-3.1-11-41
-      ip_last_octett: 4
-    - number: 03
-      snmp_contact: 34672507:ncons-hec13-oob-03.net.sap.corp:1003
-      snmp_location: Toronto1-(TR3)-Cage1-1.1-9-34
-      ip_last_octett: 5
-    - number: 04
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 6
-    - number: 05
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 7
-    - number: 06
-      snmp_contact: unknown
-      snmp_location: unknown
-      ip_last_octett: 8
+        contact: 34672518:ncons-hec13-oob-02:1006
+        location: Toronto1-(TR3)-Cage2-3.1-12-39
+      ports:
+        - id: 1
+          description: tordc01-adm-03-co,eth13
+          ip: 10.255.194.8/31
+          speed: 10000full
+        - id: 2
+          description: sw-hec13-oob-02,eth49
+          po: 102
+          trunk: 21
+          speed: 10000full
+        - id: 3
+          description: sw-hec13-oob-03,eth49
+          po: 103
+          trunk: 21
+          speed: 10000full
+        - id: 4
+          description: sw-hec13-oob-04,eth49
+          po: 104
+          trunk: 21
+          speed: 10000full
+        - id: 5
+          description: sw-hec13-oob-05,eth49
+          po: 105
+          trunk: 21
+          speed: 10000full
+        - id: 6
+          description: sw-hec13-oob-06,eth49
+          po: 106
+          trunk: 21
+          speed: 10000full
+        - id: 7
+          description: sw-hec13-hvv-04a,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 8
+          description: sw-hec13-hvv-04b,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 9
+          description: sw-hec13-ipmi-04,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 44
+          description: naa-hec13-01, 3
+          access_vlan: 21
+          speed: 1000full
+        - id: 59/1
+          description: sw-hec13-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 60/1
+          description: sw-hec13-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.2/23
+          vrrp:
+            - id: 21
+              ip: 10.9.244.1
+              priority: 105
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 102
+          description: sw-hec13-oob-02
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec13-oob-03
+          trunk: 21
+          lacp_fallback: individual
+        - id: 104
+          description: sw-hec13-oob-04
+          trunk: 21
+          lacp_fallback: individual
+        - id: 105
+          description: sw-hec13-oob-05
+          trunk: 21
+          lacp_fallback: individual
+        - id: 106
+          description: sw-hec13-oob-06
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.251.57
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.9
+            remote_asn: 1.463
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.13
+    - number: "01b"
+      type: core
+      snmp:
+        contact: 34672517:ncons-hec13-oob-02:1007
+        location: Toronto1-(TR3)-Cage2-3.1-12-38
+      ports:
+        - id: 1
+          description: tordc01-adm-04-co,eth13
+          ip: 10.255.194.10/31
+          speed: 10000full
+        - id: 2
+          description: sw-hec13-oob-02,eth50
+          po: 102
+          trunk: 21
+          speed: 10000full
+        - id: 3
+          description: sw-hec13-oob-03,eth50
+          po: 103
+          trunk: 21
+          speed: 10000full
+        - id: 4
+          description: sw-hec13-oob-04,eth50
+          po: 104
+          trunk: 21
+          speed: 10000full
+        - id: 5
+          description: sw-hec13-oob-05,eth50
+          po: 105
+          trunk: 21
+          speed: 10000full
+        - id: 6
+          description: sw-hec13-oob-06,eth50
+          po: 106
+          trunk: 21
+          speed: 10000full
+        - id: 44
+          description: naa-hec13-01, 10
+          access_vlan: 21
+          speed: 1000full
+        - id: 45
+          description: tordc01-sob-probe-01-mgmt
+          access_vlan: 21
+          speed: 1000full
+        - id: 46
+          description: tordc01-sob-probe-01-ilo
+          access_vlan: 21
+          speed: 1000full
+        - id: 47
+          description: tordc01-sob-p-02
+          access_vlan: 21
+          speed: 1000full
+        - id: 48
+          description: tordc01-sob-pe-02
+          access_vlan: 21
+          speed: 1000full
+        - id: 59/1
+          description: sw-hec13-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 60/1
+          description: sw-hec13-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.3/23
+          vrrp:
+            - id: 21
+              ip: 10.9.244.1
+              priority: 100
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 102
+          description: sw-hec13-oob-02
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec13-oob-03
+          trunk: 21
+          lacp_fallback: individual
+        - id: 104
+          description: sw-hec13-oob-04
+          trunk: 21
+          lacp_fallback: individual
+        - id: 105
+          description: sw-hec13-oob-05
+          trunk: 21
+          lacp_fallback: individual
+        - id: 106
+          description: sw-hec13-oob-06
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.251.58
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.11
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531.13
+    - number: "02"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.4/23
+      snmp:
+        contact: 34672508:ncons-hec13-oob-01:1023
+        location: Toronto1-(TR3)-Cage2-3.1-11-41
+    - number: "03"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.5/23
+      snmp:
+        contact: 34672507:ncons-hec13-oob-03:1003
+        location: Toronto1-(TR3)-Cage1-1.1-9-34
+    - number: "04"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.47/23
+      snmp:
+        contact: 34879543:ncons-hec13-oob-03.hec.oob.net.sap:1018
+        location: Toronto1 (TR3)-Cage1- Rack 1.1-7 RU40
+    - number: "05"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.48/23
+      snmp:
+        contact: 34879544:ncons-hec13-oob-03.hec.oob.net.sap:1019
+        location: Toronto1(TR3)-Cage1- Rack 1.1-7 RU42
+    - number: "06"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.49/23
+      snmp:
+        contact: 635968:ncons-hec13-oob-02.hec.oob.net.sap:1012
+        location: Toronto 1 (TR3)-Cage2- Rack 3.1-12 RU41
   routes:
     static:
       brdr01:
@@ -323,9 +569,6 @@ hec:
         - 30/1
         - 31/1
         - 32/1
-      uplinks_speed: 100gfull
-      lo900_suffix: 29
-      mgmt1_suffix: 16
       spine_port_towards_leaf: Et3/3/1
       ports:
         - id: 900
@@ -384,34 +627,43 @@ hec:
         - id: 27/1
           description: sw-hec13-brdr-01b, Et27/1
           po: 42
+          mtu: 9214
         - id: 28/1
           description: sw-hec13-brdr-01b, Et28/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
+          mtu: 9214
         - id: 1101
           description: rt-hec13-core-01a
+          mtu: 9100
           trunk: all
         - id: 1102
           description: rt-hec13-core-01b
+          mtu: 9100
           trunk: all
         - id: 1103
           description: rt-hec13-cwan-01a
+          mtu: 9100
           trunk: all
         - id: 1104
           description: rt-hec13-idc-01a
+          mtu: 9100
           trunk: all
         - id: 1105
           description: rt-hec13-inet-01a
+          mtu: 9100
           trunk: all
         - id: 1106
           description: rt-hec13-vpn-01a
+          mtu: 9100
           trunk: all
     - number: 1b
       snmp:
-        location: CA-TOR1-CAGE2-3.1-8-39
+        location: CA-TOR1-CAGE2-3.1-8-RU39
         contact: 34672509:ncons-hec13-oob-01.net.sap.corp:1002
       oob_ip: 10.9.244.17
       nwmgmt_ip: 198.19.180.30
@@ -420,9 +672,6 @@ hec:
         - 30/1
         - 31/1
         - 32/1
-      uplinks_speed: 100gfull
-      lo900_suffix: 30
-      mgmt1_suffix: 17
       spine_port_towards_leaf: Et3/4/1
       ports:
         - id: 900
@@ -481,34 +730,43 @@ hec:
         - id: 27/1
           description: sw-hec13-brdr-01a, Et27/1
           po: 42
+          mtu: 9214
         - id: 28/1
           description: sw-hec13-brdr-01a, Et28/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
+          mtu: 9214
         - id: 1101
           description: rt-hec13-core-01a
+          mtu: 9100
           trunk: all
         - id: 1102
           description: rt-hec13-core-01b
+          mtu: 9100
           trunk: all
         - id: 1103
           description: rt-hec13-cwan-01a
+          mtu: 9100
           trunk: all
         - id: 1104
           description: rt-hec13-idc-01a
+          mtu: 9100
           trunk: all
         - id: 1105
           description: rt-hec13-inet-01a
+          mtu: 9100
           trunk: all
         - id: 1106
           description: rt-hec13-vpn-01a
+          mtu: 9100
           trunk: all
     - number: 2a
       snmp:
-        location: CA-TOR1-CAGE2-3.1-9-41
+        location: CA-TOR1-CAGE2-3.1-9-RU41
         contact: 34672514:ncons-hec13-oob-01.net.sap.corp:1013
       oob_ip: 10.9.244.18
       nwmgmt_ip: 198.19.180.31
@@ -517,40 +775,66 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      uplinks_speed: 100gfull
-      lo900_suffix: 31
-      mgmt1_suffix: 18
       spine_port_towards_leaf: Et3/5/1
       ports:
         - id: 916
           type: vlan
           description: Transfer network for inband management
           ip: 10.255.185.76/28
-        - id: 4
-          description: lb-hec13-03, 1.4
+        - id: 1
+          description: lb-hec13-01 1.1 NEW LB-external interface (Internet facing,external VLAN 940)
           speed: 10000full
+          mtu: 9214
+          trunk: 940
+        - id: 2
+          description: lb-hec13-01 1.2 NEW LB-internal interface (customer facing VLANs 2xxx)
+          speed: 10000full
+          mtu: 9214
+          trunk: 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec13-01 1.3 NEW LB-management interface (Inband management, internal VLAN 900)
+          speed: 10000full
+          mtu: 9214
+          trunk: 900
+        - id: 4
+          description: lb-hec13-01 1.4 NEW LB-HA interface (HA interface, VLAN 902)
+          speed: 10000full
+          mtu: 9214
           access_vlan: 902
+        - id: 6
+          description: fw-hec13-01-NEW,eth1-01
+          speed: 10000full
+          mtu: 9214
+        - id: 7
+          description: fw-hec13-02-NEW,eth1-01
+          speed: 10000full
+          mtu: 9214
         - id: 48
-          description: naa-hec13-01, 11
+          description: naa-hec13-01,11
           po: 48
           speed: 1000full
           access_vlan: 916
+          mtu: 9214
         - id: 49/1
           description: sw-hec13-brdr-02b, Eth49/1
           po: 42
+          mtu: 9214
         - id: 50/1
           description: sw-hec13-brdr-02b, Eth50/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
+          mtu: 9214
         - id: 48
           description: naa-hec13-01, in-band
           access_vlan: 916
+          mtu: 9214
     - number: 2b
       snmp:
-        location: CA-TOR1-CAGE2-3.1-9-39
+        location: CA-TOR1-CAGE2-3.1-9-RU39
         contact: 34672513:ncons-hec13-oob-01.net.sap.corp:1012
       oob_ip: 10.9.244.19
       nwmgmt_ip: 198.19.180.32
@@ -559,19 +843,40 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      uplinks_speed: 100gfull
-      lo900_suffix: 32
-      mgmt1_suffix: 19
       spine_port_towards_leaf: Et3/6/1
       ports:
         - id: 916
           type: vlan
           description: Transfer network for inband management
           ip: 10.255.185.77/28
-        - id: 4
-          description: lb-hec13-04, 1.4
+        - id: 1
+          description: lb-hec13-02 1.1 NEW LB-external interface (Internet facing,external VLAN 940)
           speed: 10000full
+          mtu: 9214
+          trunk: 940
+        - id: 2
+          description: lb-hec13-02 1.2 NEW LB-internal interface (customer facing VLANs 2xxx)
+          speed: 10000full
+          mtu: 9214
+          trunk: 85,90,95,100,2000-2499
+        - id: 3
+          description: lb-hec13-02 1.3 NEW LB-management interface (Inband management, internal VLAN 900)
+          speed: 10000full
+          mtu: 9214
+          trunk: 900
+        - id: 4
+          description: lb-hec13-02 1.4 NEW LB-HA interface (HA interface, VLAN 902)
+          speed: 10000full
+          mtu: 9214
           access_vlan: 902
+        - id: 6
+          description: fw-hec13-01-NEW,eth1-02
+          speed: 10000full
+          mtu: 9214
+        - id: 7
+          description: fw-hec13-02-NEW,eth1-02
+          speed: 10000full
+          mtu: 9214
         - id: 48
           description: naa-hec13-01, 12
           po: 48
@@ -580,19 +885,23 @@ hec:
         - id: 49/1
           description: sw-hec13-brdr-02a, Eth49/1
           po: 42
+          mtu: 9214
         - id: 50/1
           description: sw-hec13-brdr-02a, Eth50/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
           trunk: all
+          mtu: 9214
         - id: 48
           description: naa-hec13-01, in-band
           access_vlan: 916
+          mtu: 9214
     - number: 3a
       snmp:
-        location: CA-TOR1-CAGE2-3.1-10-41
+        location: CA-TOR1-CAGE2-3.1-10-RU41
         contact: 34672512:ncons-hec13-oob-01.net.sap.corp:1014
       oob_ip: 10.9.244.20
       nwmgmt_ip: 198.19.180.33
@@ -601,9 +910,6 @@ hec:
         - 30/1
         - 31/1
         - 32/1
-      uplinks_speed: 100gfull
-      lo900_suffix: 33
-      mgmt1_suffix: 20
       spine_port_towards_leaf: Et3/7/1
       ports:
         - id: 900
@@ -662,34 +968,43 @@ hec:
         - id: 27/1
           description: sw-hec13-brdr-03b, Et27/1
           po: 42
+          mtu: 9214
         - id: 28/1
           description: sw-hec13-brdr-03b, Et28/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
           trunk: all
         - id: 1101
           description: rt-hec13-core-01c
+          mtu: 9100
           trunk: all
         - id: 1102
           description: rt-hec13-core-01d
+          mtu: 9100
           trunk: all
         - id: 1103
           description: rt-hec13-cwan-01b
+          mtu: 9100
           trunk: all
         - id: 1104
           description: rt-hec13-idc-01b
+          mtu: 9100
           trunk: all
         - id: 1105
           description: rt-hec13-inet-01b
+          mtu: 9100
           trunk: all
         - id: 1106
           description: rt-hec13-vpn-01b
+          mtu: 9100
           trunk: all
     - number: 3b
       snmp:
-        location: CA-TOR1-CAGE2-3.1-10-39
+        location: CA-TOR1-CAGE2-3.1-10-RU39
         contact: 34672511:ncons-hec13-oob-01.net.sap.corp:1015
       oob_ip: 10.9.244.21
       nwmgmt_ip: 198.19.180.34
@@ -759,30 +1074,39 @@ hec:
         - id: 27/1
           description: sw-hec13-brdr-03a, Et27/1
           po: 42
+          mtu: 9214
         - id: 28/1
           description: sw-hec13-brdr-01a, Et28/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
           trunk: all
         - id: 1101
           description: rt-hec13-core-01c
+          mtu: 9100
           trunk: all
         - id: 1102
           description: rt-hec13-core-01d
+          mtu: 9100
           trunk: all
         - id: 1103
           description: rt-hec13-cwan-01b
+          mtu: 9100
           trunk: all
         - id: 1104
           description: rt-hec13-idc-01b
+          mtu: 9100
           trunk: all
         - id: 1105
           description: rt-hec13-inet-01b
+          mtu: 9100
           trunk: all
         - id: 1106
           description: rt-hec13-vpn-01b
+          mtu: 9100
           trunk: all
   str:
     - number: 1a
@@ -801,12 +1125,16 @@ hec:
         - id: 30/1
           description: sw-hec13-str-01b, Et30/1
           po: 42
+          mtu: 9214
         - id: 31/1
           description: sw-hec13-str-01b, Et31/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
+          trunk: all
     - number: 1b
       snmp:
         location: CA-TOR1-CAGE2-3.1-15-U39
@@ -823,12 +1151,16 @@ hec:
         - id: 30/1
           description: sw-hec13-str-01a, Et30/1
           po: 42
+          mtu: 9214
         - id: 31/1
           description: sw-hec13-str-01a, Et31/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
+          trunk: all
     - number: 2a
       snmp:
         location: CA-TOR1-CAGE1-1.1-7-U37
@@ -842,15 +1174,34 @@ hec:
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec13b0004_eth3b
+          po: 815
+          speed: 10000full
+          mtu: 9214
+          trunk: all
+        - id: 2
+          description: hec13b0004_eth5b
+          po: 815
+          speed: 10000full
+          mtu: 9214
+          trunk: all
         - id: 49/1
           description: sw-hec13-str-02b, Et49/1
           po: 42
+          mtu: 9214
         - id: 50/1
           description: sw-hec13-str-01b, Et50/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
+          trunk: all
+        - id: 815
+          description: -> hec13b0004,Po815
+          trunk: all
     - number: 2b
       snmp:
         location: CA-TOR1-CAGE1-1.1-7-U35
@@ -864,15 +1215,103 @@ hec:
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec13b0004_eth4b
+          po: 815
+          speed: 10000full
+          mtu: 9214
+          trunk: all
+        - id: 2
+          description: hec13b0004_eth6b
+          po: 815
+          speed: 10000full
+          mtu: 9214
+          trunk: all
         - id: 49/1
           description: sw-hec13-str-02a, Et49/1
           po: 42
+          mtu: 9214
         - id: 50/1
           description: sw-hec13-str-01a, Et50/1
           po: 42
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+          mtu: 9214
+          trunk: all
+        - id: 815
+          description: -> hec13b0004,Po815
+          trunk: all
+  interdc: #NOTE: DUMMY DATA TO BE ABLE TO RUN CONFIGLET CREATION
+    - number: "01"
+      ports:
+        - id: 1
+          description: foobar
+          po: 999
+        - id: 2
+          description: -> dc2wanrt01, te0/1/0 (SaaS)
+        - id: 21
+          description: sw-hec14-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec14-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec14-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec14-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec14-interdc02, Et45
+          po: 42
+        - id: 46
+          description: sw-hec14-interdc02, Et46
+          po: 42
+        - id: 47
+          description: sw-hec14-interdc02, Et47
+          po: 42
+        - id: 48
+          description: sw-hec14-interdc02, Et48
+          po: 42
+      port_channels:
+        - id: 999
+          description: ->sw-hec13 Po999
+          trunk: 961,962
+    - number: "02"
+      ports:
+        - id: 1
+          description: foobar
+          po: 999
+        - id: 21
+          description: sw-hec14-interdc02, Et21
+          po: 42
+        - id: 22
+          description: sw-hec14-interdc02, Et22
+          po: 42
+        - id: 23
+          description: sw-hec14-interdc02, Et23
+          po: 42
+        - id: 24
+          description: sw-hec14-interdc02, Et24
+          po: 42
+        - id: 45
+          description: sw-hec14-interdc01, Et45
+          po: 42
+        - id: 46
+          description: sw-hec14-interdc01, Et46
+          po: 42
+        - id: 47
+          description: sw-hec14-interdc01, Et47
+          po: 42
+        - id: 48
+          description: sw-hec14-interdc01, Et48
+          po: 42
+      port_channels:
+        - id: 999
+          description: ->sw-hec13 Po999
+          trunk: 961,962
   shs:
     - number: 1a
       snmp:
@@ -1033,39 +1472,42 @@ hec:
     30 permit vlan 50 0x000 92 any any
     40 permit vlan 50 0x000 vrrp any any
     50 permit vlan 50 0x000 ip any 224.0.0.0/5
-    60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
-    70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
-    80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
-    90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
-    99 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22
-    110 permit vlan 50 0x000 ip 198.18.80.0/22 any
-    119 permit vlan 50 0x000 ip any any
-    130 permit vlan 55 0x000 icmp any any
-    140 permit vlan 55 0x000 pim any any
-    150 permit vlan 55 0x000 92 any any
-    160 permit vlan 55 0x000 vrrp any any
-    170 permit vlan 55 0x000 ip any 224.0.0.0/5
-    180 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.255
-    190 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
-    200 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
-    210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
-    219 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16
-    230 permit vlan 55 0x000 ip 100.125.0.0/16 any
-    239 permit vlan 55 0x000 ip any any
-    250 permit vlan 60 0x000 icmp any any
-    260 permit vlan 60 0x000 pim any any
-    270 permit vlan 60 0x000 92 any any
-    280 permit vlan 60 0x000 vrrp any any
-    290 permit vlan 60 0x000 ip any 224.0.0.0/5
-    300 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
-    310 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
-    319 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21
-    329 permit vlan 60 0x000 ip 198.18.88.0/21 any
-    340 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.255
-    350 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
-    359 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20
-    370 permit vlan 60 0x000 ip 198.19.128.0/20 any
-    379 permit vlan 60 0x000 ip any any
-    389 permit ip any any
+    60 permit vlan 50 0x000 ip 100.96.16.0/22 host 100.96.19.255
+    70 permit vlan 50 0x000 ip 100.96.16.0/22 100.96.19.0/24
+    80 permit vlan 50 0x000 ip 100.96.19.0/24 100.96.16.0/22
+    90 permit vlan 50 0x000 ip 100.96.16.0/22 host 100.96.16.1
+    100 deny vlan 50 0x000 ip 100.96.16.0/22 100.96.16.0/22 log
+    110 permit vlan 50 0x000 ip 100.96.16.0/22 any
+    120 permit vlan 50 0x000 ip any any
+    130 permit vlan 60 0x000 icmp any any
+    140 permit vlan 60 0x000 pim any any
+    150 permit vlan 60 0x000 92 any any
+    160 permit vlan 60 0x000 vrrp any any
+    170 permit vlan 60 0x000 ip any 224.0.0.0/5
+    180 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.27.255
+    190 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.31.255
+    200 permit vlan 60 0x000 ip 100.96.24.0/21 host 100.96.24.1
+    210 deny vlan 60 0x000 ip 100.96.24.0/21 100.96.24.0/21 log
+    220 permit vlan 60 0x000 ip 100.96.24.0/21 any
+    230 permit vlan 60 0x000 ip any any
+    240 permit ip any any
   hana_acl_rules: |
-    10 permit ip any any
+    10 permit icmp any any
+    20 permit pim any any
+    30 permit 92 any any
+    40 permit vrrp any any
+    50 permit ip any 224.0.0.0/5
+    60 permit ip 100.96.8.0/23 host 100.96.9.255
+    70 permit ip 100.96.8.0/23 host 100.96.8.4
+    80 permit ip host 100.96.8.4 100.96.8.0/23
+    90 permit ip 100.96.8.0/23 host 100.96.8.5
+    100 permit ip host 100.96.8.5 100.96.8.0/23
+    110 permit ip 100.96.8.0/23 host 100.96.8.6
+    120 permit ip 100.96.8.0/23 host 100.96.8.5
+    130 permit ip host 100.96.8.6 100.96.8.0/23
+    140 permit ip 100.96.8.0/23 100.96.9.224/27
+    150 permit ip 100.96.9.224/27 100.96.8.0/23
+    160 permit ip 100.96.8.0/23 host 100.96.8.1
+    170 deny ip 100.96.8.0/23 100.96.8.0/23
+    180 permit ip 100.96.8.0/23 any
+    190 permit ip any any

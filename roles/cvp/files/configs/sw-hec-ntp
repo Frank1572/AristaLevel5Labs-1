@@ -1,0 +1,3 @@
+ntp server 169.145.84.7 prefer
+ntp server 169.145.84.11
+!

@@ -1,0 +1,4 @@
+snmp-server community r0c4s ro ACL_SNMP_VTY
+snmp-server host 147.204.148.100 version 2c r0c4s
+snmp-server host 147.204.148.87 version 2c r0c4s
+!

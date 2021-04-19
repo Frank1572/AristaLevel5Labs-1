@@ -1,0 +1,99 @@
+!
+hostname rt-hec03-ha-core-01b
+!
+snmp-server contact 34697204:ncons-hec03-oob-01:1023
+snmp-server location US-STL-DC4-Cage5-FG-20-24
+!
+bfd local-address 198.19.251.119
+!
+interface Ethernet26/1
+   description ->DCP2Pa:440673080:STL1:ASH3:rt-hec16-ha-core-01b_Et26/11
+   ip address 10.254.254.2/31
+ 
+interface Vlan922
+   description ->BACKUP-TRANS
+   ip address 10.255.176.91/28
+ 
+  
+
+interface Ethernet27/1
+   description ->sw-hec03-spine-11, Et58/1
+   ip address 10.11.0.115/31
+!
+interface Ethernet28/1
+   description ->sw-hec03-spine-12, Et58/1
+   ip address 10.12.0.115/31
+!
+interface Ethernet29/1
+   description ->sw-hec03-spine-13, Et58/1
+   ip address 10.13.0.115/31
+!
+interface Ethernet30/1
+   description ->sw-hec03-spine-14, Et58/1
+   ip address 10.14.0.115/31
+!
+!
+interface Loopback1 
+   ip address 198.19.251.119/32
+   ip address 10.254.200.1/32 secondary
+! 
+interface Loopback900 
+   ip address 198.19.156.28/32
+! 
+interface Management1 
+   ip address 10.9.240.72/23
+!
+ 
+ip route 198.19.249.143/32 Ethernet26/1 10.254.254.3
+ 
+ip route 198.19.249.147/32 Ethernet26/1 10.254.254.3
+ 
+ip route 198.19.249.148/32 Ethernet26/1 10.254.254.3
+ 
+ip route 198.19.249.151/32 Ethernet26/1 10.254.254.3
+ 
+ip route 198.19.249.152/32 Ethernet26/1 10.254.254.3
+ 
+ip route 198.19.249.153/32 Ethernet26/1 10.254.254.3
+
+ip route 198.19.251.123/32 Ethernet26/1 10.254.254.3
+!
+router bgp 64103.10999 
+   router-id 198.19.251.119
+   neighbor 10.11.0.114 peer group PG-SPINE
+   neighbor 10.12.0.114 peer group PG-SPINE
+   neighbor 10.13.0.114 peer group PG-SPINE
+   neighbor 10.14.0.114 peer group PG-SPINE
+
+   neighbor 10.254.254.3 peer group PG-RMT-HA-ROUTER
+   neighbor 10.254.254.3 description *** BGP to rt-hec16-ha-core-01b ***
+   address-family evpn 
+      neighbor 10.254.254.3 activate 
+
+   neighbor 198.19.251.118 peer group PG-HA-ROUTER
+   neighbor 198.19.251.118 description *** EVPN to rt-hec03-ha-core-01a ***
+   neighbor 198.19.251.120 peer group PG-HA-ROUTER
+   neighbor 198.19.251.120 description *** EVPN to rt-hec03-ha-core-01c ***
+   neighbor 198.19.251.121 peer group PG-HA-ROUTER
+   neighbor 198.19.251.121 description *** EVPN to rt-hec03-ha-core-01d ***
+   ! 
+   address-family evpn 
+      neighbor 198.19.251.118 activate
+      neighbor 198.19.251.120 activate
+      neighbor 198.19.251.121 activate
+   !
+ 
+   vlan-aware-bundle all-vlans 
+      rd 198.19.251.119:1 
+   ! 
+   address-family ipv4 
+      neighbor 10.11.0.114 activate
+      neighbor 10.12.0.114 activate
+      neighbor 10.13.0.114 activate
+      neighbor 10.14.0.114 activate
+      network 10.254.200.1/32
+      network 198.19.156.28/32
+      network 198.19.251.123/32
+      network 198.19.251.119/32
+   ! 
+! 

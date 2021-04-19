@@ -1,0 +1,4 @@
+vrf instance OOB
+   description Out of Band
+!
+ip route vrf OOB 0.0.0.0 0.0.0.0 10.9.240.1

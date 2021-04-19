@@ -1,0 +1,69 @@
+!
+platform xp profile tcam-acl
+!
+interface Ethernet 1-22
+   switchport trunk native vlan 5
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   spanning-tree portfast
+!
+! === MLAG Peer Link: ===
+interface Ethernet 49/1,50/1
+   mtu 9214
+   speed forced 100gfull
+   channel-group 42 mode active
+!
+! === Spine Uplinks: ===
+interface Ethernet 51/1,52/1,53/1,54/1
+   no switchport
+!
+interface Ethernet 1
+   channel-group 101 mode active
+interface Ethernet 2
+   channel-group 102 mode active
+interface Ethernet 3
+   channel-group 103 mode active
+interface Ethernet 4
+   channel-group 104 mode active
+interface Ethernet 5
+   channel-group 105 mode active
+interface Ethernet 6
+   channel-group 106 mode active
+interface Ethernet 7
+   channel-group 107 mode active
+interface Ethernet 8
+   channel-group 108 mode active
+interface Ethernet 9
+   channel-group 109 mode active
+interface Ethernet 10
+   channel-group 110 mode active
+interface Ethernet 11
+   channel-group 111 mode active
+interface Ethernet 12
+   channel-group 112 mode active
+interface Ethernet 13
+   channel-group 113 mode active
+interface Ethernet 14
+   channel-group 114 mode active
+interface Ethernet 15
+   channel-group 115 mode active
+interface Ethernet 16
+   channel-group 116 mode active
+interface Ethernet 17
+   channel-group 117 mode active
+interface Ethernet 18
+   channel-group 118 mode active
+interface Ethernet 19
+   channel-group 119 mode active
+interface Ethernet 20
+   channel-group 120 mode active
+interface Ethernet 21
+   channel-group 121 mode active
+interface Ethernet 22
+   channel-group 122 mode active
+!
+interface Ethernet48
+   description ->sw-hec03-ipmi-xx
+   switchport mode trunk
+   channel-group 900 mode active
+!

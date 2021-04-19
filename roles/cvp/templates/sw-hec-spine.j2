@@ -17,7 +17,7 @@
 {% set port_range_end = ports_per_lc|int + 1 %}
 {# {% include "templates/config_templates/sw-hec-spine-ips.j2" %} #}
 {########## BGP CONFIGURATION ##########}
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
 peer-filter EVPN-PF
 ! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
    10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
@@ -37,7 +37,7 @@ router bfd
 router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    bgp asn notation asdot
    maximum-paths 8 ecmp 16
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
 {% for listen_range in hec.fabric.bgp_listen_ranges %}
    bgp listen range {{ listen_range }} peer-group EVPN-PG peer-filter EVPN-PF
 {% endfor %}
@@ -57,14 +57,14 @@ router bgp 641{{ hec.hec_nr }}.{{pod}}0000
    neighbor LEAF-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
    neighbor LEAF-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
 !
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
    address-family evpn
       bgp next-hop-unchanged
       neighbor EVPN-PG activate
    !
 {% endif %}
    address-family ipv4
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
       no neighbor EVPN-PG activate
 {% endif %}
       neighbor LEAF-PG activate

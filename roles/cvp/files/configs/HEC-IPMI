@@ -1,0 +1,19 @@
+vlan 10
+   name IPMI01
+vlan 900
+   name NW-MGMT
+!
+spanning-tree mst configuration
+  instance 1 vlan  2-4093
+!
+interface Ethernet1-48
+   switchport access vlan 10
+!
+interface Ethernet49,50
+   switchport mode trunk
+   channel-group 900 mode active
+!
+ip route 0.0.0.0/0 198.19.236.1
+!
+ip tacacs source-interface Vlan900
+ 

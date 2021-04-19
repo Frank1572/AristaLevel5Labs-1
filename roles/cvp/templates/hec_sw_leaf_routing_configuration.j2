@@ -172,7 +172,7 @@ router bgp {{ asn_generated }}
    network {{ hec.inband_trans_net }}
 {% endif %}
    !
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode== "migrate" %}
    neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG remote-as {{ asn_spine }}
    neighbor EVPN-PG update-source Loopback1
@@ -194,10 +194,12 @@ router bgp {{ asn_generated }}
    address-family ipv6
       no neighbor EVPN-PG activate
    !
+{% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
       rd 10.200.1.{{ cell_id }}:1
       route-target both 1:1
       redistribute learned
+{% endif %}
 {% if leafpurpose != 'b' %}
       vlan 5-2499
 {% else %}

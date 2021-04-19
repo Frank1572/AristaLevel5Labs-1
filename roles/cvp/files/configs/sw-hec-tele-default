@@ -1,0 +1,4 @@
+daemon TerminAttr 
+  exec /usr/bin/TerminAttr -ingestgrpcurl=10.9.241.253:9910 -taillogs -ingestauth=key,SecureKey03 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent 
+  no shutdown 
+

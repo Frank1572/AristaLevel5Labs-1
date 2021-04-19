@@ -1,0 +1,223 @@
+banner login
+****************************  W A R N I N G  *****************************
+*     Access to this system is restricted to authorized users only.      *
+*     All data residing on this system is the property of SAP.           *
+*     All activities on this system may be monitored.                    *
+*     Unauthorized usage is prohibited and may attract penalties.        *
+**************************************************************************
+
+**************************  I M P O R T A N T  ***************************
+*     Do not make configuration changes to this device on the CLI.       *
+*     This device is maintained by CVP! Changes will be overwritten.     *
+**************************************************************************
+
+      Device: $(hostname)
+EOF
+!
+snmp-server community r0c4s ro ACL_SNMP_VTY
+snmp-server host 147.204.148.100 version 2c r0c4s
+snmp-server host 147.204.148.87 version 2c r0c4s
+!!
+logging host 169.145.82.65
+logging host 169.145.84.91
+logging buffered 1043741829
+logging trap debugging
+no logging console
+logging format hostname fqdn
+logging facility local5
+!!
+dns domain stl.hec.sap.biz
+!
+ntp server 169.145.84.7 prefer
+ntp server 169.145.84.11
+!!
+sflow destination 169.145.84.67 9995
+sflow source-interface Loopback900
+sflow run
+!
+alias ic show interface counter | nz
+alias ie show interface counter errors | nz
+alias ipa show ip interface brief
+alias ipr show ip route
+alias ir show interface counter rates | nz
+alias bs show ip bgp summary
+alias es show bgp evpn summary
+alias os show ip ospf neighbor
+alias po show port-channel summary
+alias ru show running section %1
+alias pa sh int stat | grep Et | wc -l
+alias pu sh int stat | grep Et | grep conn | grep -v not |wc -l
+!
+schedule tech-support interval 60 timeout 30 max-log-files 60 command show tech-support
+!
+event-handler CONFIG_VERSIONING
+   trigger on-startup-config
+   action bash FN=/mnt/flash/startup-config; LFN="`ls -1 $FN.*-* | tail -n 1`"; if [ -z "$LFN" -o -n "`diff -I 'last modified' $FN $LFN`" ]; then cp $FN $FN.`date +%Y%m%d-%H%M%S`; ls -1r $FN.*-* | tail -n +11 | xargs -I % rm %; fi
+   delay 0
+!
+! === Interval for averaging the load in CLI commands, in seconds
+load-interval default 5
+!
+ip access-list standard ACL_SNMP_VTY
+ 10 permit 169.145.33.128/26
+  20 permit 10.17.120.0/22
+  30 permit 10.18.117.0/24
+  40 permit 10.21.104.0/24
+  50 permit 10.33.158.0/26
+  60 permit 147.204.204.32/27
+  70 permit 147.204.120.0/22
+  80 permit 169.145.84.136/32
+  90 permit 147.204.148.20/32
+  100 permit 147.204.148.64/32
+  110 permit 147.204.148.87/32
+  120 permit 147.204.148.100/32
+  130 permit 147.204.148.101/32
+  140 permit 147.204.148.156/32
+  150 permit 10.17.158.0/23
+  160 permit 10.17.160.0/22
+  170 permit 147.204.149.87/32
+  180 permit 169.145.220.74/32
+  190 permit 169.145.33.64/26
+  200 permit 147.204.144.0/25
+  210 permit 147.204.128.0/25
+  220 permit 169.145.80.0/25
+  230 permit 169.145.104.0/25
+  240 permit 169.145.240.0/25
+  250 permit 169.145.248.0/25
+  260 permit 169.145.216.0/25
+  270 permit 169.145.208.0/25
+  280 permit 100.127.16.0/25
+  290 permit 100.127.24.0/25
+  300 permit 100.127.0.0/25
+  310 permit 100.127.8.0/25
+  320 permit 100.127.32.0/25
+  330 permit 100.127.40.0/25
+  340 permit 100.127.104.0/25
+  350 permit 100.127.112.0/25
+  360 permit 100.127.120.0/25
+  370 permit 100.127.128.0/25
+  380 permit 100.127.136.0/25
+  390 permit 169.145.152.0/25
+  400 permit 147.204.149.224/30
+  410 permit 147.204.27.224/30
+  420 permit 147.204.133.224/30
+  430 permit 169.145.85.224/30
+  440 permit 169.145.109.224/30
+  450 permit 169.145.245.224/30
+  460 permit 169.145.253.224/30
+  470 permit 169.145.221.224/30
+  480 permit 169.145.213.224/30
+  490 permit 100.127.21.224/30
+  500 permit 100.127.29.224/30
+  510 permit 100.127.5.224/30
+  520 permit 100.127.13.224/30
+  530 permit 100.127.37.224/30
+  540 permit 100.127.45.224/30
+  550 permit 100.127.109.224/30
+  560 permit 100.127.117.224/30
+  570 permit 100.127.125.224/30
+  580 permit 100.127.133.224/30
+  590 permit 100.127.141.224/30
+  600 permit 147.204.146.32/31
+  610 permit 147.204.130.32/31
+  620 permit 169.145.82.32/31
+  630 permit 169.145.82.6/32
+  640 permit 169.145.106.32/31
+  650 permit 169.145.242.32/31
+  660 permit 169.145.250.32/31
+  670 permit 169.145.218.32/31
+  680 permit 169.145.210.32/31
+  690 permit 100.127.18.32/31
+  700 permit 100.127.26.32/31
+  710 permit 100.127.2.32/31
+  720 permit 100.127.10.32/31
+  730 permit 100.127.34.32/31
+  740 permit 100.127.42.32/31
+  750 permit 100.127.106.32/31
+  760 permit 100.127.114.32/31
+  770 permit 100.127.122.32/31
+  780 permit 100.127.130.32/31
+  790 permit 100.127.138.32/31
+  800 permit 169.145.154.32/31
+  810 permit 198.19.224.0/19
+  820 permit 198.19.190.0/24
+  830 permit 198.19.195.0/24
+  840 permit 198.19.156.0/23
+  850 permit 198.19.202.0/24
+  860 permit 198.19.203.0/24
+  870 permit 198.19.158.0/23
+  880 permit 198.19.200.0/24
+  890 permit 198.19.201.0/24
+  900 permit 198.19.180.0/24
+  910 permit 198.19.182.0/24
+  920 permit 198.19.188.0/24
+  930 permit 198.19.189.0/24
+  940 permit 198.19.206.0/24
+  950 permit 198.19.207.0/24
+  960 permit 198.19.166.0/24
+  970 permit 198.19.167.0/24
+  980 permit 198.19.170.0/24
+  990 permit 198.19.171.0/24
+  1000 permit 198.19.194.0/24
+  1010 permit 198.19.204.0/24
+  1020 permit 198.19.191.0/25
+  1030 permit 147.204.148.121/32
+  1040 permit 147.204.132.40/32
+  1050 permit 169.145.84.160/32
+  1060 permit 169.145.108.16/32
+  1070 permit 169.145.244.13/32
+  1080 permit 169.145.252.13/32
+  1090 permit 169.145.220.92/32
+  1100 permit 169.145.212.6/32
+  1110 permit 100.127.20.17/32
+  1120 permit 172.30.20.23/32
+  1130 permit 100.127.28.25/32
+  1140 permit 100.127.4.65/32
+  1150 permit 100.127.12.67/32
+  1160 permit 100.127.36.65/32
+  1170 permit 100.127.44.29/32
+  1180 permit 100.127.108.26/32
+  1190 permit 100.127.116.38/32
+  1200 permit 100.127.124.36/32
+  1210 permit 100.127.132.34/32
+  1220 permit 100.127.140.44/32
+  1230 permit 10.178.137.253/32
+  1240 permit 10.178.141.253/32
+  1250 permit 10.9.241.253/32
+  1260 permit 10.9.243.253/32
+  1270 permit 10.192.17.253/32
+  1280 permit 10.192.19.253/32
+  1290 permit 10.192.21.253/32
+  1300 permit 10.192.23.253/32
+  1310 permit 10.178.139.253/32
+  1320 permit 10.178.143.253/32
+  1330 permit 10.177.249.253/32
+  1340 permit 10.177.251.253/32
+  1350 permit 10.9.245.253/32
+  1360 permit 10.9.247.253/32
+  1370 permit 10.178.145.253/32
+  1380 permit 10.9.227.253/32
+  1390 permit 10.9.233.253/32
+  1400 permit 10.9.237.253/32
+  1410 permit 10.178.147.253/32
+  1420 permit 10.255.241.69/32
+  1430 permit 10.255.252.69/32
+  1440 permit 10.255.176.69/32
+  1450 permit 10.255.177.69/32
+  1460 permit 10.255.178.69/32
+  1470 permit 10.255.179.69/32
+  1480 permit 10.255.180.69/32
+  1490 permit 10.255.181.69/32
+  1500 permit 10.255.182.69/32
+  1510 permit 10.255.253.69/32
+  1520 permit 10.255.183.69/32
+  1530 permit 10.255.184.69/32
+  1540 permit 10.255.185.69/32
+  1550 permit 10.255.186.69/32
+  1560 permit 10.255.240.69/32
+  1570 permit 10.255.242.69/32
+  1580 permit 10.255.243.69/32
+  1590 permit 10.255.244.69/32
+  1600 permit 10.255.245.69/32
+  1610 deny any
+ !

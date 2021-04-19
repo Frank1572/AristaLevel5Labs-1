@@ -1,0 +1,503 @@
+vlan 7
+   name DHCP03
+!
+vlan 900
+   name NW-MGMT
+!
+vlan 930
+   name VMWARE-FAULT-TOLERANCE
+!
+vlan 931
+   name VMWARE-VMOTION
+!
+vlan 932
+   name VMWARE-VCENTER-HA
+!
+interface Vxlan1
+   vxlan vlan 7 vni 10007
+!
+interface Port-Channel101
+   mlag 101
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel102
+   mlag 102
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel103
+   mlag 103
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel104
+   mlag 104
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel105
+   mlag 105
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel106
+   mlag 106
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel107
+   mlag 107
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel108
+   mlag 108
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel109
+   mlag 109
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel110
+   mlag 110
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel111
+   mlag 111
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel112
+   mlag 112
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel113
+   mlag 113
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel114
+   mlag 114
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel115
+   mlag 115
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel116
+   mlag 116
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel117
+   mlag 117
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel118
+   mlag 118
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel119
+   mlag 119
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel120
+   mlag 120
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel121
+   mlag 121
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel122
+   mlag 122
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel123
+   mlag 123
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel124
+   mlag 124
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90-91,95,100,110,120,130,140,932,2001-2499
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel151
+   mlag 151
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel152
+   mlag 152
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel153
+   mlag 153
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel154
+   mlag 154
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel155
+   mlag 155
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel156
+   mlag 156
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel157
+   mlag 157
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel158
+   mlag 158
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel159
+   mlag 159
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel160
+   mlag 160
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel161
+   mlag 161
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel162
+   mlag 162
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel163
+   mlag 163
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel164
+   mlag 164
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel165
+   mlag 165
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel166
+   mlag 166
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel167
+   mlag 167
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel168
+   mlag 168
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel169
+   mlag 169
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel170
+   mlag 170
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel171
+   mlag 171
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel172
+   mlag 172
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel173
+   mlag 173
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel174
+   mlag 174
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan 7,20,930-931
+   switchport mode trunk
+   ip access-group HEC03-L2-APP in
+   port-channel lacp fallback individual
+   spanning-tree portfast
+!
+interface Port-Channel900
+   description ->sw-hec03-ipmi-xx
+   switchport trunk allowed vlan 10,900
+   switchport mode trunk
+   mlag 900
+!
+ip access-list HEC03-L2-APP
+10 permit vlan 50 0x000 icmp any any
+20 permit vlan 50 0x000 pim any any
+30 permit vlan 50 0x000 92 any any
+40 permit vlan 50 0x000 vrrp any any
+50 permit vlan 50 0x000 ip any 224.0.0.0/5
+60 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.83.255
+70 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.83.0/24
+80 permit vlan 50 0x000 ip 198.18.83.0/24 198.18.80.0/22
+90 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.81.112
+100 permit vlan 50 0x000 ip 198.18.80.0/22 198.18.81.96/28
+110 permit vlan 50 0x000 ip 198.18.81.96/28 198.18.80.0/22
+120 permit vlan 50 0x000 ip 198.18.80.0/22 host 198.18.80.1
+130 deny vlan 50 0x000 ip 198.18.80.0/22 198.18.80.0/22 log
+140 permit vlan 50 0x000 ip 198.18.80.0/22 any
+150 permit vlan 50 0x000 ip any any
+160 permit vlan 55 0x000 icmp any any
+170 permit vlan 55 0x000 pim any any
+180 permit vlan 55 0x000 92 any any
+190 permit vlan 55 0x000 vrrp any any
+200 permit vlan 55 0x000 ip any 224.0.0.0/5
+210 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.255.255
+220 permit vlan 55 0x000 ip 100.125.0.0/16 100.125.240.0/20
+230 permit vlan 55 0x000 ip 100.125.240.0/20 100.125.0.0/16
+240 permit vlan 55 0x000 ip 100.125.0.0/16 host 100.125.0.1
+250 deny vlan 55 0x000 ip 100.125.0.0/16 100.125.0.0/16 log
+260 permit vlan 55 0x000 ip 100.125.0.0/16 any
+270 permit vlan 55 0x000 ip any any
+280 permit vlan 60 0x000 icmp any any
+290 permit vlan 60 0x000 pim any any
+300 permit vlan 60 0x000 92 any any
+310 permit vlan 60 0x000 vrrp any any
+320 permit vlan 60 0x000 ip any 224.0.0.0/5
+330 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.91.255
+340 permit vlan 60 0x000 ip 198.18.88.0/21 host 198.18.88.1
+350 deny vlan 60 0x000 ip 198.18.88.0/21 198.18.88.0/21 log
+360 permit vlan 60 0x000 ip 198.18.88.0/21 any
+370 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.143.255
+380 permit vlan 60 0x000 ip 198.19.128.0/20 host 198.19.128.1
+390 deny vlan 60 0x000 ip 198.19.128.0/20 198.19.128.0/20 log
+400 permit vlan 60 0x000 ip 198.19.128.0/20 any
+410 permit vlan 60 0x000 ip 100.124.32.0/19 host 100.124.63.255
+420 permit vlan 60 0x000 ip 100.124.32.0/19 host 100.124.32.1
+430 deny vlan 60 0x000 ip 100.124.32.0/19 100.124.32.0/19 log
+440 permit vlan 60 0x000 ip 100.124.32.0/19 any
+450 permit vlan 60 0x000 ip any any
+460 permit ip any any

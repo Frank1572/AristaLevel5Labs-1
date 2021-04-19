@@ -1,0 +1,239 @@
+hostname sw-hec03-superspine-01
+!
+snmp-server contact xxxxx:ncons-hec03-oob-01.net.sap.corp:1029
+snmp-server location AMER-US-STL1-Cage5-FG18-29
+!
+interface Loopback1
+   description Router-ID
+   ip address 10.90.3.1/32
+!
+interface Loopback900
+   description NW-MGMT
+   ip address 198.19.156.65/32
+!
+interface Management1
+   description OOB MGMT
+   vrf OOB
+   ip address 10.9.241.33/23
+!
+interface Ethernet1/1
+   description Link to SPINE-11
+   no switchport
+   ip address 10.255.11.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet2/1
+   description Link to SPINE-12
+   no switchport
+   ip address 10.255.11.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet3/1
+   description Link to SPINE-13
+   no switchport
+   ip address 10.255.11.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet4/1
+   description Link to SPINE-14
+   no switchport
+   ip address 10.255.11.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+interface Ethernet5/1
+   description Link to SPINE-21
+   no switchport
+   ip address 10.255.21.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet6/1
+   description Link to SPINE-22
+   no switchport
+   ip address 10.255.21.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet7/1
+   description Link to SPINE-23
+   no switchport
+   ip address 10.255.21.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet8/1
+   description Link to SPINE-24
+   no switchport
+   ip address 10.255.21.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+interface Ethernet9/1
+   description Link to SPINE-31
+   no switchport
+   ip address 10.255.31.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet10/1
+   description Link to SPINE-32
+   no switchport
+   ip address 10.255.31.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet11/1
+   description Link to SPINE-33
+   no switchport
+   ip address 10.255.31.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet12/1
+   description Link to SPINE-34
+   no switchport
+   ip address 10.255.31.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+interface Ethernet13/1
+   description Link to SPINE-41
+   no switchport
+   ip address 10.255.41.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet14/1
+   description Link to SPINE-42
+   no switchport
+   ip address 10.255.41.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet15/1
+   description Link to SPINE-43
+   no switchport
+   ip address 10.255.41.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet16/1
+   description Link to SPINE-44
+   no switchport
+   ip address 10.255.41.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+interface Ethernet17/1
+   description Link to SPINE-51
+   no switchport
+   ip address 10.255.51.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet18/1
+   description Link to SPINE-52
+   no switchport
+   ip address 10.255.51.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet19/1
+   description Link to SPINE-53
+   no switchport
+   ip address 10.255.51.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet20/1
+   description Link to SPINE-54
+   no switchport
+   ip address 10.255.51.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+interface Ethernet21/1
+   description Link to SPINE-61
+   no switchport
+   ip address 10.255.61.0/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet22/1
+   description Link to SPINE-62
+   no switchport
+   ip address 10.255.61.2/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet23/1
+   description Link to SPINE-63
+   no switchport
+   ip address 10.255.61.4/31
+   mtu 9214
+   speed forced 100gfull
+!
+interface Ethernet24/1
+   description Link to SPINE-64
+   no switchport
+   ip address 10.255.61.6/31
+   mtu 9214
+   speed forced 100gfull
+!
+!
+!
+peer-filter SUPERSPINE-PF
+   10 match as-range 4201064208 result accept
+   20 match as-range 4201074208 result accept
+   30 match as-range 4201084208 result accept
+   40 match as-range 4201094208 result accept
+   50 match as-range 4201104208 result accept
+   60 match as-range 4201114208 result accept
+!
+router bfd
+   slow-timer 5000
+   interval 200 min-rx 200 multiplier 3 default
+   multihop interval 1000 min-rx 1000 multiplier 5
+!
+router bgp 64103.9000
+  router-id 10.90.3.1
+  bgp asn notation asdot
+  no bgp default ipv4-unicast
+  distance bgp 20 200 200
+  maximum-paths 16 ecmp 16
+  bgp listen range 10.100.0.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.110.3.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.120.3.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.130.3.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.140.3.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.150.3.0/24 peer-group EVPN-OVERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  bgp listen range 10.255.0.0/16 peer-group UNDERLAY-DYNAMIC peer-filter SUPERSPINE-PF
+  neighbor EVPN-OVERLAY-DYNAMIC peer group
+  neighbor EVPN-OVERLAY-DYNAMIC update-source Loopback1
+  neighbor EVPN-OVERLAY-DYNAMIC bfd
+  neighbor EVPN-OVERLAY-DYNAMIC ebgp-multihop
+  neighbor EVPN-OVERLAY-DYNAMIC send-community standard extended
+  neighbor EVPN-OVERLAY-DYNAMIC maximum-routes 0
+  neighbor UNDERLAY-DYNAMIC peer group
+  neighbor UNDERLAY-DYNAMIC send-community standard extended
+  neighbor UNDERLAY-DYNAMIC maximum-routes 12000
+  neighbor UNDERLAY-DYNAMIC rib-in pre-policy retain all
+  address-family evpn
+    bgp next-hop-unchanged
+    neighbor EVPN-OVERLAY-DYNAMIC activate
+    no neighbor UNDERLAY-DYNAMIC activate
+  address-family ipv4
+    no neighbor EVPN-OVERLAY-DYNAMIC activate
+    neighbor UNDERLAY-DYNAMIC activate
+  address-family ipv4
+    network 10.90.3.1/32
+    network 198.19.156.65/32

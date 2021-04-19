@@ -1,0 +1,13 @@
+ip routing
+!
+! === Enable ArBGP (for EVPN) ===
+service routing protocols model multi-agent
+!
+ip ftp client source-interface Loopback900
+ip http client local-interface Loopback900
+ip ssh client source-interface Loopback900
+!
+ip tacacs source-interface Loopback900
+!
+ntp local-interface Loopback900
+logging source-interface Loopback900

@@ -1,8 +1,0 @@
-logging host 169.145.82.65
-logging host 169.145.84.91
-logging buffered 1043741829
-logging trap debugging
-no logging console
-logging format hostname fqdn
-logging facility local5
-!

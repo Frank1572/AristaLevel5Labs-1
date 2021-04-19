@@ -1,6 +1,0 @@
-vlan 32
-   name HEC03-IBM-PWR-ISCSI
-!
-interface Vxlan1
-   vxlan vlan 32 vni 10032
-!

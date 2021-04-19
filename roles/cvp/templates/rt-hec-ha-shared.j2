@@ -189,7 +189,7 @@ router bgp 641{{ hec.hec_nr }}.10999
    neighbor PG-SPINE {{eos_cmd.c_neighbor_soft_reconfiguration}} all 
    neighbor PG-SPINE send-community 
    neighbor PG-SPINE maximum-routes 0
-{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %} 
    neighbor PG-SPINE-EVPN {{eos_cmd.c_neighbor_peer_group}} 
    neighbor PG-SPINE-EVPN remote-as 641{{ hec.hec_nr }}.10000 
    neighbor PG-SPINE-EVPN update-source Loopback1 
@@ -216,7 +216,7 @@ router bgp 641{{ hec.hec_nr }}.10999
    ! 
 {% endif %}
    address-family evpn 
-{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %} 
       neighbor PG-SPINE-EVPN activate
 {% endif %}
 {% for neighbor in hec.ngdr_overlay.edge_neighbors %}
@@ -224,7 +224,7 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% endfor %} 
    ! 
    address-family ipv4 
-{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %} 
       no neighbor PG-SPINE-EVPN activate 
 {% endif %}
    ! 

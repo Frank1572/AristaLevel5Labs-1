@@ -199,7 +199,6 @@ router bgp {{ asn_generated }}
       rd 10.200.1.{{ cell_id }}:1
       route-target both 1:1
       redistribute learned
-{% endif %}
 {% if leafpurpose != 'b' %}
       vlan 5-2499
 {% else %}
@@ -214,6 +213,7 @@ router bgp {{ asn_generated }}
 {% endif %}
 {% endif %}
       exit
+{% endif %}
    exit
 !
 {% endif %}{# END vtep_distribution_mode evpn? #}

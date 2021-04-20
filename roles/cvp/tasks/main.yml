@@ -414,6 +414,7 @@
     configlets: "{{ configlet_list }}"
     configlet_filter: "{{ configlet_filter }}"
     state: present
+    filter_mode: strict
   register: cvp_configlet
   ignore_errors: yes
   tags:

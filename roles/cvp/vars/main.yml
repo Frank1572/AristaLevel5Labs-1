@@ -25,6 +25,7 @@ container:
       - sw-hec-aaa-oob
       - mgmt-default
       - sw-hec-oob-common
+      - sw-hec-oob-snmp
       - sw-hec-tele-default
   HEC-External Connectivity:
     parent_container: HEC
@@ -212,3 +213,4 @@ configlet_list_global:
   - rt-hec-ha-core-01d
   - sw-hec-fwt-01a
   - sw-hec-fwt-01b
+  - sw-hec-oob-snmp

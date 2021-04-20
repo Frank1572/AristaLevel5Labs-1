@@ -12,10 +12,10 @@ configlet_list_dc_specific:
   - sw-hec-spine-32
   - sw-hec-spine-33
   - sw-hec-spine-34
-  - sw-hec-superspine-1
-  - sw-hec-superspine-2
-  - sw-hec-superspine-3
-  - sw-hec-superspine-4
+  - sw-hec-superspine-01
+  - sw-hec-superspine-02
+  - sw-hec-superspine-03
+  - sw-hec-superspine-04
   - sw-hec-str-03a
   - sw-hec-str-03b
   - sw-hec-str-04a

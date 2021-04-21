@@ -110,6 +110,7 @@
     - sw-hec-snmp
     - sw-hec-fab-snmp
     - sw-hec-switch-snmp
+    - sw-hec-oob-snmp
     - sw-hec-ntp
     - sw-hec-fab-ntp
     - sw-hec-switch-ntp

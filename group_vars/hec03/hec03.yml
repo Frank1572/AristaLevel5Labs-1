@@ -1480,7 +1480,7 @@ hec:
           description: mlag peer link
         - id: 401
           description: hec03b0015
-          trunk: 40,50,55,110,120,140
+          trunk: 40,50,55,120,140
     - number: 1b
       snmp:
         location: US-STE1-AH097-U36
@@ -1514,7 +1514,7 @@ hec:
           description: mlag peer link
         - id: 401
           description: hec03b0015
-          trunk: 40,50,55,110,120,140
+          trunk: 40,50,55,120,140
     - number: 2a
       snmp:
         location: AMER-USA-Sterling1-(DC4)-Cage6-01.AF.082)-AH-097-34
@@ -1547,7 +1547,7 @@ hec:
         - id: 48
           description: hec03b0015
           speed: 10000full
-          access_vlan: 110          
+          access_vlan: 110
         - id: 49/1
           description: sw-hec03-str-02b,Et49/1
           po: 42

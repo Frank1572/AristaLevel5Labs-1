@@ -370,7 +370,7 @@ hec:
   core_vlans: true
   fabric:
     # valid modes are: manual, cvx, evpn
-    vtep_distribution_mode: manual
+    vtep_distribution_mode: migrate
     vtep_ips:
       - 10.200.1.1
       - 10.200.1.2

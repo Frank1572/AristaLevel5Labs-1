@@ -7,7 +7,7 @@ interface Vxlan1
   vxlan vlan {{ i + 2000 }} vni {{ i + 2000 }}000
 {% endfor %}
 {% if hec.fabric.vtep_distribution_mode is defined %}
-{% if (hec.fabric.vtep_distribution_mode == 'manual') and (hec.fabric.vtep_ips is defined) %}
+{% if (hec.fabric.vtep_distribution_mode == 'manual' or hec.fabric.vtep_distribution_mode == 'migrate') and (hec.fabric.vtep_ips is defined) %}
   vxlan flood vtep add {{hec.fabric.vtep_ips|join(' ')}}
 {% endif %}
 {% if hec.fabric.vtep_distribution_mode == "cvx" %}

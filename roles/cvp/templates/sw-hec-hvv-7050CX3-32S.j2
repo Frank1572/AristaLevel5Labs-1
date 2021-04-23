@@ -1,19 +1,11 @@
-
-interface Ethernet 1/1-12/4
-   speed forced 25gfull
-   switchport trunk native vlan 7
-   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499
-   switchport mode trunk
-   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
-   spanning-tree portfast
+{% import "templates/libs.j2" as funcs %}
+{% set p_data={'start': 1, 'end': 12} %}
+{% set p_vmotion={'start': 13, 'end': 18} %}
+interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
+{{ funcs.leaf_hvv_ports_data(hec.hec_nr) }}
 !
-interface Ethernet 13/1-18/4
-   speed forced 25gfull
-   switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,930-931
-   switchport mode trunk
-   ip access-group HEC{{ hec.hec_nr }}-L2-APP in
-   spanning-tree portfast
+interface Ethernet {{p_vmotion['start']}}/1-{{p_vmotion['end']}}/4
+{{ funcs.leaf_hvv_ports_vmotion(hec.hec_nr) }}
 !
 interface Ethernet 19/1-25/4
    shutdown

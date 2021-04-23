@@ -3,7 +3,21 @@ configlet_list_dc_specific:
   - sw-hec-oob-04
   - sw-hec-oob-05
   - sw-hec-oob-06
+  - sw-hec-oob-07
+  - sw-hec-oob-08
+  - sw-hec-oob-09
+  - sw-hec-oob-10
+  - sw-hec-oob-11
+  - sw-hec-oob-12
+  - sw-hec-oob-13
+  - sw-hec-oob-14
+  - sw-hec-oob-15
+  - sw-hec-oob-16
+  - sw-hec-oob-17
+  - sw-hec-oob-18
   - sw-hec-str-03a
   - sw-hec-str-03b
   - sw-hec-str-04a
   - sw-hec-str-04b
+  - sw-hec-fwt-01a
+  - sw-hec-fwt-01b

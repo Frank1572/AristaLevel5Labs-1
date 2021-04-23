@@ -105,10 +105,12 @@
     dest: "{{role_path}}/files/configs/{{item}}"
   loop:
     - sw-hec
+    - sw-hec-oob
     - sw-hec-aaa
     - sw-hec-snmp
     - sw-hec-fab-snmp
     - sw-hec-switch-snmp
+    - sw-hec-oob-snmp
     - sw-hec-ntp
     - sw-hec-fab-ntp
     - sw-hec-switch-ntp
@@ -151,7 +153,7 @@
   tags:
     - configlets
 
-# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific radius strings.
+# next task is to reuse the sw-hec-aaa.j2 template but generate the hana-specific authentication settings.
 - set_fact:
     aaa_purpose: 'hana'
   tags:
@@ -167,6 +169,25 @@
   tags:
     - configlets
 
+# next task is to reuse the sw-hec-aaa.j2 template but generate the oob- & fwt-specific authentication settings.
+- set_fact:
+    aaa_purpose: 'oob'
+  tags:
+    - oob
+    - fwt
+    - configlets
+
+- name: Render oob & fwt aaa configlet template
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/sw-hec-aaa.j2"
+    dest: "{{role_path}}/files/configs/{{item}}"
+  loop:
+    - sw-hec-aaa-oob
+    - sw-hec-aaa-fwt
+  tags:
+    - configlets
+
 - name: Render all configlet_builder templates
   delegate_to: 127.0.0.1
   template:
@@ -178,6 +199,7 @@
     - sw-hec-descriptions
     - sw-hec-descriptions-hvv
     - sw-hec-autoconf-generate-only
+    - sw-hec-autoconf-ipmi-generate-only
     - rt-hec-ha-core-customer-builder
   tags:
     - configlets
@@ -404,6 +426,7 @@
     configlets: "{{ configlet_list }}"
     configlet_filter: "{{ configlet_filter }}"
     state: present
+    filter_mode: strict
   register: cvp_configlet
   ignore_errors: yes
   tags:

@@ -24,7 +24,7 @@ router bgp $BGP_AS
    neighbor MLPEER-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    network $LOOPBACK2_IP/32
    !
-{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or  hec.fabric.vtep_distribution_mode == "migrate" %}
    neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
    neighbor EVPN-PG remote-as $SPINE_AS
    neighbor EVPN-PG update-source Loopback1
@@ -46,10 +46,12 @@ router bgp $BGP_AS
    address-family ipv6
       no neighbor EVPN-PG activate
    !
+{% if  hec.fabric.vtep_distribution_mode == "evpn" %}
    vlan-aware-bundle service-vlans
       rd $LOOPBACK1_IP:1
       route-target both 1:1
       redistribute learned
       vlan 5-2999
+{% endif %}
    !
 {% endif %}

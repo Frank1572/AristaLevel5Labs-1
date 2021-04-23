@@ -4,7 +4,6 @@ container:
     configlets:
       - sw-hec
       - sw-hec-aaa
-      - CVP-Arista
       - sw-hec-oob-vrf
       - sw-hec-snmp
       - sw-hec-ntp
@@ -22,8 +21,11 @@ container:
   HEC-Out of band:
     parent_container: HEC
     configlets:
+      - sw-hec-oob
+      - sw-hec-aaa-oob
       - mgmt-default
       - sw-hec-oob-common
+      - sw-hec-oob-snmp
       - sw-hec-tele-default
   HEC-External Connectivity:
     parent_container: HEC
@@ -38,6 +40,9 @@ container:
       - sw-hec-tele-oob
   HEC-FWT:
     parent_container: HEC
+    configlets:
+      - sw-hec-oob
+      - sw-hec-aaa-fwt
   HEC-InterDC:
     parent_container: HEC
     configlets:
@@ -136,8 +141,11 @@ container:
 
 configlet_list_global:
   - sw-hec
+  - sw-hec-oob
   - sw-hec-aaa
   - sw-hec-aaa-hana
+  - sw-hec-aaa-oob
+  - sw-hec-aaa-fwt
   - CVP-Arista
   - sw-hec-oob-vrf
   - sw-hec-snmp
@@ -203,3 +211,4 @@ configlet_list_global:
   - rt-hec-ha-core-01b
   - rt-hec-ha-core-01c
   - rt-hec-ha-core-01d
+  - sw-hec-oob-snmp

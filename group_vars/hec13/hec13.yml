@@ -184,30 +184,30 @@ hec:
     # Fabric builds.
     # list every port and it's speed if it is different from the value
     # provided in dictionary 'hec.fabric.interlink_speed'!!
-    fortygig: [Et3/1/1, Et3/2/1]
+    fortygig: [3/1/1, 3/2/1]
     # list the snmp contact and location for spines in this order
     number:
       - id: 11
         snmp:
-          location: Toronto1-(TR3)-Cage2-3.1-8-3
+          location: CA-TOR1-CAGE2-3.1-8-RU03
           contact: 34672533:ncons-hec13-oob-01.net.sap.corp:1009
         oob_ip: 10.9.244.12
         nwmgmt_ip: 198.19.180.11
       - id: 12
         snmp:
-          location: Toronto1-(TR3)-Cage2-3.1-9-3
+          location: CA-TOR1-CAGE2-3.1-9-RU03
           contact: 34672534:ncons-hec13-oob-01.net.sap.corp:1010
         oob_ip: 10.9.244.13
         nwmgmt_ip: 198.19.180.12
       - id: 13
         snmp:
-          location: Toronto1-(TR3)-Cage2-3.1-10-3
+          location: CA-TOR1-CAGE2-3.1-10-RU03
           contact: 34672535:ncons-hec13-oob-01.net.sap.corp:1022
         oob_ip: 10.9.244.14
         nwmgmt_ip: 198.19.180.13
       - id: 14
         snmp:
-          location: Toronto1-(TR3)-Cage2-3.1-11-3
+          location: CA-TOR1-CAGE2-3.1-11-RU03
           contact: 34672536:ncons-hec13-oob-02.net.sap.corp:1001
         oob_ip: 10.9.244.15
         nwmgmt_ip: 198.19.180.14

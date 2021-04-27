@@ -459,6 +459,9 @@ hec:
       snmp:
         contact: 34672180:ncons-hec14-oob-01.net.sap.corp 1001
         location: CA-TOR2-CAGE3-CAB41-U43
+      uplinks:
+        - Ethernet49
+        - Ethernet50
     - number: "03"
       ports:
         - id: 21
@@ -468,6 +471,9 @@ hec:
       snmp:
         contact: 34672181:ncons-hec14-oob-02.net.sap.corp 1009
         location: CA-TOR2-CAGE3-CAB44-U41
+      uplinks:
+        - Ethernet49
+        - Ethernet50
     - number: "04"
       ports:
         - id: 21
@@ -477,6 +483,9 @@ hec:
       snmp:
         contact: 34879840:ncons-hec14-06.tor.sap.corp:1007
         location: CA-TOR2-CAGE2-Rack26-U22
+      uplinks:
+        - Ethernet49
+        - Ethernet50
     - number: "05"
       ports:
         - id: 21
@@ -486,6 +495,9 @@ hec:
       snmp:
         contact: 34879841:ncons-hec14-06.tor.sap.corp:1008
         location: CA-TOR2-CAGE2-Rack27-U22
+      uplinks:
+        - Ethernet49
+        - Ethernet50
   routes:
     static:
       brdr01:

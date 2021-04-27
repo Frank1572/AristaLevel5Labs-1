@@ -271,12 +271,12 @@ hec:
           ip: 10.255.195.8/31
           speed: 10000full
         - id: 2
-          description: sw-hec13-oob-02
+          description: sw-hec14-oob-02
           po: 102
           trunk: 21
           speed: 10000full
         - id: 3
-          description: sw-hec13-oob-03
+          description: sw-hec14-oob-03
           po: 103
           trunk: 21
           speed: 10000full
@@ -286,12 +286,12 @@ hec:
           trunk: 21
           speed: 10000full
         - id: 5
-          description: sw-hec13-oob-04
+          description: sw-hec14-oob-04
           po: 104
           trunk: 21
           speed: 10000full
         - id: 6
-          description: sw-hec13-oob-05
+          description: sw-hec14-oob-05
           po: 105
           trunk: 21
           speed: 10000full
@@ -366,12 +366,12 @@ hec:
           ip: 10.255.195.10/31
           speed: 10000full
         - id: 2
-          description: sw-hec13-oob-02
+          description: sw-hec14-oob-02
           po: 102
           trunk: 21
           speed: 10000full
         - id: 3
-          description: sw-hec13-oob-03
+          description: sw-hec14-oob-03
           po: 103
           trunk: 21
           speed: 10000full
@@ -381,12 +381,12 @@ hec:
           trunk: 21
           speed: 10000full
         - id: 5
-          description: sw-hec13-oob-04
+          description: sw-hec14-oob-04
           po: 104
           trunk: 21
           speed: 10000full
         - id: 6
-          description: sw-hec13-oob-05
+          description: sw-hec14-oob-05
           po: 105
           trunk: 21
           speed: 10000full

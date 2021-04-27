@@ -582,21 +582,27 @@ hec:
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
+          mtu: 9100
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+          mtu: 9100
         - id: 1103
           description: rt-hec14-cwan-01a
           trunk: all
+          mtu: 9100
         - id: 1104
           description: rt-hec14-idc-01a
           trunk: all
+          mtu: 9100
         - id: 1105
           description: rt-hec14-inet-01a
           trunk: all
+          mtu: 9100
         - id: 1106
           description: rt-hec14-vpn-01a
           trunk: all
+          mtu: 9100
     - number: 1b
       oob_ip: 10.9.246.22
       nwmgmt_ip: 198.19.182.42
@@ -675,21 +681,27 @@ hec:
         - id: 1101
           description: rt-hec14-core-01a
           trunk: all
+          mtu: 9100
         - id: 1102
           description: rt-hec14-core-01b
           trunk: all
+          mtu: 9100
         - id: 1103
           description: rt-hec14-cwan-01a
           trunk: all
+          mtu: 9100
         - id: 1104
           description: rt-hec14-idc-01a
           trunk: all
+          mtu: 9100
         - id: 1105
           description: rt-hec14-inet-01a
           trunk: all
+          mtu: 9100
         - id: 1106
           description: rt-hec14-vpn-01a
           trunk: all
+          mtu: 9100
     - number: 2a
       oob_ip: 10.9.246.23
       nwmgmt_ip: 198.19.182.43
@@ -826,21 +838,26 @@ hec:
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
+          mtu: 9100
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+          mtu: 9100
         - id: 1103
           description: rt-hec14-cwan-01b
           trunk: all
         - id: 1104
           description: rt-hec14-idc-01b
           trunk: all
+          mtu: 9100
         - id: 1105
           description: rt-hec14-vpn-01b
           trunk: all
+          mtu: 9100
         - id: 1106
           description: rt-hec14-inet-01b
           trunk: all
+          mtu: 9100
     - number: 3b
       oob_ip: 10.9.246.26
       nwmgmt_ip: 198.19.182.46
@@ -919,21 +936,27 @@ hec:
         - id: 1101
           description: rt-hec14-core-01c
           trunk: all
+          mtu: 9100
         - id: 1102
           description: rt-hec14-core-01d
           trunk: all
+          mtu: 9100
         - id: 1103
           description: rt-hec14-cwan-01b
           trunk: all
+          mtu: 9100
         - id: 1104
           description: rt-hec14-idc-01b
           trunk: all
+          mtu: 9100
         - id: 1105
           description: rt-hec14-vpn-01b
           trunk: all
+          mtu: 9100
         - id: 1106
           description: rt-hec14-inet-01b
           trunk: all
+          mtu: 9100
   str:
     - number: 1a
       oob_ip: 10.9.246.29

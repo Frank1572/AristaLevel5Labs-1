@@ -846,6 +846,7 @@ hec:
         - id: 1103
           description: rt-hec14-cwan-01b
           trunk: all
+          mtu: 9100
         - id: 1104
           description: rt-hec14-idc-01b
           trunk: all

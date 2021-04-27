@@ -817,12 +817,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-vpn-01b, Fo0/2/0 
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: rt-hec14-inet-01b
+          description: rt-hec14-inet-01b, Fo0/2/0 
           po: 1105
           speed: 40gfull
           mtu: 9100
@@ -916,12 +916,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: rt-hec14-vpn-01b
+          description: rt-hec14-vpn-01b, Fo0/2/1
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: rt-hec14-inet-01b
+          description: rt-hec14-inet-01b, Fo0/2/1
           po: 1105
           speed: 40gfull
           mtu: 9100

@@ -493,11 +493,6 @@ hec:
           nexthop: 198.19.233.1
           interface: Vlan900
           redist_bgp: true
-      brdr02:
-        - destination: 10.9.247.253/32
-          nexthop: 10.255.186.69
-          interface: Vlan916
-          redist_bgp: true
       brdr03:
         - destination: 0.0.0.0/0
           nexthop: 198.19.233.1
@@ -715,6 +710,28 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et3/5/1
       ports:
+        - id: 1
+          description: lb-hec14-01 1.1
+          trunk: 940
+          speed: 10000full
+        - id: 2
+          description: lb-hec14-01 1.2
+          trunk: 85,90,95,100,2000-2499
+          speed: 10000full
+        - id: 3
+          description: lb-hec14-01 1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec14-01 1.4
+          access_vlan: 902
+          speed: 10000full
+        - id: 6
+          description: fw-hec14-01-NEW,eth1-01
+          speed: 10000full
+        - id: 7
+          description: fw-hec14-02-NEW,eth1-01
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02b, Et49
           po: 42
@@ -722,9 +739,14 @@ hec:
           description: sw-hec14-brdr-02b, Et50
           po: 42
         - id: 48
-          description: ->naa-hec14-01, in-band
+          description: ->naa-hec14-01, E3
           po: 48
           access_vlan: 916
+          speed: 1000full
+        - id: 916
+          description: FW-TRANS
+          type: vlan
+          ip: 10.255.186.76/28
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -744,6 +766,28 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et3/6/1
       ports:
+        - id: 1
+          description: lb-hec14-02 1.1
+          trunk: 940
+          speed: 10000full
+        - id: 2
+          description: lb-hec14-02 1.2
+          trunk: 85,90,95,100,2000-2499
+          speed: 10000full
+        - id: 3
+          description: lb-hec14-02 1.3
+          trunk: 900
+          speed: 10000full
+        - id: 4
+          description: lb-hec14-02 1.4
+          access_vlan: 902
+          speed: 10000full
+        - id: 6
+          description: fw-hec14-01-NEW,eth1-02
+          speed: 10000full
+        - id: 7
+          description: fw-hec14-02-NEW,eth1-02
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02a, Et49
           po: 42
@@ -751,9 +795,14 @@ hec:
           description: sw-hec14-brdr-02a, Et50
           po: 42
         - id: 48
-          description: ->naa-hec14-01, in-band
+          description: ->naa-hec14-01, E4
           po: 48
           access_vlan: 916
+          speed: 1000full
+        - id: 916
+          description: FW-TRANS
+          type: vlan
+          ip: 10.255.186.77/28
       port_channels:
         - id: 42
           description: MLAG-PEER

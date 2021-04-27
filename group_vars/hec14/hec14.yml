@@ -560,22 +560,22 @@ hec:
           po: 1104
           speed: 40gfull
           mtu: 9100
+        - id: 5/1
+          description: rt-hec14-vpn-01a, Fo0/2/0
+          po: 1106
+          speed: 40gfull
+          mtu: 9100
+        - id: 6/1
+          description: rt-hec14-inet-01a, Fo0/2/0
+          po: 1105
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-01b, Et27
           po: 42
         - id: 28/1
           description: sw-hec14-brdr-01b, Et28
           po: 42
-        - id: 5/1
-          description: rt-hec14-vpn-01a
-          po: 1106
-          speed: 40gfull
-          mtu: 9100
-        - id: 6/1
-          description: rt-hec14-inet-01a
-          po: 1105
-          speed: 40gfull
-          mtu: 9100
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -653,22 +653,22 @@ hec:
           po: 1104
           speed: 40gfull
           mtu: 9100
+        - id: 5/1
+          description: rt-hec14-vpn-01a, Fo0/2/1
+          po: 1106
+          speed: 40gfull
+          mtu: 9100
+        - id: 6/1
+          description: rt-hec14-inet-01a, Fo0/2/1
+          po: 1105
+          speed: 40gfull
+          mtu: 9100
         - id: 27/1
           description: sw-hec14-brdr-01a, Et27
           po: 42
         - id: 28/1
           description: sw-hec14-brdr-01a, Et28
           po: 42
-        - id: 5/1
-          description: rt-hec14-vpn-01a
-          po: 1106
-          speed: 40gfull
-          mtu: 9100
-        - id: 6/1
-          description: rt-hec14-inet-01a
-          po: 1105
-          speed: 40gfull
-          mtu: 9100
       port_channels:
         - id: 42
           description: MLAG-PEER

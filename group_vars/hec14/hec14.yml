@@ -1,4 +1,7 @@
 ---
+eos:
+  new_syntax: True
+
 # file: group_vars/hec14.yml
 idrac:
  ip: "10.9.247.254"
@@ -945,15 +948,28 @@ hec:
         - 35/1
         - 36/1
       ports:
+        - id: 27/1
+          description: rt-hec14-str-01a, Et53
+          po: 700
+          speed: 100gfull
+          mtu: 9214
         - id: 30/1
           description: sw-hec14-str-01b, Et30
           po: 42
         - id: 31/1
           description: sw-hec14-str-01b, Et31
           po: 42
+        - id: 32/1
+          description: rt-hec14-str-01b, Et53
+          po: 700
+          speed: 100gfull
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 700
+          description: rt-hec14-str-01a,Et53-Et54
+          trunk: all
     - number: 1b
       oob_ip: 10.9.246.30
       nwmgmt_ip: 198.19.182.48
@@ -967,15 +983,28 @@ hec:
         - 35/1
         - 36/1
       ports:
+        - id: 27/1
+          description: rt-hec14-str-01a, Et54
+          po: 700
+          speed: 100gfull
+          mtu: 9214
         - id: 30/1
           description: sw-hec14-str-01a, Et30
           po: 42
         - id: 31/1
           description: sw-hec14-str-01a, Et31
           po: 42
+        - id: 32/1
+          description: rt-hec14-str-01b, Et54
+          po: 700
+          speed: 100gfull
+          mtu: 9214
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 700
+          description: rt-hec14-str-01a,Et53-Et54
+          trunk: all
     - number: 2a
       oob_ip: 10.9.246.31
       nwmgmt_ip: 198.19.182.49
@@ -990,6 +1019,16 @@ hec:
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec14f0001
+          po: 50
+          speed: 10000full
+          mtu: 9214
+        - id: 2
+          description: hec14f0002
+          po: 60
+          speed: 10000full
+          mtu: 9214
         - id: 49/1
           description: sw-hec14-str-02b, Et49
           po: 42
@@ -999,6 +1038,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 50
+          description: hec14f0001
+          trunk: 30,40,50,55,130,2001-2499
+        - id: 60
+          description: hec14f0002
+          trunk: 30,40,50,55,130,2001-2499
     - number: 2b
       oob_ip: 10.9.246.32
       nwmgmt_ip: 198.19.182.50
@@ -1013,6 +1058,16 @@ hec:
         - 53/1
         - 54/1
       ports:
+        - id: 1
+          description: hec14f0001
+          po: 50
+          speed: 10000full
+          mtu: 9214
+        - id: 2
+          description: hec14f0002
+          po: 60
+          speed: 10000full
+          mtu: 9214
         - id: 49/1
           description: sw-hec14-str-02a, Et49
           po: 42
@@ -1022,6 +1077,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 50
+          description: hec14f0001
+          trunk: 30,40,50,55,130,2001-2499
+        - id: 60
+          description: hec14f0002
+          trunk: 30,40,50,55,130,2001-2499
   shs:
     - number: 1a
       oob_ip: 10.9.246.32

@@ -121,6 +121,15 @@ interface Port-Channel101
    switchport mode trunk
    port-channel lacp fallback individual
 !
+{% if item.uplinks is defined %}
+{% for uplink in item.uplinks %}
+interface {{ uplink }}
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   channel-group 101 mode active
+!
+{% endfor %}
+{% else %}
 interface Ethernet51
    switchport trunk allowed vlan 21
    switchport mode trunk
@@ -130,6 +139,7 @@ interface Ethernet52
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 101 mode active
+{% endif %}
 !
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !

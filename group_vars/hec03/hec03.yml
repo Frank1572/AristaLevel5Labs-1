@@ -1812,6 +1812,14 @@ hec:
          description: sw-hec03-str-05b,Et31/1
          po: 42
          speed: 100gfull
+       - id: 33/1
+         description: hec03f0059,e2a
+         po: 820
+         speed: 100gfull
+       - id: 34/1
+         description: hec03f0060,e2a
+         po: 825
+         speed: 100gfull     
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -1826,6 +1834,12 @@ hec:
           trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 820
+          description: hec03f0059,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 825
+          description: hec03f0060,Data
           trunk: 30,40,50,55,130,140,2001-2499
     - number: 5b
       snmp:
@@ -1864,7 +1878,15 @@ hec:
        - id: 31/1
          description: sw-hec03-str-05a,Et31/1
          po: 42
+         speed: 100gfull         
+       - id: 33/1
+         description: hec03f0059,e3a
+         po: 820
          speed: 100gfull
+       - id: 34/1
+         description: hec03f0060,e3a
+         po: 825
+         speed: 100gfull 
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -1879,6 +1901,12 @@ hec:
           trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 820
+          description: hec03f0059,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 825
+          description: hec03f0060,Data
           trunk: 30,40,50,55,130,140,2001-2499
     - number: 6a
       snmp:
@@ -1906,6 +1934,12 @@ hec:
         - id: 4
           description: hec03f0055r,BMC
           access_vlan: 10
+        - id: 5
+          description: hec03f0059,eoM
+          access_vlan: 110
+        - id: 6
+          description: hec03f0059r,BMC
+          access_vlan: 10          
         - id: 49/1
           description: sw-hec03-str-06b,Et49/1
           po: 42
@@ -1941,6 +1975,12 @@ hec:
         - id: 4
           description: hec03f0056r,BMC
           access_vlan: 10
+        - id: 5
+          description: hec03f0060,eoM
+          access_vlan: 110
+        - id: 6
+          description: hec03f0060r,BMC
+          access_vlan: 10      
         - id: 49/1
           description: sw-hec03-str-06a,Et49/1
           po: 42

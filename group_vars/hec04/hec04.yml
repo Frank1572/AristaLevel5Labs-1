@@ -1456,23 +1456,27 @@ hec:
       mode: trunk
       trunk: all
   brdr:
-  - number: 01a
+  - number: 1a
     snmp:
-      location: '!! MISSING !!'
-      contact: '!! MISSING !!'
-    oob_ip: 10.9.242.4/23
-    nwmgmt_ip: 198.19.243.130/24
+      location: US-CA01-P30-C46-U41
+      contact: 34412958:ncons-hec04-oob-01.net:1011
+    oob_ip: 10.9.242.4
+    nwmgmt_ip: 198.19.158.15
+    uplinks:
+      - 29/1
+      - 30/1
+      - 31/1
+      - 32/1
+    spine_port_towards_leaf: Et3/3/1
     ports:
     - id: 900
+      description: NW-MGMT
       type: vlan
       ip_address: 198.19.243.130/24
       vrrp:
       - id: 250
         priority: 120
         ip: 198.19.243.119
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.1/30
     - id: 1/1
       description: ->rt-hec04-core-01a, Fo0/2/0
       po: 1101
@@ -1554,23 +1558,27 @@ hec:
       description: rt-hec04-idc-01a
       mode: trunk
       trunk: all
-  - number: 01b
+  - number: 1b
     snmp:
       location: '!! MISSING !!'
       contact: '!! MISSING !!'
-    oob_ip: 10.9.242.5/23
-    nwmgmt_ip: 198.19.243.131/24
+    oob_ip: 10.9.242.5
+    nwmgmt_ip: 198.19.158.16
+    uplinks:
+      - 29/1
+      - 30/1
+      - 31/1
+      - 32/1
+    spine_port_towards_leaf: Et3/4/1    
     ports:
     - id: 900
       type: vlan
+      description: NW-MGMT
       ip_address: 198.19.243.131/24
       vrrp:
       - id: 250
         priority: 115
         ip: 198.19.243.119
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.2/30
     - id: 1/1
       description: ->rt-hec04-core-01a, Fo0/2/1
       po: 1101
@@ -1594,46 +1602,6 @@ hec:
     - id: 6/1
       description: ->rt-hec04-inet-01a, Fo0/2/1
       po: 1401
-      speed: 40gfull
-    - id: 7/1
-      speed: 40gfull
-    - id: 8/1
-      speed: 40gfull
-    - id: 9/1
-      speed: 40gfull
-    - id: 10/1
-      speed: 40gfull
-    - id: 11/1
-      speed: 40gfull
-    - id: 12/1
-      speed: 40gfull
-    - id: 13/1
-      speed: 40gfull
-    - id: 14/1
-      speed: 40gfull
-    - id: 15/1
-      speed: 40gfull
-    - id: 16/1
-      speed: 40gfull
-    - id: 17/1
-      speed: 40gfull
-    - id: 18/1
-      speed: 40gfull
-    - id: 19/1
-      speed: 40gfull
-    - id: 20/1
-      speed: 40gfull
-    - id: 21/1
-      speed: 40gfull
-    - id: 22/1
-      speed: 40gfull
-    - id: 23/1
-      speed: 40gfull
-    - id: 24/1
-      speed: 40gfull
-    - id: 25/1
-      speed: 40gfull
-    - id: 26/1
       speed: 40gfull
     - id: 27/1
       description: ->sw-hec04-brdr-01a, Eth27/1
@@ -1692,21 +1660,23 @@ hec:
       description: rt-hec04-idc-01a
       mode: trunk
       trunk: all
-  - number: 02a
+  - number: 2a
     snmp:
       location: '!! MISSING !!'
       contact: '!! MISSING !!'
-    oob_ip: 10.9.242.6/23
+    oob_ip: 10.9.242.6
+    nwmgmt_ip: 198.19.158.17
+    uplinks:
+      - 51/1
+      - 52/1
+      - 53/1
+      - 54/1
+    spine_port_towards_leaf: Et3/5/1
     ports:
-    - id: 900
-      type: vlan
     - id: 916
       type: vlan
       description: ->Transfer network for inband management
       ip_address: 10.255.177.76/28
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.1/30
     - id: '1'
       description: '##lb-hec04-01 1.1 NEW LB-external interface (Internet facing,
         external VLAN 940)##'
@@ -1722,94 +1692,12 @@ hec:
     - id: '4'
       description: '##lb-hec04-01 1.4 NEW LB-HA interface (HA interface, VLAN 902)##'
       speed: 10000full
-    - id: '5'
-      speed: 1000full
     - id: '6'
       description: fw-hec04-01-new,eth1-01
       speed: 10000full
     - id: '7'
       description: fw-hec04-02-new,eth1-01
       speed: 10000full
-    - id: '8'
-      speed: 1000full
-    - id: '9'
-      speed: 10000full
-    - id: '10'
-      speed: 10000full
-    - id: '11'
-      speed: 10000full
-    - id: '12'
-      speed: 10000full
-    - id: '13'
-      speed: 10000full
-    - id: '14'
-      speed: 10000full
-    - id: '15'
-      speed: 10000full
-    - id: '16'
-      speed: 10000full
-    - id: '17'
-      speed: 10000full
-    - id: '18'
-      speed: 10000full
-    - id: '19'
-      speed: 10000full
-    - id: '20'
-      speed: 10000full
-    - id: '21'
-      speed: 10000full
-    - id: '22'
-      speed: 10000full
-    - id: '23'
-      speed: 10000full
-    - id: '24'
-      speed: 10000full
-    - id: '25'
-      speed: 10000full
-    - id: '26'
-      speed: 10000full
-    - id: '27'
-      speed: 10000full
-    - id: '28'
-      speed: 10000full
-    - id: '29'
-      speed: 10000full
-    - id: '30'
-      speed: 10000full
-    - id: '31'
-      speed: 10000full
-    - id: '32'
-      speed: 10000full
-    - id: '33'
-      speed: 10000full
-    - id: '34'
-      speed: 10000full
-    - id: '35'
-      speed: 10000full
-    - id: '36'
-      speed: 10000full
-    - id: '37'
-      speed: 10000full
-    - id: '38'
-      speed: 10000full
-    - id: '39'
-      speed: 10000full
-    - id: '40'
-      speed: 10000full
-    - id: '41'
-      speed: 10000full
-    - id: '42'
-      speed: 10000full
-    - id: '43'
-      speed: 10000full
-    - id: '44'
-      speed: 10000full
-    - id: '45'
-      speed: 1000full
-    - id: '46'
-      speed: 1000full
-    - id: '47'
-      speed: 1000full
     - id: '48'
       description: ->naa-hec04-01, E3
       po: 48
@@ -1850,21 +1738,23 @@ hec:
     - id: 48
       description: '"->naa-hec04-01, eth2 in-band"'
       mode: access
-  - number: 02b
+  - number: 2b
     snmp:
       location: '!! MISSING !!'
       contact: '!! MISSING !!'
-    oob_ip: 10.9.242.7/23
+    oob_ip: 10.9.242.7
+    nwmgmt_ip: 198.19.158.18
+    uplinks:
+      - 51/1
+      - 52/1
+      - 53/1
+      - 54/1
+    spine_port_towards_leaf: Et3/6/1
     ports:
-    - id: 900
-      type: vlan
     - id: 916
       type: vlan
       description: ->Transfer network for inband management
       ip_address: 10.255.177.77/28
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.2/30
     - id: '1'
       description: '##lb-hec04-02 1.1 NEW LB-external interface (Internet facing,
         external VLAN 940)##'
@@ -1880,94 +1770,12 @@ hec:
     - id: '4'
       description: '##lb-hec04-02 1.4 NEW LB-HA interface (HA interface, VLAN 902)##'
       speed: 10000full
-    - id: '5'
-      speed: 1000full
     - id: '6'
       description: fw-hec04-02-new,eth1-02
       speed: 10000full
     - id: '7'
       description: fw-hec04-02-new,eth1-02
       speed: 10000full
-    - id: '8'
-      speed: 10000full
-    - id: '9'
-      speed: 10000full
-    - id: '10'
-      speed: 10000full
-    - id: '11'
-      speed: 10000full
-    - id: '12'
-      speed: 10000full
-    - id: '13'
-      speed: 10000full
-    - id: '14'
-      speed: 10000full
-    - id: '15'
-      speed: 10000full
-    - id: '16'
-      speed: 10000full
-    - id: '17'
-      speed: 10000full
-    - id: '18'
-      speed: 10000full
-    - id: '19'
-      speed: 10000full
-    - id: '20'
-      speed: 10000full
-    - id: '21'
-      speed: 10000full
-    - id: '22'
-      speed: 10000full
-    - id: '23'
-      speed: 10000full
-    - id: '24'
-      speed: 10000full
-    - id: '25'
-      speed: 10000full
-    - id: '26'
-      speed: 10000full
-    - id: '27'
-      speed: 10000full
-    - id: '28'
-      speed: 10000full
-    - id: '29'
-      speed: 10000full
-    - id: '30'
-      speed: 10000full
-    - id: '31'
-      speed: 10000full
-    - id: '32'
-      speed: 10000full
-    - id: '33'
-      speed: 10000full
-    - id: '34'
-      speed: 10000full
-    - id: '35'
-      speed: 10000full
-    - id: '36'
-      speed: 10000full
-    - id: '37'
-      speed: 10000full
-    - id: '38'
-      speed: 10000full
-    - id: '39'
-      speed: 10000full
-    - id: '40'
-      speed: 10000full
-    - id: '41'
-      speed: 10000full
-    - id: '42'
-      speed: 10000full
-    - id: '43'
-      speed: 10000full
-    - id: '44'
-      speed: 10000full
-    - id: '45'
-      speed: 1000full
-    - id: '46'
-      speed: 1000full
-    - id: '47'
-      speed: 1000full
     - id: '48'
       description: ->naa-hec04-01, E4
       po: 48
@@ -2008,23 +1816,27 @@ hec:
     - id: 48
       description: '"->naa-hec04-01, eth2 in-band"'
       mode: access
-  - number: 03a
+  - number: 3a
     snmp:
       location: '!! MISSING !!'
       contact: '!! MISSING !!'
-    oob_ip: 10.9.242.8/23
-    nwmgmt_ip: 198.19.243.132/24
+    oob_ip: 10.9.242.8
+    nwmgmt_ip: 198.19.158.19
+    spine_port_towards_leaf: Et3/7/1
+    uplinks:
+      - 29/1
+      - 30/1
+      - 31/1
+      - 32/1
     ports:
     - id: 900
+      description: NW-MGMT
       type: vlan
       ip_address: 198.19.243.132/24
       vrrp:
       - id: 250
         priority: 110
         ip: 198.19.243.119
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.1/30
     - id: 1/1
       description: ->rt-hec04-core-01c, Fo0/2/0
       po: 1103
@@ -2049,64 +1861,6 @@ hec:
       description: ->rt-hec04-inet-01b, Fo0/2/0
       po: 1402
       speed: 40gfull
-    - id: 7/1
-      speed: 40gfull
-    - id: 7/2
-      speed: 40gfull
-    - id: 7/3
-      speed: 40gfull
-    - id: 7/4
-      speed: 40gfull
-    - id: 8/1
-      speed: 40gfull
-    - id: 8/2
-      speed: 40gfull
-    - id: 8/3
-      speed: 40gfull
-    - id: 8/4
-      speed: 40gfull
-    - id: 9/1
-      speed: 40gfull
-    - id: 9/2
-      speed: 40gfull
-    - id: 9/3
-      speed: 40gfull
-    - id: 9/4
-      speed: 40gfull
-    - id: 10/1
-      speed: 40gfull
-    - id: 11/1
-      speed: 40gfull
-    - id: 12/1
-      speed: 40gfull
-    - id: 13/1
-      speed: 40gfull
-    - id: 14/1
-      speed: 40gfull
-    - id: 15/1
-      speed: 40gfull
-    - id: 16/1
-      speed: 40gfull
-    - id: 17/1
-      speed: 40gfull
-    - id: 18/1
-      speed: 40gfull
-    - id: 19/1
-      speed: 40gfull
-    - id: 20/1
-      speed: 40gfull
-    - id: 21/1
-      speed: 40gfull
-    - id: 22/1
-      speed: 40gfull
-    - id: 23/1
-      speed: 40gfull
-    - id: 24/1
-      speed: 40gfull
-    - id: 25/1
-      speed: 100gfull
-    - id: 26/1
-      speed: 100gfull
     - id: 27/1
       description: ->sw-hec04-brdr-03b, Eth27/1
       po: 42
@@ -2164,23 +1918,27 @@ hec:
       description: rt-hec04-idc-01b
       mode: trunk
       trunk: all
-  - number: 03b
+  - number: 3b
     snmp:
       location: '!! MISSING !!'
       contact: '!! MISSING !!'
-    oob_ip: 10.9.242.9/23
-    nwmgmt_ip: 198.19.243.133/24
+    oob_ip: 10.9.242.9
+    nwmgmt_ip: 198.19.158.20
+    spine_port_towards_leaf: Et3/8/1
+    uplinks:
+      - 29/1
+      - 30/1
+      - 31/1
+      - 32/1
     ports:
     - id: 900
+      description: NW-MGMT
       type: vlan
       ip_address: 198.19.243.133/24
       vrrp:
       - id: 250
         priority: 105
         ip: 198.19.243.119
-    - id: 4094
-      type: vlan
-      ip_address: 198.19.224.2/30
     - id: 1/1
       description: ->rt-hec04-core-01c, Fo0/2/1
       po: 1103
@@ -2205,60 +1963,6 @@ hec:
       description: ->rt-hec04-inet-01b, Fo0/2/1
       po: 1402
       speed: 40gfull
-    - id: 7/1
-      speed: 40gfull
-    - id: 7/2
-      speed: 40gfull
-    - id: 7/3
-      speed: 40gfull
-    - id: 8/1
-      speed: 40gfull
-    - id: 8/2
-      speed: 40gfull
-    - id: 8/3
-      speed: 40gfull
-    - id: 8/4
-      speed: 40gfull
-    - id: 9/1
-      speed: 40gfull
-    - id: 9/3
-      speed: 40gfull
-    - id: 9/4
-      speed: 40gfull
-    - id: 10/1
-      speed: 40gfull
-    - id: 11/1
-      speed: 40gfull
-    - id: 12/1
-      speed: 40gfull
-    - id: 13/1
-      speed: 40gfull
-    - id: 14/1
-      speed: 40gfull
-    - id: 15/1
-      speed: 40gfull
-    - id: 16/1
-      speed: 40gfull
-    - id: 17/1
-      speed: 40gfull
-    - id: 18/1
-      speed: 40gfull
-    - id: 19/1
-      speed: 40gfull
-    - id: 20/1
-      speed: 40gfull
-    - id: 21/1
-      speed: 40gfull
-    - id: 22/1
-      speed: 40gfull
-    - id: 23/1
-      speed: 40gfull
-    - id: 24/1
-      speed: 40gfull
-    - id: 25/1
-      speed: 100gfull
-    - id: 26/1
-      speed: 100gfull
     - id: 27/1
       description: ->sw-hec04-brdr-03a, Eth27/1
       po: 42

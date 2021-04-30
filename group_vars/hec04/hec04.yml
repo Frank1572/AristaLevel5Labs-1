@@ -1,3 +1,4 @@
+---
 eos:
   new_syntax: True
 
@@ -256,7 +257,6 @@ hec:
         uplink_ports: 51/1,52/1,53/1,54/1
       - model: 7050SX3-48YC12
         uplink_ports: 51/1,52/1,53/1,54/1
-hec:
   legacy:
   - number: '001'
     snmp:

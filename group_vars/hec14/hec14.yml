@@ -149,9 +149,17 @@ hec:
       - ipv4: 100.127.44.51
         port: 9995
     source: Loopback900
-  admin_mpls:
+  admin_mpls_oob:
     prefix_mask:
       - 10.9.246.0/23
+  admin_mpls:
+    prefix_mask:
+      - 100.96.32.0/19
+      - 100.127.40.0/21
+      - 198.19.233.0/24
+      - 198.19.182.0/24
+      - 10.255.186.0/28
+      - 198.19.224.192/28
   spine:
     # valid models are: 7504, 7508, 7280
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!

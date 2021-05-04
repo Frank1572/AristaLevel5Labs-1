@@ -157,11 +157,9 @@ hec:
       - ipv4: 169.145.84.67
         port: 9995
     source: Loopback900
-  admin_mpls_obb:
-    prefix_mask:
-      - 10.9.240.0/23
   admin_mpls:
     prefix_mask:
+      - 10.9.240.0/23
       - 100.124.32.0/19
       - 169.145.80.0/21
       - 198.18.64.0/19

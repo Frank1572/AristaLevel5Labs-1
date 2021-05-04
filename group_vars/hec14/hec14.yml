@@ -324,7 +324,7 @@ hec:
             remote_asn: 64531.14
     - number: "01b"
       snmp:
-        contact: 34672191: ncons-hec14-oob-02.net.sap.corp:1008
+        contact: 34672191:ncons-hec14-oob-02.net.sap.corp:1008
         location: CA-TOR2-CAGE3-CAB44-U45
       ports:
         - id: 1

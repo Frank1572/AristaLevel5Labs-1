@@ -78,7 +78,7 @@ ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 ip routing
 !
 ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
-{% for prefix in hec.admin_mpls_oob.prefix_mask %}
+{% for prefix in hec.admin_mpls.prefix_mask %}
 ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
 {% endfor %}
 !

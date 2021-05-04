@@ -271,14 +271,20 @@ hec:
           speed: 10000full
         - id: 3
           description: fw-hec14-01, eth1-03
+          speed: 10000full
           po: 1
         - id: 4
           description: fw-hec14-02, eth1-03
+          speed: 10000full
           po: 2
         - id: 47
           description: fw-hec14-01-NEW, eth1-03
+          speed: 10000full
+          po: 3  
         - id: 48
           description: fw-hec14-02-NEW, eth1-03
+          speed: 10000full
+          po: 4
         - id: 59/1
           description: sw-hec14-fwt-01b, 59
           po: 42
@@ -299,6 +305,12 @@ hec:
           trunk: 915
         - id: 2
           description: fw-hec14-02
+          trunk: 915
+        - id: 3
+          description: fw-hec14-01-NEW
+          trunk: 915
+        - id: 4
+          description: fw-hec14-02-NEW
           trunk: 915
         - id: 42
           description: MLAG-PEER
@@ -324,11 +336,15 @@ hec:
           po: 1
         - id: 4
           description: fw-hec14-02,eth1-04
-          po:2
+          po: 2
         - id: 47
           description: fw-hec14-01-NEW,eth1-04
+          speed: 10000full
+          po: 3
         - id: 48
           description: fw-hec14-02-NEW,eth1-04
+          speed: 10000full
+          po: 4
         - id: Et59/1
           description: sw-hec14-fwt-01a,59
           po: 42
@@ -348,6 +364,12 @@ hec:
           trunk: 915
         - id: 2
           description: fw-hec14-02
+          trunk: 915
+        - id: 3
+          description: fw-hec14-01-NEW
+          trunk: 915
+        - id: 4
+          description: fw-hec14-02-NEW
           trunk: 915
         - id: 42
           description: MLAG-PEER

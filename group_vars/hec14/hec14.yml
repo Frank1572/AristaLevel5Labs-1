@@ -259,128 +259,128 @@ hec:
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1  
-    fwt:
-    - number: "01a"
-      snmp:
-        contact: 34672190:ncons-hec14-oob-02.net.sap.corp:1007
-        location: CA-TOR2-CAGE3-CAB44-U46
-      ports:
-        - id: 1
-          description: tordc02-adm-03-co , Et1/18
-          ip: 10.255.195.12/31
-          speed: 10000full
-        - id: 3
-          description: fw-hec14-01, eth1-03
-          speed: 10000full
-          po: 1
-        - id: 4
-          description: fw-hec14-02, eth1-03
-          speed: 10000full
-          po: 2
-        - id: 47
-          description: fw-hec14-01-NEW, eth1-03
-          speed: 10000full
-          po: 3  
-        - id: 48
-          description: fw-hec14-02-NEW, eth1-03
-          speed: 10000full
-          po: 4
-        - id: 59/1
-          description: sw-hec14-fwt-01b, 59
-          po: 42
-        - id: 60/1
-          description: sw-hec14-fwt-01b, 60
-          po: 42
-        - id: 915
-          description: FWT-TRANS
-          type: vlan
-          ip: 10.255.186.2/28
-          vrrp:
-            - id: 16
-              priority: 110
-              ip: 10.255.186.1
-      port_channels:
-        - id: 1
-          description: fw-hec14-01
-          trunk: 915
-        - id: 2
-          description: fw-hec14-02
-          trunk: 915
-        - id: 3
-          description: fw-hec14-01-NEW
-          trunk: 915
-        - id: 4
-          description: fw-hec14-02-NEW
-          trunk: 915
-        - id: 42
-          description: MLAG-PEER
-      bgp:
-        router_id: 198.19.249.149
-        local_asn: 64531.14
-        peers:
-          - ipv4: 10.255.195.13
-            remote_asn: 1.463
-          - ipv4: 198.19.224.2
-            remote_asn: 64531.14
-    - number: "01b"
-      snmp:
-        contact: 34672191:ncons-hec14-oob-02.net.sap.corp:1008
-        location: CA-TOR2-CAGE3-CAB44-U45
-      ports:
-        - id: 1
-          description: tordc02-adm-04-co, eth1/18 
-          ip: 10.255.195.14/31
-          speed: 10000full
-        - id: 3
-          description: fw-hec14-01,eth1-04
-          po: 1
-        - id: 4
-          description: fw-hec14-02,eth1-04
-          po: 2
-        - id: 47
-          description: fw-hec14-01-NEW,eth1-04
-          speed: 10000full
-          po: 3
-        - id: 48
-          description: fw-hec14-02-NEW,eth1-04
-          speed: 10000full
-          po: 4
-        - id: Et59/1
-          description: sw-hec14-fwt-01a,59
-          po: 42
-        - id: 60/1
-          description: sw-hec14-fwt-01a,60
-          po: 42
-        - id: 915
-          description: FWT-TRANS
-          type: vlan
-          ip: 10.255.186.3/28
-          vrrp:
-            - id: 16
-              ip: 10.255.186.1 
-      port_channels:
-        - id: 1
-          description: fw-hec14-01
-          trunk: 915
-        - id: 2
-          description: fw-hec14-02
-          trunk: 915
-        - id: 3
-          description: fw-hec14-01-NEW
-          trunk: 915
-        - id: 4
-          description: fw-hec14-02-NEW
-          trunk: 915
-        - id: 42
-          description: MLAG-PEER
-      bgp:
-        router_id: 198.19.249.150
-        local_asn: 64531.14
-        peers:
-          - ipv4: 10.255.195.15
-            remote_asn: 64536
-          - ipv4: 198.19.224.1
-            remote_asn: 64531.14
+  fwt:
+  - number: "01a"
+    snmp:
+      contact: 34672190:ncons-hec14-oob-02.net.sap.corp:1007
+      location: CA-TOR2-CAGE3-CAB44-U46
+    ports:
+      - id: 1
+        description: tordc02-adm-03-co , Et1/18
+        ip: 10.255.195.12/31
+        speed: 10000full
+      - id: 3
+        description: fw-hec14-01, eth1-03
+        speed: 10000full
+        po: 1
+      - id: 4
+        description: fw-hec14-02, eth1-03
+        speed: 10000full
+        po: 2
+      - id: 47
+        description: fw-hec14-01-NEW, eth1-03
+        speed: 10000full
+        po: 3  
+      - id: 48
+        description: fw-hec14-02-NEW, eth1-03
+        speed: 10000full
+        po: 4
+      - id: 59/1
+        description: sw-hec14-fwt-01b, 59
+        po: 42
+      - id: 60/1
+        description: sw-hec14-fwt-01b, 60
+        po: 42
+      - id: 915
+        description: FWT-TRANS
+        type: vlan
+        ip: 10.255.186.2/28
+        vrrp:
+          - id: 16
+            priority: 110
+            ip: 10.255.186.1
+    port_channels:
+      - id: 1
+        description: fw-hec14-01
+        trunk: 915
+      - id: 2
+        description: fw-hec14-02
+        trunk: 915
+      - id: 3
+        description: fw-hec14-01-NEW
+        trunk: 915
+      - id: 4
+        description: fw-hec14-02-NEW
+        trunk: 915
+      - id: 42
+        description: MLAG-PEER
+    bgp:
+      router_id: 198.19.249.149
+      local_asn: 64531.14
+      peers:
+        - ipv4: 10.255.195.13
+          remote_asn: 1.463
+        - ipv4: 198.19.224.2
+          remote_asn: 64531.14
+  - number: "01b"
+    snmp:
+      contact: 34672191:ncons-hec14-oob-02.net.sap.corp:1008
+      location: CA-TOR2-CAGE3-CAB44-U45
+    ports:
+      - id: 1
+        description: tordc02-adm-04-co, eth1/18 
+        ip: 10.255.195.14/31
+        speed: 10000full
+      - id: 3
+        description: fw-hec14-01,eth1-04
+        po: 1
+      - id: 4
+        description: fw-hec14-02,eth1-04
+        po: 2
+      - id: 47
+        description: fw-hec14-01-NEW,eth1-04
+        speed: 10000full
+        po: 3
+      - id: 48
+        description: fw-hec14-02-NEW,eth1-04
+        speed: 10000full
+        po: 4
+      - id: Et59/1
+        description: sw-hec14-fwt-01a,59
+        po: 42
+      - id: 60/1
+        description: sw-hec14-fwt-01a,60
+        po: 42
+      - id: 915
+        description: FWT-TRANS
+        type: vlan
+        ip: 10.255.186.3/28
+        vrrp:
+          - id: 16
+            ip: 10.255.186.1 
+    port_channels:
+      - id: 1
+        description: fw-hec14-01
+        trunk: 915
+      - id: 2
+        description: fw-hec14-02
+        trunk: 915
+      - id: 3
+        description: fw-hec14-01-NEW
+        trunk: 915
+      - id: 4
+        description: fw-hec14-02-NEW
+        trunk: 915
+      - id: 42
+        description: MLAG-PEER
+    bgp:
+      router_id: 198.19.249.150
+      local_asn: 64531.14
+      peers:
+        - ipv4: 10.255.195.15
+          remote_asn: 64536
+        - ipv4: 198.19.224.1
+          remote_asn: 64531.14
   oob:
     - number: "01a"
       type: core

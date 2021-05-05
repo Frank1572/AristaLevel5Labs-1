@@ -885,10 +885,12 @@ hec:
           description: fw-hec14-01-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec14-02-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 20
         - id: 49/1
           description: sw-hec14-brdr-02b, Et49
           po: 42
@@ -907,6 +909,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 10
+          description: fw-hec14-01-NEW
+          trunk: all
+        - id: 20
+          description: fw-hec14-02-NEW
+          trunk: all
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -947,10 +955,12 @@ hec:
           description: fw-hec14-01-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec14-02-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 20
         - id: 49/1
           description: sw-hec14-brdr-02a, Et49
           po: 42
@@ -969,6 +979,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 10
+          description: fw-hec14-01-NEW
+          trunk: all
+        - id: 20
+          description: fw-hec14-02-NEW
+          trunk: all
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916

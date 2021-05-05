@@ -52,10 +52,13 @@ router bgp {{ item.bgp.local_asn }}
    router-id {{ item.bgp.router_id }}
 {% endif %}
 {% for peer in item.bgp.peers %}
-{% for setting in [ 'next-hop-self', 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
-{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'next-hop-self', 'maximum-routes 12000' ] %}
+{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'next-hop-self' ] if peer.remote_asn == item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
 {% endfor %}

@@ -914,6 +914,7 @@ hec:
       snmp:
         contact: 34677795:ncons4407.wdf.sap.corp:1026
         location: DE-ROT2-RZ44-R1-3-41
+      oob_ip: 10.178.136.48/23
       ports:
         - id: 1
           description: rot13dc02-adm-03-co , Et1/14
@@ -971,6 +972,7 @@ hec:
           trunk: 915
         - id: 42
           description: MLAG-PEER
+      ospf: True
       bgp:
         router_id: 198.19.251.34
         local_asn: 64531.1
@@ -983,6 +985,7 @@ hec:
       snmp:
         contact: 34677794:ncons5402.wdf.sap.corp:1009
         location: DE-ROT2-RZ54-R2-2-34
+      oob_ip: 10.178.136.49/23
       ports:
         - id: 1
           description: rot06dc01-adm-04-co, Et1/14
@@ -1038,6 +1041,7 @@ hec:
           trunk: 915
         - id: 42
           description: MLAG-PEER
+      ospf: True
       bgp:
         router_id: 198.19.251.35
         local_asn: 64531.1

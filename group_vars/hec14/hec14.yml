@@ -437,6 +437,12 @@ hec:
           po: 107
           trunk: 21
           speed: 10000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec14-01, E1
           access_vlan: 21
@@ -529,6 +535,12 @@ hec:
           po: 105
           trunk: 21
           speed: 10000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec14-01, E2
           access_vlan: 21

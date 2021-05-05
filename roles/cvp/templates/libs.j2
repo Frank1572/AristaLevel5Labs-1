@@ -99,7 +99,9 @@ interface {{ inttype }}{{ interface.id }}
 {% if interface.type is not defined %}
 interface Ethernet{{ interface.id }}
 {% endif %}
+{% if interface.description is defined %}
    description ->{{ interface.description }}
+{% endif %}
 {% if interface.po is defined %}
    channel-group {{ interface.po }} mode active
 {% endif %}

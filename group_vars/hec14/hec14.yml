@@ -270,6 +270,7 @@ hec:
     snmp:
       contact: 34672190:ncons-hec14-oob-02.net.sap.corp:1007
       location: CA-TOR2-CAGE3-CAB44-U46
+    oob_ip: 10.9.246.27/23
     ports:
       - id: 1
         description: tordc02-adm-03-co , Et1/18
@@ -332,6 +333,7 @@ hec:
     snmp:
       contact: 34672191:ncons-hec14-oob-02.net.sap.corp:1008
       location: CA-TOR2-CAGE3-CAB44-U45
+    oob_ip: 10.9.246.28/23
     ports:
       - id: 1
         description: tordc02-adm-04-co, eth1/18 

@@ -299,6 +299,7 @@
     src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-shs-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.shs }}'
+  when: hec.shs is defined
   tags:
     - configlets
     - storageleafs

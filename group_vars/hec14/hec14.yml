@@ -306,6 +306,9 @@ hec:
           - id: 16
             priority: 110
             ip: 10.255.186.1
+            track:
+                object: 494
+                weight: 10
     port_channels:
       - id: 1
         description: fw-hec14-01
@@ -365,7 +368,11 @@ hec:
         ip: 10.255.186.3/28
         vrrp:
           - id: 16
-            ip: 10.255.186.1 
+            priority: 100
+            ip: 10.255.186.1
+            track:
+                object: 494
+                weight: 10
     port_channels:
       - id: 1
         description: fw-hec14-01

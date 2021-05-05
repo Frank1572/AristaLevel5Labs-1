@@ -325,7 +325,7 @@ hec:
       - id: 42
         description: MLAG-PEER
     bgp:
-      router_id: 198.19.249.149
+      router_id: 198.19.251.48
       local_asn: 64531.14
       peers:
         - ipv4: 10.255.195.13
@@ -389,7 +389,7 @@ hec:
       - id: 42
         description: MLAG-PEER
     bgp:
-      router_id: 198.19.249.150
+      router_id: 198.19.251.49
       local_asn: 64531.14
       peers:
         - ipv4: 10.255.195.15

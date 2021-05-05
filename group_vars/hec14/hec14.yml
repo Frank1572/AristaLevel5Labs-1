@@ -478,6 +478,8 @@ hec:
       bgp:
         router_id: 198.19.249.112
         local_asn: 64531.14
+        network_mask:
+          - 10.9.246.0/23
         peers:
           - ipv4: 10.255.195.9
             remote_asn: 1.463
@@ -568,6 +570,8 @@ hec:
       bgp:
         router_id: 198.19.249.113
         local_asn: 64531.14
+        network_mask:
+          - 10.9.246.0/23
         peers:
           - ipv4: 10.255.195.11
             remote_asn: 64536

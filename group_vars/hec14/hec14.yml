@@ -906,6 +906,8 @@ hec:
           access_vlan: 902
           speed: 10000full
           mtu: 9214
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec14-01-NEW,eth1-01
           speed: 10000full
@@ -916,12 +918,20 @@ hec:
           speed: 10000full
           mtu: 9214
           po: 20
+        - id: 8
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02b, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-brdr-02b, Et50
           po: 42
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec14-01, E3
           po: 48
@@ -976,6 +986,8 @@ hec:
           access_vlan: 902
           speed: 10000full
           mtu: 9214
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec14-01-NEW,eth1-02
           speed: 10000full
@@ -986,12 +998,20 @@ hec:
           speed: 10000full
           mtu: 9214
           po: 20
+        - id: 8
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02a, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-brdr-02a, Et50
           po: 42
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec14-01, E4
           po: 48

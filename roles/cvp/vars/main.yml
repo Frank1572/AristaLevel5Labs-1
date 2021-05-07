@@ -43,6 +43,8 @@ container:
     configlets:
       - sw-hec-oob
       - sw-hec-aaa-fwt
+      - sw-hec-tele-oob
+      - mgmt-oob
   HEC-InterDC:
     parent_container: HEC
     configlets:

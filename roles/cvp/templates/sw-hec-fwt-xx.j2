@@ -5,18 +5,23 @@ hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number }}
 snmp-server contact {{ item.snmp.contact}}
 snmp-server location {{ item.snmp.location}}
 !
+vlan 915
+   name HEC{{ hec.hec_nr }}-{{vlandb.915.name}}
+!
 {% if hec.is_tacacs %}
-ip tacacs source-interface Vlan21
+ip tacacs source-interface Vlan915
 {% else %}
-ip radius source-interface Vlan21
+ip radius source-interface Vlan915
 {% endif %}
 !
-logging source-interface Vlan21
+logging source-interface Vlan915
 !
-{{eos_cmd.c_ntp_source}} Vlan21
+{{eos_cmd.c_ntp_source}} Vlan915
+!
+sflow source-interface Vlan915 
 !
 mlag configuration
-   domain-id MLAG-fwt
+   domain-id MLAG-FWT-{{ item.number[:2] }}
 !
 vlan 4094
    name MLAG_Vlan
@@ -27,16 +32,8 @@ spanning-tree mst 0-1 priority 28672
 interface Loopback0
    ip address {{ item.bgp.router_id | ipaddr('address') }}/32
 !
-router ospf 1
-   router-id {{ item.bgp.router_id }}
-   passive-interface default
-   no passive-interface Vlan4094
-   max-lsa 12000
-   network 198.19.224.0/30 area 0.0.0.0
-   network 198.19.251.0/24 area 0.0.0.0
-   network 198.19.249.0/24 area 0.0.0.0
-!
 router bgp {{ item.bgp.local_asn }}
+   bgp asn notation asdot
    router-id {{ item.bgp.router_id }}
 {% for peer in item.bgp.peers %}
 {% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
@@ -45,7 +42,24 @@ router bgp {{ item.bgp.local_asn }}
 {% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
+{% for setting in [ 'next-hop-self' ] if peer.remote_asn == item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
+{% endfor %}
+{% for port in item.ports %}
+{% if port.id == 915 and port.type is defined %}
+{% if port.type == 'vlan' %}
+   network {{ port.ip | ipaddr('network/prefix') }}
+{% if port.secondary is defined %}
+{% for secondary_ip in port.secondary %}
+   network {{ secondary_ip | ipaddr('network/prefix') }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+   redistribute connected
+   redistribute static
 {% endif %}
 !
 interface Loopback494
@@ -54,8 +68,14 @@ interface Loopback494
 track 494 interface Loopback494 line-protocol
 !
 interface Vlan4094
-   ip ospf network point-to-point
 !
+{% if item.oob_ip is defined %}
+interface Management1
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} OOB
+   ip address {{item.oob_ip}}/{{hec.oob_mask}}
+!
+{% endif %}
 ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 !
 ip routing

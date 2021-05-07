@@ -152,6 +152,12 @@ hec:
   admin_mpls:
     prefix_mask:
       - 10.9.246.0/23
+      - 100.96.32.0/19
+      - 100.127.40.0/21
+      - 198.19.233.0/24
+      - 198.19.182.0/24
+      - 10.255.186.0/28
+      - 198.19.224.192/28
   spine:
     # valid models are: 7504, 7508, 7280
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
@@ -258,7 +264,138 @@ hec:
       - model: 7280QR-C36
         uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
-        uplink_ports: 51/1,52/1,53/1,54/1
+        uplink_ports: 51/1,52/1,53/1,54/1  
+  fwt:
+  - number: "01a"
+    snmp:
+      contact: 34672190:ncons-hec14-oob-02.net.sap.corp:1007
+      location: CA-TOR2-CAGE3-CAB44-U46
+    oob_ip: 10.9.246.27
+    ports:
+      - id: 1
+        description: tordc02-adm-03-co , Et1/18
+        ip: 10.255.195.12/31
+        speed: 10000full
+      - id: 3
+        description: fw-hec14-01, eth1-03
+        speed: 10000full
+        po: 1
+      - id: 4
+        description: fw-hec14-02, eth1-03
+        speed: 10000full
+        po: 2
+      - id: 47
+        description: fw-hec14-01-NEW, eth1-03
+        speed: 10000full
+        po: 3  
+      - id: 48
+        description: fw-hec14-02-NEW, eth1-03
+        speed: 10000full
+        po: 4
+      - id: 59/1
+        description: sw-hec14-fwt-01b, 59
+        po: 42
+      - id: 60/1
+        description: sw-hec14-fwt-01b, 60
+        po: 42
+      - id: 915
+        description: FWT-TRANS
+        type: vlan
+        ip: 10.255.186.2/28
+        vrrp:
+          - id: 16
+            priority: 110
+            ip: 10.255.186.1
+            track:
+                object: 494
+                weight: 10
+    port_channels:
+      - id: 1
+        description: fw-hec14-01
+        trunk: 915
+      - id: 2
+        description: fw-hec14-02
+        trunk: 915
+      - id: 3
+        description: fw-hec14-01-NEW
+        trunk: 915
+      - id: 4
+        description: fw-hec14-02-NEW
+        trunk: 915
+      - id: 42
+        description: MLAG-PEER
+    bgp:
+      router_id: 198.19.251.48
+      local_asn: 64531.14
+      peers:
+        - ipv4: 10.255.195.13
+          remote_asn: 1.463
+        - ipv4: 198.19.224.2
+          remote_asn: 64531.14
+  - number: "01b"
+    snmp:
+      contact: 34672191:ncons-hec14-oob-02.net.sap.corp:1008
+      location: CA-TOR2-CAGE3-CAB44-U45
+    oob_ip: 10.9.246.28
+    ports:
+      - id: 1
+        description: tordc02-adm-04-co, eth1/18 
+        ip: 10.255.195.14/31
+        speed: 10000full
+      - id: 3
+        description: fw-hec14-01,eth1-04
+        po: 1
+      - id: 4
+        description: fw-hec14-02,eth1-04
+        po: 2
+      - id: 47
+        description: fw-hec14-01-NEW,eth1-04
+        speed: 10000full
+        po: 3
+      - id: 48
+        description: fw-hec14-02-NEW,eth1-04
+        speed: 10000full
+        po: 4
+      - id: Et59/1
+        description: sw-hec14-fwt-01a,59
+        po: 42
+      - id: 60/1
+        description: sw-hec14-fwt-01a,60
+        po: 42
+      - id: 915
+        description: FWT-TRANS
+        type: vlan
+        ip: 10.255.186.3/28
+        vrrp:
+          - id: 16
+            priority: 100
+            ip: 10.255.186.1
+            track:
+                object: 494
+                weight: 10
+    port_channels:
+      - id: 1
+        description: fw-hec14-01
+        trunk: 915
+      - id: 2
+        description: fw-hec14-02
+        trunk: 915
+      - id: 3
+        description: fw-hec14-01-NEW
+        trunk: 915
+      - id: 4
+        description: fw-hec14-02-NEW
+        trunk: 915
+      - id: 42
+        description: MLAG-PEER
+    bgp:
+      router_id: 198.19.251.49
+      local_asn: 64531.14
+      peers:
+        - ipv4: 10.255.195.15
+          remote_asn: 64536
+        - ipv4: 198.19.224.1
+          remote_asn: 64531.14
   oob:
     - number: "01a"
       type: core
@@ -300,6 +437,12 @@ hec:
           po: 107
           trunk: 21
           speed: 10000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec14-01, E1
           access_vlan: 21
@@ -390,6 +533,12 @@ hec:
           po: 105
           trunk: 21
           speed: 10000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec14-01, E2
           access_vlan: 21
@@ -505,6 +654,22 @@ hec:
           nexthop: 198.19.233.1
           interface: Vlan900
           redist_bgp: true
+      fwt01:
+        - destination: 100.96.32.0/19
+          nexthop: 10.255.186.12
+          interface: Vlan915
+        - destination: 100.127.40.0/21
+          nexthop: 10.255.186.12
+          interface: Vlan915
+        - destination: 198.19.182.0/24
+          nexthop: 10.255.186.12
+          interface: Vlan915
+        - destination: 198.19.224.192/28
+          nexthop: 10.255.186.12
+          interface: Vlan915
+        - destination: 198.19.233.0/24
+          nexthop: 10.255.186.12
+          interface: Vlan915
   brdr:
     - number: 1a
       oob_ip: 10.9.246.21
@@ -737,20 +902,32 @@ hec:
           access_vlan: 902
           speed: 10000full
           mtu: 9214
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec14-01-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec14-02-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 20
+        - id: 8
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02b, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-brdr-02b, Et50
           po: 42
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec14-01, E3
           po: 48
@@ -763,6 +940,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 10
+          description: fw-hec14-01-NEW
+          trunk: all
+        - id: 20
+          description: fw-hec14-02-NEW
+          trunk: all
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916
@@ -799,20 +982,32 @@ hec:
           access_vlan: 902
           speed: 10000full
           mtu: 9214
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec14-01-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec14-02-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 20
+        - id: 8
+          speed: 10000full
         - id: 49/1
           description: sw-hec14-brdr-02a, Et49
           po: 42
         - id: 50/1
           description: sw-hec14-brdr-02a, Et50
           po: 42
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec14-01, E4
           po: 48
@@ -825,6 +1020,12 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+        - id: 10
+          description: fw-hec14-01-NEW
+          trunk: all
+        - id: 20
+          description: fw-hec14-02-NEW
+          trunk: all
         - id: 48
           description: ->naa-hec14-01, in-band
           access_vlan: 916

@@ -52,16 +52,26 @@ router bgp {{ item.bgp.local_asn }}
    router-id {{ item.bgp.router_id }}
 {% endif %}
 {% for peer in item.bgp.peers %}
-{% for setting in [ 'next-hop-self', 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
-{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'next-hop-self', 'maximum-routes 12000' ] %}
+{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'next-hop-self' ] if peer.remote_asn == item.bgp.local_asn %}
    neighbor {{ peer.ipv4 }} {{ setting }}
 {% endfor %}
 {% endfor %}
-{% for prefix in hec.admin_mpls.prefix_mask %}
-{% if loop.index <= 2 %}
-   network {{ prefix }}
+{% for port in item.ports %}
+{% if port.id == 21 and port.type is defined %}
+{% if port.type == 'vlan' %}
+   network {{ port.ip | ipaddr('network/prefix') }}
+{% if port.secondary is defined %}
+{% for secondary_ip in port.secondary %}
+   network {{ secondary_ip | ipaddr('network/prefix') }}
+{% endfor %}
+{% endif %}
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

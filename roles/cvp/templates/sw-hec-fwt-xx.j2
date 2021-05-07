@@ -21,7 +21,7 @@ logging source-interface Vlan915
 sflow source-interface Vlan915 
 !
 mlag configuration
-   domain-id MLAG-FWT-{{ item.number[2:] }}
+   domain-id MLAG-FWT-{{ item.number[:2] }}
 !
 vlan 4094
    name MLAG_Vlan

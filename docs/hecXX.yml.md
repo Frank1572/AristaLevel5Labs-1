@@ -7,7 +7,7 @@ Variable name in the dictionary tree | Description
 ------------------------------------ | -----------
 hec.fabric.interlink_mtu | MTU size for MLAG- and Spine-Uplinks
 hec.fabric.interlink_speed | speed setting for MLAG- and Spine-Uplinks
-hec.fabric.vtep_distribution_mode | set this to either use 'manual', 'cvx' or 'evpn'
+hec.fabric.vtep_distribution_mode | set this to either use 'manual', 'cvx', 'migrate' or 'evpn'
 hec.core_vlans | if routing between core routers and WAN/VPN routers is with static routed subinterfaces, the 3000-3499 vlans will be created and 'vni-mapped'
 hec.routes.static.TYPE | per device pairs, define a list of key-values that describe routes that are to be generated. See next options.
 hec.routes.static.TYPE.destination | network/host to add a route for. CIDR notation. (mandatory)

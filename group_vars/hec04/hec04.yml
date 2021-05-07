@@ -7310,6 +7310,26 @@ hec:
       description: sw-hec04-oob-01a/b
       mode: trunk
       trunk: all
+  - number: '03'
+    snmp:
+      location: CA01-P13-C14-U43
+      contact: xxxxxx:ncons-hec04-oob-03:1003
+    ports:
+    - id: 21
+      type: vlan
+      description: OOB Access Vlan
+      ip_address: 10.9.242.40/23
+    - id: '49'
+      description: sw-hec04-oob-01a
+      po: 103
+    - id: '50'
+      description: sw-hec04-oob-01b
+      po: 103
+    port_channels:
+    - id: 103
+      description: sw-hec04-oob-01a/b
+      mode: trunk
+      trunk: all
   str:
   - number: 1a
     snmp:

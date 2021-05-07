@@ -208,9 +208,4 @@ configlet_list_global:
   - autoconf.ini
   - 7160-profile-tcam-acl
   - sw-hec-leaf
-  - rt-hec-ha-shared
-  - rt-hec-ha-core-01a
-  - rt-hec-ha-core-01b
-  - rt-hec-ha-core-01c
-  - rt-hec-ha-core-01d
   - sw-hec-oob-snmp

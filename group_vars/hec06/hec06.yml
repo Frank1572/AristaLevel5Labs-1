@@ -136,10 +136,6 @@ hec:
   syslog1: 169.145.250.65 # comment ip from sw-hec06-227
   syslog2: 169.145.253.69 # comment ip from sw-hec06-227
  # syslog3: 147.204.146.42 # !!!there is no ohther log ip on switch
-  radius1: 169.145.33.70 # there is no radius
-  radius2: 10.4.201.55  #  there is no radius
-  radius_key: 07037265610E0D170E54333D547F3D  # there is no radius
-  is_tacacs: True
   tacacs:
     servers:
       - ipv4: 169.145.250.181

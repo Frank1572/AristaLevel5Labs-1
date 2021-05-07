@@ -616,8 +616,6 @@ hec:
           lacp_fallback: individual
       bgp:
         local_asn: 64531.3
-        network_mask:
-          - 10.9.240.0/23
         peers:
           - ipv4: 10.255.224.11
             remote_asn: 64536
@@ -802,8 +800,6 @@ hec:
           lacp_fallback: individual
       bgp:
         local_asn: 64531.3
-        network_mask:
-          - 10.9.240.0/23
         peers:
           - ipv4: 10.255.224.9
             remote_asn: 1.463

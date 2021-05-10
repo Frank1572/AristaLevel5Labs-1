@@ -7268,28 +7268,12 @@ hec:
   - number: '02'
     snmp:
       location: CA01-P30-C50-U41
-      contact: xxxxxx:ncons-hec04-oob-01:1001
+      contact: 34412861:ncons-hec04-oob-01:1001
     ports:
     - id: 21
       type: vlan
       description: OOB Access Vlan
       ip_address: 10.9.242.22/23
-    - id: '26'
-      description: ->sw-hec04-ipmi-03,Mgmt1
-    - id: '32'
-      description: '***lb-hec04-01-mgmt-new boxes ***'
-    - id: '33'
-      description: '***lb-hec04-02-mgmt-new boxes ***'
-    - id: '44'
-      description: ->sw-hec04-hvv-02a,Mgmt1
-    - id: '45'
-      description: ->sw-hec04-hvv-02b,Mgmt1
-    - id: '46'
-      description: ->sw-hec01-ipmi-02,Mgmt1
-    - id: '47'
-      description: ->sw-hec04-hvv-03a,Mgmt1
-    - id: '48'
-      description: ->sw-hec04-hvv-03b,Mgmt1
     - id: '49'
       description: sw-hec04-oob-01a
       po: 102
@@ -7304,7 +7288,7 @@ hec:
   - number: '03'
     snmp:
       location: CA01-P13-C14-U43
-      contact: xxxxxx:ncons-hec04-oob-03:1003
+      contact: 34412862:ncons-hec04-oob-03:1003
     ports:
     - id: 21
       type: vlan

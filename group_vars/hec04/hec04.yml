@@ -98,7 +98,7 @@ hec:
   lo900_domain: "sac.hec.sap.biz"
   vl900_domain: "sac.hec.sap.biz"
   vl900_mask: 23
-  vl900_def_gw: 198.19.202.0
+  vl900_def_gw: 198.19.202.1
   vl900_net: 198.19.202.0/23
   lo900_net: 198.19.158.0/23
   lo900_prefix: 198.19.158
@@ -7523,6 +7523,29 @@ hec:
       description: MLAG-PEER
       mode: trunk
       trunk: all
+
+  routes:
+    static:
+      fwt01:
+        - destination: 100.124.0.0/19
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 100.127.16.0/21
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.0.0/19
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.190.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.192.0/23
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 0.0.0.0/0
+          nexthop: 10.178.136.1
+          vrf: OOB
+  
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

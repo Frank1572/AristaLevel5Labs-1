@@ -8,11 +8,7 @@ snmp-server location {{ item.snmp.location}}
 vlan 915
    name HEC{{ hec.hec_nr }}-{{vlandb.915.name}}
 !
-{% if hec.is_tacacs %}
 ip tacacs source-interface Vlan915
-{% else %}
-ip radius source-interface Vlan915
-{% endif %}
 !
 logging source-interface Vlan915
 !

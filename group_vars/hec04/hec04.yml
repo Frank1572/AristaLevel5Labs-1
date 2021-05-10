@@ -128,15 +128,6 @@ hec:
   snmp2: 147.204.148.87
   syslog1: 169.145.106.65
   syslog2: 169.145.109.69
-  syslog3: 
-  radius1: 
-  radius2: 
-  radius:
-    oob:
-      servers:
-        - ipv4: 
-        - ipv4: 
-  is_tacacs: True
   tacacs:
     nat:
       servers:

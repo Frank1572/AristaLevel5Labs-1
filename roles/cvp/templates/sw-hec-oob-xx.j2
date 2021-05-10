@@ -5,11 +5,7 @@ hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number }}
 snmp-server contact {{ item.snmp.contact}}
 snmp-server location {{ item.snmp.location}}
 !
-{% if hec.is_tacacs %}
 ip tacacs source-interface Vlan21
-{% else %}
-ip radius source-interface Vlan21
-{% endif %}
 !
 logging source-interface Vlan21
 !

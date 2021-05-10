@@ -129,10 +129,6 @@ hec:
   snmp2: 147.204.148.87
   syslog1: 100.127.42.65
   syslog2: 100.127.45.69
-  radius1: 10.4.201.55
-  radius2: 169.145.33.70
-  radius_key: 07037265610E0D170E54333D547F3D
-  is_tacacs: True
   tacacs:
     nat:
       servers:

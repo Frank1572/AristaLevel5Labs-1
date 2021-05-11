@@ -98,7 +98,7 @@ hec:
   lo900_domain: "sac.hec.sap.biz"
   vl900_domain: "sac.hec.sap.biz"
   vl900_mask: 23
-  vl900_def_gw: 198.19.202.0
+  vl900_def_gw: 198.19.202.1
   vl900_net: 198.19.202.0/23
   lo900_net: 198.19.158.0/23
   lo900_prefix: 198.19.158
@@ -7268,59 +7268,21 @@ hec:
   - number: '02'
     snmp:
       location: CA01-P30-C50-U41
-      contact: xxxxxx:ncons-hec04-oob-01:1001
+      contact: 34412861:ncons-hec04-oob-01:1001
     ports:
     - id: 21
       type: vlan
       description: OOB Access Vlan
-      ip_address: 10.9.242.22/23
-    - id: '26'
-      description: ->sw-hec04-ipmi-03,Mgmt1
-    - id: '32'
-      description: '***lb-hec04-01-mgmt-new boxes ***'
-    - id: '33'
-      description: '***lb-hec04-02-mgmt-new boxes ***'
-    - id: '44'
-      description: ->sw-hec04-hvv-02a,Mgmt1
-    - id: '45'
-      description: ->sw-hec04-hvv-02b,Mgmt1
-    - id: '46'
-      description: ->sw-hec01-ipmi-02,Mgmt1
-    - id: '47'
-      description: ->sw-hec04-hvv-03a,Mgmt1
-    - id: '48'
-      description: ->sw-hec04-hvv-03b,Mgmt1
-    - id: '49'
-      description: sw-hec04-oob-01a
-      po: 102
-    - id: '50'
-      description: sw-hec04-oob-01b
-      po: 102
-    port_channels:
-    - id: 102
-      description: sw-hec04-oob-01a/b
-      mode: trunk
-      trunk: all
+      ip: 10.9.242.22/23
   - number: '03'
     snmp:
       location: CA01-P13-C14-U43
-      contact: xxxxxx:ncons-hec04-oob-03:1003
+      contact: 34412862:ncons-hec04-oob-03:1003
     ports:
     - id: 21
       type: vlan
       description: OOB Access Vlan
-      ip_address: 10.9.242.40/23
-    - id: '49'
-      description: sw-hec04-oob-01a
-      po: 103
-    - id: '50'
-      description: sw-hec04-oob-01b
-      po: 103
-    port_channels:
-    - id: 103
-      description: sw-hec04-oob-01a/b
-      mode: trunk
-      trunk: all
+      ip: 10.9.242.40/23
   str:
   - number: 1a
     snmp:
@@ -7523,6 +7485,29 @@ hec:
       description: MLAG-PEER
       mode: trunk
       trunk: all
+
+  routes:
+    static:
+      fwt01:
+        - destination: 100.124.0.0/19
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 100.127.16.0/21
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.0.0/19
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.190.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.192.0/23
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 0.0.0.0/0
+          nexthop: 10.178.136.1
+          vrf: OOB
+  
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

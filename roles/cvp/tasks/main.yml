@@ -116,6 +116,7 @@
     - sw-hec-fab-ntp
     - sw-hec-switch-ntp
     - sw-hec-logging
+    - sw-hec-oob-logging
     - sw-hec-fab-logging
     - sw-hec-switch-logging
     - sw-hec-switch-sflow

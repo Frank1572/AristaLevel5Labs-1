@@ -209,6 +209,3 @@ configlet_list_global:
   - 7160-profile-tcam-acl
   - sw-hec-leaf
   - sw-hec-oob-snmp
-  - vxlan1-shutdown
-  - maintenancemode
-  - maintenancemode-ha

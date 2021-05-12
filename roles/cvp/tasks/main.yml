@@ -143,7 +143,6 @@
     - sw-mlag-b
     - mgmt-oob
     - mgmt-default
-    - CVP-Arista
     - sw-hec-vtep
     - hec-shs
     - autoconf.ini

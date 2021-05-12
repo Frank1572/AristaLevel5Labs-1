@@ -7274,6 +7274,9 @@ hec:
       type: vlan
       description: OOB Access Vlan
       ip: 10.9.242.22/23
+    uplinks:
+      - Ethernet49
+      - Ethernet50
   - number: '03'
     snmp:
       location: CA01-P13-C14-U43
@@ -7283,6 +7286,9 @@ hec:
       type: vlan
       description: OOB Access Vlan
       ip: 10.9.242.40/23
+    uplinks:
+      - Ethernet49
+      - Ethernet50
   str:
   - number: 1a
     snmp:

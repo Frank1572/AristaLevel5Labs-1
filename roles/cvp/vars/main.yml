@@ -148,7 +148,6 @@ configlet_list_global:
   - sw-hec-aaa-hana
   - sw-hec-aaa-oob
   - sw-hec-aaa-fwt
-  - CVP-Arista
   - sw-hec-oob-vrf
   - sw-hec-snmp
   - sw-hec-ntp

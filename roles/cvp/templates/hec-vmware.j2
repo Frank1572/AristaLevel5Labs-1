@@ -1,6 +1,9 @@
 vlan 7
    name {{vlandb.7.name}}
 !
+vlan 30
+   name {{vlandb.30.name}}
+!
 vlan 900
    name {{vlandb.900.name}}
 !
@@ -24,7 +27,7 @@ interface Vxlan1
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 5,7,20,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499
+   switchport trunk allowed vlan 5,7,20,30,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-APP in
    port-channel lacp fallback individual

@@ -64,7 +64,7 @@ container:
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
       - sw-hec-switch-sflow
-      - mgmt-oob
+      - mgmt-default
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
@@ -90,6 +90,7 @@ container:
     configlets:
       - hec-vmware
       - hec-vmware-L2
+      - hec-vmware-special
   HEC-Xen Top of rack:
     parent_container: HEC-HV Top of rack
     configlets:

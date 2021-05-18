@@ -90,7 +90,6 @@ container:
     configlets:
       - hec-vmware
       - hec-vmware-L2
-      - hec-vmware-special
   HEC-Xen Top of rack:
     parent_container: HEC-HV Top of rack
     configlets:

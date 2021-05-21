@@ -1,5 +1,10 @@
 {% include "templates/7160.j2" %}
-
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == "7160-32CQ" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
 interface Ethernet 1/1,1/2,1/3,1/4,2/1,2/2,2/3,2/4,3/1,3/2,3/3,3/4,4/1,4/2,4/3,4/4,5/1,5/2,5/3,5/4,6/1,6/2,6/3,6/4,7/1,7/2,7/3,7/4,8/1,8/2,8/3,8/4,9/1,9/2,9/3,9/4
    speed forced 25gfull
    switchport trunk native vlan 40
@@ -15,7 +20,7 @@ interface Ethernet27/1,28/1
    channel-group 42 mode active
 !
 ! === Spine Uplinks: ===
-interface Ethernet{{ hec.fabric.leaf_models["7160-32CQ"].uplink_ports }}
+interface Ethernet{{ intf_spines['name'] }}
 {#
   40gfull is not applicable for all cells in all locations
   as of now there is no way to determine the transceiver speed

@@ -250,19 +250,7 @@ hec:
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
-    leaf_models:
-      - model: 7050CX3-32S
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-32CQ
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-48YC6
-        uplink_ports: 51/1,52/1,53/1,54/1
-      - model: 7280QR-C36
-        uplink_ports: 25/1,26/1,35/1,36/1
-      - model: 7280QR-C36-M
-        uplink_ports: 25/1,26/1,35/1,36/1
-      - model: 7280SR-48C6
-        uplink_ports: 51/1,52/1,53/1,54/1  
+    leaf_models: "{{ net.device.leaf_models }}" 
   fwt:
   - number: "01a"
     snmp:
@@ -285,7 +273,7 @@ hec:
       - id: 47
         description: fw-hec14-01-NEW, eth1-03
         speed: 10000full
-        po: 3  
+        po: 3
       - id: 48
         description: fw-hec14-02-NEW, eth1-03
         speed: 10000full
@@ -337,7 +325,7 @@ hec:
     oob_ip: 10.9.246.28
     ports:
       - id: 1
-        description: tordc02-adm-04-co, eth1/18 
+        description: tordc02-adm-04-co, eth1/18
         ip: 10.255.195.14/31
         speed: 10000full
       - id: 3
@@ -495,7 +483,7 @@ hec:
           - ipv4: 10.255.195.9
             remote_asn: 1.463
           - ipv4: 198.19.224.2
-            remote_asn: 64531.14 
+            remote_asn: 64531.14
     - number: "01b"
       type: core
       snmp:
@@ -591,7 +579,7 @@ hec:
           - ipv4: 10.255.195.11
             remote_asn: 64536
           - ipv4: 198.19.224.1
-            remote_asn: 64531.14 
+            remote_asn: 64531.14
     - number: "02"
       ports:
         - id: 21
@@ -1084,12 +1072,12 @@ hec:
           speed: 40gfull
           mtu: 9100
         - id: 5/1
-          description: rt-hec14-vpn-01b, Fo0/2/0 
+          description: rt-hec14-vpn-01b, Fo0/2/0
           po: 1106
           speed: 40gfull
           mtu: 9100
         - id: 6/1
-          description: rt-hec14-inet-01b, Fo0/2/0 
+          description: rt-hec14-inet-01b, Fo0/2/0
           po: 1105
           speed: 40gfull
           mtu: 9100

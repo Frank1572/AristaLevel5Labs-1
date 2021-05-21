@@ -27,6 +27,7 @@ container:
       - sw-hec-oob-common
       - sw-hec-oob-snmp
       - sw-hec-tele-default
+      - sw-hec-oob-logging
   HEC-External Connectivity:
     parent_container: HEC
   HEC-CWAN:
@@ -152,6 +153,7 @@ configlet_list_global:
   - sw-hec-snmp
   - sw-hec-ntp
   - sw-hec-logging
+  - sw-hec-oob-logging
   - HEC-IPMI
   - mgmt-oob
   - sw-hec-tele-oob

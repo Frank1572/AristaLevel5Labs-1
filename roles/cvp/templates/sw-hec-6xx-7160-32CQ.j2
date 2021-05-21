@@ -1,5 +1,12 @@
 {% include "templates/sw-hec-hvv-7160-32CQ.j2" %}
 
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == "7160-32CQ" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
+
 ! === Spine Uplinks: ===
 interface Ethernet {{ intf_spines['name'] }}
 {#

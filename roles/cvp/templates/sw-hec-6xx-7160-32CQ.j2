@@ -1,0 +1,13 @@
+{% include "templates/sw-hec-hvv-7160-32CQ.j2" %}
+
+! === Spine Uplinks: ===
+interface Ethernet {{ intf_spines['name'] }}
+{#
+  40gfull is not applicable for all cells in all locations
+  as of now there is no way to determine the transceiver speed
+  while rendering this jinja template, we need to leave this out.
+
+   speed forced 40gfull
+#}
+   switchport
+!

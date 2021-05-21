@@ -7144,6 +7144,10 @@ hec:
       - id: 21
         priority: 105
         ip: 10.9.242.1
+        track:
+          object: 494
+          weight: 10
+        auth: oobnw
     - id: '1'
       speed: 10000full
       description: sjcdc01-adm-03-co, Et1/13
@@ -7152,64 +7156,74 @@ hec:
       po: 102
       description: sw-hec04-oob-02
       speed: 10000full
+      trunk: 21
     - id: '3'
       po: 103
       description: sw-hec04-oob-03
       speed: 10000full
+      trunk: 21
     - id: '4'
       po: 104
       description: sw-hec04-oob-04
       speed: 10000full
+      trunk: 21
     - id: '5'
-      description: ->sw-hec04-hvv-04b,Mgmt1
+      description: sw-hec04-hvv-04b,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '6'
-      description: ->sw-hec04-ipmi-04,Mgmt1
+      description: sw-hec04-ipmi-04,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '7'
-      description: ->sw-hec04-hvv-05a,Mgmt1
+      description: sw-hec04-hvv-05a,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '8'
-      description: ->sw-hec04-hvv-05b,Mgmt1
+      description: sw-hec04-hvv-05b,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '9'
-      description: ->sw-hec04-ipmi-05,Mgmt1
+      description: sw-hec04-ipmi-05,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '10'
-      description: ->sw-hec04-hvv-06a,Mgmt1
+      description: sw-hec04-hvv-06a,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '11'
-      description: ->sw-hec04-hvv-04a,Mgmt1
+      description: sw-hec04-hvv-04a,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '42'
       description: fw-hec04-01-new
       speed: 1000full
+      access_vlan: 21
     - id: '44'
       description: ->naa-hec04-01, E1
       speed: 1000full
+      access_vlan: 21
     - id: 59/1
-      description: ->sw-hec04-oob-01-mlag-peer
+      description: sw-hec04-oob-01-mlag-peer
       po: 42
-    - id: 60/1
-      description: ->sw-hec04-oob-01-mlag-peer
-      po: 42
-    port_channels:
-    - id: 42
-      description: MLAG-PEER
-      mode: trunk
       trunk: all
+    - id: 60/1
+      description: sw-hec04-oob-01-mlag-peer
+      po: 42
+      trunk: all
+    port_channels:
     - id: 102
       description: sw-hec04-oob-02
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     - id: 103
       description: sw-hec04-oob-03
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     - id: 104
       description: sw-hec04-oob-04
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     bgp:
       router_id: 198.19.251.196
       local_asn: 64531.4
@@ -7230,7 +7244,12 @@ hec:
       ip: 10.9.242.3/23
       vrrp:
       - id: 21
+        priority: 100
         ip: 10.9.242.1
+        track:
+          object: 494
+          weight: 10
+        auth: oobnw
     - id: '1'
       description: sjcdc01-adm-04-co, Et1/13
       speed: 10000full
@@ -7239,49 +7258,54 @@ hec:
       po: 102
       description: sw-hec04-oob-02
       speed: 10000full
+      trunk: 21
     - id: '3'
       po: 103
       description: sw-hec04-oob-03
       speed: 10000full
+      trunk: 21
     - id: '4'
       po: 104
       description: sw-hec04-oob-04
       speed: 10000full
+      trunk: 21
     - id: '10'
-      description: ->sw-hec04-hvv-06b,Mgmt1
+      description: sw-hec04-hvv-06b,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '11'
-      description: ->sw-hec04-ipmi-06,Mgmt1
+      description: sw-hec04-ipmi-06,Mgmt1
       speed: 1000full
+      access_vlan: 21
     - id: '42'
       description: fw-hec04-02-new
       speed: 1000full
+      access_vlan: 21
     - id: '44'
-      description: ->naa-hec04-01, E2
+      description: naa-hec04-01, E2
       speed: 1000full
+      access_vlan: 21
     - id: 59/1
-      description: ->sw-hec04-oob-01-mlag-peer
+      description: sw-hec04-oob-01-mlag-peer
       po: 42
-    - id: 60/1
-      description: ->sw-hec04-oob-01-mlag-peer
-      po: 42
-    port_channels:
-    - id: 42
-      description: MLAG-PEER
-      mode: trunk
       trunk: all
+    - id: 60/1
+      description: sw-hec04-oob-01-mlag-peer
+      po: 42
+      trunk: all
+    port_channels:
     - id: 102
       description: sw-hec04-oob-02
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     - id: 103
       description: sw-hec04-oob-03
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     - id: 104
       description: sw-hec04-oob-04
-      mode: trunk
-      trunk: all
+      trunk: 21
+      lacp_fallback: individual
     bgp:
       router_id: 198.19.251.197
       local_asn: 64531.4

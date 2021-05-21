@@ -174,18 +174,9 @@ vlans:
       vid: 150
     - name: "{{vlandb.900.name}}"
       vid: 900
-# net:
-#   device:
-#     leaf:
-#       vmware:
-#         - model: "7160-32CQ"
-#           ports:
-#             prod: "1/1-12/4"
-#             ic: "13/1-18/4"
-#         - model: "7150S-64-CL"
-#           ports:
-#             prod: "1-15,17-31"
-#             ic: "33-47"
+  trunklists:
+    hvv_data: "5,7,20,30,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499"
+    hvv_vmotion: "7,20,930-931"
 net:
   device:
     leaf_models:

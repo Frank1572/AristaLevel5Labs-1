@@ -1,4 +1,5 @@
 {% include "templates/7160.j2" %}
+{% import "templates/libs.j2" as funcs with context %}
 
 interface Ethernet 1/1,1/2,1/3,1/4,2/1,2/2,2/3,2/4,3/1,3/2,3/3,3/4,4/1,4/2,4/3,4/4,5/1,5/2,5/3,5/4,6/1,6/2,6/3,6/4,7/1,7/2,7/3,7/4,8/1,8/2,8/3,8/4,9/1,9/2,9/3,9/4
    speed forced 25gfull
@@ -14,16 +15,7 @@ interface Ethernet27/1,28/1
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
-! === Spine Uplinks: ===
-interface Ethernet29/1,30/1,31/1,32/1
-{#
-  40gfull is not applicable for all cells in all locations
-  as of now there is no way to determine the transceiver speed
-  while rendering this jinja template, we need to leave this out.
-
-   speed forced 40gfull
-#}
-   no switchport
+{{ funcs.leaf_uplinks("7160-32CQ")}}
 !
 interface Ethernet1/1,1/2
    channel-group 101 mode active

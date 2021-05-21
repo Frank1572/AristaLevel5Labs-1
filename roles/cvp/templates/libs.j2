@@ -52,7 +52,7 @@
 {% macro leaf_hvv_ports_data(hec_nr) -%}
    speed forced 25gfull
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 5,7,20,30,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499
+   switchport trunk allowed vlan {{ vlans.trunklists.hvv_data }}
    switchport mode trunk
    ip access-group HEC{{ hec_nr }}-L2-APP in
    spanning-tree portfast
@@ -60,7 +60,7 @@
 {% macro leaf_hvv_ports_vmotion(hec_nr) -%}
    speed forced 25gfull
    switchport trunk native vlan 7
-   switchport trunk allowed vlan 7,20,930-931
+   switchport trunk allowed vlan {{ vlans.trunklists.hvv_vmotion }}
    switchport mode trunk
    ip access-group HEC{{ hec_nr }}-L2-APP in
    spanning-tree portfast
@@ -80,6 +80,19 @@
    port-channel lacp fallback static
    spanning-tree portfast
 {%- endmacro %}
+
+{% macro leaf_uplinks(model) %}
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == model %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
+! === Spine Uplinks: ===
+interface Ethernet{{ intf_spines['name'] }}
+   mtu {{hec.fabric.interlink_mtu}}
+   no switchport
+{% endmacro %}
 
 {# convert ASN between asdot and asplain notation #}
 {% macro asdot(asn) -%}

@@ -259,6 +259,8 @@ hec:
         uplink_ports: 51/1,52/1,53/1,54/1
       - model: 7280QR-C36
         uplink_ports: 25/1,26/1,35/1,36/1
+      - model: 7280QR-C36-M
+        uplink_ports: 25/1,26/1,35/1,36/1
       - model: 7280SR-48C6
         uplink_ports: 51/1,52/1,53/1,54/1  
   fwt:

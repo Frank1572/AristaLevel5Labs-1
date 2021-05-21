@@ -64,7 +64,7 @@ container:
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
       - sw-hec-switch-sflow
-      - mgmt-oob
+      - mgmt-default
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:

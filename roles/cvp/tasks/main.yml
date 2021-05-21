@@ -135,6 +135,7 @@
     - sw-hec-hana-7160-48YC6
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
+    - sw-hec-6xx-7160-32CQ
     - sw-hec-vmware-7150S-64-CL
     - sw-hec-hvx-7160-32CQ
     - sw-hec-hvx-7160-48YC6
@@ -143,13 +144,15 @@
     - sw-mlag-b
     - mgmt-oob
     - mgmt-default
-    - CVP-Arista
     - sw-hec-vtep
     - hec-shs
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
+    - vxlan1-shutdown
+    - maintenancemode
+    - maintenancemode-ha
   tags:
     - configlets
 

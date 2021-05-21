@@ -1,13 +1,7 @@
 {% include "templates/7160-profile-tcam-acl.j2" %}
-{% import "templates/libs.j2" as funcs %}
+{% import "templates/libs.j2" as funcs with context %}
 {% set p_data={'start': 1, 'end': 18} %}
 {% set p_mlag={'start': 49, 'end': 50} %}
-{% set intf_spines = {'name' : 'none'} %}
-{% for m in hec.fabric.leaf_models %}
-{% if m.model == "7160-48YC6" %}
-{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
-{% endif %}
-{% endfor %}
 
 interface Ethernet {{p_data['start']}}-{{p_data['end']}},{{p_data['start']+24}}-{{p_data['end']+24}}
    switchport trunk native vlan 40
@@ -21,16 +15,7 @@ interface Ethernet {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
    speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
-! === Spine Uplinks: ===
-interface Ethernet {{ intf_spines['name'] }}
-{#
-  40gfull is not applicable for all cells in all locations
-  as of now there is no way to determine the transceiver speed
-  while rendering this jinja template, we need to leave this out.
-
-   speed forced 40gfull
-#}
-   no switchport
+{{ funcs.leaf_uplinks("7160-48YC6")}}
 !
 {% for main_intf in range(p_data['start'], p_data['end']+1) %}
 interface Ethernet {{ main_intf }}, {{main_intf+24}}

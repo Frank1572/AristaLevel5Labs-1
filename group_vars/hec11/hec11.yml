@@ -118,8 +118,11 @@ hec:
   ntp2: 100.127.5.38 # taken from sw-hec11-101 correct ?
   snmp1: 147.204.148.100 # taken from sw-hec11-101 correct ?
   snmp2: 147.204.148.87 # taken from sw-hec11-101 correct ?
-  syslog1: 100.127.2.65 # taken from sw-hec11-101 correct ?
-  syslog2: 100.127.5.69 # taken from sw-hec11-101 correct ?
+  syslog:
+    inband:
+      servers:
+        - ipv4: 100.127.2.65 # taken from sw-hec11-101 correct ?
+        - ipv4: 100.127.5.69 # taken from sw-hec11-101 correct ?
   radius1: 10.17.121.35 # taken from sw-hec11-101 correct ?
   radius2: 10.17.122.21 # taken from sw-hec11-101 correct ?
   is_tacacs: False

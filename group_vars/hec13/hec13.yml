@@ -134,8 +134,11 @@ hec:
   ntp2: 100.127.37.38
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 100.127.34.65
-  syslog2: 100.127.37.69
+  syslog:
+    inband:
+      servers:
+        - ipv4: 100.127.34.65
+        - ipv4: 100.127.37.69
   tacacs:
     nat:
       servers:

@@ -133,9 +133,12 @@ hec:
   ntp2: 169.145.253.38 # comment ip from sw-hec06-227
   snmp1: 147.204.148.100 # comment ip from sw-hec06-227 (same as hec05)
   snmp2: 147.204.148.87 # comment ip from sw-hec06-227
-  syslog1: 169.145.250.65 # comment ip from sw-hec06-227
-  syslog2: 169.145.253.69 # comment ip from sw-hec06-227
  # syslog3: 147.204.146.42 # !!!there is no ohther log ip on switch
+  syslog:
+    inband:
+      servers:
+        - ipv4: 169.145.253.69 # comment ip from sw-hec06-227
+        - ipv4: 169.145.250.65 # comment ip from sw-hec06-227
   tacacs:
     servers:
       - ipv4: 169.145.250.181

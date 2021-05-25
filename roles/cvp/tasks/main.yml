@@ -154,6 +154,7 @@
     - vxlan1-shutdown
     - maintenancemode
     - maintenancemode-ha
+    - hec_rt_str_shared
   tags:
     - configlets
 

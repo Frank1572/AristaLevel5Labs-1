@@ -214,3 +214,4 @@ configlet_list_global:
   - vxlan1-shutdown
   - maintenancemode
   - maintenancemode-ha
+  - hec_rt_str_shared

@@ -126,6 +126,17 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
+  strrt:
+    - name: "{{vlandb.40.name}}"
+      vid: 40
+    - name: "{{vlandb.50.name}}"
+      vid: 50
+    - name: "{{vlandb.55.name}}"
+      vid: 55
+    - name: "{{vlandb.130.name}}"
+      vid: 130
+    - name: "{{vlandb.140.name}}"
+      vid: 140
   ipmi:
     - name: "{{vlandb.10.name}}"
       vid: 10

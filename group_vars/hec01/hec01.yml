@@ -2377,6 +2377,16 @@ hec:
         - id: 54/1
           description: sw-hec01-str-04b
           po: 700
+        - id: 40
+          description: "{{vlandb.40.name}}"
+          type: vlan
+          ip: 198.18.8.76/22
+          virtual_router_ip: 198.18.8.75
+        - id: 50
+          description: "{{vlandb.50.name}}"
+          type: vlan
+          ip: 198.18.16.2/22
+          virtual_router_ip: 198.18.16.1
       port_channels:
         - id: 700
           description: sw-hec01-str-04a/b
@@ -2400,6 +2410,16 @@ hec:
         - id: 54/1
           description: sw-hec01-str-04b
           po: 700
+        - id: 40
+          description: "{{vlandb.40.name}}"
+          type: vlan
+          ip: 198.18.8.77/22
+          virtual_router_ip: 198.18.8.75
+        - id: 50
+          description: "{{vlandb.50.name}}"
+          type: vlan
+          ip: 198.18.16.3/22
+          virtual_router_ip: 198.18.16.1
       port_channels:
         - id: 700
           description: sw-hec01-str-04a/b

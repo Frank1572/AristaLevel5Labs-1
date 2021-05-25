@@ -136,18 +136,23 @@ hec:
   ntp2: 169.145.245.38 # comment ip from sw-hec05-235
   snmp1: 147.204.148.100 # comment ip from sw-hec05-235
   snmp2: 147.204.148.87 # comment ip from sw-hec05-235
-  syslog1: 169.145.242.65 # comment ip from sw-hec05-235
-  syslog2: 169.145.245.69 # comment ip from sw-hec05-235
  # syslog3: 147.204.146.42 # !!!!!!!!!!!!!!!!!!!!!
-  radius1: 169.145.33.70 # there is no radius
-  radius2: 10.4.201.55  #  there is no radius
-  radius_key: 07037265610E0D170E54333D547F3D  # there is no radius
-  is_tacacs: True
+  syslog:
+    inband:
+      servers:
+        - ipv4: 169.145.242.65  # comment ip from sw-hec05-235
+        - ipv4: 169.145.245.69  # comment ip from sw-hec05-235
   tacacs:
-    servers:
-      - ipv4: 169.145.242.181
-      - ipv4: 169.145.242.182
-      - ipv4: 169.145.242.183
+    nat:
+      servers:
+        - ipv4: 169.145.242.181
+        - ipv4: 169.145.242.182
+        - ipv4: 169.145.242.183
+    oob:
+      servers:
+        - ipv4: 10.33.142.110
+        - ipv4: 10.33.142.111
+        - ipv4: 10.16.8.32
   sflow:
     destination:
       - ipv4: 169.145.244.40
@@ -260,17 +265,7 @@ hec:
     evpn_maximum_routes: 0 # to be checked ??????? we go with evpn or manual
     mlag_a_ip: 198.19.224.1 # correct
     mlag_b_ip: 198.19.224.2 # correct
-    leaf_models:
-      - model: 7050CX3-32S
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-32CQ
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-48YC6
-        uplink_ports: 51/1,52/1,53/1,54/1
-      - model: 7280QR-C36 # brdr4ab
-        uplink_ports: 25/1,26/1,35/1,36/1
-      - model: 7280SR-48C6 # brdr2ab
-        uplink_ports: 51/1,52/1,53/1,54/1
+    leaf_models: "{{ net.device.leaf_models }}"
   oob:
     - number: "01a"
       type: core

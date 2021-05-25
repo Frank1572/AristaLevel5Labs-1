@@ -1,2 +1,4 @@
 ---
 configlet_list_dc_specific:
+  - sw-hec-fwt-01a
+  - sw-hec-fwt-01b

@@ -33,9 +33,12 @@ router bgp $BGP_AS
    neighbor EVPN-PG maximum-routes $EVPN_RTMAX
    neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
-{% for i in range(11,15) %}
-   neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
-{% endfor %}
+   neighbor $SPINE_LO1_IP_OCT1_3$SPINE1_LO1_IP_OCT4 {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+   neighbor $SPINE_LO1_IP_OCT1_3$SPINE2_LO1_IP_OCT4 {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% if  hec.hec_nr != "90" %}
+   neighbor $SPINE_LO1_IP_OCT1_3$SPINE3_LO1_IP_OCT4 {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+   neighbor $SPINE_LO1_IP_OCT1_3$SPINE4_LO1_IP_OCT4 {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% endif %}
    !
    address-family evpn
       neighbor EVPN-PG activate

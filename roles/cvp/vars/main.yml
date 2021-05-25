@@ -27,6 +27,7 @@ container:
       - sw-hec-oob-common
       - sw-hec-oob-snmp
       - sw-hec-tele-default
+      - sw-hec-oob-logging
   HEC-External Connectivity:
     parent_container: HEC
   HEC-CWAN:
@@ -43,6 +44,8 @@ container:
     configlets:
       - sw-hec-oob
       - sw-hec-aaa-fwt
+      - sw-hec-tele-oob
+      - mgmt-oob
   HEC-InterDC:
     parent_container: HEC
     configlets:
@@ -62,7 +65,7 @@ container:
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
       - sw-hec-switch-sflow
-      - mgmt-oob
+      - mgmt-default
   HEC-Routed Fabric:
     parent_container: HEC
     configlets:
@@ -146,11 +149,11 @@ configlet_list_global:
   - sw-hec-aaa-hana
   - sw-hec-aaa-oob
   - sw-hec-aaa-fwt
-  - CVP-Arista
   - sw-hec-oob-vrf
   - sw-hec-snmp
   - sw-hec-ntp
   - sw-hec-logging
+  - sw-hec-oob-logging
   - HEC-IPMI
   - mgmt-oob
   - sw-hec-tele-oob
@@ -188,7 +191,8 @@ configlet_list_global:
   - sw-hec-hana-pwr-7160-32CQ
   - sw-hec-hana-7160-48YC6
   - sw-hec-hvv-7160-32CQ
-  - sw-hec-vmware-7150S-64-CL
+  - sw-hec-6xx-7160-32CQ
+  - sw-hec-6xx-7150S-64-CL
   - sw-hec-hvx-7160-32CQ
   - sw-hec-hvx-7160-48YC6
   - sw-hec-hvv-7050CX3-32S
@@ -206,9 +210,7 @@ configlet_list_global:
   - autoconf.ini
   - 7160-profile-tcam-acl
   - sw-hec-leaf
-  - rt-hec-ha-shared
-  - rt-hec-ha-core-01a
-  - rt-hec-ha-core-01b
-  - rt-hec-ha-core-01c
-  - rt-hec-ha-core-01d
   - sw-hec-oob-snmp
+  - vxlan1-shutdown
+  - maintenancemode
+  - maintenancemode-ha

@@ -1,0 +1,8 @@
+{% if hec.syslog.oob.servers is defined %}
+{% for srv in hec.syslog.inband.servers %}
+no logging host {{ srv.ipv4 }}
+{% endfor %}
+{% for srv in hec.syslog.oob.servers %}
+logging host {{ srv.ipv4 }}
+{% endfor %}
+{% endif %}

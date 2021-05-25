@@ -66,37 +66,38 @@
   tags:
     - configlets
 
-- name: Grab Spine interfaces
-  delegate_to: 127.0.0.1
-  connection: network_cli
-  eos_facts:
-    host: "{{ hec.oob_prefix }}.11"
-    gather_subset: min
-    gather_network_resources: interfaces
-  ignore_errors: yes
-  ignore_unreachable: yes
-  tags:
-    - configlets
-
-- name: Store the Spine interfaces in a file
-  delegate_to: 127.0.0.1
-  copy:
-    content: '{{ansible_network_resources | to_nice_yaml}}'
-    dest: '{{role_path}}/files/configs/spine_interfaces'
-  ignore_errors: yes
-  ignore_unreachable: yes
-  tags:
-    - configlets
-
-- name: Include interface for Spine from file
-  delegate_to: 127.0.0.1
-  include_vars:
-    file: '{{role_path}}/files/configs/spine_interfaces'
-    name: spine_interfaces
-  ignore_errors: yes
-  ignore_unreachable: yes
-  tags:
-    - configlets
+# see Github Issue #195
+# - name: Grab Spine interfaces
+#   delegate_to: 127.0.0.1
+#   connection: network_cli
+#   eos_facts:
+#     host: "{{ hec.oob_prefix }}.11"
+#     gather_subset: min
+#     gather_network_resources: interfaces
+#   ignore_errors: yes
+#   ignore_unreachable: yes
+#   tags:
+#     - configlets
+#
+# - name: Store the Spine interfaces in a file
+#   delegate_to: 127.0.0.1
+#   copy:
+#     content: '{{ansible_network_resources | to_nice_yaml}}'
+#     dest: '{{role_path}}/files/configs/spine_interfaces'
+#   ignore_errors: yes
+#   ignore_unreachable: yes
+#   tags:
+#     - configlets
+#
+# - name: Include interface for Spine from file
+#   delegate_to: 127.0.0.1
+#   include_vars:
+#     file: '{{role_path}}/files/configs/spine_interfaces'
+#     name: spine_interfaces
+#   ignore_errors: yes
+#   ignore_unreachable: yes
+#   tags:
+#     - configlets
 
 - name: Render all templates
   delegate_to: 127.0.0.1
@@ -115,6 +116,7 @@
     - sw-hec-fab-ntp
     - sw-hec-switch-ntp
     - sw-hec-logging
+    - sw-hec-oob-logging
     - sw-hec-fab-logging
     - sw-hec-switch-logging
     - sw-hec-switch-sflow
@@ -134,7 +136,8 @@
     - sw-hec-hana-7160-48YC6
     - sw-hec-hana-pwr-7160-32CQ
     - sw-hec-hvv-7160-32CQ
-    - sw-hec-vmware-7150S-64-CL
+    - sw-hec-6xx-7160-32CQ
+    - sw-hec-6xx-7150S-64-CL
     - sw-hec-hvx-7160-32CQ
     - sw-hec-hvx-7160-48YC6
     - sw-hec-hvv-7050CX3-32S
@@ -142,14 +145,15 @@
     - sw-mlag-b
     - mgmt-oob
     - mgmt-default
-    - CVP-Arista
     - sw-hec-vtep
     - hec-shs
     - autoconf.ini
     - hec_sw_leaf_individual
     - hec_sw_leaf_pair
     - 7160-profile-tcam-acl
-    - hec_rt_str_shared
+    - vxlan1-shutdown
+    - maintenancemode
+    - maintenancemode-ha
   tags:
     - configlets
 
@@ -311,6 +315,7 @@
     src: templates/hec_sw_borderleaf.j2
     dest: "{{role_path}}/files/configs/sw-hec-shs-{%if item.number is match('^[1-9][a-z]$') %}0{% endif %}{{item.number}}"
   loop: '{{ hec.shs }}'
+  when: hec.shs is defined
   tags:
     - configlets
     - storageleafs

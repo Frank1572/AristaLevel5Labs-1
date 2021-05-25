@@ -134,13 +134,12 @@ hec:
   ntp2: 169.145.84.11
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 169.145.82.65
-  syslog2: 169.145.84.91
- # syslog3: 147.204.146.42
-  radius1: 169.145.33.70
-  radius2: 10.4.201.55
-  radius_key: 07037265610E0D170E54333D547F3D
-  is_tacacs: True
+  # syslog3: 147.204.146.42
+  syslog:
+    inband:
+      servers:
+        - ipv4: 169.145.82.65
+        - ipv4: 169.145.84.91
   tacacs:
     nat:
       servers:
@@ -160,6 +159,18 @@ hec:
   admin_mpls:
     prefix_mask:
       - 10.9.240.0/23
+      - 100.124.32.0/19
+      - 169.145.80.0/21
+      - 198.18.64.0/19
+      - 198.18.134.0/23
+      - 198.19.128.0/20
+      - 198.19.144.0/22
+      - 198.19.156.0/23
+      - 198.19.235.0/24
+      - 198.19.236.0/23
+      - 198.19.242.0/24
+      - 10.255.176.0/28
+      - 198.19.224.240/28
   admin_sw_interface: Ethernet1
   admin_sw_description_oob1a: "stldc01-adm-03-co Eth1/13"
   admin_sw_description_oob1b: "stldc01-adm-04-co Eth1/13"
@@ -394,6 +405,7 @@ hec:
       - 10.200.1.21
       - 10.200.1.22
       - 10.200.1.23
+      - 10.200.2.1
       - 10.254.200.1
       - 198.19.251.118
       - 198.19.251.119
@@ -412,17 +424,7 @@ hec:
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
-    leaf_models:
-      - model: 7050CX3-32S
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-32CQ
-        uplink_ports: 29/1,30/1,31/1,32/1
-      - model: 7160-48YC6
-        uplink_ports: 51/1,52/1,53/1,54/1
-      - model: 7280QR-C36
-        uplink_ports: 25/1,26/1,35/1,36/1
-      - model: 7280SR-48C6
-        uplink_ports: 51/1,52/1,53/1,54/1
+    leaf_models: "{{ net.device.leaf_models }}"
   oob:
     - number: "01a"
       type: core
@@ -1811,6 +1813,14 @@ hec:
          description: sw-hec03-str-05b,Et31/1
          po: 42
          speed: 100gfull
+       - id: 33/1
+         description: hec03f0059,e2a
+         po: 820
+         speed: 100gfull
+       - id: 34/1
+         description: hec03f0060,e2a
+         po: 825
+         speed: 100gfull
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -1825,6 +1835,12 @@ hec:
           trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 820
+          description: hec03f0059,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 825
+          description: hec03f0060,Data
           trunk: 30,40,50,55,130,140,2001-2499
     - number: 5b
       snmp:
@@ -1864,6 +1880,14 @@ hec:
          description: sw-hec03-str-05a,Et31/1
          po: 42
          speed: 100gfull
+       - id: 33/1
+         description: hec03f0059,e3a
+         po: 820
+         speed: 100gfull
+       - id: 34/1
+         description: hec03f0060,e3a
+         po: 825
+         speed: 100gfull
       port_channels:
         - id: 42
           description: MLAG-PEER
@@ -1878,6 +1902,12 @@ hec:
           trunk: 30,40,50,55,130,140,2001-2499
         - id: 815
           description: hec03f0056,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 820
+          description: hec03f0059,Data
+          trunk: 30,40,50,55,130,140,2001-2499
+        - id: 825
+          description: hec03f0060,Data
           trunk: 30,40,50,55,130,140,2001-2499
     - number: 6a
       snmp:
@@ -1904,6 +1934,12 @@ hec:
           access_vlan: 110
         - id: 4
           description: hec03f0055r,BMC
+          access_vlan: 10
+        - id: 5
+          description: hec03f0059,eoM
+          access_vlan: 110
+        - id: 6
+          description: hec03f0059r,BMC
           access_vlan: 10
         - id: 49/1
           description: sw-hec03-str-06b,Et49/1
@@ -1939,6 +1975,12 @@ hec:
           access_vlan: 110
         - id: 4
           description: hec03f0056r,BMC
+          access_vlan: 10
+        - id: 5
+          description: hec03f0060,eoM
+          access_vlan: 110
+        - id: 6
+          description: hec03f0060r,BMC
           access_vlan: 10
         - id: 49/1
           description: sw-hec03-str-06a,Et49/1

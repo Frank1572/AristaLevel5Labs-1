@@ -135,7 +135,7 @@ interface Ethernet{{ interface.id }}
 {% endif %}
 {% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
    mtu {{ interface.mtu }}
-{% endif %} {# End MTU shinans #}
+{% endif %}{# End MTU shinans #}
 {% if interface.ip is defined %}{# START ip is defined #}
 {% if (interface.type is defined) and (interface.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}
@@ -179,9 +179,9 @@ interface Ethernet{{ interface.id }}
 {% for varp_ip in interface.virtual_router_ip if interface.virtual_router_ip is defined %}{# START varp is defined #}
    ip virtual-router address {{ varp_ip }}
 {% endfor %}{# END varp is defined #}
-{% if interface.proxy_arp is defined and interface.proxy_arp %}
+{% if interface.proxy_arp is defined and interface.proxy_arp %}{# START proxy arp is defined #}
    ip proxy-arp
-{% endif %}
+{% endif %}{# END proxy arp is defined #}
 {% if interface.type is not defined %}
    no switchport
 {% endif %}

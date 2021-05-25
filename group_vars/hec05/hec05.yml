@@ -136,9 +136,12 @@ hec:
   ntp2: 169.145.245.38 # comment ip from sw-hec05-235
   snmp1: 147.204.148.100 # comment ip from sw-hec05-235
   snmp2: 147.204.148.87 # comment ip from sw-hec05-235
-  syslog1: 169.145.242.65 # comment ip from sw-hec05-235
-  syslog2: 169.145.245.69 # comment ip from sw-hec05-235
  # syslog3: 147.204.146.42 # !!!!!!!!!!!!!!!!!!!!!
+  syslog:
+    inband:
+      servers:
+        - ipv4: 169.145.242.65  # comment ip from sw-hec05-235
+        - ipv4: 169.145.245.69  # comment ip from sw-hec05-235
   tacacs:
     nat:
       servers:

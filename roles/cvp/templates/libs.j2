@@ -178,8 +178,7 @@ interface Ethernet{{ interface.id }}
 {% endif %}{# END vrrp is defined #}
 {% for varp_ip in interface.virtual_router_ip if interface.virtual_router_ip is defined %}{# START varp is defined #}
    ip virtual-router address {{ varp_ip }}
-{% endfor %}
-{% endif %}{# END varp is defined #}
+{% endfor %}{# END varp is defined #}
 {% if interface.proxy_arp is defined and interface.proxy_arp %}
    ip proxy-arp
 {% endif %}

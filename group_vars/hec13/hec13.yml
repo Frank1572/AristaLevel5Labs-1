@@ -105,7 +105,7 @@ hec:
   ma_domain: "hec.oob.net.sap"
   lo900_domain: "yyz.hec.sap.biz"
   vl900_domain: "yyz.hec.sap.biz"
-  vl900_mask: 24
+  vl900_mask: 25
   vl900_def_gw: 198.19.232.1
   vl900_net: 198.19.232.0/25
   lo900_net: 198.19.180.0/24

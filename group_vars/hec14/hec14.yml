@@ -265,6 +265,8 @@ hec:
         description: tordc02-adm-03-co , Et1/18
         ip: 10.255.195.12/31
         speed: 10000full
+      - id: 2
+        speed: 10000full
       - id: 3
         description: fw-hec14-01, eth1-03
         speed: 10000full
@@ -273,6 +275,10 @@ hec:
         description: fw-hec14-02, eth1-03
         speed: 10000full
         po: 2
+      - id: 45
+        speed: 10000full
+      - id: 46
+        speed: 10000full
       - id: 47
         description: fw-hec14-01-NEW, eth1-03
         speed: 10000full
@@ -331,12 +337,18 @@ hec:
         description: tordc02-adm-04-co, eth1/18
         ip: 10.255.195.14/31
         speed: 10000full
+      - id: 2
+        speed: 10000full
       - id: 3
         description: fw-hec14-01,eth1-04
         po: 1
       - id: 4
         description: fw-hec14-02,eth1-04
         po: 2
+      - id: 45
+        speed: 10000full
+      - id: 46
+        speed: 10000full
       - id: 47
         description: fw-hec14-01-NEW,eth1-04
         speed: 10000full

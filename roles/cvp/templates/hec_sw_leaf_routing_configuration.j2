@@ -9,7 +9,7 @@
 #}
 {% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
 {% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}
-{% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
+{% set leafid = funcs.leafid(id) %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123456])[ab]$', '\\g<one_or_two>') %}
 {#
  based on the purpose, we set the list to loop through.

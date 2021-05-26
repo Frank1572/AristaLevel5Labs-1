@@ -1,6 +1,9 @@
 {% import "templates/libs.j2" as funcs with context %}
 {% set leafid = funcs.leafid(item.number) %}
-! host is "{{ leafid }}"
+{% set intf_ip_offset = 2 %}
+{% if leafid == "b" %}
+{% set intf_ip_offset = 3 %}
+{% endif %}
 {% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}
@@ -18,6 +21,7 @@
 interface Vlan{{ vlanid }}
 {% for net in customer.backup %}
 {# determine IP offset based on hostname (a? b?) #}
+{% set conf_str_ip = 'ip address ' + net|ipaddr(intf_ip_offset)|ipaddr('address') + ' ' + net|ipaddr('netmask') %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{ conf_str_ip }}
 {% endfor %}

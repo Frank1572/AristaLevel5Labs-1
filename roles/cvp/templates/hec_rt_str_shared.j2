@@ -31,3 +31,10 @@ interface Vlan{{ vlanid }}
 {% endif %}{# END of logic that for setup the customer on the storage router #}
 !
 {% endfor %}
+!
+ip access-list 140
+{{ hec.acl_140_rules }}
+!
+ip access-list 2300
+{{ hec.acl_2300_rules }}
+!

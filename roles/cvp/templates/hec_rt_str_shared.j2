@@ -6,6 +6,7 @@ vrf definition MGMT
    rd {{ hec.hec_nr|int }}:900
 !
 {% for customer in customers %}
+{% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
 {% set vlanid = customer.id + 2000 %}
 vlan {{ vlanid }}
    name HEC{{ hec.hec_nr }}-Customer-{{ customer.name|upper}}-{{ vlanid }}
@@ -13,12 +14,10 @@ vlan {{ vlanid }}
 interface Vlan{{ vlanid }}
    ip access-group 2300 in
    ip proxy-arp
-{% if customer.backup is defined  %}
 {% for net in customer.backup %}
-{% set conf_str_ip = 'ip virtual-router address ' . net|ipaddr('1')|ipaddr('address') %}
-{# {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %} #}
+{% set conf_str_ip = 'ip virtual-router address ' + net|ipaddr('1')|ipaddr('address') %}
    {{ conf_str_ip }}
 {% endfor %}
-{% endif %}
+{% endif %}{# END of logic that for setup the customer on the storage router #}
 !
 {% endfor %}

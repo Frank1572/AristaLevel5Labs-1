@@ -5,6 +5,9 @@ vrf definition MGMT
    description Inband management
    rd {{ hec.hec_nr|int }}:900
 !
+interface Vlan140
+   ip access-group 140 in
+!
 {% for customer in customers %}
 {% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
 {% set vlanid = customer.id + 2000 %}

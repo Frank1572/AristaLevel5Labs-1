@@ -255,3 +255,7 @@ router bgp {{ asn_generated_global[0]|string }}
 {% endif %}
 {% endif %}
 {%- endmacro %}
+
+{% macro leafid(name) -%}
+{{ name | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') }}
+{%- endmacro %}

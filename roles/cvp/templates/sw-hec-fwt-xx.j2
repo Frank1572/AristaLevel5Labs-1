@@ -14,6 +14,8 @@ logging source-interface Vlan915
 !
 {{eos_cmd.c_ntp_source}} Vlan915
 !
+snmp-server {{eos_cmd.c_snmp_source_interface}} Vlan915
+!
 sflow source-interface Vlan915 
 !
 mlag configuration
@@ -72,7 +74,6 @@ interface Management1
    ip address {{item.oob_ip}}/{{hec.oob_mask}}
 !
 {% endif %}
-ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 !
 ip routing
 no ip routing vrf OOB

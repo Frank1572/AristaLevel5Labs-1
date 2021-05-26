@@ -357,7 +357,7 @@ hec:
         description: fw-hec14-02-NEW,eth1-04
         speed: 10000full
         po: 4
-      - id: Et59/1
+      - id: 59/1
         description: sw-hec14-fwt-01a,59
         po: 42
       - id: 60/1

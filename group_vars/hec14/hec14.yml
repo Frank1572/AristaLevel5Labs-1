@@ -341,9 +341,11 @@ hec:
         speed: 10000full
       - id: 3
         description: fw-hec14-01,eth1-04
+        speed: 10000full
         po: 1
       - id: 4
         description: fw-hec14-02,eth1-04
+        speed: 10000full
         po: 2
       - id: 45
         speed: 10000full

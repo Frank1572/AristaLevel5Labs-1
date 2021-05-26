@@ -7202,10 +7202,16 @@ hec:
       description: sw-hec04-hvv-04a,Mgmt1
       speed: 1000full
       access_vlan: 21
+    - id: '12'
+      speed: 1000full
+    - id: '41'
+      speed: 1000full
     - id: '42'
       description: fw-hec04-01-new
       speed: 1000full
       access_vlan: 21
+    - id: '43'
+      speed: 1000full
     - id: '44'
       description: ->naa-hec04-01, E1
       speed: 1000full
@@ -7284,10 +7290,16 @@ hec:
       description: sw-hec04-ipmi-06,Mgmt1
       speed: 1000full
       access_vlan: 21
+    - id: '12'
+      speed: 1000full
+    - id: '41'
+      speed: 1000full
     - id: '42'
       description: fw-hec04-02-new
       speed: 1000full
       access_vlan: 21
+    - id: '43'
+      speed: 1000full
     - id: '44'
       description: naa-hec04-01, E2
       speed: 1000full

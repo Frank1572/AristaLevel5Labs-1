@@ -202,20 +202,28 @@ hec:
     number:
       - id: 11
         snmp:
-          location: xx-xx
-          contact: xx-xx
+          location: ROT02-RZ44-R1-8-RU2
+          contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
       - id: 12
         snmp:
-          location: xx-xx
-          contact: xx-xx
+          location: ROT02-RZ44-R1-8-RU2
+          contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
       - id: 13
         snmp:
-          location: xx-xx
-          contact: xx-xx
+          location: ROT02-RZ44-R1-8-RU2
+          contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
       - id: 14
         snmp:
-          location: xx-xx
-          contact: xx-xx
+          location: ROT02-RZ44-R1-8-RU2
+          contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
   ngdr_underlay: # there is no ngdr in hec11 hec05 or hec06 ????
     edge_as: 65200 # there is no ngdr in hec11
   ngdr_overlay: #dummy data as no ngdr

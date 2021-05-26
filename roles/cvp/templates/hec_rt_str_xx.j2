@@ -18,7 +18,6 @@
 interface Vlan{{ vlanid }}
 {% for net in customer.backup %}
 {# determine IP offset based on hostname (a? b?) #}
-{% set conf_str_ip = 'ip address ' + net|ipaddr('2')|ipaddr('address') + net|ipaddr('prefix') %}
 {% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
    {{ conf_str_ip }}
 {% endfor %}

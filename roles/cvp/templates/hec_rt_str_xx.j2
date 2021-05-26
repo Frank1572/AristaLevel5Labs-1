@@ -1,4 +1,6 @@
 {% import "templates/libs.j2" as funcs with context %}
+{% set a_or_b = item.number[-1] %}
+! host is "{{ a_or_b }}"
 {% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}
@@ -10,3 +12,16 @@
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
 !
+{% for customer in customers %}
+{% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
+{% set vlanid = customer.id + 2000 %}
+interface Vlan{{ vlanid }}
+{% for net in customer.backup %}
+{# determine IP offset based on hostname (a? b?) #}
+{% set conf_str_ip = 'ip address ' + net|ipaddr('2')|ipaddr('address') + net|ipaddr('prefix') %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{ conf_str_ip }}
+{% endfor %}
+{% endif %}{# END of logic that for setup the customer on the storage router #}
+!
+{% endfor %}

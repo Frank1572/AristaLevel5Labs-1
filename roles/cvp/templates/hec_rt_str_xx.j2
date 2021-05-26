@@ -1,4 +1,9 @@
 {% import "templates/libs.j2" as funcs with context %}
+hostname rt-hec{{ hec.hec_nr }}-str-{{ item.number }}
+!
+snmp-server contact {{ item.snmp.contact}}
+snmp-server location {{ item.snmp.location}}
+!
 {% set leafid = funcs.leafid(item.number) %}
 {% set intf_ip_offset = 2 %}
 {% if leafid == "b" %}

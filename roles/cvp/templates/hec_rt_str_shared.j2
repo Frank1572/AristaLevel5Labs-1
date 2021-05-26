@@ -32,6 +32,38 @@ interface Vlan{{ vlanid }}
 !
 {% endfor %}
 !
+{# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
+   but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
+{% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
+{% for route in hec.routes.static['strrt'+id_short] %}
+{% if route.vrf is not defined %}
+{% set vrf = '' %}
+{% else %}
+{% set vrf = route.vrf %}
+{% endif %}
+{% if route.interface is not defined %}
+{% set interface = '' %}
+{% else %}
+{% set interface = route.interface %}
+{% endif %}
+{% if route.nexthop is not defined %}
+{% set nexthop = '' %}
+{% else %}
+{% set nexthop = route.nexthop %}
+{% endif %}
+{% if route.metric is not defined %}
+{% set metric = '' %}
+{% else %}
+{% set metric = route.metric|string %}
+{% endif %}
+{% if route.redist_bgp is not defined %}
+{% set redist_bgp = False %}
+{% else %}
+{% set redist_bgp = route.redist_bgp %}
+{% endif %}
+{{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
+{% endfor %}
+!
 ip access-list 140
 {{ hec.acl_140_rules }}
 !

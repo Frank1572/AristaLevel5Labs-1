@@ -1130,6 +1130,20 @@ hec:
         - destination: 0.0.0.0/0
           nexthop: 10.178.136.1
           vrf: OOB
+      strrt01:
+        - destination: 100.66.0.0/15
+          nexthop: 10.255.241.81
+          interface: Vlan922
+        - destination: 100.82.0.0/15
+          nexthop: 198.19.252.119
+          interface: Vlan922
+        - destination: 198.19.239.64/26
+          nexthop: 198.19.252.116
+        - destination: 198.19.252.192/28
+          nexthop: 198.19.252.117
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          vrf: MGMT
   brdr:
     - number: 1a
       snmp:

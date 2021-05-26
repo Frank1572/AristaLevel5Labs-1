@@ -1,6 +1,6 @@
 {% import "templates/libs.j2" as funcs with context %}
-{% set a_or_b = item.number[-1] %}
-! host is "{{ a_or_b }}"
+{% set leafid = funcs.leafid(item.number) %}
+! host is "{{ leafid }}"
 {% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}

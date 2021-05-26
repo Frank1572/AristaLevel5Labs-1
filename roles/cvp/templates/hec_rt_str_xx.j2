@@ -5,6 +5,17 @@
 {% set intf_ip_offset = 3 %}
 {% endif %}
 {% if item.ports is defined %}
+{# Inband Management IP #}
+interface Vlan900
+   {{eos_cmd.c_vrf_forwarding}} MGMT
+   ip address {{ item.nwmgmt_ip }}/{{ hec.vl900_mask }}
+!
+{# OOB Management IP #}
+interface Management1
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} OOB
+   ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
+!
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}
 {% endfor %}

@@ -5,6 +5,13 @@ vrf definition MGMT
    description Inband management
    rd {{ hec.hec_nr|int }}:900
 !
+! set the global varp address.
+{#
+  This is hardcoded for storage router pair 1
+  make this a variable to be either taken from hecXX.yml or all.yml
+#}
+ip virtual-router mac-address 00:1c:73:00:00:94
+!
 interface Vlan140
    ip access-group 140 in
 !

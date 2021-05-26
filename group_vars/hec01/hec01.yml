@@ -2359,8 +2359,8 @@ hec:
           trunk: 30,32,40,50,55,130,2001-2499
   strrt:
     - number: "01a"
-      oob_ip: 10.178.138.xx
-      nwmgmt_ip: 198.19.234.xx
+      oob_ip: 10.178.137.179
+      nwmgmt_ip: 198.19.240.99
       snmp:
         location: incorrect
         contact: XXXX:ncons:10XX
@@ -2413,8 +2413,8 @@ hec:
           description: sw-hec01-str-04a/b
           trunk: 40,50,130,140,900,920,922,2001-2999
     - number: "01b"
-      oob_ip: 10.178.138.xx
-      nwmgmt_ip: 198.19.234.xx
+      oob_ip: 10.178.137.178
+      nwmgmt_ip: 198.19.240.98
       snmp:
         location: incorrect
         contact: XXXX:ncons:10XX

@@ -137,8 +137,12 @@ hec:
   syslog:
     inband:
       servers:
-        - ipv4: 169.145.253.69 # comment ip from sw-hec06-227
-        - ipv4: 169.145.250.65 # comment ip from sw-hec06-227
+        - ipv4: 169.145.250.65
+        - ipv4: 169.145.253.69
+    oob:
+      servers:
+        - ipv4: 169.145.250.65
+        - ipv4: 169.145.253.69
   tacacs:
     nat:
       servers:
@@ -260,29 +264,252 @@ hec:
     - number: "01a"
       type: core
       snmp:
-        contact: incorrect
-        location: incorrect
-  # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008
-  # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37
-  # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008
-  # fwt01b_snmp_location: RU-MOW1-CAGE3-13/05/12/37
-  oob01a_snmp_contact: 34847161:ncons-hec11-06.hec.oob.net.sap:1001
-  oob01a_snmp_location: RU-MOW1-CAGE1-06/04/22/45
-  oob01b_snmp_contact: 34847162:ncons-hec11-06.hec.oob.net.sap:1002
-  oob01b_snmp_location: RU-MOW1-CAGE1-06/04/21/45 # correct
-  oob02a_snmp_contact: 34847178:ncons-hec11-07.hec.oob.net.sap:1006 # correct
-  oob02a_snmp_location: RU-MOW1-CAGE3-13/05/08/35 # corrected
-  oob02b_snmp_contact: 34847179:ncons-hec11-08.hec.oob.net.sap:1006    # correct
-  oob02b_snmp_location: RU-MOW1-CAGE3-13/05/11/35  # correct
-  oobs_2_7:   # in real we have oob3 and oob4
-    - number: 02   # correct
-      snmp_contact: 34847165:ncons-hec11-07.hec.oob.net.sap:1007 # correct
-      snmp_location: RU-MOW1-CAGE3-13/05/08/05  # correct
-      ip_last_octett: 6   # ??????????????????
-    - number: 03   # this is not updated as already in place
-      snmp_contact: 34847166:ncons-hec11-08.hec.oob.net.sap:1007   # correct
-      snmp_location: RU-MOW1-CAGE3-13/05/11/05   # correct
-      ip_last_octett: 7  # ??????????????????
+        contact: 34672518:ncons-hec13-oob-02:1006
+        location: Toronto1-(TR3)-Cage2-3.1-12-39
+      ports:
+        - id: 1
+          description: tordc01-adm-03-co,eth13
+          ip: 10.255.194.8/31
+          speed: 10000full
+        - id: 2
+          description: sw-hec13-oob-02,eth49
+          po: 102
+          trunk: 21
+          speed: 10000full
+        - id: 3
+          description: sw-hec13-oob-03,eth49
+          po: 103
+          trunk: 21
+          speed: 10000full
+        - id: 4
+          description: sw-hec13-oob-04,eth49
+          po: 104
+          trunk: 21
+          speed: 10000full
+        - id: 5
+          description: sw-hec13-oob-05,eth49
+          po: 105
+          trunk: 21
+          speed: 10000full
+        - id: 6
+          description: sw-hec13-oob-06,eth49
+          po: 106
+          trunk: 21
+          speed: 10000full
+        - id: 7
+          description: sw-hec13-hvv-04a,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 8
+          description: sw-hec13-hvv-04b,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 9
+          description: sw-hec13-ipmi-04,Mgmt1
+          access_vlan: 21
+          speed: 1000full
+        - id: 44
+          description: naa-hec13-01, 3
+          access_vlan: 21
+          speed: 1000full
+        - id: 59/1
+          description: sw-hec13-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 60/1
+          description: sw-hec13-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.2/23
+          vrrp:
+            - id: 21
+              ip: 10.9.244.1
+              priority: 105
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 102
+          description: sw-hec13-oob-02
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec13-oob-03
+          trunk: 21
+          lacp_fallback: individual
+        - id: 104
+          description: sw-hec13-oob-04
+          trunk: 21
+          lacp_fallback: individual
+        - id: 105
+          description: sw-hec13-oob-05
+          trunk: 21
+          lacp_fallback: individual
+        - id: 106
+          description: sw-hec13-oob-06
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.251.57
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.9
+            remote_asn: 1.463
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.13
+    - number: "01b"
+      type: core
+      snmp:
+        contact: 34672517:ncons-hec13-oob-02:1007
+        location: Toronto1-(TR3)-Cage2-3.1-12-38
+      ports:
+        - id: 1
+          description: tordc01-adm-04-co,eth13
+          ip: 10.255.194.10/31
+          speed: 10000full
+        - id: 2
+          description: sw-hec13-oob-02,eth50
+          po: 102
+          trunk: 21
+          speed: 10000full
+        - id: 3
+          description: sw-hec13-oob-03,eth50
+          po: 103
+          trunk: 21
+          speed: 10000full
+        - id: 4
+          description: sw-hec13-oob-04,eth50
+          po: 104
+          trunk: 21
+          speed: 10000full
+        - id: 5
+          description: sw-hec13-oob-05,eth50
+          po: 105
+          trunk: 21
+          speed: 10000full
+        - id: 6
+          description: sw-hec13-oob-06,eth50
+          po: 106
+          trunk: 21
+          speed: 10000full
+        - id: 44
+          description: naa-hec13-01, 10
+          access_vlan: 21
+          speed: 1000full
+        - id: 45
+          description: tordc01-sob-probe-01-mgmt
+          access_vlan: 21
+          speed: 1000full
+        - id: 46
+          description: tordc01-sob-probe-01-ilo
+          access_vlan: 21
+          speed: 1000full
+        - id: 47
+          description: tordc01-sob-p-02
+          access_vlan: 21
+          speed: 1000full
+        - id: 48
+          description: tordc01-sob-pe-02
+          access_vlan: 21
+          speed: 1000full
+        - id: 59/1
+          description: sw-hec13-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 60/1
+          description: sw-hec13-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.3/23
+          vrrp:
+            - id: 21
+              ip: 10.9.244.1
+              priority: 100
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 102
+          description: sw-hec13-oob-02
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec13-oob-03
+          trunk: 21
+          lacp_fallback: individual
+        - id: 104
+          description: sw-hec13-oob-04
+          trunk: 21
+          lacp_fallback: individual
+        - id: 105
+          description: sw-hec13-oob-05
+          trunk: 21
+          lacp_fallback: individual
+        - id: 106
+          description: sw-hec13-oob-06
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.251.58
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.11
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531.13
+    - number: "02"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.4/23
+      snmp:
+        contact: 34672508:ncons-hec13-oob-01:1023
+        location: Toronto1-(TR3)-Cage2-3.1-11-41
+    - number: "03"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.5/23
+      snmp:
+        contact: 34672507:ncons-hec13-oob-03:1003
+        location: Toronto1-(TR3)-Cage1-1.1-9-34
+    - number: "04"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.47/23
+      snmp:
+        contact: 34879543:ncons-hec13-oob-03.hec.oob.net.sap:1018
+        location: Toronto1 (TR3)-Cage1- Rack 1.1-7 RU40
+    - number: "05"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.48/23
+      snmp:
+        contact: 34879544:ncons-hec13-oob-03.hec.oob.net.sap:1019
+        location: Toronto1(TR3)-Cage1- Rack 1.1-7 RU42
+    - number: "06"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.49/23
+      snmp:
+        contact: 635968:ncons-hec13-oob-02.hec.oob.net.sap:1012
+        location: Toronto 1 (TR3)-Cage2- Rack 3.1-12 RU41
   routes:
     static:
       brdr04: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa

@@ -438,6 +438,108 @@ hec:
             remote_asn: 65999
           - ipv4: 198.19.224.2
             remote_asn: 64531
+    - number: "01b"
+      type: core
+      snmp:
+        contact: 34672517:ncons-hec13-oob-02:1007
+        location: Toronto1-(TR3)-Cage2-3.1-12-38
+      ports:
+        - id: 1
+          description: sw-hec05-104,Mgmt1
+          access_vlan: 21
+        - id: 2
+          description: sw-hec05-320,Mgmt1
+          access_vlan: 21
+        - id: 3
+          description: ncons-hec05-07-uplink2
+          access_vlan: 21
+        - id: 4
+          description: ncons-hec05-08-uplink2
+          access_vlan: 21
+        - id: 5
+          description: ncons-hec05-09-uplink2
+          access_vlan: 21
+        - id: 6
+          description: sw-hec05-fwt-01b,Mgmt1
+          access_vlan: 21
+        - id: 7
+          description: sw-hec05-609,Mgmt1
+          access_vlan: 21
+        - id: 8
+          description: sw-hec05-610,Mgmt1
+          access_vlan: 21
+        - id: 9
+          description: sw-hec05-926,Mgmt1
+          access_vlan: 21
+        - id: 10
+          description: sw-hec05-611,Mgmt1
+          access_vlan: 21
+        - id: 11
+          description: sw-hec05-612,Mgmt1
+          access_vlan: 21
+        - id: 12
+          description: sw-hec05-928,Mgmt1
+          access_vlan: 21
+        - id: 45
+          description: ncons-hec05-12-uplink2
+          access_vlan: 21		  
+        - id: 46
+          description: to Verizon admin - tyodc01-wan-02-admin
+          ip: 10.255.193.24/31
+        - id: 47
+          description: sw-hec05-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 48
+          description: sw-hec05-oob-01b-mlag-peer
+          po: 42
+          trunk: all
+        - id: 49
+          description: sw-hec05-oob-04,Eth50
+          access_vlan: 21
+        - id: 50
+          description: sw-hec05-oob-02,Eth50
+          access_vlan: 21
+        - id: 51
+          description: sw-hec05-oob-03,Eth50
+          access_vlan: 21
+        - id: 52
+          description: ncons-hec05-11-uplink2
+          access_vlan: 21
+          speed: 1000full
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.192.16.3/23
+          vrrp:
+            - id: 21
+              ip: 10.192.16.1
+              priority: 90
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 101
+          description: sw-hec05-oob-01,Po101
+          trunk: all
+          lacp_fallback: individual
+        - id: 102
+          description: sw-hec05-oob-02,Po102
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec05-oob-03,Po103
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.249.231
+        local_asn: 64531
+        peers:
+          - ipv4: 10.255.193.25
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531
   routes:
     static:
       brdr04: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa

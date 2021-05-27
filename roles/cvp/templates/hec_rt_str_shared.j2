@@ -15,7 +15,7 @@ ip virtual-router mac-address 00:1c:73:00:00:94
 interface Vlan140
    ip access-group 140 in
 !
-{% for customer in customers %}
+{% for customer in customers %}{# START loop through each relevant customer #}
 {% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
 {% set vlanid = customer.id + 2000 %}
 vlan {{ vlanid }}
@@ -30,12 +30,7 @@ interface Vlan{{ vlanid }}
 {% endfor %}
 {% endif %}{# END of logic that for setup the customer on the storage router #}
 !
-{% endfor %}
-!
-{# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
-   but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
-{% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
-{% for route in hec.routes.static['strrt'+id_short] %}
+{% for route in customer.routes.static['strrt'] %}
 {% if route.vrf is not defined %}
 {% set vrf = '' %}
 {% else %}
@@ -63,6 +58,8 @@ interface Vlan{{ vlanid }}
 {% endif %}
 {{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}
+!
+{% endfor %}{# END loop through each relevant customer #}
 !
 ip access-list 140
 {{ hec.acl_140_rules }}

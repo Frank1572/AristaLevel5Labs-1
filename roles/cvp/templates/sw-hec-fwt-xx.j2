@@ -17,7 +17,7 @@ logging source-interface Vlan915
 !
 snmp-server {{eos_cmd.c_snmp_source_interface}} Vlan915
 !
-sflow source-interface Vlan915 
+sflow source-interface Vlan915
 !
 mlag configuration
    domain-id MLAG-FWT-{{ item.number[:2] }}
@@ -87,21 +87,20 @@ ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
 route-map ADMIN_MPLS_IN deny 10
    match ip address prefix-list PREF_ADMIN_MPLS
 !
-{% if leafid == 'a' %}
 route-map ADMIN_MPLS_IN permit 20
-   match ip address prefix-list MATCH_ANY
+{% if leafid == 'a' %}
+   set local-preference 100
 {% elif leafid == 'b' %}
-route-map ADMIN_MPLS_IN permit 20 
 {% for peer in item.bgp.peers %}
 {% if peer.remote_asn != item.bgp.local_asn %}
-   match as {{ peer.remote_asn }} 
+   match as {{ peer.remote_asn }}
 {% endif %}
 {% endfor %}
-   set local-preference 50 
-! 
-route-map ADMIN_MPLS_IN permit 30 
-   match ip address prefix-list MATCH_ANY 
+   set local-preference 50
+!
 {% endif %}
+route-map ADMIN_MPLS_IN permit 30
+   match ip address prefix-list MATCH_ANY
 !
 route-map ADMIN_MPLS_OUT permit 10
    match ip address prefix-list PREF_ADMIN_MPLS

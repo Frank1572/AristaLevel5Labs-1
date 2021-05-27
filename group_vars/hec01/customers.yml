@@ -14,16 +14,12 @@
         remote_dc: 4
         remote_c_id: 234
       backup:
+        - 100.104.12.0/24
+        - 100.104.91.0/24
     - id: 42
       name: TRU
       network:
         - 10.42.42.0/21
-      routes:
-        static:
-          strrt01:
-      dr:
-        remote_dc:
-        remote_c_id:
       backup:
         - 100.104.12.0/24
         - 100.104.91.0/24

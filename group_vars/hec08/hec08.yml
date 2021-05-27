@@ -36,8 +36,8 @@ oob1:
     prefix: 10.192.22.1
     mask: 255.255.254.0
     router: 10.192.22.1
-    idrac_ip: 10.192.22.248 # sudo cat /var/lib/dhcpd/dhcpd.leases
-    cva_ip: 10.192.22.249 # sudo cat /var/lib/dhcpd/dhcpd.leases
+    idrac_ip: 10.192.23.248 # sudo cat /var/lib/dhcpd/dhcpd.leases
+    cva_ip: 10.192.23.249 # sudo cat /var/lib/dhcpd/dhcpd.leases
 
 cvp:
   version: cvp-2020.2.4-kvm.tgz
@@ -64,15 +64,15 @@ cvp:
   # HEC08-NW-MGMT01 198.19.247.0/25 (all router and ipmis)
     - prefix: 198.19.247.0
       mask: 25
-      nexthop: 10.255.181.78
+      nexthop: 198.19.247.1
   # HEC08-NW-MGMT02 198.19.247.128/25 (all router and ipmis)
     - prefix: 198.19.247.128
       mask: 25
-      nexthop: 10.255.181.78
+      nexthop: 198.19.247.129
   # HEC01-NW-MGMT03 (all fab)
     - prefix: 198.18.231.0
       mask: 24
-      nexthop: 10.255.181.78
+      nexthop: 198.18.231.1
   dhcp:
     prefix: 10.192.22.0
     mask: 255.255.254.0
@@ -131,9 +131,23 @@ hec:
   ntp2: 169.145.213.38
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  syslog1: 169.145.210.65
-  syslog2: 169.145.213.69
-  syslog3: 147.204.146.42
+  syslog:
+    inband:
+      servers:
+        - ipv4: 169.145.210.65
+        - ipv4: 169.145.213.69
+        - ipv4: 147.204.146.42
+    oob:
+      servers:
+        - ipv4: 10.33.142.33
+  radius1: 169.145.210.74
+  radius2: 169.145.210.74
+  radius:
+    oob:
+      servers:
+        - ipv4: 10.17.122.21
+        - ipv4: 10.17.121.35
+  is_tacacs: True
   tacacs:
     nat:
       servers:

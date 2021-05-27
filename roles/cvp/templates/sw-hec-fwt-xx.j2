@@ -90,6 +90,7 @@ route-map ADMIN_MPLS_IN deny 10
 route-map ADMIN_MPLS_IN permit 20
 {% if leafid == 'a' %}
    set local-preference 100
+!
 {% elif leafid == 'b' %}
 {% for peer in item.bgp.peers %}
 {% if peer.remote_asn != item.bgp.local_asn %}

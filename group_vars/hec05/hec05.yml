@@ -404,7 +404,7 @@ hec:
         - id: 52
           description: sw-hec05-oob-03,Eth49
           access_vlan: 21
-		  speed: 1000full
+                speed: 1000full
         - id: 21
           type: vlan
           description: OOB Access Vlan

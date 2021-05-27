@@ -166,6 +166,7 @@ hec:
     source: Loopback900
   admin_mpls:
     prefix_mask:
+      - 10.192.22.0/23
       - 10.255.181.0/28
       - 169.145.208.0/21
       - 198.19.247.0/24
@@ -338,7 +339,7 @@ hec:
         - id: 21
           type: vlan
           description: OOB Access Vlan
-          ip: 10.19.22.2/23
+          ip: 10.192.22.2/23
           #secondary:
           #  - 10.178.138.2/23
           vrrp:

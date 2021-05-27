@@ -34,8 +34,7 @@ interface Vlan{{ vlanid }}
 {% endfor %}{# END loop through ALL customer #}
 !
 {# START adding required static routes from hec.routes.static.strrtXX #}
-{% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
-{% for route in hec.routes.static['strrt'+id_short] %}
+{% for route in hec.routes.static['strrt01'] %}
 {% if route.vrf is not defined %}
 {% set vrf = '' %}
 {% else %}

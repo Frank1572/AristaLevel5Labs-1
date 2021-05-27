@@ -55,7 +55,7 @@ cvp:
   ntp2: 10.17.122.185
   device_int: eth0
   cluster_int: eth1
-  ingest_key: SecureKey01
+  ingest_key: SecureKey08
   vmname: cvp-hec08
   KvmDomain: cvp
   password: arista

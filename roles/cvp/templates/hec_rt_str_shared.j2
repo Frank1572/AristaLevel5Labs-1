@@ -1,3 +1,4 @@
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
 {% import "templates/libs.j2" as funcs with context %}
 interface Et1-48
    shutdown
@@ -16,52 +17,22 @@ ip virtual-router mac-address 00:1c:73:00:00:94
 interface Vlan140
    ip access-group 140 in
 !
-{% for customer in customers -%}{# START loop through ALL customer #}
+{% for customer in customers %}{# START loop through ALL customer #}
   {% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
-  {% set vlanid = customer.id + 2000 %}
-  vlan {{ vlanid }}
-     name HEC{{ hec.hec_nr }}-Customer-{{ customer.name|upper}}-{{ vlanid }}
-  !
-  interface Vlan{{ vlanid }}
-     ip access-group 2300 in
-     ip proxy-arp
-  {% for net in customer.backup %}
-  {% set conf_str_ip = 'ip virtual-router address ' + net|ipaddr('1')|ipaddr('address') %}
-     {{ conf_str_ip }}
-  {% endfor %}
-  !
-  {% for route in customer.routes.static['strrt'] -%}{# START generate routes if they are present #}
-    {% if route.vrf is not defined -%}
-      {% set vrf = '' %}
-      {% else %}
-      {% set vrf = route.vrf %}
-      {% endif %}
-      {% if route.interface is not defined %}
-      {% set interface = '' %}
-      {% else %}
-      {% set interface = route.interface %}
-      {% endif %}
-      {% if route.nexthop is not defined %}
-      {% set nexthop = '' %}
-      {% else %}
-      {% set nexthop = route.nexthop %}
-      {% endif %}
-      {% if route.metric is not defined %}
-      {% set metric = '' %}
-      {% else %}
-      {% set metric = route.metric|string %}
-      {% endif %}
-      {% if route.redist_bgp is not defined %}
-      {% set redist_bgp = False %}
-      {% else %}
-      {% set redist_bgp = route.redist_bgp %}
-    {%- endif %}
-    {{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
-  {%- endfor %}{# END generate routes if they are present #}
-  !
+    {% set vlanid = customer.id + 2000 %}
+    vlan {{ vlanid }}
+       name HEC{{ hec.hec_nr }}-Customer-{{ customer.name|upper}}-{{ vlanid }}
+    !
+    interface Vlan{{ vlanid }}
+       ip access-group 2300 in
+       ip proxy-arp
+    {% for net in customer.backup %}
+      {% set conf_str_ip = 'ip virtual-router address ' + net|ipaddr('1')|ipaddr('address') %}
+         {{ conf_str_ip }}
+    {% endfor %}
   {% endif %}{# END of logic that for setup the customer on the storage router #}
   !
-{%- endfor %}{# END loop through ALL customer #}
+{% endfor %}{# END loop through ALL customer #}
 !
 ip access-list 140
 {{ hec.acl_140_rules }}

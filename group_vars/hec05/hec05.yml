@@ -270,29 +270,174 @@ hec:
     - number: "01a"
       type: core
       snmp:
-        contact: incorrect
-        location: incorrect
-  # fwt01a_snmp_contact: 34847163:ncons-hec11-07.hec.oob.net.sap:1008
-  # fwt01a_snmp_location: RU-MOW1-CAGE3-13/05/09/37
-  # fwt01b_snmp_contact: 34847164:ncons-hec11-08.hec.oob.net.sap:1008
-  # fwt01b_snmp_location: RU-MOW1-CAGE3-13/05/12/37
-  oob01a_snmp_contact: 34847161:ncons-hec11-06.hec.oob.net.sap:1001
-  oob01a_snmp_location: RU-MOW1-CAGE1-06/04/22/45
-  oob01b_snmp_contact: 34847162:ncons-hec11-06.hec.oob.net.sap:1002
-  oob01b_snmp_location: RU-MOW1-CAGE1-06/04/21/45 # correct
-  oob02a_snmp_contact: 34847178:ncons-hec11-07.hec.oob.net.sap:1006 # correct
-  oob02a_snmp_location: RU-MOW1-CAGE3-13/05/08/35 # corrected
-  oob02b_snmp_contact: 34847179:ncons-hec11-08.hec.oob.net.sap:1006    # correct
-  oob02b_snmp_location: RU-MOW1-CAGE3-13/05/11/35  # correct
-  oobs_2_7:   # in real we have oob3 and oob4
-    - number: 02   # correct
-      snmp_contact: 34847165:ncons-hec11-07.hec.oob.net.sap:1007 # correct
-      snmp_location: RU-MOW1-CAGE3-13/05/08/05  # correct
-      ip_last_octett: 6   # ??????????????????
-    - number: 03   # this is not updated as already in place
-      snmp_contact: 34847166:ncons-hec11-08.hec.oob.net.sap:1007   # correct
-      snmp_location: RU-MOW1-CAGE3-13/05/11/05   # correct
-      ip_last_octett: 7  # ??????????????????
+        contact: 34358756:ncons-hec05-07.net.sap.corp:1011
+        location: JP-Tokyo-TK6-Cage5-K4B-268-U35
+      ports:
+        - id: 1
+          description: sw-hec05-103,Mgmt1
+          access_vlan: 21
+        - id: 2
+          description: sw-hec05-319,Mgmt1
+          access_vlan: 21
+        - id: 3
+          description: sw-hec05-918-mgmt
+          access_vlan: 21
+        - id: 4
+          description:  ncons-hec05-07-uplink1
+          access_vlan: 21
+        - id: 5
+          description:  ncons-hec05-08-uplink1
+          access_vlan: 21
+        - id: 6
+          description:  ncons-hec05-09-uplink1
+          access_vlan: 21
+        - id: 7
+          description: sw-hec05-fwt01a-mgmt
+          access_vlan: 21
+        - id: 8
+          description: sw-hec05-613,Mgmt1
+          access_vlan: 21
+        - id: 9
+          description: sw-hec05-614,Mgmt1
+          access_vlan: 21
+        - id: 10
+          description: sw-hec05-929,Mgmt1
+          access_vlan: 21
+        - id: 14
+          description: sw-hec05-235,Mgmt1
+          access_vlan: 21
+        - id: 15
+          description: sw-hec05-236,Mgmt1
+          access_vlan: 21
+        - id: 16
+          description: sw-hec05-927,Mgmt1
+          access_vlan: 21
+        - id: 20
+          description: sw-hec05-227,Mgmt1
+          access_vlan: 21
+        - id: 21
+          description: sw-hec05-228,Mgmt1
+          access_vlan: 21
+        - id: 22
+          description: sw-hec05-229,Mgmt1
+          access_vlan: 21
+        - id: 23
+          description: sw-hec05-230,Mgmt1
+          access_vlan: 21
+        - id: 24
+          description: sw-hec05-233,Mgmt1
+          access_vlan: 21
+        - id: 25
+          description: sw-hec05-234,Mgmt1
+          access_vlan: 21
+        - id: 26
+          description:  sw-hec05-601,Mgmt1
+          access_vlan: 21
+        - id: 27
+          description:  sw-hec05-602,Mgmt1
+          access_vlan: 21
+        - id: 28
+          description:  sw-hec05-603,Mgmt1
+          access_vlan: 21
+        - id: 29
+          description: sw-hec05-604,Mgmt1
+          access_vlan: 21
+        - id: 30
+          description: sw-hec05-605
+          access_vlan: 21
+        - id: 31
+          description: sw-hec05-606,Mgmt1
+          access_vlan: 21
+        - id: 32
+          description: sw-hec05-607,Mgmt1
+          access_vlan: 21
+        - id: 33
+          description:  sw-hec05-608,Mgmt1
+          access_vlan: 21
+        - id: 34
+          description: sw-hec05-919,Mgmt1
+          access_vlan: 21
+        - id: 35
+          description: sw-hec05-920,Mgmt1
+          access_vlan: 21
+        - id: 36
+          description: sw-hec05-921,Mgmt1
+          access_vlan: 21
+        - id: 37
+          description: sw-hec05-922,Mgmt1
+          access_vlan: 21
+        - id: 38
+          description: sw-hec05-923,Mgmt1
+          access_vlan: 21
+        - id: 39
+          description: sw-hec05-924,Mgmt1
+          access_vlan: 21
+        - id: 40
+          description: sw-hec05-925,Mgmt1
+          access_vlan: 21
+        - id: 45
+          description: ncons-hec05-12-uplink1
+          access_vlan: 21
+        - id: 46
+          description: tyodc01-wan-01-admin
+          ip: 10.255.208.9/29	 
+        - id: 47
+          description: sw-hec05-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 48
+          description: sw-hec05-oob-01a-mlag-peer
+          po: 42
+          trunk: all
+        - id: 49
+          description: sw-hec05-oob-04,Eth49
+          po: 101
+          trunk: 21
+        - id: 50
+          description: sw-hec05-oob-02,Eth49
+          po: 102
+          trunk: 21
+        - id: 51
+          description: sw-hec05-oob-03,Eth49
+          po: 103
+          trunk: 21
+        - id: 52
+          description: sw-hec05-oob-03,Eth49
+          access_vlan: 21
+		  speed: 1000full
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.192.16.2/23
+          vrrp:
+            - id: 21
+              ip: 10.192.16.1
+              priority: 105
+              track:
+                object: 494
+                weight: 10
+              auth: oobnw
+      port_channels:
+        - id: 101
+          description: sw-hec05-oob-04,Po101
+          trunk: all
+          lacp_fallback: individual
+        - id: 102
+          description: sw-hec13-oob-03
+          trunk: 21
+          lacp_fallback: individual
+        - id: 103
+          description: sw-hec05-oob-03,Po103
+          trunk: 21
+          lacp_fallback: individual
+      bgp:
+        router_id: 198.19.249.230
+        local_asn: 64531
+        peers:
+          - ipv4: 10.255.208.11
+            remote_asn: 65999
+          - ipv4: 198.19.224.2
+            remote_asn: 64531
   routes:
     static:
       brdr04: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa

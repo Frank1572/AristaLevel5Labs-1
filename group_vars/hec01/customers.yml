@@ -7,15 +7,23 @@
         - 10.103.0.0/24
       routes:
         static:
-          - destination: 54.208.243.134/32
-            gateway: 10.207.142.249
+          strrt01:
+            - destination: 54.208.243.134/32
+              gateway: 10.207.142.249
       dr:
         remote_dc: 4
         remote_c_id: 234
+      backup:
     - id: 42
       name: TRU
       network:
         - 10.42.42.0/21
+      routes:
+        static:
+          strrt01:
+      dr:
+        remote_dc:
+        remote_c_id:
       backup:
         - 100.104.12.0/24
         - 100.104.91.0/24

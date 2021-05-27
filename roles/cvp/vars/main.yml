@@ -214,3 +214,5 @@ configlet_list_global:
   - vxlan1-shutdown
   - maintenancemode
   - maintenancemode-ha
+  - sw-hec-fwt-01a
+  - sw-hec-fwt-01b

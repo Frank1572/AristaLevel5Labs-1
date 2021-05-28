@@ -540,6 +540,106 @@ hec:
             remote_asn: 64536
           - ipv4: 198.19.224.1
             remote_asn: 64531
+  fwt:
+    - number: "01a"
+      snmp:
+        contact: 34844022:ncons-hec07-07.hec.oob.net.sap:1002
+        location: SY4L1H5-200-06-22-23
+      ports:
+        - id: 1
+          description: syddc01-wan-03-admin, Et1/18
+          ip: 10.255.207.12/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec07-01, eth1-03
+          po: 1
+        - id: 3
+          description: fw-hec07-02, eth1-03
+          po: 2
+        - id: 47
+          description: sw-hec07-fwt-01b, Et47
+          po: 42
+        - id: 48
+          description: sw-hec07-fwt-01b, Et47
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.180.2/28
+          vrrp:
+            - id: 115
+              priority: 105
+              ip: 10.255.180.1
+              auth: fwtnw
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec07-01
+          trunk: 915
+        - id: 2
+          description: fw-hec07-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.190
+        local_asn: 64531.7
+        peers:
+          - ipv4: 10.255.207.13
+            remote_asn: 1.463
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.7
+    - number: "01b"
+      snmp:
+        contact: 34844023:ncons-hec07-08.hec.oob.net.sap:1002
+        location: SY4L1H5-200-06-23-23
+      ports:
+        - id: 1
+          description: syddc01-wan-04-admin, Et1/18
+          ip: 10.255.207.14/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec07-01, eth1-04
+          po: 1
+        - id: 3
+          description: fw-hec07-02, eth1-04
+          po: 2
+        - id: 47
+          description: sw-hec07-fwt-01a, Et47
+          po: 42
+        - id: 48
+          description: sw-hec07-fwt-01a, Et48
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.180.3/28
+          vrrp:
+            - id: 115
+              ip: 10.255.180.1
+              auth: fwtnw
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec07-01
+          trunk: 915
+        - id: 2
+          description: fw-hec07-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.191
+        local_asn: 64531.7
+        peers:
+          - ipv4: 10.255.207.15
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531.7
   routes:
     static:
       brdr04: # there is no brd1 but brd4ab as special leaf connecting to legacy and brdr2ab for lb and naa

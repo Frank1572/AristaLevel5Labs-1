@@ -120,6 +120,7 @@
     - sw-hec-fab-logging
     - sw-hec-switch-logging
     - sw-hec-switch-sflow
+    - sw-hec-switch-V900
     - sw-hec-fab-L900
     - sw-hec-oob-vrf
     - sw-hec-tele-oob
@@ -255,7 +256,7 @@
     src: "templates/sw-hec-fwt-xx.j2"
     dest: "{{role_path}}/files/configs/sw-hec-fwt-{{ item.number }}"
   with_items: "{{ hec.fwt }}"
-  ignore_errors: yes
+  #ignore_errors: yes
   tags:
     - configlets
     - fwt

@@ -43,7 +43,7 @@ interface Loopback0
 {% endif %}
 !
 router bgp {{ item.bgp.local_asn }}
-   bgp asn notation asdot 
+   bgp asn notation asdot
 {% if item.bgp.router_id is defined %}
    router-id {{ item.bgp.router_id }}
 {% endif %}
@@ -88,14 +88,7 @@ ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
 ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
 {% endfor %}
 !
-route-map ADMIN_MPLS_IN deny 10
-   match ip address prefix-list PREF_ADMIN_MPLS
-!
-route-map ADMIN_MPLS_IN permit 20
-   match ip address prefix-list MATCH_ANY
-!
-route-map ADMIN_MPLS_OUT permit 10
-   match ip address prefix-list PREF_ADMIN_MPLS
+{{ funcs.admin_mpls_filtering() }}
 !
 {% endif %}{# end of oob-core specific settings #}
 !

@@ -16,6 +16,7 @@ ip virtual-router mac-address 00:1c:73:00:00:94
 interface Vlan140
    ip access-group 140 in
 !
+{% if customers is defined %}{# START check if any customers have been defined. #}
 {% for customer in customers %}{# START loop through ALL customer #}
 {% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
 {% set vlanid = customer.id + 2000 %}
@@ -33,7 +34,9 @@ interface Vlan{{ vlanid }}
 !
 {% endfor %}{# END loop through ALL customer #}
 !
+{% endif %}{# END check if any customers have been defined. #}
 {# START adding required static routes from hec.routes.static.strrtXX #}
+{% if hec.routes.static['strrt01'] is defined %}
 {% for route in hec.routes.static['strrt01'] %}
 {% if route.vrf is not defined %}
 {% set vrf = '' %}
@@ -62,8 +65,9 @@ interface Vlan{{ vlanid }}
 {% endif %}
 {{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
 {% endfor %}
-!
+{% endif %}
 {# END adding required static routes from hec.routes.static.strrtXX #}
+!
 ip access-list 140
 {{ hec.acl_140_rules }}
 !

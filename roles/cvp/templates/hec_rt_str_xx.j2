@@ -32,7 +32,8 @@ interface Management1
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
 !
-{% for customer in customers %}
+{% if customers is defined %}{# START check if any customers have been defined. #}
+{% for customer in customers %}{# START loop through ALL customer #}
 {% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
 {% set vlanid = customer.id + 2000 %}
 interface Vlan{{ vlanid }}
@@ -43,5 +44,6 @@ interface Vlan{{ vlanid }}
    {{ conf_str_ip }}
 {% endfor %}
 {% endif %}{# END of logic that for setup the customer on the storage router #}
+{% endfor %}{# END loop through ALL customer #}
+{% endif %}{# END check if any customers have been defined. #}
 !
-{% endfor %}

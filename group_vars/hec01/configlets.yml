@@ -19,8 +19,6 @@ configlet_list_dc_specific:
   - sw-hec-str-03b
   - sw-hec-str-04a
   - sw-hec-str-04b
-  - sw-hec-fwt-01a
-  - sw-hec-fwt-01b
   - rt-hec-ha-shared
   - rt-hec-ha-core-01a
   - rt-hec-ha-core-01b

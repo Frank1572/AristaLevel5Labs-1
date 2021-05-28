@@ -61,6 +61,7 @@ container:
     parent_container: HEC
     configlets:
       - HEC-VLANs
+      - sw-hec-switch-V900
       - sw-hec-switch-snmp
       - sw-hec-switch-ntp
       - sw-hec-switch-logging
@@ -161,6 +162,7 @@ configlet_list_global:
   - sw-hec-switch-ntp
   - sw-hec-switch-logging
   - sw-hec-switch-sflow
+  - sw-hec-switch-V900
   - mgmt-default
   - sw-hec-oob-common
   - sw-hec-tele-default

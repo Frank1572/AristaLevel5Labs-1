@@ -120,6 +120,7 @@
     - sw-hec-fab-logging
     - sw-hec-switch-logging
     - sw-hec-switch-sflow
+    - sw-hec-switch-V900
     - sw-hec-fab-L900
     - sw-hec-oob-vrf
     - sw-hec-tele-oob

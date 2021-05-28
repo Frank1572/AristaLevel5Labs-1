@@ -247,3 +247,15 @@ router bgp {{ asn_generated_global[0]|string }}
 {% endif %}
 {% endif %}
 {%- endmacro %}
+
+{% macro admin_mpls_filtering() -%}
+route-map ADMIN_MPLS_IN deny 10
+   description REJECT our own advertised subnets if we receive them from external.
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+route-map ADMIN_MPLS_IN permit 20
+   description ALLOW all other prefixes that we receive from Admin MPLS.
+!
+route-map ADMIN_MPLS_OUT permit 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+{%- endmacro %}

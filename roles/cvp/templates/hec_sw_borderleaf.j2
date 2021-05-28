@@ -1,0 +1,154 @@
+{# hec_sw_borderleaf.j2 #}
+{% import "templates/libs.j2" as funcs with context %}
+{% set id = id + item.number %}
+{#
+ first, let's find out the leaf's purpose.
+  - 'b' is a borderleaf
+  - 's' is a storageleaf
+  - 'h' is a hana shared storage-leaf
+#}
+{% set id_short = id | regex_replace('^.*(?P<id>[123456][ab])$', '\\g<id>') %}
+{% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456][ab]$', '\\g<purpose>') %}
+{% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
+{% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123456])[ab]$', '\\g<one_or_two>') %}
+{% set speed = hec.fabric.interlink_speed %}
+{#
+ Let's generate the hostname base on the id-string that we were called with
+#}
+{% set hname = 'sw-hec' + hec.hec_nr +'-' %}
+{% if leafpurpose == 'b' %}
+{% set hname = hname + 'brdr-' %}
+{% set mlagText = "BRDR" %}
+{% endif %}
+{% if leafpurpose == 'h' %}
+{% set hname = hname + 'shs-' %}
+{% set mlagText = "SHS" %}
+{% endif %}
+{% if leafpurpose == 's' %}
+{% set hname = hname + 'str-' %}
+{% set mlagText = "STR" %}
+{% endif %}
+{% set hname = hname + '0' + brdrtype + leafid %}
+hostname {{hname}}
+!
+mlag configuration
+   domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
+!
+{% if leafpurpose == 'b' %}
+! Start: Remove config which can't be used on BRDRs 
+no {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999
+! End: Remove config which can't be used on BRDRs 
+!
+vlan 30
+   name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}
+!
+{% for item in vlans.inet_dmz %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{#
+ as currently do have routers connected also to brdr-02a/b,
+  we need to stretch vlan 920 there as well.
+  until those have been connected/ moved to brdr01 & brdr03,
+  we'll leave the code here to not exclude vlan 920 + vni-mapping for brdr02
+#}
+{% for item in vlans.brdr.trans %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{% endif %}
+{% if leafpurpose == 's' %}
+{% for item in vlans.str %}
+vlan {{item.vid}}
+   name {{item.name}}
+!
+interface Vxlan1
+   vxlan vlan {{item.vid}} vni {{item.vid + 10000}}
+!
+{% endfor %}
+{% endif %}
+{% set loop_items = hec.brdr %}
+{% if leafpurpose == 's' %}{% set loop_items = hec.str %}{% endif %}
+{% if leafpurpose == 'h' %}{% set loop_items = hec.shs %}{% endif %}
+!
+{% if hec.ngdr_underlay is defined %}
+{% if leafpurpose == 'b' %}
+! ===== EDGE Transfer VLANs =====
+{% for item in vlans.evpn_edge_trans %}
+vlan {{item.vid}}
+   name {{item.name|upper}}
+!
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if is_l2l3_transit|default('', true) %}
+{% include "templates/HEC-VLANs.j2" %}
+
+{% endif %}
+{% for allbrdrs in loop_items if allbrdrs.number|string == id_short %}
+!
+snmp-server contact {{allbrdrs.snmp.contact}}
+snmp-server location {{allbrdrs.snmp.location}}
+!
+interface Loopback900
+   description NW-MGMT
+   ip address {{allbrdrs.nwmgmt_ip}}/32
+!
+interface Management1
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} OOB
+   ip address {{allbrdrs.oob_ip}}/{{hec.oob_mask}}
+!
+! ===== Spine Uplinks =====
+{% for item in allbrdrs.uplinks %}
+interface Ethernet{{ item }}
+   no switchport
+   description SPINE UPLINK
+   mtu {{ hec.fabric.interlink_mtu }}
+{% if allbrdrs.uplinks_speed is defined %}{% set speed = allbrdrs.uplinks_speed %}{% endif %}
+   speed forced {{ speed }}
+!
+{% endfor %}
+! ===== End device ports =====
+{% for item in allbrdrs.ports %}
+{# call macro 'switchport' to create all defined individual ports #}
+{{ funcs.switchport(item) }}
+{% endfor %}
+! ===== Port-channels =====
+{% if allbrdrs.port_channels is defined %}
+{% for po in allbrdrs.port_channels %}
+{# call macro 'switchportchannels' to create all defined port-channel interfaces #}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+!
+{% endif %}
+{% endfor %}
+{#
+  let's do some more borderleaf specific stuff below here
+#}
+{% if leafpurpose == 'b' %}
+{##### VARP specific configuration for BRDR-02 #####}
+{% if brdrtype == '2' %}
+! ==============================================
+!   Inband management - transfer to firewall
+! ==============================================
+interface {{hec.inband_trans_gw_vlan}}
+   ip virtual-router address {{ hec.inband_trans_brdr }}
+!
+ip virtual-router mac-address {{ hec.inband_trans_brdr_mac }}
+!
+ip route {{ hec.oob_cvp }}/32 {{ hec.inband_trans_cvp }}
+{% endif %}
+{% endif %}
+{#
+  Above this is the END for borderleaf specific stuff
+#}
+{% include "templates/hec_sw_leaf_routing_configuration.j2" %}

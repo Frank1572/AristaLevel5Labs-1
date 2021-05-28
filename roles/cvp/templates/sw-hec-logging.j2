@@ -1,0 +1,10 @@
+{# https://wiki.wdf.sap.corp/wiki/x/VD57fg #}
+{% for srv in hec.syslog.inband.servers %}
+logging host {{ srv.ipv4 }}
+{% endfor %}
+logging buffered 1043741829
+logging trap debugging
+no logging console
+logging format hostname fqdn
+logging facility local5
+!

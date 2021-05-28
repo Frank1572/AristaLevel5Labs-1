@@ -1,0 +1,9 @@
+---
+configlet_list_dc_specific:
+  - sw-hec-oob-04
+  - sw-hec-oob-05
+  - rt-hec-ha-shared
+  - rt-hec-ha-core-01a
+  - rt-hec-ha-core-01b
+  - rt-hec-ha-core-01c
+  - rt-hec-ha-core-01d

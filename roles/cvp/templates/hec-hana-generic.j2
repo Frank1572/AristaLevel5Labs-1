@@ -1,0 +1,10 @@
+username cfmadm privilege 15 role network-admin secret 5 $1$EaZmGCRk$gwoPz3UrfjPwVuK6MQg8l.
+!
+!# HANA CFM VLANs (1101-1180->HANA,GPFS)
+vlan 1101-1180
+!
+{% include "templates/hec_sw_po900-uplink.j2" %}
+
+!
+ip access-list HEC{{ hec.hec_nr }}-L2-HANA
+{{ hec.hana_acl_rules }}

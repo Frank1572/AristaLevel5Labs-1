@@ -1,0 +1,236 @@
+---
+# file: group_vars/all
+idrac:
+  ip: "10.178.147.254"
+  mask: "255.255.254.0"
+  gw: "10.178.146.1"
+  name: "naa-hec19-idrac-01"
+  dns1: "100.127.141.1"
+  dns2: "100.127.141.2"
+  domain: "net.sap.corp"
+  password: "arista"
+
+cva:
+  ip: "10.178.146.43"
+  mask: "255.255.254.0"
+  gw: "10.178.146.1"
+  name: "naa-hec19-01"
+  dns1: "100.127.141.1"
+  dns2: "100.127.141.2"
+  domain: "net.sap.corp"
+  password: "arista"
+
+oob01:
+  dhcp:
+    prefix: "10.178.146.0"
+    mask: "255.255.254.0"
+    router: "10.178.146.1"
+    idrac_ip: "10.178.147.248"
+    cva_ip: "10.178.147.249"
+
+cvp:
+  version: "cvp-2018.2.5-kvm.tgz"
+  path_to_cvp_file: "/ens/bin/images/arista/"
+  ip_eth0: "10.178.147.253"
+  ip_eth1: "10.255.245.69"
+  mask_eth0: "255.255.254.0"
+  mask_eth1: "255.255.240.0"
+  gw: "10.178.146.1"
+  name: "naa-hec19-cvp-01.net.sap.corp"
+  dns1: "10.17.121.30"
+  dns2: "10.17.122.10"
+  domain: "net.sap.corp"
+  ntp1: "10.17.122.185"
+  ntp2: "10.33.142.104"
+  device_int: eth0
+  cluster_int: eth1
+  ingest_key: "SecureKey19"
+  vmname: "cvp-hec19"
+  KvmDomain: "cvp"
+  password: "arista"
+  backupuser: "cvpbkp"
+  eth1_routes:
+    - prefix: "198.19.194.0"
+      mask: "24"
+      nexthop: "10.255.245.78"
+    - prefix: "198.19.204.0"
+      mask: "24"
+      nexthop: "10.255.245.78"
+    - prefix: "100.127.140.44"
+      mask: "32"
+      nexthop: "10.255.245.78"
+  dhcp:
+    prefix: "10.178.146.0"
+    mask: "255.255.254.0"
+    range_low: "10.178.147.224"
+    range_high: "10.178.147.247"
+  aaa_config:
+    aaa_type: "RADIUS"
+    servers:
+      - ip: "10.17.121.35"
+        secret: "secretRadPw"
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
+      - ip: "10.17.122.21"
+        secret: "secretRadPw"
+        authMode: "PAP"
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
+
+hec:
+  hec_nr: "19"
+  hana_hvx_descriptions_PO_MIN: 101
+  hana_hvx_descriptions_PO_MAX: 124
+  hvv_descriptions_PO_MAX: 24
+  hvv_descriptions_PO_RANGE: "{101,151}"
+  ma_domain: "net.sap.corp"
+  lo900_domain: "fra2.hec.sap.biz"
+  vl900_domain: "fra2.hec.sap.biz"
+  vl900_mask: 24
+  vl900_def_gw: 198.19.194.1
+  vl900_net: 198.19.200.0/24
+  lo900_net: 198.19.204.0/24
+  lo900_prefix: 198.19.204
+  inband_trans_brdr: 10.255.245.78
+  inband_trans_net: 10.255.245.64/28
+  inband_trans_prefix: 10.255.245
+  inband_trans_mask: 28
+  inband_trans_gw_vlan: Vlan916
+  inband_trans_gw: 10.255.245.65
+  inband_trans_cvx: 10.255.245.68
+  inband_trans_cvp: 10.255.245.69
+  oob_def_gw: 10.178.146.1
+  oob_prefix: 10.178.146
+  oob_mask: 23
+  oob_vrf: OOB
+  oob_cvx: 10.178.147.252
+  oob_cvp: 10.178.147.253
+  as_low: 4202112785
+  as_high: 4202113983
+  cvp_ingest_key: SecureKey19
+  dns1: 10.127.141.1
+  dns2: 10.127.141.2
+  ntp1: 100.127.141.36
+  ntp2: 100.127.141.37
+  syslog1: 10.127.136.65
+  syslog2: 10.127.141.69
+  radius1: 10.17.122.21
+  radius2: 10.17.121.35
+  is_tacacs: False
+  admin_mpls:
+    prefix_mask:
+      - 100.96.192.0/19
+      - 100.127.136.0/21
+      - 10.178.146.0/23
+      - 198.19.194.0/24
+  admin_sw_interface: Ethernet49
+  admin_sw_description_oob1a: "fra3dc01-adm-03-co P1/13"
+  admin_sw_description_oob1b: "fra3dc01-adm-04-co P1/13"
+  admin_sw_prefix: 10.255.215
+  admin_sw_mask: 31
+  admin_sw_ip_oob1a: 10.255.215.8
+  admin_sw_ip_oob1b: 10.255.215.10
+  admin_sw_neig_ip_oob1a: 10.255.215.9
+  admin_sw_neig_as_oob1a: 65999
+  admin_sw_neig_ip_oob1b: 10.255.215.11
+  admin_sw_neig_as_oob1b: 64536
+  oob01_lo0_prefix: 198.19.251
+  oob01_as: 64531
+  spine_nr:
+    - 11
+    - 12
+    - 13
+    - 14
+  fabric:
+    # valid modes are: manual, cvx, evpn, manual
+    vtep_distribution_mode: evpn
+    interlink_mtu: 9214
+    # valid speeds are 40gfull, 100gfull
+    interlink_speed: 100gfull
+    bgp_maximum_routes: 12000
+    evpn_maximum_routes: 0
+    mlag_a_ip: 198.19.224.1
+    mlag_b_ip: 198.19.224.2
+    leaf_models: "{{ net.device.leaf_models }}"
+  oob:
+    - number: "01a"
+      type: core
+      snmp:
+        contact: incorrect
+        location: incorrect
+  oob01a_snmp_contact: 34360483:ncons-hec19-01.fra2.hec.sap.biz:1015
+  oob01a_snmp_location: DE-FRA3-680-226-36
+  oob01b_snmp_contact: 34360485:ncons-hec19-02.fra2.hec.sap.biz:1015
+  oob01b_snmp_location: DE-FRA3-680-210-36
+  oobs_2_7:
+    - number: 02
+      snmp_contact: 34361911:ncons-hec19-02.net.sap.corp:1016
+      snmp_location: DE-FRA3-680-201-23
+      ip_last_octett: 4
+    - number: 03
+      snmp_contact: 34361910:ncons-hec19-01.net.sap.corp:1016
+      snmp_location: DE-FRA3-680-217-23
+      ip_last_octett: 5
+    - number: 04
+      snmp_contact: 34361909:ncons-hec19-01.net.sap.corp:1021
+      snmp_location:  DE-FRA3-680-401-24
+      ip_last_octett: 6
+    - number: 05
+      snmp_contact: 34361908:ncons-hec19-02.net.sap.corp:1021
+      snmp_location: DE-FRA3-680-401-23
+      ip_last_octett: 7
+    - number: 06
+      snmp_contact: 34360481:ncons-hec19-01:net.sap.corp:1021
+      snmp_location: DE-FRA3-680-413-24
+      ip_last_octett: 8
+    - number: 07
+      snmp_contact: 34360482:ncons-hec19-01.net.sap.corp:1021
+      snmp_location: DE-FRA3-680-413-23
+      ip_last_octett: 9
+  hvv_hvx_acl_rules: |
+      10 permit vlan 50 0x000 icmp any any
+      20 permit vlan 50 0x000 pim any any
+      30 permit vlan 50 0x000 92 any any
+      40 permit vlan 50 0x000 vrrp any any
+      50 permit vlan 50 0x000 ip any 224.0.0.0/5
+      60 permit vlan 50 0x000 ip 100.96.208.0/22 host 100.96.211.255
+      70 permit vlan 50 0x000 ip 100.96.208.0/22 100.96.211.0/24
+      80 permit vlan 50 0x000 ip 100.96.211.0/24 100.96.208.0/22
+      90 permit vlan 50 0x000 ip 100.96.208.0/22 host 100.96.208.1
+      100 deny vlan 50 0x000 ip 100.96.208.0/22 100.96.208.0/22
+      110 permit vlan 50 0x000 ip 100.96.208.0/22 any
+      120 permit vlan 60 0x000 icmp any any
+      130 permit vlan 60 0x000 pim any any
+      140 permit vlan 60 0x000 92 any any
+      150 permit vlan 60 0x000 vrrp any any
+      160 permit vlan 60 0x000 ip any 224.0.0.0/5
+      170 permit vlan 60 0x000 ip 100.96.216.0/21 host 100.96.223.255
+      180 permit vlan 60 0x000 ip 100.96.216.0/21 host 100.96.216.1
+      190 deny vlan 60 0x000 ip 100.96.216.0/21 100.96.216.0/21
+      200 permit vlan 60 0x000 ip 100.96.216.0/21 any
+      210 permit ip any any
+  hana_acl_rules: |
+      10 permit icmp any any
+      20 permit pim any any
+      30 permit 92 any any
+      40 permit vrrp any any
+      50 permit ip any 224.0.0.0/5
+      60 permit ip 100.96.200.0/22 host 100.96.201.255
+      70 permit ip 100.96.200.0/22 host 100.96.203.255
+      80 permit ip 100.96.200.0/22 host 100.96.200.5
+      90 permit ip host 100.96.200.5 100.96.200.0/22
+      100 permit ip 100.96.200.0/22 host 100.96.200.6
+      110 permit ip host 100.96.200.6 100.96.200.0/22
+      120 permit ip 100.96.200.0/22 100.96.201.224/27
+      130 permit ip 100.96.201.224/27 100.96.200.0/22
+      140 permit ip 100.96.200.0/22 100.96.203.192/26
+      150 permit ip 100.96.203.192/26 100.96.200.0/22
+      160 permit ip 100.96.201.224/27 100.96.203.192/26
+      170 permit ip 100.96.203.192/26 100.96.201.224/27
+      180 permit ip 100.96.200.0/22 host 100.96.200.1
+      190 deny ip 100.96.200.0/22 100.96.200.0/22
+      200 permit ip 100.96.200.0/22 any
+      210 permit ip any any

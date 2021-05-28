@@ -1,0 +1,13 @@
+{% include "templates/hec-hana-generic.j2" %}
+
+{% for i in range(1, 19) %}
+interface Port-Channel{{ 100 + i }}
+   mlag {{ 100 + i }}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 5,40
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+!
+{% endfor %}

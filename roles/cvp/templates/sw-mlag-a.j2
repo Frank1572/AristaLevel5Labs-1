@@ -1,0 +1,8 @@
+
+interface Vlan4094
+   ip address {{hec.fabric.mlag_a_ip}}/30
+!
+{% include "templates/hec_sw_mlag.j2" %}
+
+mlag configuration
+   peer-address {{hec.fabric.mlag_b_ip}}

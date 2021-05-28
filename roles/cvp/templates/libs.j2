@@ -1,0 +1,249 @@
+{% macro podid_calculation(number) %}
+{% set podid = 0 %}
+{% if (spineid|int > 10) and (spineid|int < 20) %}
+{% set podid = 1 %}
+{% elif (spineid|int > 20) and (spineid|int < 30) %}
+{% set podid = 2 %}
+{% elif (spineid|int > 30) and (spineid|int < 40) %}
+{% set podid = 3 %}
+{% elif (spineid|int > 40) and (spineid|int < 50) %}
+{% set podid = 4 %}
+{% elif (spineid|int > 50) and (spineid|int < 60) %}
+{% set podid = 5 %}
+{% elif (spineid|int > 60) and (spineid|int < 70) %}
+{% set podid = 6 %}
+{% elif (spineid|int > 70) and (spineid|int < 80) %}
+{% set podid = 7 %}
+{% elif (spineid|int > 80) and (spineid|int < 90) %}
+{% set podid = 8 %}
+{% elif (spineid|int > 90) and (spineid|int < 100) %}
+{% set podid = 9 %}
+{% endif %}
+{% endmacro %}
+
+{% macro spine_superspine_linkip(spineid, superspineid) -%}
+{# DETERMINE INTERFACE'S LAST OCTECT IP-PART #}
+{% set lastoct = "1" %}
+{% if spineid|string is regex('.2$') %}
+{% set lastoct = "3" %}
+{% elif spineid|string is regex('.3$') %}
+{% set lastoct = "5" %}
+{% elif spineid|string is regex('.4$') %}
+{% set lastoct = "7" %}
+{% endif %}
+{# POD ID CALCULATION #}
+{% set podid = 0 %}
+{% if (spineid|int > 10) and (spineid|int < 20) %}
+{% set podid = 1 %}
+{% elif (spineid|int > 20) and (spineid|int < 30) %}
+{% set podid = 2 %}
+{% elif (spineid|int > 30) and (spineid|int < 40) %}
+{% set podid = 3 %}
+{% elif (spineid|int > 40) and (spineid|int < 50) %}
+{% set podid = 4 %}
+{% elif (spineid|int > 50) and (spineid|int < 60) %}
+{% set podid = 5 %}
+{% elif (spineid|int > 60) and (spineid|int < 70) %}
+{% set podid = 6 %}
+{% endif %}
+{% set interface_ipv4 = '10.255.' + podid|string + superspineid|string + '.' + lastoct + '/31' %}
+{{ interface_ipv4 }}
+{%- endmacro %}
+{% macro leaf_hvv_ports_data(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan {{ vlans.trunklists.hvv_data }}
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hvv_ports_vmotion(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 7
+   switchport trunk allowed vlan {{ vlans.trunklists.hvv_vmotion }}
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hvx_ports_data(hec_nr) -%}
+   speed forced 25gfull
+   switchport trunk native vlan 5
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-APP in
+   spanning-tree portfast
+{%- endmacro %}
+{% macro leaf_hana_ports_data(hec_nr) -%}
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   ip access-group HEC{{ hec_nr }}-L2-HANA in
+   port-channel lacp fallback static
+   spanning-tree portfast
+{%- endmacro %}
+
+{% macro leaf_uplinks(model) %}
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == model %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
+! === Spine Uplinks: ===
+interface Ethernet{{ intf_spines['name'] }}
+   mtu {{hec.fabric.interlink_mtu}}
+   no switchport
+{% endmacro %}
+
+{# convert ASN between asdot and asplain notation #}
+{% macro asdot(asn) -%}
+{%- if asn|string is search('\.') %}
+{{ (asn | regex_replace('^(?P<high>[0-9]*)\.[0-9]*$', '\\g<high>')|int) * 65536 + (asn | regex_replace('^[0-9]*\.(?P<low>[0-9]*)$', '\\g<low>')|int) }}{% else %}}
+{{ asn|int // 65536 }}.{{ asn|int - (asn|int // 65536) * 65536 }}{% endif -%}
+{%- endmacro %}
+
+{% macro switchport(interface) -%}
+{% if interface.type is defined %}
+{% if interface.type != 'Ethernet' %}
+{% if interface.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
+{% if interface.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
+interface {{ inttype }}{{ interface.id }}
+{% endif %}
+{% endif %}
+{% if interface.type is not defined %}
+interface Ethernet{{ interface.id }}
+{% endif %}
+{% if interface.description is defined %}
+   description ->{{ interface.description }}
+{% endif %}
+{% if interface.po is defined %}
+   channel-group {{ interface.po }} mode active
+{% endif %}
+{% if interface.trunk is defined %}{# BEGIN port is vlan trunk #}
+   switchport mode trunk
+{% if interface.trunk != "all" %}
+   switchport trunk allowed vlan {{ interface.trunk }}
+{% endif %}
+{% endif %}{# END port is vlan trunk #}
+{% if interface.access_vlan is defined %}{# BEGIN port is access_vlan #}
+   switchport access vlan {{ interface.access_vlan }}
+{% endif %}{# END port is access_vlan #}
+{% if interface.speed is defined %}
+   speed forced {{ interface.speed }}
+{% elif (interface.po is defined) and (interface.po == 42) %}
+   speed forced {{hec.fabric.interlink_speed}}
+   mtu {{hec.fabric.interlink_mtu}}
+{% endif %}
+{% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
+   mtu {{ interface.mtu }}
+{% endif %} {# End MTU shinans #}
+{% if interface.ip is defined %}{# START ip is defined #}
+{% if (interface.type is defined) and (interface.type == "spine_link") %}
+   mtu {{ hec.fabric.interlink_mtu }}
+{% endif %}
+{% if (interface.type is defined) and (interface.type != "vlan") %}
+   no switchport
+{% elif (interface.type is defined) and (interface.type == "vlan") %}
+{% if interface.vrrp is not defined %}
+   no autostate
+{% endif %}
+{% endif %}
+{#
+ vrrp group, if any defined
+#}
+{% if interface.vrrp is defined %}{# START vrrp is defined #}
+{% for vrrp_group in interface.vrrp %}
+{% if vrrp_group.priority is not defined %}
+{% set vrrp_group_priority = "100" %}
+{% else %}
+{% set vrrp_group_priority = vrrp_group.priority %}
+{% endif %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_priority}} {{ vrrp_group_priority }}
+   vrrp {{vrrp_group.id}} preempt delay minimum 180
+   vrrp {{vrrp_group.id}} preempt delay reload 180
+{% if vrrp_group.auth is defined %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_authentication}} text {{ vrrp_group.auth }}
+{% endif %}
+{% if vrrp_group.track is defined %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_track}} {{ vrrp_group.track.object }} decrement {{ vrrp_group.track.weight }}
+{% endif %}
+{% set conf_str_ip = 'vrrp ' + vrrp_group.id|string + ' ' + eos_cmd.c_vrrp_ip + ' ' + vrrp_group.ip|string %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{conf_str_ip}}
+{% if vrrp_group.secondary is defined %}
+{% for sec_ip in vrrp_group.secondary %}
+   vrrp {{vrrp_group.id}} {{eos_cmd.c_vrrp_ip}} {{ sec_ip }} secondary
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}{# END vrrp is defined #}
+{% if interface.type is not defined %}
+   no switchport
+{% endif %}
+   ip address {{ interface.ip }}
+{% if interface.secondary is defined %}
+{% for sec_ip in interface.secondary %}
+   ip address {{ sec_ip }} secondary
+{% endfor %}
+{% endif %}
+{% endif %}{# END ip is defined #}
+!
+{%- endmacro %}
+
+{% macro switchportchannels(portchannel) -%}
+interface Port-Channel{{ portchannel.id }}
+{% if portchannel.id != 42 %}
+{#
+  As we do assign the configlet sw-mlag-a/b
+  to all leafs, the creation of Po42 is not required here.
+  Also it's not required to define it under hec.brdr/str/shs.port-channels
+#}
+   description {{ portchannel.description }}
+   mlag {{ portchannel.id }}
+{% if portchannel.trunk is defined %}
+   switchport mode trunk
+{% if portchannel.trunk != "all" %}
+   switchport trunk allowed vlan {{ portchannel.trunk }}
+{% endif %}
+{% endif %}
+{% if portchannel.access_vlan is defined %}
+   switchport access vlan {{ portchannel.access_vlan }}
+{% endif %}
+{% if portchannel.mtu is defined %}
+   mtu {{ portchannel.mtu }}
+{% endif %}
+{% if portchannel.lacp_fallback is defined %}
+   port-channel lacp fallback {{ portchannel.lacp_fallback }}
+{% endif %}
+{% endif %}
+!
+{%- endmacro %}
+
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
+{% set route_statement = 'ip route' %}
+{% if vrf != '' %}
+{% set route_statement = route_statement + ' vrf ' + vrf %}
+{% endif %}
+{% set route_statement = route_statement + ' ' + dest %}
+{% if intf != '' %}
+{% set route_statement = route_statement + ' ' + intf %}
+{% endif %}
+{% if gw != '' %}
+{% set route_statement = route_statement + ' ' + gw %}
+{% endif %}
+{% if met != '' %}
+{% set route_statement = route_statement + ' ' + met %}
+{% endif %}
+{{ route_statement }}
+{% if red_bgp == True %}
+router bgp {{ asn_generated_global[0]|string }}
+{% if vrf != '' %}
+   vrf {{ vrf }}
+     redistribute static
+{% else %}
+   redistribute static
+{% if dest == '0.0.0.0/0' %}
+   neighbor SPINE-PG default-originate
+{% endif %}
+{% endif %}
+{% endif %}
+{%- endmacro %}

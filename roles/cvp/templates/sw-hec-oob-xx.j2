@@ -1,0 +1,150 @@
+{# this is to have to macros available that are used for switch port generation #}
+{% import "templates/libs.j2" as funcs with context%}
+hostname sw-hec{{ hec.hec_nr }}-oob-{{ item.number }}
+!
+snmp-server contact {{ item.snmp.contact}}
+snmp-server location {{ item.snmp.location}}
+!
+ip tacacs source-interface Vlan21
+!
+logging source-interface Vlan21
+!
+{{eos_cmd.c_ntp_source}} Vlan21
+!
+{% if item.type is defined and item.type == 'core' %}
+mlag configuration
+   domain-id MLAG-oob
+!
+vlan 4094
+   name MLAG_Vlan
+!
+spanning-tree mst 0-1 priority 28672
+!
+{# we want the CVA & iDRAC serving DHCP server to only be on the first core switch #}
+{% if item.number == '01a' %}
+alias dhcp-off
+   10 bash sudo service dhcpd stop
+   20 bash sudo service dhcpd status
+!
+alias dhcp-on
+   10 bash sudo cp /mnt/flash/dhcpd.conf /etc/dhcp/
+   20 bash sudo service dhcpd start
+   30 bash sudo service dhcpd status
+!
+alias dhcp-status
+   10 bash sudo service dhcpd status
+   20 bash sudo cat /var/lib/dhcpd/dhcpd.leases
+!
+{% endif %}
+{% if item.bgp is defined %}
+{% if item.bgp.router_id is defined %}
+interface Loopback0
+   ip address {{ item.bgp.router_id | ipaddr('address') }}/32
+{% endif %}
+!
+router bgp {{ item.bgp.local_asn }}
+   bgp asn notation asdot 
+{% if item.bgp.router_id is defined %}
+   router-id {{ item.bgp.router_id }}
+{% endif %}
+{% for peer in item.bgp.peers %}
+{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'next-hop-self' ] if peer.remote_asn == item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% endfor %}
+{% for port in item.ports %}
+{% if port.id == 21 and port.type is defined %}
+{% if port.type == 'vlan' %}
+   network {{ port.ip | ipaddr('network/prefix') }}
+{% if port.secondary is defined %}
+{% for secondary_ip in port.secondary %}
+   network {{ secondary_ip | ipaddr('network/prefix') }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+!
+interface Loopback494
+   description !!! DO NOT TOUCH - HSRP tracking interface !!!
+!
+track 494 interface Loopback494 line-protocol
+!
+interface Vlan4094
+!
+ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
+!
+ip routing
+!
+ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
+{% for prefix in hec.admin_mpls.prefix_mask %}
+ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
+{% endfor %}
+!
+route-map ADMIN_MPLS_IN deny 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+route-map ADMIN_MPLS_IN permit 20
+   match ip address prefix-list MATCH_ANY
+!
+route-map ADMIN_MPLS_OUT permit 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+{% endif %}{# end of oob-core specific settings #}
+!
+{% if item.type is not defined or item.type != 'core' %}
+{# setting all ports to default access-port with oob vlan 21 #}
+interface Ethernet1-48
+   switchport access vlan 21
+!
+{% endif %}
+!
+{% if item.ports is defined %}
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
+{% endfor %}
+{% endif %}{# end of port generation #}
+!
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
+!
+{% if item.type is not defined or item.type != 'core' %}
+! === Uplinks to the OOB core switch pair
+interface Port-Channel101
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   port-channel lacp fallback individual
+!
+{% if item.uplinks is defined %}
+{% for uplink in item.uplinks %}
+interface {{ uplink }}
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   channel-group 101 mode active
+!
+{% endfor %}
+{% else %}
+interface Ethernet51
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   channel-group 101 mode active
+!
+interface Ethernet52
+   switchport trunk allowed vlan 21
+   switchport mode trunk
+   channel-group 101 mode active
+{% endif %}
+!
+ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
+!
+{% endif %}

@@ -1,0 +1,83 @@
+{% import "templates/libs.j2" as funcs %}
+{% set pod=item.id %}
+{########## INTERFACE CONFIGURATION WHICH IS SPECIFIC TO SPINES ##########}
+{% set ports_per_lc = 36 %}
+{% if hec.spine.model|string is search('75[01][486].*') %}
+{% set lc_start = 3 %}
+{% set lc_end   = lc_start + hec.spine.linecards %}
+{% endif %}
+{% if hec.spine.model|string is search('7280.*') %}
+{% set lc_start = 3 %}
+{% set lc_end   = 4 %}
+{% endif %}
+{% if hec.spine.model|string is search('.*-.*') %}
+{% set ports_per_lc = hec.spine.model|string %}
+{% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
+{% endif %}
+{% set port_range_end = ports_per_lc|int + 1 %}
+{# {% include "templates/config_templates/sw-hec-spine-ips.j2" %} #}
+{########## BGP CONFIGURATION ##########}
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
+peer-filter EVPN-PF
+! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
+!
+{% endif %}
+peer-filter LEAF-PF
+! ##### {{ hec.as_low }}-{{ hec.as_high }} == 641{{ hec.hec_nr }}.{{pod}}0001-641{{ hec.hec_nr }}.{{pod}}1199 #####
+   10 match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '0001') }}-{{ funcs.asdot('641' + hec.hec_nr|string + '.' + pod|string + '1199') }} result accept
+!
+{% if pod != 1 %}
+router bfd
+   slow-timer 5000
+   interval 200 min-rx 200 multiplier 3 default
+   multihop interval 1000 min-rx 1000 multiplier 5
+!
+{% endif %}
+router bgp 641{{ hec.hec_nr }}.{{pod}}0000
+   bgp asn notation asdot
+   maximum-paths 8 ecmp 16
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
+{% for listen_range in hec.fabric.bgp_listen_ranges %}
+   bgp listen range {{ listen_range }} peer-group EVPN-PG peer-filter EVPN-PF
+{% endfor %}
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor EVPN-PG update-source Loopback1
+   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+   neighbor EVPN-PG ebgp-multihop 2
+   neighbor EVPN-PG send-community standard extended
+   neighbor EVPN-PG maximum-routes {{ hec.fabric.evpn_maximum_routes }}
+{% endif %}
+!
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_peer_group}}
+   neighbor LEAF-PG send-community
+{% if hec.spine.underlay_bfd %}
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+{% endif %}
+   neighbor LEAF-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
+   neighbor LEAF-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+!
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor EVPN-PG activate
+   !
+{% endif %}
+   address-family ipv4
+{% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
+      no neighbor EVPN-PG activate
+{% endif %}
+      neighbor LEAF-PG activate
+!
+! ============= to enable a port, add it to the list of interfaces below =============
+!
+{# {% if spine_interfaces is defined %}
+{% for interface in spine_interfaces.interfaces %}
+{% if "Ethernet" in interface.name %}
+{% if interface.enabled %}
+interface {{ interface.name }}
+ no shutdown
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %} #}

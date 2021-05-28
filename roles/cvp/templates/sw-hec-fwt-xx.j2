@@ -1,0 +1,135 @@
+{# this is to have to macros available that are used for switch port generation #}
+{% import "templates/libs.j2" as funcs with context%}
+hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number }}
+!
+snmp-server contact {{ item.snmp.contact}}
+snmp-server location {{ item.snmp.location}}
+!
+vlan 915
+   name HEC{{ hec.hec_nr }}-{{vlandb.915.name}}
+!
+ip tacacs source-interface Vlan915
+!
+logging source-interface Vlan915
+!
+{{eos_cmd.c_ntp_source}} Vlan915
+!
+sflow source-interface Vlan915 
+!
+mlag configuration
+   domain-id MLAG-FWT-{{ item.number[:2] }}
+!
+vlan 4094
+   name MLAG_Vlan
+!
+spanning-tree mst 0-1 priority 28672
+!
+{% if item.bgp is defined %}
+interface Loopback0
+   ip address {{ item.bgp.router_id | ipaddr('address') }}/32
+!
+router bgp {{ item.bgp.local_asn }}
+   bgp asn notation asdot
+   router-id {{ item.bgp.router_id }}
+{% for peer in item.bgp.peers %}
+{% for setting in [ 'route-map ADMIN_MPLS_IN in', 'route-map ADMIN_MPLS_OUT out', 'maximum-routes 12000' ] if peer.remote_asn != item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'remote-as ' + peer.remote_asn|string, 'maximum-routes 12000' ] %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% for setting in [ 'next-hop-self' ] if peer.remote_asn == item.bgp.local_asn %}
+   neighbor {{ peer.ipv4 }} {{ setting }}
+{% endfor %}
+{% endfor %}
+{% for port in item.ports %}
+{% if port.id == 915 and port.type is defined %}
+{% if port.type == 'vlan' %}
+   network {{ port.ip | ipaddr('network/prefix') }}
+{% if port.secondary is defined %}
+{% for secondary_ip in port.secondary %}
+   network {{ secondary_ip | ipaddr('network/prefix') }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+   redistribute connected
+   redistribute static
+{% endif %}
+!
+interface Loopback494
+   description !!! DO NOT TOUCH - HSRP tracking interface !!!
+!
+track 494 interface Loopback494 line-protocol
+!
+interface Vlan4094
+!
+{% if item.oob_ip is defined %}
+interface Management1
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} OOB
+   ip address {{item.oob_ip}}/{{hec.oob_mask}}
+!
+{% endif %}
+ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
+!
+ip routing
+no ip routing vrf OOB
+!
+ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
+{% for prefix in hec.admin_mpls.prefix_mask %}
+ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
+{% endfor %}
+!
+route-map ADMIN_MPLS_IN deny 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+route-map ADMIN_MPLS_IN permit 20
+   match ip address prefix-list MATCH_ANY
+!
+route-map ADMIN_MPLS_OUT permit 10
+   match ip address prefix-list PREF_ADMIN_MPLS
+!
+{% if item.ports is defined %}
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
+{% endfor %}
+{% endif %}{# end of port generation #}
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
+!
+{# there must be some static routes, at least back into this HEC DC, so we do not check if it's defined but
+   but simply rely on the playbook to die if it's missing the entries in hecXX.yml :) #}
+{% set id_short = item.number | regex_replace('^.*(?P<id>[0123456]{2})[ab]$', '\\g<id>') %}
+{% for route in hec.routes.static['fwt'+id_short] %}
+{% if route.vrf is not defined %}
+{% set vrf = '' %}
+{% else %}
+{% set vrf = route.vrf %}
+{% endif %}
+{% if route.interface is not defined %}
+{% set interface = '' %}
+{% else %}
+{% set interface = route.interface %}
+{% endif %}
+{% if route.nexthop is not defined %}
+{% set nexthop = '' %}
+{% else %}
+{% set nexthop = route.nexthop %}
+{% endif %}
+{% if route.metric is not defined %}
+{% set metric = '' %}
+{% else %}
+{% set metric = route.metric|string %}
+{% endif %}
+{% if route.redist_bgp is not defined %}
+{% set redist_bgp = False %}
+{% else %}
+{% set redist_bgp = route.redist_bgp %}
+{% endif %}
+{{ funcs.render_route_statement(route.destination, nexthop, vrf, interface, metric, redist_bgp) }}
+{% endfor %}

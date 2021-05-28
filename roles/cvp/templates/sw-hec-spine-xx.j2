@@ -1,0 +1,137 @@
+{% set bgp_underlay_max_routes = 'maximum-routes ' + hec.fabric.bgp_maximum_routes|default("12000")|string %}
+{% set bgp_overlay_max_routes  = 'maximum-routes ' + hec.fabric.evpn_maximum_routes|default("12000")|string %}
+{% set hec_spine_model = {'name' : 'none', 'linecards' : 1} %}
+{% if hec.spine.pod is not defined %}
+{% if hec_spine_model.update({'name':hec.spine.model})%}{% endif %}
+{% if hec_spine_model.update({'linecards':hec.spine.linecards})%}{% endif %}
+{% else %}
+{% for i in hec.spine.pod.number %}
+{% set id_string = item.id|string %}
+{% if id_string[0] == i.id|string %}
+{% if hec_spine_model.update({'name':i.model})%}{% endif %}
+{% if hec_spine_model.update({'linecards':i.linecards})%}{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+! {{item.id}}
+! {{hec_spine_model.name}}
+{% import "templates/libs.j2" as funcs %}
+{#
+  Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
+#}
+{% set oob_mgmt_intf = "Management0" %}
+{% if hec_spine_model.name|string is search('7280.*') %}
+{% set oob_mgmt_intf = "Management1" %}
+{% endif %}
+{% set ports_per_lc = 36 %}
+hostname sw-hec{{ hec.hec_nr }}-spine-{{ item.id }}
+!
+snmp-server contact {{ item.snmp.contact }}
+snmp-server location {{ item.snmp.location }}
+!
+{% for a in hec.spine.number %}
+{% if a.id == item %}
+snmp-server contact {{a.snmp.contact}}
+snmp-server location {{a.snmp.location}}
+!
+{% endif %}
+{% endfor %}
+{% if hec_spine_model.name|string is search('75[01][486].*')  %}
+{% set lc_start = 3 %}
+{% set lc_end   = lc_start + hec_spine_model.linecards %}
+{% endif %}
+{% if hec_spine_model.name|string is search('7280.*') %}
+{% set lc_start = 3 %}
+{% set lc_end   = 4 %}
+{% endif %}
+{% if hec_spine_model.name|string is search('.*-.*') %}
+{% set ports_per_lc = hec_spine_model.name|string %}
+{% set ports_per_lc = ports_per_lc|regex_replace('^.*-(?P<num>[1-9][0-9])$', '\\g<num>') %}
+{% endif %}
+{% set create_ip_on_interface = "yes" %}
+{% set port_range_end = ports_per_lc|int + 1 %}
+{% include "templates/sw-hec-spine-ips.j2" %}
+!
+{# the addressing of interface Loopback1 which used as router-id,
+    depends on the POD ID (in superspine deployments).
+    So if there are superspines defined, the we need to
+    generate the IP address based on the spine numer.
+#}
+{% set interface_loopback1 = '10.100.0.' + item.id|string %} {# this is the default for POD 1 always #}
+{% set pod = 1 %}
+{% if hec.superspine|default(false) %}
+{% if item.id|int > 20 and item.id|int < 30 %}
+{# POD 2 #}
+{% set pod = 2 %}
+{% set interface_loopback1 = '10.110.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 30 and item.id|int < 40 %}
+{# POD 3 #}
+{% set pod = 3 %}
+{% set interface_loopback1 = '10.120.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 40 and item.id|int < 50 %}
+{# POD 4 #}
+{% set pod = 4 %}
+{% set interface_loopback1 = '10.130.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 50 and item.id|int < 60 %}
+{# POD 5 #}
+{% set pod = 5 %}
+{% set interface_loopback1 = '10.140.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 60 and item.id|int < 70 %}
+{# POD 6 #}
+{% set pod = 6 %}
+{% set interface_loopback1 = '10.150.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 70 and item.id|int < 80 %}
+{# POD 7 #}
+{% set pod = 7 %}
+{% set interface_loopback1 = '10.160.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% elif item.id|int > 80 and item.id|int < 90 %}
+{# POD 8 #}
+{% set pod = 8 %}
+{% set interface_loopback1 = '10.170.' + hec.hec_nr|int|string + '.' + item.id|string %}
+{% endif %}
+{% endif %}
+interface Loopback1
+   description Router-ID
+   ip address {{interface_loopback1}}/32
+!
+interface Loopback900
+   description NW-MGMT
+   ip address {{ item.nwmgmt_ip }}/32
+!
+interface {{oob_mgmt_intf}}
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
+   ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
+!
+router bgp 641{{ hec.hec_nr }}.{{pod}}0000
+   router-id {{interface_loopback1}}
+   bgp listen range 10.{{ item.id }}.0.0/16 peer-group LEAF-PG peer-filter LEAF-PF
+   network {{interface_loopback1}}/32
+   network {{ item.nwmgmt_ip}}/32
+{# if this location has superspine switches defined in hecXX.yml, then we
+generate all BGP related settings. #}
+{% if hec.superspine|default(false) %}
+{% set superspine_asn = '641' + hec.hec_nr + '.9000' %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'update-source Loopback1',
+                  eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', bgp_overlay_max_routes] %}
+   neighbor EVPN-SUPERSPINE {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + superspine_asn, 'send-community standard extended', bgp_underlay_max_routes, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+   neighbor UNDERLAY-SUPERSPINE {{ setting }}
+{% endfor %}
+{% for i in range(1,5) %}
+   neighbor 10.90.{{ hec.hec_nr|int }}.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-SUPERSPINE
+{% endfor %}
+{% for x in item.spine_port_towards_superspine %}
+{% set neighbor_ipv4 = funcs.spine_superspine_linkip(item.id, loop.index) %}
+   neighbor {{ neighbor_ipv4|ipaddr('0')|ipaddr('address') }} {{eos_cmd.c_neighbor_peer_group}} UNDERLAY-SUPERSPINE
+{% endfor %}
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor EVPN-SUPERSPINE activate
+      no neighbor UNDERLAY-SUPERSPINE activate
+   address-family ipv4
+      no neighbor EVPN-SUPERSPINE activate
+      neighbor UNDERLAY-SUPERSPINE activate
+{% endif %}
+!

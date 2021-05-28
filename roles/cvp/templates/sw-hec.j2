@@ -1,0 +1,58 @@
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
+banner login
+****************************  W A R N I N G  *****************************
+*     Access to this system is restricted to authorized users only.      *
+*     All data residing on this system is the property of SAP.           *
+*     All activities on this system may be monitored.                    *
+*     Unauthorized usage is prohibited and may attract penalties.        *
+**************************************************************************
+
+**************************  I M P O R T A N T  ***************************
+*     Do not make configuration changes to this device on the CLI.       *
+*     This device is maintained by CVP! Changes will be overwritten.     *
+**************************************************************************
+
+      Device: $(hostname)
+EOF
+!
+{% include "templates/sw-hec-snmp.j2" %}
+!
+{% include "templates/sw-hec-logging.j2" %}
+!
+{{eos_cmd.c_ip_domain_name}} {{ hec.lo900_domain}}
+!
+{% include "templates/sw-hec-ntp.j2" %}
+!
+{% include "templates/hec_sflow.j2" %}
+!
+alias ic show interface counter | nz
+alias ie show interface counter errors | nz
+alias ipa show ip interface brief
+alias ipr show ip route
+alias ir show interface counter rates | nz
+alias bs show ip bgp summary
+alias es show bgp evpn summary
+alias os show ip ospf neighbor
+alias po show port-channel summary
+alias ru show running section %1
+alias pa sh int stat | grep Et | wc -l
+alias pu sh int stat | grep Et | grep conn | grep -v not |wc -l
+!
+schedule tech-support interval 60 timeout 30 max-log-files 60 command show tech-support
+!
+event-handler CONFIG_VERSIONING
+   trigger on-startup-config
+   action bash FN=/mnt/flash/startup-config; LFN="`ls -1 $FN.*-* | tail -n 1`"; if [ -z "$LFN" -o -n "`diff -I 'last modified' $FN $LFN`" ]; then cp $FN $FN.`date +%Y%m%d-%H%M%S`; ls -1r $FN.*-* | tail -n +11 | xargs -I % rm %; fi
+   delay 0
+!
+! === Interval for averaging the load in CLI commands, in seconds
+load-interval default 5
+!
+ip access-list standard ACL_SNMP_VTY
+{% for i in ACL_SNMP_VTY %}
+ {{ loop.index * 10 }} permit {{ i }}
+ {% if loop.last %}
+ {{ loop.index * 10 + 10 }} deny any
+ {% endif %}
+{% endfor %}
+!

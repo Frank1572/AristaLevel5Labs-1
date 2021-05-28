@@ -1,0 +1,116 @@
+{% include "templates/7160.j2" %}
+{% import "templates/libs.j2" as funcs with context %}
+interface Ethernet 1/1-4/4,6/1-9/4,11/1-14/4
+   speed forced 25gfull
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   lacp rate fast
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+   spanning-tree portfast
+!
+interface Ethernet 5/1,5/2,10/1,10/2,15/1,15/2
+   speed forced 25gfull
+   switchport trunk native vlan 31
+   switchport trunk allowed vlan 30-32
+   switchport mode trunk
+   lacp rate fast
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+   spanning-tree portfast
+!
+interface Ethernet 5/3,5/4,10/3,10/4,15/3,15/4
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+!
+interface Ethernet16/1
+   speed forced 40gfull
+   channel-group 400 mode active
+!
+interface Ethernet17/1
+   speed forced 40gfull
+   channel-group 401 mode active
+!
+! === MLAG Peer Link: ===
+interface Ethernet27/1,28/1
+   mtu {{hec.fabric.interlink_mtu}}
+   channel-group 42 mode active
+!
+{{ funcs.leaf_uplinks("7160-32CQ")}}
+!
+interface Ethernet26/1
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   speed forced 10000full
+   switchport mode trunk
+   channel-group 900 mode active
+!
+interface Ethernet1/1,1/2
+   channel-group 1101 mode active
+!
+interface Ethernet1/3,1/4
+   channel-group 1103 mode active
+!
+interface Ethernet2/1,2/2
+   channel-group 1102 mode active
+!
+interface Ethernet2/3,2/4
+   channel-group 1104 mode active
+!
+interface Ethernet3/1,3/2
+   channel-group 1105 mode active
+!
+interface Ethernet3/3,3/4
+   channel-group 1107 mode active
+!
+interface Ethernet4/1,4/2
+   channel-group 1106 mode active
+!
+interface Ethernet4/3,4/4
+   channel-group 1108 mode active
+!
+interface Ethernet6/1,6/2
+   channel-group 1201 mode active
+!
+interface Ethernet6/3,6/4
+   channel-group 1203 mode active
+!
+interface Ethernet7/1,7/2
+   channel-group 1202 mode active
+!
+interface Ethernet7/3,7/4
+   channel-group 1204 mode active
+!
+interface Ethernet8/1,8/2
+   channel-group 1205 mode active
+!
+interface Ethernet8/3,8/4
+   channel-group 1207 mode active
+!
+interface Ethernet9/1,9/2
+   channel-group 1206 mode active
+!
+interface Ethernet9/3,9/4
+   channel-group 1208 mode active
+!
+interface Ethernet11/1,11/2
+   channel-group 1301 mode active
+!
+interface Ethernet11/3,11/4
+   channel-group 1303 mode active
+!
+interface Ethernet12/1,12/2
+   channel-group 1302 mode active
+!
+interface Ethernet12/3,12/4
+   channel-group 1304 mode active
+!
+interface Ethernet13/1,13/2
+   channel-group 1305 mode active
+!
+interface Ethernet13/3,13/4
+   channel-group 1307 mode active
+!
+interface Ethernet14/1,14/2
+   channel-group 1306 mode active
+!
+interface Ethernet14/3,14/4
+   channel-group 1308 mode active
+!

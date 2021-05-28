@@ -4,7 +4,7 @@ These ansible playbooks are used to configure the cloud vision appliance (CVA), 
 
 It is required to install data from repository "repo_hec_globals". Run the following after cloning this repository:
 
- - ansible-galaxy install -r roles/requirements.yml -c --force
+ 	ansible-galaxy install -r roles/requirements.yml -c --force
 
 The following describes how to use the ansible playbooks in a greenfield environment (currently configlets are designed for EVPN):
 
@@ -17,7 +17,10 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 		ansible-playbook oob01.yml -i dhcp --tags "oob01_dhcp" --limit hecXX
 
  - Install DHCP server and config on the OOB01 a/b. Use the files "dhcp-4.2.5-15.fc18.i686.rpm" (*can be different depending on the EOS version*) and the generated "dhcpd.conf" in the folder "roles/oob01/files/"
-
+ 	- Use dhcp-4.2.5-15.fc18.i686.rpm for EOS versions prior to 4.23.x 
+	- Use dhcp-4.2.5-68.el7.centos.1.i686.rpm for EOS 4.23.x 
+                
+		```
 		1) Copy the DHCP RPM and the dhcpd.conf to the switch in the /mnt/flash/ directory, by issuing the following command
 		Example for Windows using pscp:
 		pscp.exe -scp roles\oob01\files\dhcp-4.2.5-15.fc18.i686.rpm <user>@<sw-hecXX-OOB01a/b-IP>:/mnt/flash/
@@ -34,6 +37,7 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
 
 		4) On the OOB switch: Make the extension persist over reboots
 		copy installed-extensions boot-extensions
+		```
 
   - Put the following alias configuration snippet on OOB01 a/b to be able to enable and disable the DHCP service
 		
@@ -85,9 +89,16 @@ Always consider the use of "--limit hecXX" (with 'XX' being the location number)
        
        ansible-playbook cva.yml -i cva --tags "cvp_init" --timeout 240  --limit hecXX
        
+  - Login to the CVP, go to the Provisioning View and change the name of the top container from "Tenant" to "Fabric". This can be done by double-click on the name "Tenant".
+  
   - Set the static IP assigned to the CVP in the file "\<ansible-home\>/cvp" example x.x.x.253
 
-       ansible-playbook cvp.yml -i cvp --tags "configlets, upload_configlets, create_containers" --timeout 240  --limit hecXX
+       ```
+       ansible-playbook cvp.yml -i cvp --tags "configlets" --timeout 240  --limit hecXX
+       
+       ansible-playbook cvp.yml -i cvp --tags "upload_configlets" --timeout 240  --limit hecXX
+       
+       ansible-playbook cvp.yml -i cvp --tags "create_containers" --timeout 240  --limit hecXX
 
  - Software Images need to be assigned manually to the containers (will be automated in future)
 
@@ -104,9 +115,9 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
        ansible-playbook pb_custom_configlets.yml --tags "env_local_setup"
 
- - Download cell switch configgurations from CVP
+ - Download cell switch configurations from CVP
 
-       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i static --limit hecXX
+       ansible-playbook pb_custom_configlets.yml --tags "configlets_download_from_cvp" -i cvp --limit hecXX
 
  - Upload the stored configlets into remote repository
 
@@ -118,20 +129,4 @@ To manage configlets that have been created via the dynamic onfiglet builders on
 
 # Deploy/ Maintain TerminAttr (telemetry streaming configuration)
 
-To deploy or correct configuration for TerminAttr agent on switches (if considered incorrect), run the following:
-
-       ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --limit hecXX
-
-Maintain the correct parameters for the daemon configuration in file inv_daemonTerminAttr.
-
-To stop daemon on device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_stop" --limit hecXX
-
-To restart daemon service on device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_restart" --limit hecXX
-
-To remove daemon configration from device(s):
-
-      ansible-playbook pb_telemetry.yml -i inv_daemonTerminAttr --tags "daemon_remove" --limit hecXX
+Read docs/pb_telemetry.md

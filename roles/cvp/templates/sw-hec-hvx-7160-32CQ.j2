@@ -1,0 +1,30 @@
+{% include "templates/7160.j2" %}
+{% import "templates/libs.j2" as funcs with context %}
+{% set p_data={'start': 1, 'end': 12} %}
+{% set p_mlag={'start': 27, 'end': 28} %}
+
+interface Ethernet {{p_data['start']}}/1-{{p_data['end']}}/4
+{{ funcs.leaf_hvx_ports_data(hec.hec_nr) }}
+!
+! === MLAG Peer Link: ===
+interface {{p_mlag['start']}}/1,{{p_mlag['end']}}/1
+   mtu {{hec.fabric.interlink_mtu}}
+   speed forced {{hec.fabric.interlink_speed}}
+   channel-group 42 mode active
+!
+{{ funcs.leaf_uplinks("7160-32CQ")}}
+!
+{% for main_intf in range(p_data['start'], p_data['end']+1) %}
+interface Ethernet {{ main_intf }}/1-2
+   channel-group {{ main_intf + 100 + loop.index0 }} mode active
+!
+interface Ethernet {{ main_intf }}/3-4
+   channel-group {{ main_intf + 101 + loop.index0 }} mode active
+!
+{% endfor %}
+interface Ethernet26/1
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   speed forced 10000full
+   switchport mode trunk
+   channel-group 900 mode active
+!

@@ -10,7 +10,7 @@ cli_cmd:
       c_vrf_defintion: vrf instance
       c_vrf_forwarding: vrf
       c_ntp_source: ntp local-interface
-      c_neighbor_soft_reconfiguration: neighbor rib-in pre-policy retain
+      c_neighbor_soft_reconfiguration: rib-in pre-policy retain
       c_neighbor_peer_group: peer group
       c_neighbor_fall_over_bfd: bfd
       c_ip_http_client_source_interface: ip http client local-interface
@@ -19,6 +19,8 @@ cli_cmd:
       c_enable_secret: enable password
       c_bgp_listen_limit: dynamic peer max
       c_aaa_authorization_console: aaa authorization serial-console
+      c_spanning_tree_vlan: spanning-tree vlan-id
+      c_snmp_source_interface: local-interface
   22:
     cmd:
       c_vrrp_priority: priority
@@ -30,12 +32,14 @@ cli_cmd:
       c_vrf_defintion: vrf definition
       c_vrf_forwarding: vrf forwarding
       c_ntp_source: ntp source
-      c_neighbor_soft_reconfiguration: soft-reconfiguration
+      c_neighbor_soft_reconfiguration: soft-reconfiguration inbound
       c_neighbor_peer_group: peer-group
       c_neighbor_fall_over_bfd: fall-over bfd
-      c_ip_http_client_source-interface: ip http client source-interface
+      c_ip_http_client_source_interface: ip http client source-interface
       c_ip_extcommunity_list_standard: ip extcommunity-list standard
-      c_ip_domain-name: ip domain-name
+      c_ip_domain_name: ip domain-name
       c_enable_secret: enable secret
       c_bgp_listen_limit: bgp listen limit
       c_aaa_authorization_console: aaa authorization console
+      c_spanning_tree_vlan: spanning-tree vlan
+      c_snmp_source_interface: source-interface

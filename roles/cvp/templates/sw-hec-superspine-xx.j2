@@ -1,0 +1,51 @@
+{% import "templates/libs.j2" as funcs with context %}
+{#
+  Fixed models use Management1 while chassis-based models have Management0 for OOB connectivity
+#}
+{% set oob_mgmt_intf = "Management0" %}
+{% if hec.superspine.model|string is search('7280.*') %}
+{% set oob_mgmt_intf = "Management1" %}
+{% endif %}
+{% set interface_loopback1 = "10.90." + hec.hec_nr|int|string + "." + item.id|string %}
+{% set asn_generated = '641' + hec.hec_nr + '.9000' %}
+hostname sw-hec{{ hec.hec_nr }}-superspine-{% if item.id < 10 %}0{% endif %}{{ item.id }}
+!
+{% for a in hec.superspine.number %}
+{% if a.id == item.id %}
+snmp-server contact {{a.snmp.contact}}
+snmp-server location {{a.snmp.location}}
+!
+{% endif %}
+{% endfor %}
+interface Loopback1
+   description Router-ID
+   ip address {{interface_loopback1}}/32
+!
+interface Loopback900
+   description NW-MGMT
+   ip address {{ item.nwmgmt_ip }}/32
+!
+interface {{oob_mgmt_intf}}
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} {{ hec.oob_vrf }}
+   ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
+!
+{% include "templates/sw-hec-superspine-all-interfaces.j2" %}
+!
+peer-filter SUPERSPINE-PF
+{% for entry in range(1, 7) %}
+   {{ loop.index * 10 }} match as-range {{ funcs.asdot('641' + hec.hec_nr|string + '.' + entry|string + '0000') }} result accept
+{% endfor %}
+!
+router bfd
+   slow-timer 5000
+   interval 200 min-rx 200 multiplier 3 default
+   multihop interval 1000 min-rx 1000 multiplier 5
+!
+router bgp {{ asn_generated }}
+  router-id {{ interface_loopback1 }}
+{% include "templates/sw-hec-superspine-bgp.j2" %}
+
+  address-family ipv4
+    network {{ interface_loopback1 }}/32
+    network {{ item.nwmgmt_ip }}/32

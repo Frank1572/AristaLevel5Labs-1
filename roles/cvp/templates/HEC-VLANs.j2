@@ -1,0 +1,19 @@
+{#
+  Do add/ remove VLANS with caution here. The resulting configlet is
+   bound to the container "HEC" and creates these VLANs for each switch
+   within this container.
+#}
+{% for item in vlans.default %}
+vlan {{item.vid}}
+  name {{item.name}}
+!
+{% endfor %}
+{% for item in vlans.ranges %}
+{% if item.name == "cust_backend" %}
+! All possible customer backend networks
+vlan {{item.range}}
+!
+{% endif %}
+{% endfor %}
+! === VLAN range for internal VLANs (routed interfaces) ===
+{{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999

@@ -1,0 +1,78 @@
+{# below lines get included by sw-hec-spine-xx.j2 and sw-hec-spine.j2 #}
+{# ! DEBUG: inside sw-hec-spine-ips.j2 #}
+{% set id_string = item.id|string %}
+{% set pod = id_string[0] %}
+{% set hec_pod_spine_fortygig = {'ports' : []} %}
+{% if hec.spine.pod is defined %}
+{% for i in hec.spine.pod.number %}
+{% if pod == i.id|string %}
+{% if i.fortygig is defined %}
+{% if hec_pod_spine_fortygig.update({'ports':i.fortygig})%}{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% for lc in range(lc_start, lc_end ) %}
+{% for subintf in range(1,port_range_end) %}
+{% set ip = loop.index * 2 - 2 %}
+{% set offset = lc - 3 %}
+{% set ip = ip + ((port_range_end - 1)*2) * offset %}
+{% set nextsubnet = 0 %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 1 %}
+{% endif %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 2 %}
+{% endif %}
+{#
+  determine the correct interface name based on the spine model
+#}
+{% if hec_spine_model|string is search('7280.*') %}
+{% set intf_name = subintf|string+'/1' %}
+{% endif %}
+{% if hec_spine_model|string is search('75[01][486].*')  %}
+{% set intf_name = lc|string+'/'+subintf|string+'/1' %}
+{% endif %}
+interface Ethernet {{intf_name}}
+ no switchport
+{# {% if create_ip_on_interface == 'yes' %} #}
+ ip address 10.{{ item.id }}.{{ nextsubnet }}.{{ ip }}/31
+{# {% endif %} #}
+ mtu {{ hec.fabric.interlink_mtu }}
+{#
+   let's see if we are in need to configure some links with different speed settings
+#}
+{% if hec_pod_spine_fortygig.ports|length > 0 %}
+{% if intf_name in hec_pod_spine_fortygig.ports %}
+ speed forced 40gfull
+{% else %}
+ speed forced {{ hec.fabric.interlink_speed }}
+{% endif %}
+{% elif hec.spine.fortygig is defined and pod|int == 1 and intf_name in hec.spine.fortygig %}
+ speed forced 40gfull
+{#
+   otherwise we take the default speed.
+#}
+{% else %}
+ speed forced {{ hec.fabric.interlink_speed }}
+{% endif %}
+!
+{% endfor %}
+{% endfor %}
+{# if this location has superspine switches defined in hecXX.yml, then we
+generate the uplink ports towards superspines. #}
+{% if hec.superspine|default(false) %}
+{% if item.spine_port_towards_superspine|default("incorrect") != "incorrect" %}
+{% for x in item.spine_port_towards_superspine %}
+interface {{x}}
+  no switchport
+  description Uplink to Superspine-{{loop.index}}
+{% import "templates/libs.j2" as funcs %}
+  ip address {{ funcs.spine_superspine_linkip(item.id, loop.index) }}
+{% endfor %}
+{% else %}
+! ERROR: you did miss to set the "spine_port_towards_superspine" variable for each Spine.
+{% endif %}
+{% endif %}

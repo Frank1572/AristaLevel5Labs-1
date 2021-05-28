@@ -1,0 +1,42 @@
+tacacs-server key 7 075907641D1A3C323E
+tacacs-server timeout 2
+!
+{% for srv in hec.tacacs.nat.servers %}
+tacacs-server host {{ srv.ipv4 }}
+{% endfor %}
+!
+{% if (aaa_purpose is defined) and (aaa_purpose == 'oob') %}
+{% if hec.tacacs.oob.servers is defined %}
+{% for srv in hec.tacacs.oob.servers %}
+tacacs-server host {{ srv.ipv4 }} 
+{% endfor %}
+{% for srv in hec.tacacs.nat.servers %}
+no tacacs-server host {{ srv.ipv4 }}
+{% endfor %}
+{% endif %}
+{% endif %}
+!
+{% set order = 'group tacacs+ local' %}
+{% if (aaa_purpose is defined) and (aaa_purpose == 'hana') %}
+{% set order = 'local group tacacs+' %}
+{% endif %}
+aaa authentication login default {{order}}
+{{eos_cmd.c_aaa_authorization_console}}
+aaa authorization exec default {{order}}
+aaa authentication enable default {{order}}
+aaa accounting commands 1,15 default start-stop group tacacs+
+!
+{{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$A5UyPWAO$oC2lAIG2WV3WIU3Z.8nSR1
+!
+management console
+   idle-timeout 30
+!
+management telnet
+   shutdown
+!
+management ssh
+   ip access-group ACL_SNMP_VTY in
+   idle-timeout 30

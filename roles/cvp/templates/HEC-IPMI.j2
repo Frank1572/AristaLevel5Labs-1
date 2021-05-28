@@ -1,0 +1,18 @@
+{% for item in vlans.ipmi %}
+vlan {{item.vid}}
+   name {{item.name}}
+{% endfor %}
+!
+spanning-tree mst configuration
+  instance 1 vlan  2-4093
+!
+interface Ethernet1-48
+   switchport access vlan 10
+!
+interface Ethernet49,50
+   switchport mode trunk
+   channel-group 900 mode active
+!
+ip route 0.0.0.0/0 {{ hec.vl900_def_gw }}
+!
+ip tacacs source-interface Vlan900

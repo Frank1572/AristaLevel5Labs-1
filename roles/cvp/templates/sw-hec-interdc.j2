@@ -1,0 +1,79 @@
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
+!
+spanning-tree mst 0-1 priority 61440
+!
+{% if hec.interdc is defined %}
+{% for switches in hec.interdc %}
+{% if switches.number == item.number %}
+! ===== End device ports =====
+{% for item in switches.ports %}
+  {% if item.type is defined %}
+    {% if item.type != "Ethernet" %}
+      {% if item.type == 'vlan' %}
+        {% set inttype = 'Vlan' %}
+      {% endif %}
+      {% if item.type == 'spine_link' %}
+        {% set inttype = 'Ethernet' %}
+      {% endif %}
+      interface {{ inttype }}{{ item.id }}
+    {% endif %}
+  {% endif %}
+  {% if item.type is not defined %}
+    interface Ethernet{{ item.id }}
+  {% endif %}
+    description ->{{ item.description }}
+  {% if item.po is defined %}
+    channel-group {{ item.po }} mode active
+  {% endif %}
+  {% if item.trunk is defined %} {# BEGIN port is vlan trunk #}
+    switchport mode trunk
+    {% if item.trunk != "all" %}
+      switchport trunk allowed vlan {{ item.trunk }}
+    {% endif %}
+  {% endif %} {# END port is vlan trunk #}
+  {% if item.access_vlan is defined %} {# BEGIN port is access_vlan #}
+    switchport access vlan {{ item.access_vlan }}
+  {% endif %} {# END port is access_vlan #}
+  {% if item.speed is defined %} {# BEGIN port is access_vlan #}
+    speed forced {{ item.speed }}
+  {% endif %} {# END port is access_vlan #}
+  {% if item.ip is defined %}
+    {% if item.type is defined %}
+      {% if item.type != "vlan" %}
+        no switchport
+      {% endif %}
+      {% if item.type == "spine_link" %}
+        mtu {{ hec.fabric.interlink_mtu }}
+      {% endif %}
+    {% endif %}
+    ip address {{ item.ip }}
+  {% endif %}
+{% endfor %}
+! END  ===== End device ports =====
+! ===== Port-channels =====
+{% if switches.port_channels is defined %}
+{% for po in switches.port_channels %}
+  interface Port-Channel{{ po.id }}
+  {% if po.id == 42 %}
+    description {{ po.description }}
+    switchport mode trunk
+    switchport trunk group MLAG-Peer
+  {% else %}
+    description {{ po.description }}
+    mlag {{ po.id }}
+    {% if po.trunk is defined %}
+      switchport mode trunk
+      {% if po.trunk != "all" %}
+        switchport trunk allowed vlan {{ po.trunk }}
+      {% endif %}
+    {% endif %}
+    {% if po.access_vlan is defined %}
+      switchport access vlan {{ po.access_vlan }}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% endif %}
+! END ===== Port-channels =====
+{% endif %} {## if switches.number == item.number ##}
+{% endfor %} {## switches in hec.interdc ##}
+{% endif %} {## if hec.interdc is defined ##}

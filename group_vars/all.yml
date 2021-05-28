@@ -1,12 +1,40 @@
 ---
 # file: group_vars/all
 vlandb:
+  5: {name: 'DHCP01'}
+  6: {name: 'DHCP02'}
+  7: {name: 'DHCP03'}
+  10: {name: 'IPMI01'}
+  20: {name: 'HV-MGMT01'}
+  30: {name: 'IBM-PWR-MGMT01'}
+  31: {name: 'IBM-PWR-LPM'}
+  32: {name: 'IBM-PWR-ISCSI'}
+  33: {name: 'IBM-PWR-RMC01'}
+  40: {name: 'HANA-MGMT01'}
+  50: {name: 'APP-STOR01'}
+  55: {name: 'APP-STOR02'}
+  60: {name: 'APP-MGMT01'}
+  70: {name: 'TS01'}
+  75: {name: 'TIC01'}
+  85: {name: 'SCS01'}
+  90: {name: 'CIS01'}
+  95: {name: 'DNS-01'}
+  100: {name: 'CSS01'}
+  110: {name: 'STOR-MGMT01'}
+  120: {name: 'BACKUP-SYNC01'}
+  130: {name: 'STOR-SYNC01'}
+  140: {name: 'BACKUP-DEVICES'}
+  150: {name: 'CUSTOMER_DATA_TRANSFER'}
   900: {name: 'NW-MGMT'}
+  902: {name: 'LB-SYNC'}
   914: {name: 'FW-CORE-TRANS'}
   915: {name: 'FWT-FW-TRANS'}
   916: {name: 'FW-BRDR-TRANS'}
   920: {name: 'BGP-TRANS'}
   922: {name: 'BACKUP-TRANS'}
+  930: {name: 'VMWARE-FAULT-TOLERANCE'}
+  931: {name: 'VMWARE-VMOTION'}
+  932: {name: 'VMWARE-VCENTER-HA'}
   940: {name: 'INET'}
   961: {name: 'RT-HEC-CWAN-01A-TRANS'}
   962: {name: 'RT-HEC-CWAN-01A-TRANS'}
@@ -92,6 +120,8 @@ vlans:
     trans:
       - name: "{{vlandb.900.name}}"
         vid: 900
+      - name: "{{vlandb.902.name}}"
+        vid: 902
       - name: "{{vlandb.914.name}}"
         vid: 914
       - name: "{{vlandb.915.name}}"
@@ -109,15 +139,69 @@ vlans:
       vid: 900
     - name: "{{vlandb.922.name}}"
       vid: 922
-# net:
-#   device:
-#     leaf:
-#       vmware:
-#         - model: "7160-32CQ"
-#           ports:
-#             prod: "1/1-12/4"
-#             ic: "13/1-18/4"
-#         - model: "7150S-64-CL"
-#           ports:
-#             prod: "1-15,17-31"
-#             ic: "33-47"
+  ipmi:
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.900.name}}"
+      vid: 900
+  default:
+    - name: "{{vlandb.5.name}}"
+      vid: 5
+    - name: "{{vlandb.6.name}}"
+      vid: 6
+    - name: "{{vlandb.7.name}}"
+      vid: 7
+    - name: "{{vlandb.10.name}}"
+      vid: 10
+    - name: "{{vlandb.20.name}}"
+      vid: 20
+    - name: "{{vlandb.40.name}}"
+      vid: 40
+    - name: "{{vlandb.50.name}}"
+      vid: 50
+    - name: "{{vlandb.55.name}}"
+      vid: 55
+    - name: "{{vlandb.60.name}}"
+      vid: 60
+    - name: "{{vlandb.70.name}}"
+      vid: 70
+    - name: "{{vlandb.75.name}}"
+      vid: 75
+    - name: "{{vlandb.85.name}}"
+      vid: 85
+    - name: "{{vlandb.90.name}}"
+      vid: 90
+    - name: "{{vlandb.95.name}}"
+      vid: 95
+    - name: "{{vlandb.100.name}}"
+      vid: 100
+    - name: "{{vlandb.110.name}}"
+      vid: 110
+    - name: "{{vlandb.120.name}}"
+      vid: 120
+    - name: "{{vlandb.130.name}}"
+      vid: 130
+    - name: "{{vlandb.140.name}}"
+      vid: 140
+    - name: "{{vlandb.150.name}}"
+      vid: 150
+    - name: "{{vlandb.900.name}}"
+      vid: 900
+  trunklists:
+    hvv_data: "5,7,20,30,40,50,55,60,70,75,85,90,95,100,110,120,130,140,932,2001-2499"
+    hvv_vmotion: "7,20,930-931"
+net:
+  device:
+    leaf_models:
+      - model: 7050CX3-32S
+        uplink_ports: 29/1,30/1,31/1,32/1
+      - model: 7160-32CQ
+        uplink_ports: 29/1,30/1,31/1,32/1
+      - model: 7160-48YC6
+        uplink_ports: 51/1,52/1,53/1,54/1
+      - model: 7280QR-C36
+        uplink_ports: 25/1,26/1,35/1,36/1
+      - model: 7280SR-48C6
+        uplink_ports: 51/1,52/1,53/1,54/1
+      - model: 7280-QR-C36-M
+        uplink_ports: 25/1,26/1,35/1,36/1

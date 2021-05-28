@@ -84,7 +84,8 @@ ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
 ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
 {% endfor %}
 !
-{{ funcs.admin_mpls_filtering }}
+{{ funcs.admin_mpls_filtering() }}
+!
 {% if item.ports is defined %}
 {% for port in item.ports %}
 {{ funcs.switchport(port) }}

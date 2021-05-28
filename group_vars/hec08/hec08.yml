@@ -212,57 +212,63 @@ hec:
     number:
       - id: 11
         snmp:
-          location: AU-SYD-SY3:L2H5:RZ6-19-40
-          contact: xxxxxxx:ncons-hec07-07.hec.oob.net.sap:1008
-        oob_ip: 10.192.20.134
-        nwmgmt_ip: 198.18.199.11
+          location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U40
+          contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1001
+        oob_ip: 10.192.22.121
+        nwmgmt_ip: 198.19.231.11
       - id: 12
         snmp:
-          location: AU-SYD-SY3:L2H5:RZ6-20-40
-          contact: xxxxxxx:ncons-hec07-07.hec.oob.net.sap:1009
-        oob_ip: 10.192.20.135
-        nwmgmt_ip: 198.18.199.12
+          location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U40
+          contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1002
+        oob_ip: 10.192.22.122
+        nwmgmt_ip: 198.19.231.12
       - id: 13
         snmp:
-          location: AU-SYD-SY3:L2H5:RZ6-22-40
-          contact: xxxxxxx:ncons-hec07-08.hec.oob.net.sap:1008
-        oob_ip: 10.192.20.136
-        nwmgmt_ip: 198.18.199.13
+          location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U40
+          contact: xxxxxxx:ncons-hec08-08.hec.oob.net.sap:1001
+        oob_ip: 10.192.22.123
+        nwmgmt_ip: 198.19.231.13
       - id: 14
         snmp:
-          location: AU-SYD-SY3:L2H5:RZ6-23-40
-          contact: xxxxxxx:ncons-hec07-08.hec.oob.net.sap:1009
-        oob_ip: 10.192.20.137
-        nwmgmt_ip: 198.18.199.14
+          location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U40
+          contact: xxxxxxx:ncons-hec07-08.hec.oob.net.sap:1002
+        oob_ip: 10.192.22.124
+        nwmgmt_ip: 198.19.231.14
   ngdr_underlay:
-    edge_as: 65499
+    edge_as: 65500
   ngdr_overlay:
     remote_hec_nr: "08"
     routes:
-      - network: 100.76.0.0/15
+      - network: 100.78.0.0/15
         interface: Vlan922
-        nexthop: 10.255.180.81
+        nexthop: 10.255.188.81
         vrf: INFRA
     edge_neighbors:
-      - ip: 198.19.251.4
-        hostname: rt-hec07-601
-      - ip: 198.19.251.5
-        hostname: rt-hec07-602
-      - ip: 198.19.251.42
-        hostname: rt-hec07-cwan-01a
-      - ip: 198.19.251.43
-        hostname: rt-hec07-cwan-01b
-      - ip: 198.19.251.46
-        hostname: rt-hec07-vpn-01a
-      - ip: 198.19.251.47
-        hostname: rt-hec07-vpn-01b
+      - ip: 198.19.249.63
+        hostname: rt-hec08-601
+      - ip: 198.19.249.64
+        hostname: rt-hec08-602
+      - ip: 198.19.249.61
+        hostname: rt-hec08-501
+      - ip: 198.19.249.62
+        hostname: rt-hec08-502
+      - ip: 198.19.251.215
+        hostname: rt-hec08-cwan-01a
+      - ip: 198.19.251.216
+        hostname: rt-hec08-cwan-01b
+      - ip: 198.19.251.217
+        hostname: rt-hec08-vpn-01a
+      - ip: 198.19.251.218
+        hostname: rt-hec08-vpn-01b
     remote_edge_routers:
-      - ip: 198.19.249.160
-      - ip: 198.19.249.161
-      - ip: 198.19.249.162
-      - ip: 198.19.249.163
-      - ip: 198.19.249.164
-      - ip: 198.19.249.165
+      - ip: 198.19.249.53     # rt-hec07-501
+      - ip: 198.19.249.54     # rt-hec07-502
+      - ip: 198.19.249.55     # rt-hec07-601
+      - ip: 198.19.249.56     # rt-hec07-602
+      - ip: 198.19.249.205    # rt-hec07-cwan-01a
+      - ip: 198.19.249.206    # rt-hec07-cwan-01b
+      - ip: 198.19.249.207    # rt-hec07-vpn-01a
+      - ip: 198.19.249.208    # rt-hec07-vpn-01b
   lrdr_overlay:
     remote_hec_nr: "07"
   # Are the core vlans 3000 to 3499 needed
@@ -623,7 +629,7 @@ hec:
           - ipv4: 10.255.193.147
             remote_asn: 64536
           - ipv4: 198.19.224.1
-            remote_asn: 64531.1
+            remote_asn: 64531.8
   routes:
     static:
       brdr01:

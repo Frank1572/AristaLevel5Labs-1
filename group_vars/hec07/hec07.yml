@@ -242,25 +242,19 @@ hec:
         nexthop: 10.255.180.81
         vrf: INFRA
     edge_neighbors:
-      - ip: 198.19.251.4
-        hostname: rt-hec07-601
-      - ip: 198.19.251.5
-        hostname: rt-hec07-602
-      - ip: 198.19.251.42
+      - ip: 198.19.251.205
         hostname: rt-hec07-cwan-01a
-      - ip: 198.19.251.43
+      - ip: 198.19.251.206
         hostname: rt-hec07-cwan-01b
-      - ip: 198.19.251.46
+      - ip: 198.19.251.207
         hostname: rt-hec07-vpn-01a
-      - ip: 198.19.251.47
+      - ip: 198.19.251.208
         hostname: rt-hec07-vpn-01b
     remote_edge_routers:
-      - ip: 198.19.249.160
-      - ip: 198.19.249.161
-      - ip: 198.19.249.162
-      - ip: 198.19.249.163
-      - ip: 198.19.249.164
-      - ip: 198.19.249.165
+      - ip: 198.19.251.215
+      - ip: 198.19.251.216
+      - ip: 198.19.251.217
+      - ip: 198.19.251.218
   lrdr_overlay:
     remote_hec_nr: "07"
   # Are the core vlans 3000 to 3499 needed
@@ -1346,6 +1340,115 @@ hec:
       port_channels:
         - id: 42
           description: MLAG-PEER
+  ngdr:
+    - number: 1a
+      oob_ip: 10.192.20.156
+      nwmgmt_ip: 198.18.199.33
+      loopback1_ip: 198.19.251.201
+      remote_ha_ip: 198.19.251.211
+      snmp:
+        location: AU-SY4-L2H5-200-06-19-37
+        contact: xxxxxx:ncons-hec07-07.oob.hec.net.sap:1022
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et93/1
+      ports:
+        - id: 26/1
+          description: rt-hec08-ha-core-01a, Et26/1
+          ip: 10.254.254.0/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.180.90/28
+          virtual_router_ip: 10.255.180.94
+    - number: 1b
+      oob_ip: 10.192.20.157
+      nwmgmt_ip: 198.18.199.34
+      loopback1_ip: 198.19.251.202
+      remote_ha_ip: 198.19.251.212
+      snmp:
+        location: AU-SY4-L2H5-200-06-20-37
+        contact: xxxxxx:ncons-hec07-07.oob.hec.net.sap:1023
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et94/1
+      ports:
+        - id: 26/1
+          description: rt-hec08-ha-core-01b, Et26/1
+          ip: 10.254.254.2/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.180.91/28
+          virtual_router_ip: 10.255.180.94
+    - number: 1c
+      oob_ip: 10.192.20.158
+      nwmgmt_ip: 198.18.199.35
+      loopback1_ip: 198.19.251.203
+      remote_ha_ip: 198.19.251.213
+      snmp:
+        location: AU-SY4-L2H5-200-06-22-37
+        contact: xxxxxx:ncons-hec07-08.oob.hec.net.sap:1024
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et95/1
+      ports:
+        - id: 26/1
+          description: rt-hec08-ha-core-01c, Et26/1
+          ip: 10.254.254.4/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.180.92/28
+          virtual_router_ip: 10.255.180.94
+    - number: 1d
+      oob_ip: 10.192.20.159
+      nwmgmt_ip: 198.18.199.36
+      loopback1_ip: 198.19.251.204
+      remote_ha_ip: 198.19.251.214
+      snmp:
+        location: AU-SY4-L2H5-200-06-23-37
+        contact: xxxxxx:ncons-hec07-08.oob.hec.net.sap:1025
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et96/1
+      ports:
+        - id: 26/1
+          description: rt-hec08-ha-core-01d, Et26/1
+          ip: 10.254.254.6/31
+          mtu: 9214
+          bfd: true
+        - id: 922
+          description: BACKUP-TRANS
+          type: vlan
+          mtu: 9100
+          vrf: INFRA
+          ip: 10.255.180.93/28
+          virtual_router_ip: 10.255.180.94
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

@@ -499,6 +499,7 @@ hec:
       snmp:
         contact: 34844022:ncons-hec07-07.hec.oob.net.sap:1002
         location: SY4L1H5-200-06-22-23
+      oob_ip: 10.192.20.47
       ports:
         - id: 1
           description: syddc01-wan-03-admin, Et1/18
@@ -506,15 +507,19 @@ hec:
           speed: 10000full
         - id: 2
           description: fw-hec07-01, eth1-03
+          speed: 10000full
           po: 1
         - id: 3
           description: fw-hec07-02, eth1-03
+          speed: 10000full
           po: 2
         - id: 47
           description: sw-hec07-fwt-01b, Et47
+          speed: 10000full
           po: 42
         - id: 48
           description: sw-hec07-fwt-01b, Et47
+          speed: 10000full
           po: 42
         - id: 915
           description: FWT-TRANS
@@ -535,8 +540,6 @@ hec:
         - id: 2
           description: fw-hec07-02
           trunk: 915
-        - id: 42
-          description: MLAG-PEER
       bgp:
         router_id: 198.19.251.190
         local_asn: 64531.7
@@ -549,6 +552,7 @@ hec:
       snmp:
         contact: 34844023:ncons-hec07-08.hec.oob.net.sap:1002
         location: SY4L1H5-200-06-23-23
+      oob_ip: 10.192.20.48
       ports:
         - id: 1
           description: syddc01-wan-04-admin, Et1/18
@@ -556,15 +560,19 @@ hec:
           speed: 10000full
         - id: 2
           description: fw-hec07-01, eth1-04
+          speed: 10000full
           po: 1
         - id: 3
           description: fw-hec07-02, eth1-04
+          speed: 10000full
           po: 2
         - id: 47
           description: sw-hec07-fwt-01a, Et47
+          speed: 10000full
           po: 42
         - id: 48
           description: sw-hec07-fwt-01a, Et48
+          speed: 10000full
           po: 42
         - id: 915
           description: FWT-TRANS
@@ -584,8 +592,6 @@ hec:
         - id: 2
           description: fw-hec07-02
           trunk: 915
-        - id: 42
-          description: MLAG-PEER
       bgp:
         router_id: 198.19.251.191
         local_asn: 64531.7
@@ -598,109 +604,40 @@ hec:
     static:
       brdr01:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.240.1
+          nexthop: 198.19.246.1
           interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24
-          interface: Null0
-          metric: 240
-        - destination: 10.254.200.1/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.110/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.111/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.112/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.113/32
           interface: Null0
           metric: 240
       brdr03:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.240.193
+          nexthop: 198.19.246.193
           interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24
           interface: Null0
           metric: 240
-        - destination: 10.254.200.1/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.110/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.111/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.112/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.113/32
-          interface: Null0
-          metric: 240
       brdr04:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.230.1
+          nexthop: 198.19.246.1
           interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24 # to be checked
           interface: Null0
           metric: 240
       fwt01:
-        - destination: 100.124.0.0/19
-          nexthop: 10.255.241.12
+        - destination: 100.124.128.0/21
+          nexthop: 10.255.180.12
           interface: Vlan915
-        - destination: 100.127.16.0/21
-          nexthop: 10.255.241.7
+        - destination: 169.145.216.0/21
+          nexthop: 10.255.180.12
           interface: Vlan915
-        - destination: 147.204.24.0/22
-          nexthop: 10.255.241.12
+        - destination: 198.18.192.0/19
+          nexthop: 10.255.180.12
           interface: Vlan915
-        - destination: 147.204.144.0/21
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.18.0.0/19
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.0.0/19
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.190.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.192.0/23
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.196.0/23
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.198.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.208.0/20
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.224.128/28
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.224.208/28
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.226.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.228.0/24
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.234.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.240.0/24
-          nexthop: 10.255.241.12
+        - destination: 198.19.246.0/24
+          nexthop: 10.255.180.12
           interface: Vlan915
         - destination: 0.0.0.0/0
           nexthop: 10.178.136.1

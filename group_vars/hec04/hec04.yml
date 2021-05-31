@@ -7560,8 +7560,8 @@ hec:
       trunk: all
   - number: 2b
     snmp:
-      location: 34412891:ncons-hec04-oob-02.net:1004
-      contact: US-CA01-P30-C51-U35
+      location: US-CA01-P30-C51-U35
+      contact: 34412891:ncons-hec04-oob-02.net:1004
     oob_ip: 10.9.242.17
     nwmgmt_ip: 198.19.158.24
     uplinks:

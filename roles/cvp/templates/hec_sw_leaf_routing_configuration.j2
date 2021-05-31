@@ -64,22 +64,27 @@
 {% set offset = spine_lc|int - 3 %}
 {% set cell_id = cell_id + (offset * 18) %}
 {% endif %}
-{% set asn_part = cell_id + 11000 %}
+{% if allbrdrs.pod is not defined %}
 {% set asn_part = cell_id + 10000 %}
+{% set asn_spine_part = 10000 %}
+{% else %}
+{% set asn_part = cell_id + (10000 * allbrdrs.pod|int) %}
+{% set asn_spine_part = 10000 * allbrdrs.pod|int %}
+{% endif %}
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
 {% set _ = asn_generated_global.append(asn_generated) %}
-{% set asn_spine = '641' + hec.hec_nr + '.10000' %}
+{% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}
 {% if leafid == 'b' %}
-{% set Lo1 = cell_id + 100 %}
+{% set Lo1 = (cell_id % 100) + 100 %}
 {% else %}
-{% set Lo1 = cell_id %}
+{% set Lo1 = cell_id % 100 %}
 {% endif %}
 interface Loopback1
    description Router-ID
-   ip address 10.100.1.{{ Lo1 }}/32
+   ip address 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
 !
 interface Loopback2
-   ip address 10.200.1.{{ cell_id }}/32
+   ip address 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32
 !
 {% if spine_lc|int > 0 %}
 {% set offset = spine_lc|int - 3 %}
@@ -120,7 +125,7 @@ route-map RM-EDGE deny 20
 !
 router bgp {{ asn_generated }}
    bgp asn notation asdot
-   router-id 10.100.1.{{ Lo1 }}
+   router-id 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}
    maximum-paths 8 ecmp 16
    !
    neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
@@ -157,7 +162,15 @@ router bgp {{ asn_generated }}
 {% endif %}
    !
 {% for i in range(1,5) %}
+{% if allbrdrs.pod is not defined %}
    neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+{% else %}
+{% if allbrdrs.pod == 1 %}
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+{% else %}
+   neighbor 10.{{ loop.index + 10 + (10 * (allbrdrs.pod - 1)) }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+{% endif %}
+{% endif %}
 {% endfor %}
 {% set mlag_ip_peer  = hec.fabric.mlag_a_ip %}
 {% if leafid == 'a' %}
@@ -165,8 +178,8 @@ router bgp {{ asn_generated }}
 {% endif %}
    neighbor {{ mlag_ip_peer }} {{eos_cmd.c_neighbor_peer_group}} MLPEER-PG
    !
-   network 10.100.1.{{ Lo1 }}/32
-   network 10.200.1.{{ cell_id }}/32
+   network 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
+   network 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32
    network {{allbrdrs.nwmgmt_ip}}/32
 {% if (brdrtype == '2') and (leafpurpose == 'b') %}
    network {{ hec.inband_trans_net }}
@@ -182,7 +195,15 @@ router bgp {{ asn_generated }}
    neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
    !
 {% for i in range(11,15) %}
+{% if allbrdrs.pod is not defined %}
    neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% else %}
+{% if allbrdrs.pod == 1 %}
+   neighbor 10.100.0.{{i}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% else %}
+   neighbor 10.1{{ allbrdrs.pod - 1 }}0.{{ hec.hec_nr|int }}.{{ i + (10 * (allbrdrs.pod - 1))}} {{eos_cmd.c_neighbor_peer_group}} EVPN-PG
+{% endif %}
+{% endif %}
 {% endfor %}
    !
    address-family evpn
@@ -196,7 +217,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd 10.200.1.{{ cell_id }}:1
+      rd 10.{{ 200 + (cell_id/100) }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}:1
       route-target both 1:1
       redistribute learned
 {% set ns = namespace(vlans_right_side_end=0) %}
@@ -210,8 +231,8 @@ router bgp {{ asn_generated }}
 {% if leafpurpose != 'b' %}
       vlan 5-{{ns.vlans_right_side_end}}
 {% else %}
-{% if (brdrtype == '1') or (brdrtype == '3') %}
-{% if hec.core_vlans|default('', true) %}
+{% if (brdrtype == '1') or (brdrtype == '3') or (brdrtype == '4') or (brdrtype == '5') %}
+{% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
       vlan 5-3499
 {% else %}
       vlan 5-2499
@@ -235,7 +256,7 @@ interface Vxlan1
 {% endfor %}
 {% endif %}{# END storageleaf - remove vni for vlan 30 & 920 #}
 {% if leafpurpose == 'b' %}
-{% if (brdrtype == '1') or (brdrtype == '3') %}
+{% if (brdrtype == '1') or (brdrtype == '3') or (brdrtype == '4') or (brdrtype == '5') %}
 {#
   we need to have vlans and the vni mapping for 3000-3499
   if the core routers and wan/vpn routers are still doing

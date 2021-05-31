@@ -1,5 +1,6 @@
 {# this is to have to macros available that are used for switch port generation #}
 {% import "templates/libs.j2" as funcs with context%}
+{% set leafid = item.number | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
 hostname sw-hec{{ hec.hec_nr }}-fwt-{{ item.number }}
 !
 snmp-server contact {{ item.snmp.contact}}
@@ -14,7 +15,9 @@ logging source-interface Vlan915
 !
 {{eos_cmd.c_ntp_source}} Vlan915
 !
-sflow source-interface Vlan915 
+snmp-server {{eos_cmd.c_snmp_source_interface}} Vlan915
+!
+sflow source-interface Vlan915
 !
 mlag configuration
    domain-id MLAG-FWT-{{ item.number[:2] }}
@@ -72,7 +75,6 @@ interface Management1
    ip address {{item.oob_ip}}/{{hec.oob_mask}}
 !
 {% endif %}
-ip route {{ hec.inband_trans_cvp }}/32 {{ hec.oob_cvp }}
 !
 ip routing
 no ip routing vrf OOB
@@ -82,14 +84,7 @@ ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
 ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
 {% endfor %}
 !
-route-map ADMIN_MPLS_IN deny 10
-   match ip address prefix-list PREF_ADMIN_MPLS
-!
-route-map ADMIN_MPLS_IN permit 20
-   match ip address prefix-list MATCH_ANY
-!
-route-map ADMIN_MPLS_OUT permit 10
-   match ip address prefix-list PREF_ADMIN_MPLS
+{{ funcs.admin_mpls_filtering() }}
 !
 {% if item.ports is defined %}
 {% for port in item.ports %}

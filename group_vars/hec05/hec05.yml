@@ -1744,7 +1744,7 @@ hec:
       90 permit vlan 50 0x000 ip 198.18.144.0/22 host 198.18.144.1
       100 deny vlan 50 0x000 ip 198.18.144.0/22 198.18.144.0/22 log
       110 permit vlan 50 0x000 ip 198.18.144.0/22
-      120 permit vlan 50 0x000 ip any any log
+      120 permit vlan 50 0x000 ip any any
       130 permit vlan 60 0x000 icmp any any
       140 permit vlan 60 0x000 pim any any
       150 permit vlan 60 0x000 92 any any

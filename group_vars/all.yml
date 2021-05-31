@@ -59,6 +59,9 @@ vlans:
     # customer backend vlan networks
     - name: cust_backend
       range: 2001-2499
+    # per customer hana 2 hana sync networks configured by CFM
+    - name: hana2hana
+      range: 2500-2999
     # customer transit networks between core and wan/vpn routers
     #  only applicable where subinterfaces still used
     - name: cust_static_trans

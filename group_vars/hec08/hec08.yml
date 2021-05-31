@@ -2,9 +2,8 @@
 eos:
   new_syntax: true
 #
-# HEC87-NW-MGMT01 - 198.19.247.0/25 (vlan900/lb/rt/sw)
-# HEC08-NW-MGMT02 - 198.19.247.128/25 (vlan900/lb/rt/sw)
-# HEC08-NW-MGMT03 - 198.18.231.0/24 (fabric management)
+# HEC08-NW-MGMT01 - 198.19.247.0/24 (vlan900/lb/rt/sw)
+# HEC08-NW-MGMT02 - 198.18..0/24 (fabric management)
 # HEC08-NW-OOB-MGMT01 - 10.192.22.0/23
 # grep naa-hec08 /ens/docu/exports/dns/hosts
 # 10.192.22.46 naa-hec08-01.hec.oob.net.sap
@@ -61,18 +60,14 @@ cvp:
   password: arista
   backupuser: cvpbkp
   eth1_routes:
-  # HEC08-NW-MGMT01 198.19.247.0/25 (all router and ipmis)
+  # HEC08-NW-MGMT01 198.19.247.0/24 (all router and ipmis)
     - prefix: 198.19.247.0
-      mask: 25
-      nexthop: 198.19.247.1
-  # HEC08-NW-MGMT02 198.19.247.128/25 (all router and ipmis)
-    - prefix: 198.19.247.128
-      mask: 25
-      nexthop: 198.19.247.129
-  # HEC01-NW-MGMT03 (all fab)
-    - prefix: 198.18.231.0
       mask: 24
-      nexthop: 198.18.231.1
+      nexthop: 198.19.247.1
+  # HEC01-NW-MGMT02 (all fab Loopback900)
+    - prefix: 198.18..0
+      mask: 24
+      nexthop: 198.18..1
   dhcp:
     prefix: 10.192.22.0
     mask: 255.255.254.0
@@ -105,8 +100,8 @@ hec:
   vl900_mask: 24
   vl900_def_gw: 198.19.247.1
   vl900_net: 198.19.247.0/24
-  lo900_net: 198.19.231.0/24
-  lo900_prefix: 198.19.231
+  lo900_net: 198.18.231.0/24
+  lo900_prefix: 198.18.231
   inband_trans_brdr: 10.255.181.78
   inband_trans_brdr_mac: 00:1c:73:00:00:96
   inband_trans_net: 10.255.181.64/28
@@ -137,17 +132,6 @@ hec:
         - ipv4: 169.145.210.65
         - ipv4: 169.145.213.69
         - ipv4: 147.204.146.42
-    oob:
-      servers:
-        - ipv4: 10.33.142.33
-  radius1: 169.145.210.74
-  radius2: 169.145.210.74
-  radius:
-    oob:
-      servers:
-        - ipv4: 10.17.122.21
-        - ipv4: 10.17.121.35
-  is_tacacs: True
   tacacs:
     nat:
       servers:
@@ -215,25 +199,25 @@ hec:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U40
           contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1001
         oob_ip: 10.192.22.121
-        nwmgmt_ip: 198.19.231.11
+        nwmgmt_ip: 198.18.231.11
       - id: 12
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U40
           contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1002
         oob_ip: 10.192.22.122
-        nwmgmt_ip: 198.19.231.12
+        nwmgmt_ip: 198.18.231.12
       - id: 13
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U40
           contact: xxxxxxx:ncons-hec08-08.hec.oob.net.sap:1001
         oob_ip: 10.192.22.123
-        nwmgmt_ip: 198.19.231.13
+        nwmgmt_ip: 198.18.231.13
       - id: 14
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U40
           contact: xxxxxxx:ncons-hec07-08.hec.oob.net.sap:1002
         oob_ip: 10.192.22.124
-        nwmgmt_ip: 198.19.231.14
+        nwmgmt_ip: 198.18.231.14
   ngdr_underlay:
     edge_as: 65500
   ngdr_overlay:
@@ -295,7 +279,7 @@ hec:
       type: core
       snmp:
         contact: 34844057:ncons-hec08-07.hec.oob.net.sap:1019
-        location: AU-SYD-SYD2-SYD10-S120-5-17-U23
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U23
       ports:
         - id: 1
           description: Syddc02-wan-03-admin, Et1/13
@@ -391,7 +375,7 @@ hec:
       type: core
       snmp:
           contact: 34844058:ncons-hec08-07.hec.oob.net.sap:1020
-          location: AU-SYD-SYD2-SYD10-S120-5-18-U23
+          location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U23
       ports:
         - id: 1
           description: Syddc02-wan-04-admin, Et1/13
@@ -491,7 +475,7 @@ hec:
           ip: 10.192.22.4/23
       snmp:
         contact: 34844061:ncons-hec08-07.hec.oob.net.sap:1021
-        location: AU-SYD-SYD2-SYD10-S120-5-17-U25
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U25
     - number: "03"
       ports:
         - id: 21
@@ -500,7 +484,7 @@ hec:
           ip: 10.192.22.5/23
       snmp:
         contact: 34844062:ncons-hec08-08.hec.oob.net.sap:1021
-        location: AU-SYD-SYD2-SYD10-S120-5-18-U25
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U25
     - number: "04"
       ports:
         - id: 21
@@ -509,7 +493,7 @@ hec:
           ip: 10.192.22.6/23
       snmp:
         contact: 34844063:ncons-hec08-07.hec.oob.net.sap:1022
-        location: AU-SYD-SYD2-SYD10-S120-6-4-U25
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U25
     - number: "05"
       ports:
         - id: 21
@@ -527,12 +511,12 @@ hec:
           ip: 10.192.22.155/23
       snmp:
         contact:  34719367:ncons-hec08-04.hec.oob.net.sap:1005
-        location: AU-SYD-SYD2-SYD10-S120-8-11-U28
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-8-11-U28
   fwt:
     - number: "01a"
       snmp:
         contact: 34844059:ncons-hec08-08.hec.oob.net.sap:1019
-        location: AU-SYD-SYD2-SYD10-S120-6-4-U23
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U23
       oob_ip: 10.192.22.47/23
       ports:
         - id: 1
@@ -583,7 +567,7 @@ hec:
     - number: "01b"
       snmp:
         contact: 34844060:ncons-hec08-08.hec.oob.net.sap:1020
-        location: AU-SYD-SYD2-SYD10-S120-6-5-U23
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U23
       oob_ip: 10.192.22.48
       ports:
         - id: 1
@@ -634,58 +618,24 @@ hec:
     static:
       brdr01:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.240.1
+          nexthop: 198.19.247.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 10.200.1.0/24
-          interface: Null0
-          metric: 240
-        - destination: 10.254.200.1/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.110/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.111/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.112/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.113/32
-          interface: Null0
-          metric: 240
+      brdr02:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.247.1
+          interface: Vlan900
+          redist_bgp: true
       brdr03:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.240.193
+          nexthop: 198.19.247.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 10.200.1.0/24
-          interface: Null0
-          metric: 240
-        - destination: 10.254.200.1/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.110/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.111/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.112/32
-          interface: Null0
-          metric: 240
-        - destination: 198.19.251.113/32
-          interface: Null0
-          metric: 240
       brdr04:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.230.1
+          nexthop: 198.19.247.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 10.200.1.0/24 # to be checked
-          interface: Null0
-          metric: 240
       fwt01:
         - destination: 169.145.208.0/21
           nexthop: 10.255.181.12
@@ -702,10 +652,10 @@ hec:
   brdr:
     - number: 1a
       snmp:
-        location: AU-SY4-L2H5-200-06-19-35
-        contact: xxxxxx:ncons-hec07-07.hec.oob.net.sap:1010
-      oob_ip: 10.192.20.138
-      nwmgmt_ip: 198.18.199.15
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U35
+        contact: 34912803:ncons-hec08-07.hec.oob.net.sap:1003
+      oob_ip: 10.192.22.125
+      nwmgmt_ip: 198.18.231.15
       uplinks:
         - 25/1
         - 26/1
@@ -716,45 +666,45 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.130/25
+          ip: 198.19.247.74/24
           vrrp:
             - id: 250
               priority: 120
-              ip: 198.19.246.132
+              ip: 198.19.247.76
         - id: 961
           type: vlan
-          description: Transfer to rt-hec07-cwan-01a
+          description: Transfer to rt-hec08-cwan-01a
           mtu: 9100
           ip: 10.254.253.1/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.0
         - id: 33/1
-          description: rt-hec07-cwan-01a, Et1/1
+          description: rt-hec08-cwan-01a, Et1/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec07-inet-01a, Et1/1
+          description: rt-hec08-inet-01a, Et1/1
           po: 1401
           speed: 100gfull
         - id: 30/1
-          description: sw-hec07-brdr-01b, Et30/1
+          description: sw-hec08-brdr-01b, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-brdr-01b, Et31/1
+          description: sw-hec08-brdr-01b, Et31/1
           po: 42
       port_channels:
         - id: 1401
-          description: rt-hec07-inet-01a
+          description: rt-hec08-inet-01a
           trunk: all
         - id: 1501
-          description: rt-hec07-cwan-01a
+          description: rt-hec08-cwan-01a
           trunk: all
     - number: 1b
       snmp:
-        location: AU-SY4-L2H5-200-06-20-35
-        contact: xxxxxx:ncons-hec07-07.hec.oob.net.sap:1011
-      oob_ip: 10.192.20.139
-      nwmgmt_ip: 198.18.199.16
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U35
+        contact: 34912804:ncons-hec08-07.hec.oob.net.sap:1004
+      oob_ip: 10.192.22.126
+      nwmgmt_ip: 198.18.231.16
       uplinks:
         - 25/1
         - 26/1
@@ -765,45 +715,45 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.131/25
+          ip: 198.19.247.75/24
           vrrp:
             - id: 250
               priority: 110
-              ip: 198.19.246.132
+              ip: 198.19.247.76
         - id: 962
           type: vlan
-          description: Transfer to rt-hec07-cwan-01a
+          description: Transfer to rt-hec08-cwan-01a
           mtu: 9100
           ip: 10.254.253.3/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.4
         - id: 33/1
-          description: rt-hec07-cwan-01a, Et1/1
+          description: rt-hec08-cwan-01a, Et1/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec07-inet-01a, Et1/1
+          description: rt-hec08-inet-01a, Et1/1
           po: 1401
           speed: 100gfull
         - id: 30/1
-          description: sw-hec07-brdr-01b, Et30/1
+          description: sw-hec08-brdr-01a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-brdr-01b, Et31/1
+          description: sw-hec08-brdr-01a, Et31/1
           po: 42
       port_channels:
         - id: 1401
-          description: rt-hec07-inet-01a
+          description: rt-hec08-inet-01a
           trunk: all
         - id: 1501
-          description: rt-hec07-cwan-01a
+          description: rt-hec08-cwan-01a
           trunk: all
     - number: 2a
       snmp:
-        location: AU-SY4-L2H5-200-06-19-33
-        contact: xxxxxx:ncons-hec07-07.oob.hec.net.sap:1014
-      oob_ip: 10.192.20.140
-      nwmgmt_ip: 198.18.199.17
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U33
+        contact: 34912825:ncons-hec08-07.oob.hec.net.sap:1007
+      oob_ip: 10.192.22.127
+      nwmgmt_ip: 198.18.231.17
       uplinks:
         - 51/1
         - 52/1
@@ -811,69 +761,105 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et3/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.247.77/24
+          vrrp:
+            - id: 250
+              priority: 120
+              ip: 198.19.247.79
+        - id: 965
+          type: vlan
+          description: Transfer to rt-hec08-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.9/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.8
+        - id: 967
+          type: vlan
+          description: ->Transfer to rt-hec08-vpn-01b
+          ip: 10.254.253.13/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.12
+    mtu: 9100
         - id: 1
-          description: rt-hec07-vpn-01a, Et1
+          description: rt-hec08-vpn-01a, Et1
           trunk: all
           speed: 10000full
         - id: 2
-          description: rt-hec07-vpn-01a, Et2
+          description: rt-hec08-vpn-01a, Et2
           trunk: all
           speed: 10000full
         - id: 3
-          description: rt-hec07-vpn-01b, Et1
+          description: rt-hec08-vpn-01b, Et1
           trunk: all
           speed: 10000full
         - id: 4
-          description: rt-hec07-vpn-01b, Et2
+          description: rt-hec08-vpn-01b, Et2
           access_vlan: all
           speed: 10000full
         - id: 5
-          description: naa-hec07-01, e11 (inband)
+          description: naa-hec08-01, e11 (inband)
           po: 48
           access_vlan: 916
           speed: 1000full
         - id: 6
-          description: lb-hec07-01, eth1.1
+          description: lb-hec08-01, eth1.1
           speed: 10000full
           trunk: 940
         - id: 7
-          description: lb-hec07-01, eth1.2
+          description: lb-hec08-01, eth1.2
           speed: 10000full
           trunk: 85,90,95,100,2000-2499
         - id: 8
-          description: lb-hec07-01, eth1.3
+          description: lb-hec08-01, eth1.3
           trunk: 900
           speed: 10000full
         - id: 9
-          description: lb-HEC07-01, eth1.4
+          description: lb-hec08-01, eth1.4
           access_vlan: 902
           speed: 10000full
+        - id: 13
+          description: fw-hec08-01, eth1
+          po: 10
+          speed: 10000full
+        - id: 14
+          description: fw-hec08-02, eth1
+          po: 20
+          speed: 10000full
         - id: 49/1
-          description: sw-hec07-brdr-02b, Et49/1
+          description: sw-hec08-brdr-02b, Et49/1
           po: 42
         - id: 50/1
-          description: sw-hec07-brdr-02b, Et50/1
+          description: sw-hec08-brdr-02b, Et50/1
           po: 42
         - id: 916
           description: FW-TRANS
           type: vlan
-          ip: 10.255.180.76/28
+          ip: 10.255.181.76/28
       port_channels:
+        - id: 10
+          description: ->fw-hec08-01
+          trunk: 916
+        - id: 20
+          description: ->fw-hec08-02
+          trunk: 916
         - id: 1503
-          description: ->rt-hec07-vpn-01a
+          description: ->rt-hec08-vpn-01a
           trunk: all
         - id: 1504
-          description: ->rt-hec07-vpn-01b
+          description: ->rt-hec08-vpn-01b
           trunk: all
         - id: 48
-          description: ->naa-hec07-01, in-band
+          description: ->naa-hec08-01, in-band
           access_vlan: 916
     - number: 2b
       snmp:
-        location: AU-SY4-L2H5-200-06-20-33
-        contact: xxxxxx:ncons-hec07-07.oob.hec.net.sap:1015
-      oob_ip: 10.192.20.141
-      nwmgmt_ip: 198.18.199.18
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U33
+        contact: 34912826:ncons-hec08-07.oob.hec.net.sap:1008
+      oob_ip: 10.192.22.128
+      nwmgmt_ip: 198.18.231.18
       uplinks:
         - 51/1
         - 52/1
@@ -881,42 +867,72 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et4/1
       ports:
+        - id: 900
+          type: vlan
+          description: NW-MGMT
+          ip: 198.19.247.78/24
+          vrrp:
+            - id: 250
+              priority: 110
+              ip: 198.19.247.79
+        - id: 966
+          type: vlan
+          description: Transfer to rt-hec08-vpn-01a
+          mtu: 9100
+          ip: 10.254.253.11/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.10
+        - id: 968
+          type: vlan
+          description: Transfer to rt-hec08-vpn-01b
+          ip: 10.254.253.15/31
+          ngdr_underlay: true
+          ngdr_underlay_neighbor: 10.254.253.14
+          mtu: 9100
         - id: 1
-          description: rt-hec07-vpn-01a, Et3
+          description: rt-hec08-vpn-01a, Et3
           trunk: all
           speed: 10000full
         - id: 2
-          description: rt-hec07-vpn-01a, Et4
+          description: rt-hec08-vpn-01a, Et4
           trunk: all
           speed: 10000full
         - id: 3
-          description: rt-hec07-vpn-01b, Et3
+          description: rt-hec08-vpn-01b, Et3
           trunk: all
           speed: 10000full
         - id: 4
-          description: rt-hec07-vpn-01b, Et4
+          description: rt-hec08-vpn-01b, Et4
           access_vlan: all
           speed: 10000full
         - id: 5
-          description: naa-hec07-01, e12 (inband)
+          description: naa-hec08-01, e12 (inband)
           po: 48
           access_vlan: 916
           speed: 1000full
         - id: 6
-          description: lb-hec07-02, eth1.1
+          description: lb-hec08-02, eth1.1
           speed: 10000full
           trunk: 940
         - id: 7
-          description: lb-hec07-02, eth1.2
+          description: lb-hec08-02, eth1.2
           speed: 10000full
           trunk: 85,90,95,100,2000-2499
         - id: 8
-          description: lb-hec07-02, eth1.3
+          description: lb-hec08-02, eth1.3
           trunk: 900
           speed: 10000full
         - id: 9
-          description: lb-HEC07-02, eth1.4
+          description: lb-hec08-02, eth1.4
           access_vlan: 902
+          speed: 10000full
+        - id: 13
+          description: fw-hec08-01, eth2
+          po: 10
+          speed: 10000full
+        - id: 14
+          description: fw-hec08-02, eth2
+          po: 20
           speed: 10000full
         - id: 49/1
           description: sw-hec07-brdr-02a, Et49/1
@@ -929,21 +945,27 @@ hec:
           type: vlan
           ip: 10.255.180.77/28
       port_channels:
+        - id: 10
+          description: ->fw-hec08-01
+          trunk: 916
+        - id: 20
+          description: ->fw-hec08-02
+          trunk: 916
         - id: 1503
-          description: ->rt-hec07-vpn-01a
+          description: ->rt-hec08-vpn-01a
           trunk: all
         - id: 1504
-          description: ->rt-hec07-vpn-01b
+          description: ->rt-hec08-vpn-01b
           trunk: all
         - id: 48
-          description: ->naa-hec07-01, in-band
+          description: ->naa-hec08-01, in-band
           access_vlan: 916
     - number: 3a
       snmp:
-        location: AU-SY4-L2H5-200-06-19-31
-        contact: xxxxxx:ncons-hec07-07.hec.oob.net.sap:1012
-      oob_ip: 10.192.20.142
-      nwmgmt_ip: 198.18.199.19
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U31
+        contact: 34912805:ncons-hec08-07.hec.oob.net.sap:1005
+      oob_ip: 10.192.22.129
+      nwmgmt_ip: 198.18.231.19
       uplinks:
         - 25/1
         - 26/1
@@ -954,45 +976,45 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.136/25
+          ip: 198.19.247.80/24
           vrrp:
             - id: 250
               priority: 120
-              ip: 198.19.246.138
+              ip: 198.19.247.82
         - id: 963
           type: vlan
-          description: Transfer to rt-hec07-cwan-01b
+          description: Transfer to rt-hec08-cwan-01b
           mtu: 9100
           ip: 10.254.253.5/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.6
         - id: 33/1
-          description: rt-hec07-cwan-01b, Et1/1
+          description: rt-hec08-cwan-01b, Et1/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec07-inet-01b, Et1/1
+          description: rt-hec08-inet-01b, Et1/1
           po: 1401
           speed: 100gfull
         - id: 30/1
-          description: sw-hec07-brdr-03b, Et30/1
+          description: sw-hec08-brdr-03b, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-brdr-03b, Et31/1
+          description: sw-hec08-brdr-03b, Et31/1
           po: 42
       port_channels:
         - id: 1401
-          description: rt-hec07-inet-01b
+          description: rt-hec08-inet-01b
           trunk: all
         - id: 1501
-          description: rt-hec07-cwan-01b
+          description: rt-hec08-cwan-01b
           trunk: all
     - number: 3b
       snmp:
-        location: AU-SY4-L2H5-200-06-20-31
-        contact: xxxxxx:ncons-hec07-07.hec.oob.net.sap:1013
-      oob_ip: 10.192.20.143
-      nwmgmt_ip: 198.18.199.20
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U31
+        contact: 34912816:ncons-hec08-07.hec.oob.net.sap:1006
+      oob_ip: 10.192.22.130
+      nwmgmt_ip: 198.18.231.20
       uplinks:
         - 25/1
         - 26/1
@@ -1003,46 +1025,46 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.137/25
+          ip: 198.19.247.81/24
           vrrp:
             - id: 250
               priority: 110
-              ip: 198.19.246.138
+              ip: 198.19.247.82
         - id: 964
           type: vlan
-          description: Transfer to rt-hec07-cwan-01b
+          description: Transfer to rt-hec08-cwan-01b
           mtu: 9100
           ip: 10.254.253.7/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.8
         - id: 33/1
-          description: rt-hec07-cwan-01b, Et2/1
+          description: rt-hec08-cwan-01b, Et2/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec07-inet-01b, Et2/1
+          description: rt-hec08-inet-01b, Et2/1
           po: 1401
           speed: 100gfull
         - id: 30/1
-          description: sw-hec07-brdr-03a, Et30/1
+          description: sw-hec08-brdr-03a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-brdr-03a, Et31/1
+          description: sw-hec08-brdr-03a, Et31/1
           po: 42
       port_channels:
         - id: 1401
-          description: rt-hec07-inet-01b
+          description: rt-hec08-inet-01b
           trunk: all
         - id: 1501
-          description: rt-hec07-cwan-01b
+          description: rt-hec08-cwan-01b
           trunk: all
     - number: 4a # Special leaf 7280QR-C36 towards legacy
       is_l2l3_transit: true
       snmp:
-        location: AU-SY4-L2H5-200-06-22-35
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1010
-      oob_ip: 10.192.20.144
-      nwmgmt_ip: 198.18.199.21
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U35
+        contact: 34912817:ncons-hec08-08.hec.oob.net.sap:1003
+      oob_ip: 10.192.22.131
+      nwmgmt_ip: 198.18.231.21
       uplinks:
         - 25/1
         - 26/1
@@ -1053,18 +1075,20 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.139/25
+          ip: 198.19.247.83/24
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
               priority: 105
-              ip: 198.19.246.141
+              ip: 198.19.247.85
               auth: FWTTRANS
-        - id: 32/1 # 100G Link to L2 core switch
-          description: sw-hec07-103 Et29/1
+        - id: 1/1 # 100G Link to L2 core switch
+          description: sw-hec07-103 Et5/23
           po: 101
-        - id: 33/1 # 100G Link to L2 core switch
-          description: sw-hec07-104 Et29/1
+          speed: 40gfull
+        - id: 2/1 # 100G Link to L2 core switch
+          description: sw-hec07-104 Et5/23
           po: 101
+          speed: 40gfull
         - id: 30/1
           description: sw-hec07-brdr-04b, Et30/1
           po: 42
@@ -1075,37 +1099,40 @@ hec:
         - id: 42
           description: MLAG-PEER
         - id: 101
-          description: ->sw-hec07-103/104, Po101
+          description: ->sw-hec08-101/102, Po101
           trunk: all
     - number: 4b # Special leaf 7280QR-C36 towards legacy
       is_l2l3_transit: true
       snmp:
-        location: AU-SY4-L2H5-200-06-23-35
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1011
-      oob_ip: 10.192.20.145
-      nwmgmt_ip: 198.18.199.22
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U35
+        contact: 34912818:ncons-hec08-08.hec.oob.net.sap:1004
+      oob_ip: 10.192.22.132
+      nwmgmt_ip: 198.18.231.22
       uplinks:
         - 25/1
         - 26/1
         - 35/1
         - 36/1
+        #uplinks_speed: 40gfull
       spine_port_towards_leaf: Et8/1
       ports:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.140/25
+          ip: 198.19.247.84/24
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
               priority: 105
-              ip: 198.19.246.141
+              ip: 198.19.247.85
               auth: FWTTRANS
-        - id: 32/1 # 100G Link to L2 core switch
-          description: sw-hec07-103 Et30/1
+        - id: 1/1 # 40G Link to L2 core switch
+          description: sw-hec08-103 Et5/24
           po: 101
-        - id: 33/1 # 100G Link to L2 core switch
-          description: sw-hec07-104 Et30/1
+          speed: 40gfull
+        - id: 1/2 # 40G Link to L2 core switch
+          description: sw-hec08-104 Et5/24
           po: 101
+          speed: 40gfull
         - id: 30/1
           description: sw-hec07-brdr-04a, Et30/1
           po: 42
@@ -1116,67 +1143,66 @@ hec:
         - id: 42
           description: MLAG-PEER
         - id: 101
-          description: ->sw-hec07-103/104, Po101
+          description: ->sw-hec08-101/102, Po101
           trunk: all
   str:
     - number: 1a
       snmp:
-        location: AU-SY4-L2H5-200-06-22-33
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1012
-      oob_ip: 10.192.20.146
-      nwmgmt_ip: 198.18.199.23
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U33
+        contact: 34912819:ncons-hec08-08.hec.oob.net.sap:1005
+      oob_ip: 10.192.22.133
+      nwmgmt_ip: 198.18.231.23
       spine_port_towards_leaf: Et9/1
       uplinks:
         - 25/1
         - 26/1
         - 35/1
         - 36/1
-      uplinks_speed: 40gfull
+      #uplinks_speed: 40gfull
       ports:
         - id: 30/1
-          description: sw-hec07-str-01b, Et30/1
+          description: sw-hec08-str-01b, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-str-01b, Et31/1
+          description: sw-hec08-str-01b, Et31/1
           po: 42
         - id: 32/1
-          description: rt-hec07-str-01a, Et1/1
+          description: rt-hec08-str-01a, Et1/1
           po: 700
         - id: 33/1
-          description: rt-hec07-str-0ba, Et1/1
+          description: rt-hec08-str-01b, Et1/1
           po: 700
-          speed: 100gfull
-      port_channels:
+          port_channels:
         - id: 42
           description: MLAG-PEER
         - id: 700
-          description: ->sw-hec07-str-01a/b
+          description: ->rt-hec07-str-01a/b
           trunk: 110,130,140,900,920,922,2001-2999
     - number: 1b
       snmp:
-        location: AU-SY4-L2H5-200-06-23-33
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1013
-      oob_ip: 10.192.20.147
-      nwmgmt_ip: 198.18.199.24
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U33
+        contact: 34912820:ncons-hec08-08.hec.oob.net.sap:1006
+      oob_ip: 10.192.22.134
+      nwmgmt_ip: 198.18.231.24
       spine_port_towards_leaf: Et10/1
       uplinks:
         - 25/1
         - 26/1
         - 35/1
         - 36/1
-      uplinks_speed: 40gfull
+      #uplinks_speed: 40gfull
       ports:
         - id: 30/1
-          description: sw-hec07-str-01a, Et30/1
+          description: sw-hec08-str-01a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-str-01a, Et31/1
+          description: sw-hec08-str-01a, Et31/1
           po: 42
         - id: 32/1
-          description: rt-hec07-str-01a, Et2/1
+          description: rt-hec08-str-01a, Et2/1
           po: 700
         - id: 33/1
-          description: rt-hec07-str-0ba, Et2/1
+          description: rt-hec08-str-01b, Et2/1
           po: 700
           speed: 100gfull
       port_channels:
@@ -1187,10 +1213,10 @@ hec:
           trunk: 110,130,140,900,920,922,2001-2999
     - number: 2a
       snmp:
-        location: AU-SY4-L2H5-200-06-22-31
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1014
-      oob_ip: 10.192.20.148
-      nwmgmt_ip: 198.18.199.25
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U31
+        contact: 34912829:ncons-hec08-08.hec.oob.net.sap:1007
+      oob_ip: 10.192.22.141
+      nwmgmt_ip: 198.18.231.25
       spine_port_towards_leaf: Et11/1
       uplinks:
         - 51/1
@@ -1200,10 +1226,10 @@ hec:
       uplinks_speed: 100gfull
       ports:
         - id: 30/1
-          description: sw-hec07-str-02b, Et49/1
+          description: sw-hec08-str-02b, Et49/1
           po: 42
         - id: 31/1
-          description: sw-hec07-str-02b, Et50/1
+          description: sw-hec08-str-02b, Et50/1
           po: 42
           speed: 100gfull
       port_channels:
@@ -1211,10 +1237,10 @@ hec:
           description: MLAG-PEER
     - number: 2b
       snmp:
-        location: AU-SY4-L2H5-200-06-23-31
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1015
-      oob_ip: 10.192.20.149
-      nwmgmt_ip: 198.18.199.26
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U31
+        contact: 34912830:ncons-hec08-08.hec.oob.net.sap:1008
+      oob_ip: 10.192.22.142
+      nwmgmt_ip: 198.18.231.26
       spine_port_towards_leaf: Et12/1
       uplinks:
         - 51/1
@@ -1236,10 +1262,10 @@ hec:
   shs:
     - number: 1a
       snmp:
-        location: AU-SY4-L2H5-200-06-22-29
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1016
-      oob_ip: 10.192.20.150
-      nwmgmt_ip: 198.18.199.27
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U29
+        contact: 34912821:ncons-hec08-08.hec.oob.net.sap:1009
+      oob_ip: 10.192.22.135
+      nwmgmt_ip: 198.18.231.27
       uplinks:
         - 25/1
         - 26/1
@@ -1252,20 +1278,20 @@ hec:
           type: vlan
           ip: 172.19.96.100/23
         - id: 30/1
-          description: sw-hec07-shs-01b, Et30/1
+          description: sw-hec08-shs-01b, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-shs-01b, Et31/1
+          description: sw-hec08-shs-01b, Et31/1
           po: 42
       port_channels:
         - id: 42
           description: MLAG-PEER
     - number: 1b
       snmp:
-        location: AU-SY4-L2H5-200-06-23-29
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1017
-      oob_ip: 10.192.20.151
-      nwmgmt_ip: 198.18.199.28
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U29
+        contact: 34912822:ncons-hec08-08.hec.oob.net.sap:1010
+      oob_ip: 10.192.22.136
+      nwmgmt_ip: 198.18.231.28
       uplinks:
         - 25/1
         - 26/1

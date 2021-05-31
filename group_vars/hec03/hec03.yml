@@ -321,7 +321,7 @@ hec:
       - id: 43
         snmp:
           location: Sterling-2-(DC3)-Cage-2-(01.CK.004)-DB-024-18
-          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz: 1018
+          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1018
         oob_ip: 10.9.241.115
         nwmgmt_ip: 198.19.156.87
         spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']

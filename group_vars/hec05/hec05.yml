@@ -1698,7 +1698,7 @@ hec:
       80 permit vlan 50 0x000 ip 198.18.147.0/24 198.18.144.0/22
       90 permit vlan 50 0x000 ip 198.18.144.0/22 host 198.18.144.1
       100 deny vlan 50 0x000 ip 198.18.144.0/22 198.18.144.0/22 log
-      110 permit vlan 50 0x000 ip 198.18.144.0/22 any
+      110 permit vlan 50 0x000 ip 198.18.144.0/22
       120 permit vlan 50 0x000 ip any any log
       130 permit vlan 60 0x000 icmp any any
       140 permit vlan 60 0x000 pim any any
@@ -1709,7 +1709,7 @@ hec:
       190 permit vlan 60 0x000 ip 198.18.152.0/21 host 198.18.152.1
       200 deny vlan 60 0x000 ip 198.18.152.0/21 198.18.152.0/21 log
       210 permit vlan 60 0x000 ip 198.18.152.0/21 any
-      220 permit vlan 60 0x000 ip any any log
+      220 permit vlan 60 0x000 ip any any
       230 permit ip any any
 #       ip access-list sw-hec05-235#
   hana_acl_rules: |

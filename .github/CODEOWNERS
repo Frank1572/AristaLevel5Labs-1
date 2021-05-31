@@ -1,2 +1,3 @@
-/group_vars/  @thecoolkids/L4_Reviewers
+/group_vars/hec*/  @thecoolkids/Reviewers_Datafiles
+/group_vars/all.yml @thecoolkids/L4_Reviewers_Code
 /roles/ @thecoolkids/L4_Reviewers_Code

@@ -166,6 +166,11 @@ hec:
     model: 7280-90 # hec11 does use chassis Arista DCS-7280CR3-96-F spines - correct
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
+    pod:
+      number:
+        - id: 1
+          model: 7280-90
+          linecards: 1
     linecards: 1 # hec11 does use chassis spines - correct
     # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True # not sure ????????????
@@ -180,18 +185,26 @@ hec:
         snmp:
           location: RU-MOW1-CAGE3-13/05/08/13 # correct
           contact: 34847180:ncons-hec11-07.hec.oob.net.sap:1001  # correct
+        oob_ip: 10.177.248.11
+        nwmgmt_ip: 198.19.188.11
       - id: 12
         snmp:
           location: RU-MOW1-CAGE3-13/05/09/13 # correct
           contact: 34847181:ncons-hec11-07.hec.oob.net.sap:1002  # correct
+        oob_ip: 10.177.248.12
+        nwmgmt_ip: 198.19.188.12
       - id: 13
         snmp:
           location: RU-MOW1-CAGE3-13/05/11/13 # correct
           contact: 34847182:ncons-hec11-08.hec.oob.net.sap:1001  # correct
+        oob_ip: 10.177.248.13
+        nwmgmt_ip: 198.19.188.13
       - id: 14
         snmp:
           location: RU-MOW1-CAGE3-13/05/43/03  # correct
           contact: 34847183:ncons-hec11-08.hec.oob.net.sap:1002  # correct
+        oob_ip: 10.177.248.14
+        nwmgmt_ip: 198.19.188.14
   ngdr_underlay: # there is no ngdr in hec11
     edge_as: 65200 # there is no ngdr in hec11
   # Are the core vlans 3000 to 3499 needed

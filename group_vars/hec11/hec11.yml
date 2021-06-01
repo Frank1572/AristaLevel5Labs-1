@@ -123,9 +123,18 @@ hec:
       servers:
         - ipv4: 100.127.2.65 # taken from sw-hec11-101 correct ?
         - ipv4: 100.127.5.69 # taken from sw-hec11-101 correct ?
-  radius1: 10.17.121.35 # taken from sw-hec11-101 correct ?
-  radius2: 10.17.122.21 # taken from sw-hec11-101 correct ?
-  is_tacacs: False
+  tacacs:
+    nat:
+      servers:
+        - ipv4: 100.127.2.181
+        - ipv4: 100.127.2.182
+        - ipv4: 100.127.2.183
+    oob:
+      servers:
+        - ipv4: 10.16.8.142
+        - ipv4: 10.16.8.32
+        - ipv4: 169.145.33.51
+  is_tacacs: True
   sflow:
     destination:
       - ipv4: 100.127.4.47 # taken from sw-hec11-101 correct ?

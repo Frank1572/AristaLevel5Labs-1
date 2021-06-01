@@ -2450,7 +2450,7 @@ hec:
       pod: 4
       snmp:
         location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-024-RU17
-        contact: XXXXXXXX:ncons-hec03-26.stl.hec.sap.biz:1028
+        contact: 34912694:ncons-hec03-26.stl.hec.sap.biz:1028
       oob_ip: 10.9.241.121
       nwmgmt_ip: 198.19.156.93
       spine_port_towards_leaf: Et3/5/1

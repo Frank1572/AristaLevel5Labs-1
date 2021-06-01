@@ -1304,20 +1304,20 @@ hec:
           type: vlan
           ip: 172.19.96.101/23
         - id: 30/1
-          description: sw-hec07-shs-01a, Et30/1
+          description: sw-hec08-shs-01a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-shs-01a, Et31/1
+          description: sw-hec08-shs-01a, Et31/1
           po: 42
       port_channels:
         - id: 42
           description: MLAG-PEER
     - number: 2a
       snmp:
-        location: AU-SY4-L2H5-200-06-22-27
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1018
-      oob_ip: 10.192.20.152
-      nwmgmt_ip: 198.18.199.29
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U27
+        contact: xxxxxx:ncons-hec08-08.hec.oob.net.sap:1011
+      oob_ip: 10.192.22.137
+      nwmgmt_ip: 198.18.231.29
       uplinks:
         - 25/1
         - 26/1
@@ -1330,20 +1330,20 @@ hec:
           type: vlan
           ip: 172.19.96.102/23
         - id: 30/1
-          description: sw-hec07-shs-02b, Et30/1
+          description: sw-hec08-shs-02b, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-shs-02b, Et31/1
+          description: sw-hec08-shs-02b, Et31/1
           po: 42
       port_channels:
         - id: 42
           description: MLAG-PEER
     - number: 2b
       snmp:
-        location: AU-SY4-L2H5-200-06-23-27
-        contact: xxxxxx:ncons-hec07-08.hec.oob.net.sap:1019
-      oob_ip: 10.192.20.153
-      nwmgmt_ip: 198.18.199.30
+        location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U27
+        contact: xxxxxx:ncons-hec08-08.hec.oob.net.sap:1012
+      oob_ip: 10.192.22.138
+      nwmgmt_ip: 198.18.231.30
       uplinks:
         - 25/1
         - 26/1
@@ -1356,10 +1356,10 @@ hec:
           type: vlan
           ip: 172.19.96.103/23
         - id: 30/1
-          description: sw-hec07-shs-02a, Et30/1
+          description: sw-hec08-shs-02a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-shs-02a, Et31/1
+          description: sw-hec08-shs-02a, Et31/1
           po: 42
       port_channels:
         - id: 42

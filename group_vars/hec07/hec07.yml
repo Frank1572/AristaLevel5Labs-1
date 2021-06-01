@@ -1073,7 +1073,6 @@ hec:
         - 26/1
         - 35/1
         - 36/1
-      uplinks_speed: 40gfull
       ports:
         - id: 30/1
           description: sw-hec07-str-01b, Et30/1
@@ -1085,7 +1084,7 @@ hec:
           description: rt-hec07-str-01a, Et1/1
           po: 700
         - id: 33/1
-          description: rt-hec07-str-0ba, Et1/1
+          description: rt-hec07-str-01b, Et1/1
           po: 700
           speed: 100gfull
       port_channels:
@@ -1106,7 +1105,6 @@ hec:
         - 26/1
         - 35/1
         - 36/1
-      uplinks_speed: 40gfull
       ports:
         - id: 30/1
           description: sw-hec07-str-01a, Et30/1

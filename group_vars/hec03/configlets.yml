@@ -12,6 +12,7 @@ configlet_list_dc_specific:
   - sw-hec-spine-32
   - sw-hec-spine-33
   - sw-hec-spine-34
+  - sw-hec-spine-4x
   - sw-hec-spine-41
   - sw-hec-spine-42
   - sw-hec-spine-43

@@ -2,8 +2,7 @@
 eos:
   new_syntax: true
 #
-# HEC07-NW-MGMT01 - 198.19.246.0/25 (vlan900/lb/rt/sw)
-# HEC07-NW-MGMT02 - 198.19.246.128/28 (vlan900/lb/rt/sw)
+# HEC07-NW-MGMT01 - 198.19.246.0/24 (vlan900/lb/rt/sw)
 # HEC07-NW-MGMT03 - 198.18.199.0/24 (fabric management)
 # HEC07-NW-OOB-MGMT01 - 10.192.20.0/23
 # grep naa-hec07 /ens/docu/exports/dns/hosts
@@ -608,7 +607,7 @@ hec:
           metric: 240
       brdr03:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.246.193
+          nexthop: 198.19.246.1
           interface: Vlan900
           redist_bgp: true
         - destination: 10.200.1.0/24
@@ -655,11 +654,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.130/25
+          ip: 198.19.246.102/24
           vrrp:
             - id: 250
               priority: 120
-              ip: 198.19.246.132
+              ip: 198.19.246.104
         - id: 961
           type: vlan
           description: Transfer to rt-hec07-cwan-01a
@@ -704,11 +703,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.131/25
+          ip: 198.19.246.103/24
           vrrp:
             - id: 250
               priority: 110
-              ip: 198.19.246.132
+              ip: 198.19.246.104
         - id: 962
           type: vlan
           description: Transfer to rt-hec07-cwan-01a
@@ -893,11 +892,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.136/25
+          ip: 198.19.246.108/24
           vrrp:
             - id: 250
               priority: 120
-              ip: 198.19.246.138
+              ip: 198.19.246.110
         - id: 963
           type: vlan
           description: Transfer to rt-hec07-cwan-01b
@@ -942,11 +941,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.137/25
+          ip: 198.19.246.109/24
           vrrp:
             - id: 250
               priority: 110
-              ip: 198.19.246.138
+              ip: 198.19.246.110
         - id: 964
           type: vlan
           description: Transfer to rt-hec07-cwan-01b
@@ -992,11 +991,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.139/25
+          ip: 198.19.246.111/24
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
               priority: 105
-              ip: 198.19.246.141
+              ip: 198.19.246.113
               auth: FWTTRANS
         - id: 32/1 # 100G Link to L2 core switch
           description: sw-hec07-103 Et29/1
@@ -1033,11 +1032,11 @@ hec:
         - id: 900
           type: vlan
           description: NW-MGMT
-          ip: 198.19.246.140/25
+          ip: 198.19.246.112/25
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
               priority: 105
-              ip: 198.19.246.141
+              ip: 198.19.246.113
               auth: FWTTRANS
         - id: 32/1 # 100G Link to L2 core switch
           description: sw-hec07-103 Et30/1

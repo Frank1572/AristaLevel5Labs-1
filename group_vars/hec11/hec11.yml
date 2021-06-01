@@ -916,6 +916,77 @@ hec:
         - id: 48
           description: naa-hec01-01, in-band
           access_vlan: 916
+  fwt:
+    - number: "01a"
+      snmp:
+        contact: 34677795:ncons4407.wdf.sap.corp:1026
+        location: DE-ROT2-RZ44-R1-3-41
+      oob_ip: 10.178.136.48
+      ports:
+        - id: 1
+          description: rot13dc02-adm-03-co , Et1/14
+          ip: 10.255.200.12/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec01-01, eth1-03
+          po: 1
+        - id: 3
+          description: fw-hec01-02, eth1-03
+          po: 2
+        - id: 4
+          description: nw147-204-5-246_gi1/0/19
+          ip: 147.204.5.206/24
+          vrrp:
+            - id: 200
+              priority: 105
+              ip: 147.204.5.200
+        - id: 47
+          description: fw-hec09-01, eth1-04
+          po: 3
+        - id: 48
+          description: fw-hec09-02, eth1-04
+          po: 4
+        - id: 55/1
+          description: MLAG
+          po: 42
+        - id: 56/1
+          description: MLAG
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.241.2/28
+          vrrp:
+            - id: 115
+              priority: 105
+              ip: 10.255.241.1
+              auth: fwtnw
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec01-01
+          trunk: 915
+        - id: 2
+          description: fw-hec01-02
+          trunk: 915
+        - id: 3
+          description: fw-hec09-01
+          trunk: 915
+        - id: 4
+          description: fw-hec09-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.34
+        local_asn: 64531.1
+        peers:
+          - ipv4: 10.255.200.13
+            remote_asn: 65535
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.1
   str: # below is for storage but there is no storage in hec11 or hec12
     - number: 1a
       snmp:

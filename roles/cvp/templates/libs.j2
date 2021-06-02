@@ -1,3 +1,9 @@
+{#
+  for each template that need those functions, import them via
+
+  {% import "templates/libs.j2" as funcs with context %}
+
+#}
 {% macro podid_calculation(number) %}
 {% set podid = 0 %}
 {% if (spineid|int > 10) and (spineid|int < 20) %}

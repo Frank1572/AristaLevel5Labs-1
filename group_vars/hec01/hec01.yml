@@ -2507,7 +2507,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 198.19.252.120/28
-          virtual_router_ip: 198.19.252.119
+          virtual_router_ip: ['198.19.252.119']
     - number: 1b
       oob_ip: 10.178.136.56
       nwmgmt_ip: 198.19.190.26
@@ -2534,7 +2534,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 198.19.252.121/28
-          virtual_router_ip: 198.19.252.119
+          virtual_router_ip: ['198.19.252.119']
     - number: 1c
       oob_ip: 10.178.136.57
       nwmgmt_ip: 198.19.190.27
@@ -2561,7 +2561,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 198.19.252.122/28
-          virtual_router_ip: 198.19.252.119
+          virtual_router_ip: ['198.19.252.119']
     - number: 1d
       oob_ip: 10.178.136.58
       nwmgmt_ip: 198.19.190.28
@@ -2588,7 +2588,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 198.19.252.123/28
-          virtual_router_ip: 198.19.252.119
+          virtual_router_ip: ['198.19.252.119']
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any

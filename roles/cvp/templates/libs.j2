@@ -268,20 +268,20 @@ router bgp {{ asn_generated_global[0]|string }}
 {%- endmacro %}
 
 {% macro spine_lc(portname) -%}
-{% if portname|string is search('^\d{1,2}/\d{1,2}/\d$') %}
+{% if portname|string is search('^Et\d{1,2}/\d{1,2}/\d$') %}
 {# Chassis based devices #}
 {{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') }}
-{% elif portname|string is search('^\d{1,2}/\d$') %}
+{% elif portname|string is search('^Et\d{1,2}/\d$') %}
 {# Non-modular switches like 7280 #}
 {{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') }}
 {% endif %}
 {%- endmacro %}
 
 {% macro spine_po(portname) -%}
-{% if portname|string is search('^\d{1,2}/\d{1,2}/\d$') %}
+{% if portname|string is search('^Et\d{1,2}/\d{1,2}/\d$') %}
 {# Chassis based devices #}
 {{ portname | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>') }}
-{% elif portname|string is search('^\d{1,2}/\d$') %}
+{% elif portname|string is search('^Et\d{1,2}/\d$') %}
 {# Non-modular switches like 7280 #}
 {{ portname | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>') }}
 {% endif %}

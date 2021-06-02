@@ -311,6 +311,22 @@ router bgp {{ asn_generated_global[0]|string }}
 {{ nextsubnet }}.{{ ip }}
 {%- endmacro %}
 
+{% macro cell_id(intf_uplink, leafid) -%}
+{% set spine_lc = spine_lc(intf_uplink) %}
+{% set spine_po = spine_po(intf_uplink) %}
+{% if leafid == 'a' %}
+{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
+{% endif %}
+{% if leafid == 'b' %}
+{% set cell_id  = (( spine_po|int ) / 2 )|int %}
+{% endif %}
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% set cell_id = cell_id + (offset * 18) %}
+{% endif %}
+{{ cell_id }}
+{%- endmacro %}
+
 {% macro admin_mpls_filtering() -%}
 route-map ADMIN_MPLS_IN deny 10
    description REJECT our own advertised subnets if we receive them from external.

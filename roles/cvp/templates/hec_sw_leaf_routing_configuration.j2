@@ -1,3 +1,4 @@
+{% import "templates/libs.j2" as funcs with context %}
 {# hec_sw_leaf_routing_configuration.j2 #}
 {% set asn_generated_global = [] %}
 {% import "templates/libs.j2" as funcs with context %}
@@ -44,17 +45,17 @@
 {% endfor %}
 {% endif %}
 ! {{hec_spine_model.name}}
-{% if hec_spine_model.name|string is search('75[01][486].*')  %}
+{# {% if hec_spine_model.name|string is search('75[01][486].*')  %} #}
 {# Chassis based devices #}
-{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
+{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
 {% set spine_po = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*\d{1,2}/(?P<ponr>\d{1,2})/.*$', '\\g<ponr>')%}
 {% endif %}
-{% if hec_spine_model.name|string is search('7280.*') %}
+{% if hec_spine_model.name|string is search('7280.*') %} #}
 {# Non-modular switches like 7280 #}
-{% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/1$', '0') %}
+{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/1$', '0') %}
 {% set spine_po = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<ponr>\d{1,2})/1$', '\\g<ponr>')%}
-{% endif %}
-{% if leafid == 'a' %}
+{% endif %} #}
+{# {% if leafid == 'a' %}
 {% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
 {% endif %}
 {% if leafid == 'b' %}
@@ -63,7 +64,8 @@
 {% if spine_lc|int > 0 %}
 {% set offset = spine_lc|int - 3 %}
 {% set cell_id = cell_id + (offset * 18) %}
-{% endif %}
+{% endif %} #}
+{% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid) %}
 {% if allbrdrs.pod is not defined %}
 {% set asn_part = cell_id + 10000 %}
 {% set asn_spine_part = 10000 %}
@@ -86,7 +88,7 @@ interface Loopback1
 interface Loopback2
    ip address 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32
 !
-{% if spine_lc|int > 0 %}
+{# {% if spine_lc|int > 0 %}
 {% set offset = spine_lc|int - 3 %}
 {% else %}
 {% set offset = 0 %}
@@ -102,7 +104,10 @@ interface Loopback2
 {% set ip = ip - 256 %}
 {% set nextsubnet = 2 %}
 {% endif %}
-{% set link_ip = ip %}
+{% set link_ip = ip %} #}
+{% set uplink_ipv4 = funcs.uplink_port_ip(item.spine_port_towards_leaf) %}
+{% set nextsubnet = uplink_ipv4.split('.')[0] %}
+{% set link_ip = uplink_ipv4.split('.')[1] %}
 {% for intf in allbrdrs.uplinks %}
 {% set spine_pod_offset = 10 * allbrdrs.pod|default(1) %}
 interface Ethernet{{ intf }}

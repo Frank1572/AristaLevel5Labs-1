@@ -3,18 +3,20 @@ eos:
   new_syntax: true
 #
 # HEC08-NW-MGMT01 - 198.19.247.0/24 (vlan900/lb/rt/sw)
-# HEC08-NW-MGMT02 - 198.18..0/24 (fabric management)
+# HEC08-NW-MGMT02 - 198.18.231.0/24 (fabric management)
 # HEC08-NW-OOB-MGMT01 - 10.192.22.0/23
 # grep naa-hec08 /ens/docu/exports/dns/hosts
 # 10.192.22.46 naa-hec08-01.hec.oob.net.sap
 # 10.192.23.254 naa-hec08-idrac-01.hec.oob.net.sap
 # 10.192.23.253 naa-hec08-cvp-01.hec.oob.net.sap
 #
+#
 idrac:
-  ip: 10.192.23.254
+  ip: 10.192.23.254 # naa-hec08-idrac-01
   mask: 255.255.254.0
   gw: 10.192.22.1
   name: naa-hec08-idrac-01
+  # global dns IP's
   dns1: 10.17.121.30
   dns2: 10.17.122.10
   domain: hec.oob.net.sap
@@ -25,6 +27,7 @@ cva:
   mask: 255.255.254.0
   gw: 10.192.22.1
   name: naa-hec08-01
+  # global dns IP's
   dns1: 10.17.121.30
   dns2: 10.17.122.10
   domain: hec.oob.net.sap
@@ -61,13 +64,13 @@ cvp:
   backupuser: cvpbkp
   eth1_routes:
   # HEC08-NW-MGMT01 198.19.247.0/24 (all router and ipmis)
-    - prefix: 198.19.247.0
-      mask: 24
-      nexthop: 198.19.247.1
+  #  - prefix: 198.19.247.0
+  #    mask: 24
+  #    nexthop: 198.19.247.1
   # HEC01-NW-MGMT02 (all fab Loopback900)
-    - prefix: 198.18..0
-      mask: 24
-      nexthop: 198.18..1
+  #  - prefix: 198.18.231.0
+  #    mask: 24
+  #    nexthop: 198.18.231.1
   dhcp:
     prefix: 10.192.22.0
     mask: 255.255.254.0
@@ -132,6 +135,9 @@ hec:
         - ipv4: 169.145.210.65
         - ipv4: 169.145.213.69
         - ipv4: 147.204.146.42
+    oob:
+        servers:
+          - ipv4: 10.33.142.33
   tacacs:
     nat:
       servers:
@@ -197,31 +203,31 @@ hec:
       - id: 11
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U40
-          contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1001
+          contact: 34912799:ncons-hec08-07.hec.oob.net.sap:1001
         oob_ip: 10.192.22.121
         nwmgmt_ip: 198.18.231.11
       - id: 12
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U40
-          contact: xxxxxxx:ncons-hec08-07.hec.oob.net.sap:1002
+          contact: 34912800:ncons-hec08-07.hec.oob.net.sap:1002
         oob_ip: 10.192.22.122
         nwmgmt_ip: 198.18.231.12
       - id: 13
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U40
-          contact: xxxxxxx:ncons-hec08-08.hec.oob.net.sap:1001
+          contact: 34912801:ncons-hec08-08.hec.oob.net.sap:1001
         oob_ip: 10.192.22.123
         nwmgmt_ip: 198.18.231.13
       - id: 14
         snmp:
           location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U40
-          contact: xxxxxxx:ncons-hec07-08.hec.oob.net.sap:1002
+          contact: 34912802:ncons-hec07-08.hec.oob.net.sap:1002
         oob_ip: 10.192.22.124
         nwmgmt_ip: 198.18.231.14
   ngdr_underlay:
     edge_as: 65500
   ngdr_overlay:
-    remote_hec_nr: "08"
+    remote_hec_nr: "07"
     routes:
       - network: 100.78.0.0/15
         interface: Vlan922
@@ -249,10 +255,10 @@ hec:
       - ip: 198.19.249.54     # rt-hec07-502
       - ip: 198.19.249.55     # rt-hec07-601
       - ip: 198.19.249.56     # rt-hec07-602
-      - ip: 198.19.249.205    # rt-hec07-cwan-01a
-      - ip: 198.19.249.206    # rt-hec07-cwan-01b
-      - ip: 198.19.249.207    # rt-hec07-vpn-01a
-      - ip: 198.19.249.208    # rt-hec07-vpn-01b
+      - ip: 198.19.251.205    # rt-hec07-cwan-01a
+      - ip: 198.19.251.206    # rt-hec07-cwan-01b
+      - ip: 198.19.251.207    # rt-hec07-vpn-01a
+      - ip: 198.19.251.208    # rt-hec07-vpn-01b
   lrdr_overlay:
     remote_hec_nr: "07"
   # Are the core vlans 3000 to 3499 needed
@@ -549,10 +555,10 @@ hec:
                 weight: 10
       port_channels:
         - id: 1
-          description: fw-hec01-01
+          description: fw-hec08-01
           trunk: 915
         - id: 2
-          description: fw-hec01-02
+          description: fw-hec08-02
           trunk: 915
         - id: 42
           description: MLAG-PEER
@@ -575,10 +581,10 @@ hec:
           ip: 10.255.193.146/31
           speed: 10000full
         - id: 2
-          description: fw-hec01-01, eth1-04
+          description: fw-hec08-01, eth1-04
           po: 1
         - id: 3
-          description: fw-hec01-02, eth1-04
+          description: fw-hec08-02, eth1-04
           po: 2
         - id: 47
           description: MLAG
@@ -599,10 +605,10 @@ hec:
                 weight: 10
       port_channels:
         - id: 1
-          description: fw-hec01-01
+          description: fw-hec08-01
           trunk: 915
         - id: 2
-          description: fw-hec01-02
+          description: fw-hec08-02
           trunk: 915
         - id: 42
           description: MLAG-PEER
@@ -935,15 +941,15 @@ hec:
           po: 20
           speed: 10000full
         - id: 49/1
-          description: sw-hec07-brdr-02a, Et49/1
+          description: sw-hec08-brdr-02a, Et49/1
           po: 42
         - id: 50/1
-          description: sw-hec07-brdr-02a, Et50/1
+          description: sw-hec08-brdr-02a, Et50/1
           po: 42
         - id: 916
           description: FW-TRANS
           type: vlan
-          ip: 10.255.180.77/28
+          ip: 10.255.181.77/28
       port_channels:
         - id: 10
           description: ->fw-hec08-01
@@ -983,17 +989,17 @@ hec:
               ip: 198.19.247.82
         - id: 963
           type: vlan
-          description: Transfer to rt-hec08-cwan-01b
+          description: Transfer to rt-hec08-cwan-01a
           mtu: 9100
           ip: 10.254.253.5/31
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.6
         - id: 33/1
-          description: rt-hec08-cwan-01b, Et1/1
+          description: rt-hec08-cwan-01a, Et51/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec08-inet-01b, Et1/1
+          description: rt-hec08-inet-01a, Et51/1
           po: 1401
           speed: 100gfull
         - id: 30/1
@@ -1004,10 +1010,10 @@ hec:
           po: 42
       port_channels:
         - id: 1401
-          description: rt-hec08-inet-01b
+          description: rt-hec08-inet-01a
           trunk: all
         - id: 1501
-          description: rt-hec08-cwan-01b
+          description: rt-hec08-cwan-01a
           trunk: all
     - number: 3b
       snmp:
@@ -1038,11 +1044,11 @@ hec:
           ngdr_underlay: true
           ngdr_underlay_neighbor: 10.254.253.8
         - id: 33/1
-          description: rt-hec08-cwan-01b, Et2/1
+          description: rt-hec08-cwan-01b, Et52/1
           po: 1501
           speed: 100gfull
         - id: 32/1
-          description: rt-hec08-inet-01b, Et2/1
+          description: rt-hec08-inet-01b, Et52/1
           po: 1401
           speed: 100gfull
         - id: 30/1
@@ -1076,17 +1082,17 @@ hec:
           type: vlan
           description: NW-MGMT
           ip: 198.19.247.83/24
-          vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
+          vrrp: # VRRP gw for FWTRANS towards HEC08 Fabric
             - id: 250
               priority: 105
               ip: 198.19.247.85
               auth: FWTTRANS
-        - id: 1/1 # 100G Link to L2 core switch
-          description: sw-hec07-103 Et5/23
+        - id: 27/1 # 40G Link to L2 core switch
+          description: sw-hec08-101 Et5/23
           po: 101
           speed: 40gfull
-        - id: 2/1 # 100G Link to L2 core switch
-          description: sw-hec07-104 Et5/23
+        - id: 32/1 # 40G Link to L2 core switch
+          description: sw-hec08-102 Et5/23
           po: 101
           speed: 40gfull
         - id: 30/1
@@ -1125,19 +1131,19 @@ hec:
               priority: 105
               ip: 198.19.247.85
               auth: FWTTRANS
-        - id: 1/1 # 40G Link to L2 core switch
+        - id: 27/1 # 40G Link to L2 core switch
           description: sw-hec08-103 Et5/24
           po: 101
           speed: 40gfull
-        - id: 1/2 # 40G Link to L2 core switch
+        - id: 32/1 # 40G Link to L2 core switch
           description: sw-hec08-104 Et5/24
           po: 101
           speed: 40gfull
         - id: 30/1
-          description: sw-hec07-brdr-04a, Et30/1
+          description: sw-hec08-brdr-04a, Et30/1
           po: 42
         - id: 31/1
-          description: sw-hec07-brdr-04a, Et31/1
+          description: sw-hec08-brdr-04a, Et31/1
           po: 42
       port_channels:
         - id: 42
@@ -1167,17 +1173,17 @@ hec:
           description: sw-hec08-str-01b, Et31/1
           po: 42
         - id: 32/1
-          description: rt-hec08-str-01a, Et1/1
+          description: rt-hec08-str-01a, Et51/1
           po: 700
         - id: 33/1
-          description: rt-hec08-str-01b, Et1/1
+          description: rt-hec08-str-01b, Et51/1
           po: 700
           port_channels:
         - id: 42
           description: MLAG-PEER
         - id: 700
-          description: ->rt-hec07-str-01a/b
-          trunk: 110,130,140,900,920,922,2001-2999
+          description: ->rt-hec08-str-01a/b
+          trunk: 110,120,130,140,900,922,2001-2999
     - number: 1b
       snmp:
         location: AU-SYD-SYD2-SYD10-Cage1-S120-6-5-U33
@@ -1199,18 +1205,17 @@ hec:
           description: sw-hec08-str-01a, Et31/1
           po: 42
         - id: 32/1
-          description: rt-hec08-str-01a, Et2/1
+          description: rt-hec08-str-01a, Et52/1
           po: 700
         - id: 33/1
-          description: rt-hec08-str-01b, Et2/1
+          description: rt-hec08-str-01b, Et52/1
           po: 700
-          speed: 100gfull
-      port_channels:
+          port_channels:
         - id: 42
           description: MLAG-PEER
         - id: 700
-          description: ->rt-hec07-str-01a/b
-          trunk: 110,130,140,900,920,922,2001-2999
+          description: ->rt-hec08-str-01a/b
+          trunk: 110,120,130,140,900,922,2001-2999
     - number: 2a
       snmp:
         location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U31
@@ -1223,7 +1228,7 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      uplinks_speed: 100gfull
+      #uplinks_speed: 100gfull
       ports:
         - id: 30/1
           description: sw-hec08-str-02b, Et49/1
@@ -1247,13 +1252,13 @@ hec:
         - 52/1
         - 53/1
         - 54/1
-      uplinks_speed: 100gfull
+      #uplinks_speed: 100gfull
       ports:
         - id: 30/1
-          description: sw-hec07-str-02a, Et49/1
+          description: sw-hec08-str-02a, Et49/1
           po: 42
         - id: 31/1
-          description: sw-hec07-str-02a, Et50/1
+          description: sw-hec08-str-02a, Et50/1
           po: 42
           speed: 100gfull
       port_channels:
@@ -1370,34 +1375,33 @@ hec:
       30 permit vlan 50 0x000 92 any any
       40 permit vlan 50 0x000 vrrp any any
       50 permit vlan 50 0x000 ip any 224.0.0.0/5
-      60 permit vlan 50 0x000 ip 198.18.208.0/22 host 198.18.211.255
-      70 permit vlan 50 0x000 ip 198.18.208.0/22 198.18.211.0/24
-      80 permit vlan 50 0x000 ip 198.18.211.0/24 198.18.208.0/22
-      90 permit vlan 50 0x000 ip 198.18.208.0/22 host 198.18.208.1
-      100 deny vlan 50 0x000 ip 198.18.208.0/22 198.18.208.0/22 log
-      110 permit vlan 50 0x000 ip 198.18.208.0/22 any
+      60 permit vlan 50 0x000 ip 198.18.240.0/22 host 198.18.243.255
+      70 permit vlan 50 0x000 ip 198.18.240.0/22 198.18.243.0/24
+      80 permit vlan 50 0x000 ip 198.18.243.0/24 198.18.240.0/22
+      90 permit vlan 50 0x000 ip 198.18.240.0/22 host 198.18.240.1
+      100 deny vlan 50 0x000 ip 198.18.240.0/22 198.18.240.0/22 log
+      110 permit vlan 50 0x000 ip 198.18.240.0/22 any
       120 permit vlan 50 0x000 ip any any
-      130 permit vlan 55 0x000 icmp any any
-      140 permit vlan 55 0x000 pim any any
-      150 permit vlan 55 0x000 92 any any
-      160 permit vlan 55 0x000 vrrp any any
-      170 permit vlan 55 0x000 ip any 224.0.0.0/5
-      180 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.127.255
-      190 permit vlan 55 0x000 ip 100.122.64.0/18 100.122.124.0/22
-      200 permit vlan 55 0x000 ip 100.122.124.0/22 100.122.64.0/18
-      210 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.64.1
-      220 deny vlan 55 0x000 ip 100.122.64.0/18 100.122.64.0/18 log
-      230 permit vlan 55 0x000 ip 100.122.64.0/18 any
-      240 permit vlan 55 0x000 ip any any
+#      130 permit vlan 55 0x000 icmp any any
+#      140 permit vlan 55 0x000 pim any any
+#      160 permit vlan 55 0x000 vrrp any any
+#      170 permit vlan 55 0x000 ip any 224.0.0.0/5
+#      180 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.127.255
+#      190 permit vlan 55 0x000 ip 100.122.64.0/18 100.122.124.0/22
+#      200 permit vlan 55 0x000 ip 100.122.124.0/22 100.122.64.0/18
+#      210 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.64.1
+#      220 deny vlan 55 0x000 ip 100.122.64.0/18 100.122.64.0/18 log
+#      230 permit vlan 55 0x000 ip 100.122.64.0/18 any
+#      240 permit vlan 55 0x000 ip any any
       250 permit vlan 60 0x000 icmp any any
       260 permit vlan 60 0x000 pim any any
       270 permit vlan 60 0x000 92 any any
       280 permit vlan 60 0x000 vrrp any any
       290 permit vlan 60 0x000 ip any 224.0.0.0/5
-      300 permit vlan 60 0x000 ip 198.18.216.0/22 host 198.18.219.255
-      310 permit vlan 60 0x000 ip 198.18.216.0/22 host 198.18.216.1
-      320 deny vlan 60 0x000 ip 198.18.216.0/22 198.18.216.0/22 log
-      330 permit vlan 60 0x000 ip 198.18.216.0/22 any
+      300 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.251.255
+      310 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.248.1
+      320 deny vlan 60 0x000 ip 198.18.248.0/21 198.18.248.0/22 log
+      330 permit vlan 60 0x000 ip 198.18.248.0/21 any
       340 permit vlan 60 0x000 ip 100.124.128.0/21 host 198.18.219.255
       350 permit vlan 60 0x000 ip 100.124.128.0/21 host 198.18.216.1
       360 deny vlan 60 0x000 ip 100.124.128.0/21 100.124.128.0/21 log

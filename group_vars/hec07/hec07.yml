@@ -239,13 +239,19 @@ hec:
         hostname: rt-hec07-vpn-01a
       - ip: 198.19.251.208
         hostname: rt-hec07-vpn-01b
+      - ip: 198.19.249.53
+        hostname: rt-hec07-501
+      - ip: 198.19.249.54
+        hostname: rt-hec07-502
     remote_edge_routers:
       - ip: 198.19.251.215
       - ip: 198.19.251.216
       - ip: 198.19.251.217
       - ip: 198.19.251.218
+      - ip: 198.19.249.61
+      - ip: 198.19.249.62
   lrdr_overlay:
-    remote_hec_nr: "07"
+    remote_hec_nr: "08"
   # Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:

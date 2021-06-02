@@ -30,3 +30,33 @@ yml_str:
     uplinks_speed: 40gfull
     ports: []
     port_channels: []
+  - number: 2a
+    snmp:
+      location: US-STE1-AH-094-RU36
+      contact: 34414808:ncons-hec03-oob-04.net:1003
+    oob_ip: 10.9.240.10
+    nwmgmt_ip: 198.19.156.21
+    spine_port_towards_leaf: Et9/1
+    uplinks:
+      - 25/1
+      - 26/1
+      - 35/1
+      - 36/1
+    uplinks_speed: 40gfull
+    ports: []
+    port_channels: []
+  - number: 2b
+    snmp:
+      location: US-STE1-AH-094-RU36
+      contact: 34414808:ncons-hec03-oob-04.net:1003
+    oob_ip: 10.9.240.10
+    nwmgmt_ip: 198.19.156.21
+    spine_port_towards_leaf: Et9/1
+    uplinks:
+      - 25/1
+      - 26/1
+      - 35/1
+      - 36/1
+    uplinks_speed: 40gfull
+    ports: []
+    port_channels: []

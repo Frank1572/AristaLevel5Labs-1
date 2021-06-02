@@ -263,7 +263,52 @@ router bgp {{ asn_generated_global[0]|string }}
 {%- endmacro %}
 
 {% macro leafid(name) -%}
+{# from a given hostname, extract the matchin letter 'a' or 'b' from the end and return it #}
 {{ name | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') }}
+{%- endmacro %}
+
+{% macro spine_lc(portname) -%}
+{% if portname|string is search('^.*/.*/.*$') %}
+{# Chassis based devices #}
+{{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') }}
+{% else %}
+{# Non-modular switches like 7280 #}
+{{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') }}
+{% endif %}
+{%- endmacro %}
+
+{% macro spine_po(portname) -%}
+{% if portname|string is search('^.*/.*/.*$') %}
+{# Chassis based devices #}
+{{ portname | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>') }}
+{% else %}
+{# Non-modular switches like 7280 #}
+{{ portname | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>') }}
+{% endif %}
+{%- endmacro %}
+
+{% macro uplink_port_ip(intf_uplink) -%}
+{% set spine_lc = spine_lc(intf_uplink) %}
+{% set spine_po = spine_po(intf_uplink) %}
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% else %}
+{% set offset = 0 %}
+{% endif %}
+{% set ip = spine_po|int * 2 - 1 %}
+{% set ip = ip + 72 * offset %}
+{% set nextsubnet = 0 %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 1 %}
+{% endif %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 2 %}
+{% endif %}
+{% set link_ip = ip %}
+{# is it enough to only return the 3rd and 4th octet of the IPv4 address? #}
+{{ nextsubnet }}.{{ ip }}
 {%- endmacro %}
 
 {% macro admin_mpls_filtering() -%}

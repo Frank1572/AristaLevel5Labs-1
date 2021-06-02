@@ -1,0 +1,30 @@
+---
+yml_shs:
+  - number: 1a
+    oob_ip: 10.9.240.17
+    nwmgmt_ip: 198.19.156.24
+    snmp:
+      location: foo
+      contact: bar
+    uplinks:
+      - 25/1
+      - 26/1
+      - 35/1
+      - 36/1
+    spine_port_towards_leaf: Et4/3/1
+    ports: []
+    port_channels: []
+  - number: 1b
+    oob_ip: 10.9.240.18
+    nwmgmt_ip: 198.19.156.25
+    snmp:
+      location: foo
+      contact: bar
+    uplinks:
+      - 25/1
+      - 26/1
+      - 35/1
+      - 36/1
+    spine_port_towards_leaf: Et4/4/1
+    ports: []
+    port_channels: []

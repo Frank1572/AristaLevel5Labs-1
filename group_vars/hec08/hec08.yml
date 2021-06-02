@@ -1376,17 +1376,6 @@ hec:
       100 deny vlan 50 0x000 ip 198.18.240.0/22 198.18.240.0/22 log
       110 permit vlan 50 0x000 ip 198.18.240.0/22 any
       120 permit vlan 50 0x000 ip any any
-#     130 permit vlan 55 0x000 icmp any any
-#     140 permit vlan 55 0x000 pim any any
-#     160 permit vlan 55 0x000 vrrp any any
-#     170 permit vlan 55 0x000 ip any 224.0.0.0/5
-#     180 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.127.255
-#     190 permit vlan 55 0x000 ip 100.122.64.0/18 100.122.124.0/22
-#     200 permit vlan 55 0x000 ip 100.122.124.0/22 100.122.64.0/18
-#     210 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.64.1
-#     220 deny vlan 55 0x000 ip 100.122.64.0/18 100.122.64.0/18 log
-#     230 permit vlan 55 0x000 ip 100.122.64.0/18 any
-#     240 permit vlan 55 0x000 ip any any
       130 permit vlan 60 0x000 icmp any any
       140 permit vlan 60 0x000 pim any any
       150 permit vlan 60 0x000 92 any any

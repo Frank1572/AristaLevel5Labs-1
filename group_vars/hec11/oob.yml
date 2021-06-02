@@ -1,0 +1,428 @@
+---
+yml_oob:
+  - number: "01a"
+    type: core
+    snmp:
+      contact: 34679366:ncons4407.wdf.sap.corp:1027
+      location: DE-ROT2-RZ44-R1-3-40
+    ports:
+      - id: 1
+        description: rot13dc02-adm-03-co, Et1/13
+        ip: 10.255.200.8/31
+        speed: 10000full
+      - id: 2
+        description: sw-hec01-oob-02
+        po: 102
+        trunk: 21
+        speed: 10000full
+      - id: 3
+        description: sw-hec01-oob-03
+        po: 103
+        trunk: 21
+        speed: 10000full
+      - id: 4
+        description: sw-hec01-oob-04
+        po: 104
+        trunk: 21
+        speed: 10000full
+      - id: 5
+        description: sw-hec01-oob-05
+        po: 105
+        trunk: 21
+        speed: 10000full
+      - id: 6
+        description: sw-hec01-oob-06
+        po: 106
+        trunk: 21
+        speed: 10000full
+      - id: 7
+        description: sw-hec01-oob-07
+        po: 107
+        trunk: 21
+        speed: 10000full
+      - id: 8
+        description: sw-hec01-oob-08
+        po: 108
+        trunk: 21
+        speed: 10000full
+      - id: 9
+        description: sw-hec01-oob-09
+        po: 109
+        trunk: 21
+        speed: 10000full
+      - id: 10
+        description: sw-hec01-oob-10
+        po: 110
+        trunk: 21
+        speed: 10000full
+      - id: 11
+        description: sw-hec01-oob-11
+        po: 111
+        trunk: 21
+        speed: 10000full
+      - id: 12
+        description: sw-hec01-oob-12
+        po: 112
+        trunk: 21
+        speed: 10000full
+      - id: 13
+        description: sw-hec01-oob-13
+        po: 113
+        trunk: 21
+        speed: 10000full
+      - id: 14
+        description: sw-hec01-oob-14
+        po: 114
+        trunk: 21
+        speed: 10000full
+      - id: 15
+        description: sw-hec01-oob-15
+        po: 115
+        trunk: 21
+        speed: 10000full
+      - id: 16
+        description: sw-hec01-oob-16
+        po: 116
+        trunk: 21
+        speed: 10000full
+      - id: 17
+        description: sw-hec01-oob-17
+        po: 117
+        trunk: 21
+        speed: 10000full
+      - id: 18
+        description: sw-hec01-oob-18
+        po: 118
+        trunk: 21
+        speed: 10000full
+      - id: 21
+        description: fw-hec01-01-NEW
+        access_vlan: 21
+        speed: 1000full
+      - id: 22
+        description: lb-hec01-01-NEW-2021-MGMT
+        access_vlan: 21
+        speed: 1000full
+      - id: 55/1
+        description: sw-hec01-oob-01b-mlag-peer
+        po: 42
+        trunk: all
+      - id: 56/1
+        description: sw-hec01-oob-01b-mlag-peer
+        po: 42
+        trunk: all
+      - id: 21
+        type: vlan
+        description: OOB Access Vlan
+        ip: 10.178.136.2/23
+        secondary:
+          - 10.178.138.2/23
+        vrrp:
+          - id: 21
+            ip: 10.178.136.1
+            secondary:
+              - 10.178.138.1
+            priority: 105
+            track:
+              object: 494
+              weight: 10
+            auth: oobnw
+    port_channels:
+      - id: 102
+        description: sw-hec01-oob-02
+        trunk: 21
+        lacp_fallback: individual
+      - id: 103
+        description: sw-hec01-oob-03
+        trunk: 21
+        lacp_fallback: individual
+      - id: 104
+        description: sw-hec01-oob-04
+        trunk: 21
+        lacp_fallback: individual
+      - id: 105
+        description: sw-hec01-oob-05
+        trunk: 21
+        lacp_fallback: individual
+      - id: 106
+        description: sw-hec01-oob-06
+        trunk: 21
+        lacp_fallback: individual
+      - id: 107
+        description: sw-hec01-oob-07
+        trunk: 21
+        lacp_fallback: individual
+      - id: 108
+        description: sw-hec01-oob-08
+        trunk: 21
+        lacp_fallback: individual
+      - id: 109
+        description: sw-hec01-oob-09
+        trunk: 21
+        lacp_fallback: individual
+      - id: 110
+        description: sw-hec01-oob-10
+        trunk: 21
+        lacp_fallback: individual
+      - id: 111
+        description: sw-hec01-oob-11
+        trunk: 21
+        lacp_fallback: individual
+      - id: 112
+        description: sw-hec01-oob-12
+        trunk: 21
+        lacp_fallback: individual
+      - id: 113
+        description: sw-hec01-oob-13
+        trunk: 21
+        lacp_fallback: individual
+      - id: 114
+        description: sw-hec01-oob-14
+        trunk: 21
+        lacp_fallback: individual
+      - id: 115
+        description: sw-hec01-oob-15
+        trunk: 21
+        lacp_fallback: individual
+      - id: 116
+        description: sw-hec01-oob-16
+        trunk: 21
+        lacp_fallback: individual
+      - id: 117
+        description: sw-hec01-oob-17
+        trunk: 21
+        lacp_fallback: individual
+      - id: 118
+        description: sw-hec01-oob-18
+        trunk: 21
+        lacp_fallback: individual
+    bgp:
+      router_id: 198.19.251.32
+      local_asn: 64531.1
+      peers:
+        - ipv4: 10.255.200.9
+          remote_asn: 65535
+        - ipv4: 198.19.224.2
+          remote_asn: 64531.1
+  - number: "01b"
+    type: core
+    snmp:
+      contact: 34679368:ncons-5401.wdf.sap.corp:1027
+      location: DE-ROT2-RZ54-R2-2-35
+    ports:
+      - id: 1
+        description: rot06dc01-adm-04-co, Et1/13
+        ip: 10.255.200.10/31
+        speed: 10000full
+      - id: 2
+        description: sw-hec01-oob-02
+        po: 102
+        trunk: 21
+        speed: 10000full
+      - id: 3
+        description: sw-hec01-oob-03
+        po: 103
+        trunk: 21
+        speed: 10000full
+      - id: 4
+        description: sw-hec01-oob-04
+        po: 104
+        trunk: 21
+        speed: 10000full
+      - id: 5
+        description: sw-hec01-oob-05
+        po: 105
+        trunk: 21
+        speed: 10000full
+      - id: 6
+        description: sw-hec01-oob-06
+        po: 106
+        trunk: 21
+        speed: 10000full
+      - id: 7
+        description: sw-hec01-oob-07
+        po: 107
+        trunk: 21
+        speed: 10000full
+      - id: 8
+        description: sw-hec01-oob-08
+        po: 108
+        trunk: 21
+        speed: 10000full
+      - id: 9
+        description: sw-hec01-oob-09
+        po: 109
+        trunk: 21
+        speed: 10000full
+      - id: 10
+        description: sw-hec01-oob-10
+        po: 110
+        trunk: 21
+        speed: 10000full
+      - id: 11
+        description: sw-hec01-oob-11
+        po: 111
+        trunk: 21
+        speed: 10000full
+      - id: 12
+        description: sw-hec01-oob-12
+        po: 112
+        trunk: 21
+        speed: 10000full
+      - id: 13
+        description: sw-hec01-oob-13
+        po: 113
+        trunk: 21
+        speed: 10000full
+      - id: 14
+        description: sw-hec01-oob-14
+        po: 114
+        trunk: 21
+        speed: 10000full
+      - id: 15
+        description: sw-hec01-oob-15
+        po: 115
+        trunk: 21
+        speed: 10000full
+      - id: 16
+        description: sw-hec01-oob-16
+        po: 116
+        trunk: 21
+        speed: 10000full
+      - id: 17
+        description: sw-hec01-oob-17
+        po: 117
+        trunk: 21
+        speed: 10000full
+      - id: 18
+        description: sw-hec01-oob-18
+        po: 118
+        trunk: 21
+        speed: 10000full
+      - id: 21
+        description: fw-hec01-02-NEW
+        access_vlan: 21
+        speed: 1000full
+      - id: 22
+        description: lb-hec01-02-NEW-2021-MGMT
+        access_vlan: 21
+        speed: 1000full
+      - id: 55/1
+        description: sw-hec01-oob-01a-mlag-peer
+        po: 42
+        trunk: all
+      - id: 56/1
+        description: sw-hec01-oob-01a-mlag-peer
+        po: 42
+        trunk: all
+      - id: 21
+        type: vlan
+        description: OOB Access Vlan
+        ip: 10.178.136.3/23
+        secondary:
+          - 10.178.138.3/23
+        vrrp:
+          - id: 21
+            ip: 10.178.136.1
+            secondary:
+              - 10.178.138.1
+            priority: 100
+            track:
+              object: 494
+              weight: 10
+            auth: oobnw
+    port_channels:
+      - id: 102
+        description: sw-hec01-oob-02
+        trunk: 21
+        lacp_fallback: individual
+      - id: 103
+        description: sw-hec01-oob-03
+        trunk: 21
+        lacp_fallback: individual
+      - id: 104
+        description: sw-hec01-oob-04
+        trunk: 21
+        lacp_fallback: individual
+      - id: 105
+        description: sw-hec01-oob-05
+        trunk: 21
+        lacp_fallback: individual
+      - id: 106
+        description: sw-hec01-oob-06
+        trunk: 21
+        lacp_fallback: individual
+      - id: 107
+        description: sw-hec01-oob-07
+        trunk: 21
+        lacp_fallback: individual
+      - id: 108
+        description: sw-hec01-oob-08
+        trunk: 21
+        lacp_fallback: individual
+      - id: 109
+        description: sw-hec01-oob-09
+        trunk: 21
+        lacp_fallback: individual
+      - id: 110
+        description: sw-hec01-oob-10
+        trunk: 21
+        lacp_fallback: individual
+      - id: 111
+        description: sw-hec01-oob-11
+        trunk: 21
+        lacp_fallback: individual
+      - id: 112
+        description: sw-hec01-oob-12
+        trunk: 21
+        lacp_fallback: individual
+      - id: 113
+        description: sw-hec01-oob-13
+        trunk: 21
+        lacp_fallback: individual
+      - id: 114
+        description: sw-hec01-oob-14
+        trunk: 21
+        lacp_fallback: individual
+      - id: 115
+        description: sw-hec01-oob-15
+        trunk: 21
+        lacp_fallback: individual
+      - id: 116
+        description: sw-hec01-oob-16
+        trunk: 21
+        lacp_fallback: individual
+      - id: 117
+        description: sw-hec01-oob-17
+        trunk: 21
+        lacp_fallback: individual
+      - id: 118
+        description: sw-hec01-oob-18
+        trunk: 21
+        lacp_fallback: individual
+    bgp:
+      router_id: 198.19.251.33
+      local_asn: 64531.1
+      peers:
+        - ipv4: 10.255.200.11
+          remote_asn: 64536
+        - ipv4: 198.19.224.1
+          remote_asn: 64531.1
+  - number: "02"
+    ports:
+      - id: 21
+        type: vlan
+        description: OOB Access Vlan
+        ip: 10.178.137.202/23
+    snmp:
+      contact: 34413655:ncons-4408.wdf.sap.corp:1009
+      location: DE-ROT2-RZ44-R1-3-32
+  - number: "03"
+    ports:
+      - id: 21
+        type: vlan
+        description: OOB Access Vlan
+        ip: 10.178.137.202/23
+    snmp:
+      contact: 34413655:ncons-4408.wdf.sap.corp:1009
+      location: DE-ROT2-RZ44-R1-3-32

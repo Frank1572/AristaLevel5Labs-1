@@ -16,35 +16,6 @@ bfd local-address {{ item.loopback1_ip }}
 {{ funcs.switchportchannels(po) }}
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
-
-{# {% set spine_port_towards_leaf = item.spine_port_towards_leaf %}
-{% if hec.spine.model|string is search('75[01][486].*')  %} #}
-{# Chassis based devices #}
-{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>')%}
-{% endif %} #}
-{# {% if hec.spine.model|string is search('7280.*') %} #}
-{# Non-modular switches like 7280 #}
-{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>')%}
-{% endif %}
-{% if spine_lc|int > 0 %}
-{% set offset = spine_lc|int - 3 %}
-{% else %}
-{% set offset = 0 %}
-{% endif %}
-{% set ip = spine_po|int * 2 - 1 %}
-{% set ip = ip + 72 * offset %}
-{% set nextsubnet = 0 %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 1 %}
-{% endif %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 2 %}
-{% endif %}
-{% set link_ip = ip %} #}
 {% set uplink_ipv4 = funcs.uplink_port_ip(item.spine_port_towards_leaf) %}
 {% set nextsubnet = uplink_ipv4.split('.')[0] %}
 {% set link_ip = uplink_ipv4.split('.')[1] %}

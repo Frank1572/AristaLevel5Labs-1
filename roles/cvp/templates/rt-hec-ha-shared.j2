@@ -32,14 +32,11 @@ alias undrain
 !
 event-monitor
 !
-vlan 30
-   name HANA-STOR01
-!
 vlan 900
-   name NW-MGMT
+   name {{vlandb.900.name}}
 !
 vlan 922
-   name BACKUP-TRANS
+   name {{vlandb.900.name}}
 !
 {{eos_cmd.c_vrf_defintion}} INFRA
    description InfraVRF
@@ -62,52 +59,6 @@ interface Ethernet {{ num }}/1
 {{ funcs.switchportchannels(po) }}
 {% endfor %}
 {% endif %}{# end of port-channel generation #}
-{# {% for interface in item.ports %}
-{% if interface.type is defined %}
-{% if interface.type != 'Ethernet' %}
-{% if interface.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
-{% if interface.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
-interface {{ inttype }}{{ interface.id }}
-{% endif %}
-{% endif %}
-{% if interface.type is not defined %}
-interface Ethernet{{ interface.id }}
-{% endif %}
-{% if interface.speed is defined %}
-   speed forced {{ interface.speed }}
-{% else %}
-{% if interface.type is not defined %}
-   speed forced {{ hec.fabric.interlink_speed }}
-{% endif %}
-{% endif %}
-{% if interface.mtu is defined %}
-   mtu {{ interface.mtu }}
-{% else %}
-   mtu {{ hec.fabri.interlink_mtu }}
-{% endif %}
-{% if interface.ip is defined %}
-{% if interface.type is not defined %}
-   no switchport
-{% endif %}
-{% if interface.type is defined %}
-{% if interface.type|lower != 'vlan' %}
-   no switchport
-{% endif %}
-{% if interface.type|lower == 'vlan' %}
-   no autostate
-{% endif %}
-{% endif %}
-{% if interface.vrf is defined %}
-   {{eos_cmd.c_vrf_forwarding}} {{ interface.vrf }}
-{% endif %}
-{% if interface.virtual_router_ip is defined %}
-   ip virtual-router address {{ interface.virtual_router_ip }}
-{% endif %}
-{% endif %}
-{% if interface.bfd is defined %}
-   bfd interval 1000 min_rx 1000 multiplier 3
-{% endif %}
-{% endfor %}   #}
 !
 ! ===== Spine Uplinks =====
 {% for uplink in item.uplinks %}
@@ -172,22 +123,22 @@ router bgp 641{{ hec.hec_nr }}.10999
    no bgp default ipv4-unicast
    distance bgp 20 95 200
    maximum-paths 8 ecmp 16
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as|string, 'next-hop-unchanged', 'update-source Loopback1',
-                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
-   neighbor PG-EDGE-ROUTER {{ setting }}
- {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10999', 'update-source Loopback1',
-                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
-   neighbor PG-HA-ROUTER {{ setting }}
- {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.ngdr_overlay.remote_hec_nr + '.10999', 'next-hop-unchanged', 'update-source Loopback1',
-                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'route-map RM-HAPEER out'] %}
-   neighbor PG-RMT-HA-ROUTER {{ setting }}
- {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000',
-                   eos_cmd.c_neighbor_fall_over_bfd, 'send-community', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'allowas-in 3'] %}
-   neighbor PG-SPINE {{ setting }}
- {% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as|string, 'next-hop-unchanged', 'update-source Loopback1',
+                 eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+  neighbor PG-EDGE-ROUTER {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10999', 'update-source Loopback1',
+                 eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+  neighbor PG-HA-ROUTER {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.ngdr_overlay.remote_hec_nr + '.10999', 'next-hop-unchanged',
+                 eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'route-map RM-HAPEER out'] %}
+  neighbor PG-RMT-HA-ROUTER {{ setting }}
+{% endfor %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000',
+                 eos_cmd.c_neighbor_fall_over_bfd, 'send-community', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'allowas-in 3'] %}
+  neighbor PG-SPINE {{ setting }}
+{% endfor %}
 {% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000', 'next-hop-unchanged', 'update-source Loopback1',
                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'ebgp-multihop 2'] %}
@@ -223,8 +174,8 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% endif %}
    !
    vrf INFRA
-      rd {{ hec.hec_nr }}:900
+      rd {{ hec.hec_nr|int }}:900
       route-target import evpn {{ hec.ngdr_overlay.remote_hec_nr }}:900
-      route-target export evpn {{ hec.hec_nr }}:900
+      route-target export evpn {{ hec.hec_nr|int }}:900
       redistribute static
 !

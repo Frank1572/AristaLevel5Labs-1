@@ -1,4 +1,4 @@
-!
+{% import "templates/libs.j2" as funcs with context %}
 hostname rt-hec{{ hec.hec_nr }}-ha-core-0{{ item.number }}
 !
 snmp-server contact {{ item.snmp.contact }}
@@ -6,22 +6,16 @@ snmp-server location {{ item.snmp.location }}
 !
 bfd local-address {{ item.loopback1_ip }}
 !
-{% for interface in item.ports %}
-{% if interface.type is defined %}
-{% if interface.type != 'Ethernet' %}
-{% if interface.type|lower == 'vlan' %}{% set inttype = 'Vlan' %}{% endif %}
-{% if interface.type|lower == 'spine_link' %}{% set inttype = 'Ethernet' %}{% endif %}
-interface {{ inttype }}{{ interface.id }}
-{% endif %}
-{% endif %}
-{% if interface.type is not defined %}
-interface Ethernet{{ interface.id }}
-{% endif %}
-   description ->{{ interface.description }}
-{% if interface.ip is defined %}
-   ip address {{ interface.ip }}
-{% endif %} 
-{% endfor %}  
+{% if item.ports is defined %}
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
+{% endfor %}
+{% endif %}{# end of port generation #}
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
 
 {% set spine_port_towards_leaf = item.spine_port_towards_leaf %}
 {% if hec.spine.model|string is search('75[01][486].*')  %}
@@ -58,14 +52,14 @@ interface Ethernet{{ interface }}
 !
 {% endfor %}
 !
-interface Loopback1 
+interface Loopback1
    ip address {{ item.loopback1_ip }}/32
    ip address 10.254.200.1/32 secondary
-! 
-interface Loopback900 
+!
+interface Loopback900
    ip address {{ item.nwmgmt_ip }}/32
-! 
-interface Management1 
+!
+interface Management1
    ip address {{ item.oob_ip }}/{{hec.oob_mask}}
 !
 {% for interface in item.ports %}
@@ -77,7 +71,7 @@ interface Management1
 {% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int -1 %}
 {% endif %}
 {% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
-{% for remote_edge in hec.ngdr_overlay.remote_edge_routers %} 
+{% for remote_edge in hec.ngdr_overlay.remote_edge_routers %}
 ip route {{ remote_edge.ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }}
 {% endfor %}
 {% endif %}
@@ -96,7 +90,7 @@ ip route {{ item.remote_ha_ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }
 {% endif %}
 {% endfor %}
 !
-router bgp 641{{ hec.hec_nr }}.10999 
+router bgp 641{{ hec.hec_nr }}.10999
    router-id {{ item.loopback1_ip }}
 {% for interface in item.uplinks %}
    neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip | int -1 }} {{eos_cmd.c_neighbor_peer_group}} PG-SPINE
@@ -113,8 +107,8 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
    neighbor {{ remote_ha_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-RMT-HA-ROUTER
    neighbor {{ remote_ha_ip }} description *** BGP to rt-hec{{ hec.ngdr_overlay.remote_hec_nr }}-ha-core-0{{ item.number}} ***
-   address-family evpn 
-      neighbor {{ remote_ha_ip }} activate 
+   address-family evpn
+      neighbor {{ remote_ha_ip }} activate
 {% endif %}
 {% endfor %}
 
@@ -153,18 +147,18 @@ router bgp 641{{ hec.hec_nr }}.10999
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor2_letter }} ***
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
    neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor3_letter }} ***
-   ! 
-   address-family evpn 
+   !
+   address-family evpn
       neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} activate
       neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} activate
       neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} activate
    !
-{% if hec.fabric.vtep_distribution_mode == "evpn" %} 
-   vlan-aware-bundle all-vlans 
-      rd {{ item.loopback1_ip }}:1 
-   ! 
+{% if hec.fabric.vtep_distribution_mode == "evpn" %}
+   vlan-aware-bundle all-vlans
+      rd {{ item.loopback1_ip }}:1
+   !
 {% endif %}
-   address-family ipv4 
+   address-family ipv4
 {% for interface in item.uplinks %}
       neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip | int -1 }} activate
 {% endfor %}
@@ -172,5 +166,5 @@ router bgp 641{{ hec.hec_nr }}.10999
       network {{ item.nwmgmt_ip }}/32
       network {{ item.remote_ha_ip }}/32
       network {{ item.loopback1_ip }}/32
-   ! 
-! 
+   !
+!

@@ -57,6 +57,13 @@ container:
       - sw-hec-tele-oob
   HEC-Backup Routers:
     parent_container: HEC
+    configlets:
+      - hec_rt_str_shared
+      - sw-hec-switch-snmp
+      - sw-hec-switch-ntp
+      - sw-hec-switch-logging
+      - sw-hec-switch-sflow
+      - mgmt-default
   HEC-Switched Fabric:
     parent_container: HEC
     configlets:
@@ -218,3 +225,4 @@ configlet_list_global:
   - maintenancemode-ha
   - sw-hec-fwt-01a
   - sw-hec-fwt-01b
+  - hec_rt_str_shared

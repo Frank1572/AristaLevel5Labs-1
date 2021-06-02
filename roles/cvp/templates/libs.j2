@@ -141,7 +141,7 @@ interface Ethernet{{ interface.id }}
 {% endif %}
 {% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
    mtu {{ interface.mtu }}
-{% endif %} {# End MTU shinans #}
+{% endif %}{# End MTU shinans #}
 {% if interface.ip is defined %}{# START ip is defined #}
 {% if (interface.type is defined) and (interface.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}
@@ -182,6 +182,14 @@ interface Ethernet{{ interface.id }}
 {% endif %}
 {% endfor %}
 {% endif %}{# END vrrp is defined #}
+{% if interface.virtual_router_ip is defined %}{# START varp is defined #}
+{% for varp_ip in interface.virtual_router_ip %}
+   ip virtual-router address {{ varp_ip }}
+{% endfor %}
+{% endif %}{# END varp is defined #}
+{% if interface.proxy_arp is defined and interface.proxy_arp %}{# START proxy arp is defined #}
+   ip proxy-arp
+{% endif %}{# END proxy arp is defined #}
 {% if interface.type is not defined %}
    no switchport
 {% endif %}
@@ -252,6 +260,10 @@ router bgp {{ asn_generated_global[0]|string }}
 {% endif %}
 {% endif %}
 {% endif %}
+{%- endmacro %}
+
+{% macro leafid(name) -%}
+{{ name | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') }}
 {%- endmacro %}
 
 {% macro admin_mpls_filtering() -%}

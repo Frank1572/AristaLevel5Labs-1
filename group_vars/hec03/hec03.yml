@@ -134,11 +134,11 @@ hec:
   ntp2: 169.145.84.11
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  # syslog3: 147.204.146.42
+  # syslog3: 147.204.146.42	  
   syslog:
     inband:
-      servers:
-        - ipv4: 169.145.82.65
+      servers:	
+        - ipv4: 169.145.82.65	
         - ipv4: 169.145.84.91
   tacacs:
     nat:
@@ -208,6 +208,10 @@ hec:
         - id: 3
           model: 7280-60
           linecards: 1
+          fortygig: []
+        - id: 4
+          model: 7504
+          linecards: 2
           fortygig: []
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
@@ -300,6 +304,34 @@ hec:
         oob_ip: 10.9.241.44
         nwmgmt_ip: 198.19.156.76
         spine_port_towards_superspine: [ 'Et57/1', 'Et58/1', 'Et59/1', 'Et60/1']
+      - id: 41
+        snmp:
+          location: Sterling-2-(DC3)-Cage-2-(01.CK.004)-DB-024-2
+          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1016
+        oob_ip: 10.9.241.113
+        nwmgmt_ip: 198.19.156.85
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
+      - id: 42
+        snmp:
+          location: Sterling-2-(DC3)-Cage 2-(01.CK.004)-DB-025-2
+          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1017
+        oob_ip: 10.9.241.114
+        nwmgmt_ip: 198.19.156.86
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
+      - id: 43
+        snmp:
+          location: Sterling-2-(DC3)-Cage-2-(01.CK.004)-DB-024-18
+          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1018
+        oob_ip: 10.9.241.115
+        nwmgmt_ip: 198.19.156.87
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
+      - id: 44
+        snmp:
+          location:  Sterling-2-(DC3)-Cage-2-(01.CK.004)-DB-025-18
+          contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1019
+        oob_ip: 10.9.241.116
+        nwmgmt_ip: 198.19.156.88
+        spine_port_towards_superspine: [ 'Et3/33/1', 'Et3/34/1', 'Et3/35/1', 'Et3/36/1']
   superspine:
     # valid models are: 7504, 7508, 7280
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
@@ -830,11 +862,340 @@ hec:
       snmp:
         contact: 34414790:ncons-hec03-oob-xx.net.sap.corp:100x
         location: US-STL1-CAGE4-GK17-RU44
+  fwt:
+    - number: "01a"
+      snmp:
+        contact: 34414805:ncons-hec03-oob-01.net.sap.corp:1005
+        location: US-STL1-CAGE5-FG18-U39
+      oob_ip: 10.9.240.20
+      ports:
+        - id: 1
+          description: Admin-MPLS -> Level 3
+          ip: 10.255.224.12/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec03-01-new,eth1-03
+          speed: 10000full
+        - id: 3
+          description: fw-hec03-02-new,eth1-03
+          speed: 10000full
+        - id: 4
+          speed: 10000full
+        - id: 5
+          speed: 10000full
+        - id: 6
+          speed: 10000full
+        - id: 7
+          speed: 10000full
+        - id: 8
+          speed: 10000full
+        - id: 9
+          speed: 10000full
+        - id: 10
+          speed: 10000full
+        - id: 11
+          description: na-us-1-sw711
+          speed: 10000full
+        - id: 12
+          description: na-us-1-sw721
+          speed: 10000full
+        - id: 13
+          speed: 10000full
+        - id: 14
+          speed: 10000full
+        - id: 15
+          description: fw-hec03-01,eth1-01
+          speed: 10000full
+          po: 1
+        - id: 16
+          description: fw-hec03-01,eth1-01
+          speed: 10000full
+          po: 2
+        - id: 17
+          speed: 10000full
+        - id: 18
+          speed: 10000full
+        - id: 19
+          speed: 10000full
+        - id: 20
+          speed: 10000full
+        - id: 21
+          speed: 10000full
+        - id: 22
+          speed: 10000full
+        - id: 23
+          speed: 10000full
+        - id: 24
+          speed: 10000full
+        - id: 25
+          speed: 10000full
+        - id: 26
+          speed: 10000full
+        - id: 27
+          speed: 10000full
+        - id: 28
+          speed: 10000full
+        - id: 29
+          speed: 10000full
+        - id: 30
+          speed: 10000full
+        - id: 31
+          speed: 10000full
+        - id: 32
+          speed: 10000full
+        - id: 33
+          speed: 10000full
+        - id: 34
+          speed: 10000full
+        - id: 35
+          speed: 10000full
+        - id: 36
+          speed: 10000full
+        - id: 37
+          speed: 10000full
+        - id: 38
+          speed: 10000full
+        - id: 39
+          speed: 10000full
+        - id: 40
+          speed: 10000full
+        - id: 41
+          speed: 10000full
+        - id: 42
+          speed: 10000full
+        - id: 43
+          speed: 10000full
+        - id: 44
+          speed: 10000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
+        - id: 47
+          description: MLAG
+          speed: 10000full
+          po: 42
+        - id: 48
+          description: MLAG
+          speed: 10000full
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.176.2/28
+          vrrp:
+            - id: 15
+              priority: 105
+              ip: 10.255.176.1
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec03-01
+          trunk: 915
+        - id: 2
+          description: fw-hec03-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.166
+        local_asn: 64531.3
+        peers:
+          - ipv4: 10.255.224.13
+            remote_asn: 1.463
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.3
+    - number: "01b"
+      snmp:
+        contact: 34414807:ncons-hec03-oob-01.net.sap.corp:1006
+        location: US-STL1-CAGE5-FG20-U39
+      oob_ip: 10.9.240.21
+      ports:
+        - id: 1
+          description: Admin-MPLS -> Verizon
+          ip: 10.255.224.14/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec03-01-new,eth1-04
+          speed: 10000full
+        - id: 3
+          description: fw-hec03-02-new,eth1-04
+          speed: 10000full
+        - id: 4
+          speed: 10000full
+        - id: 5
+          speed: 10000full
+        - id: 6
+          speed: 10000full
+        - id: 7
+          speed: 10000full
+        - id: 8
+          speed: 10000full
+        - id: 9
+          speed: 10000full
+        - id: 10
+          speed: 10000full
+        - id: 11
+          description: na-us-1-sw711
+          speed: 10000full
+        - id: 12
+          description: na-us-1-sw721
+          speed: 10000full
+        - id: 13
+          speed: 10000full
+        - id: 14
+          speed: 10000full
+        - id: 15
+          description: fw-hec03-01,eth1-04
+          speed: 10000full
+          po: 1
+        - id: 16
+          description: fw-hec03-01,eth1-04
+          speed: 10000full
+          po: 2
+        - id: 17
+          speed: 10000full
+        - id: 18
+          speed: 10000full
+        - id: 19
+          speed: 10000full
+        - id: 20
+          speed: 10000full
+        - id: 21
+          speed: 10000full
+        - id: 22
+          speed: 10000full
+        - id: 23
+          speed: 10000full
+        - id: 24
+          speed: 10000full
+        - id: 25
+          speed: 10000full
+        - id: 26
+          speed: 10000full
+        - id: 27
+          speed: 10000full
+        - id: 28
+          speed: 10000full
+        - id: 29
+          speed: 10000full
+        - id: 30
+          speed: 10000full
+        - id: 31
+          speed: 10000full
+        - id: 32
+          speed: 10000full
+        - id: 33
+          speed: 10000full
+        - id: 34
+          speed: 10000full
+        - id: 35
+          speed: 10000full
+        - id: 36
+          speed: 10000full
+        - id: 37
+          speed: 10000full
+        - id: 38
+          speed: 10000full
+        - id: 39
+          speed: 10000full
+        - id: 40
+          speed: 10000full
+        - id: 41
+          speed: 10000full
+        - id: 42
+          speed: 10000full
+        - id: 43
+          speed: 10000full
+        - id: 44
+          speed: 10000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
+        - id: 47
+          description: MLAG
+          speed: 10000full
+          po: 42
+        - id: 48
+          description: MLAG
+          speed: 10000full
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.176.3/28
+          vrrp:
+            - id: 15
+              priority: 100
+              ip: 10.255.176.1
+              track:
+                object: 494
+                weight: 10
+      port_channels:
+        - id: 1
+          description: fw-hec03-01
+          trunk: 915
+        - id: 2
+          description: fw-hec03-02
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.167
+        local_asn: 64531.3
+        peers:
+          - ipv4: 10.255.224.15
+            remote_asn: 64536
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.3
   routes:
     static:
       brdr01:
         - destination: 0.0.0.0/0
           nexthop: 198.19.235.1
+      fwt01:
+        - destination: 10.255.176.0/28
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 100.124.32.0/19
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 169.145.80.0/21
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.18.64.0/19
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.18.134.0/23
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.128.0/20
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.144.0/22
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.156.0/23
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.224.240/28
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.235.0/24
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.236.0/23
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 198.19.242.0/24
+          nexthop: 10.255.176.12
+          interface: Vlan915
+        - destination: 0.0.0.0/0
+          nexthop: 10.9.240.1
+          vrf: OOB
   brdr:
     - number: 1a
       snmp:
@@ -1448,6 +1809,52 @@ hec:
         - id: 1902
           description: rt-hec03-px-01b
           trunk: all
+    - number: 5a
+      pod: 4
+      snmp:
+        location: Sterling 2(DC3)-Cage 2 (01.CK.004)-DB-024-25
+        contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1020
+      oob_ip: 10.9.241.117
+      nwmgmt_ip: 198.19.156.89
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      spine_port_towards_leaf: Et3/1/1
+      ports:
+        - id: 30/1
+          description: sw-hec03-brdr-05b, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec03-brdr-05b, Et31/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+    - number: 5b
+      pod: 4
+      snmp:
+        location: Sterling 2(DC3)-Cage 2 (01.CK.004)-DB-025-25
+        contact: xxxxx:ncons-hec03-26.stl.hec.sap.biz:1021
+      oob_ip: 10.9.241.118
+      nwmgmt_ip: 198.19.156.90
+      uplinks:
+        - 25/1
+        - 36/1
+        - 35/1
+        - 36/1
+      spine_port_towards_leaf: Et3/2/1
+      ports:
+        - id: 30/1
+          description: sw-hec03-brdr-05a, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec03-brdr-05a, Et31/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
   str:
     - number: 1a
       snmp:
@@ -1987,6 +2394,102 @@ hec:
           po: 42
         - id: 50/1
           description: sw-hec03-str-06a,Et50/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 7a
+      pod: 4
+      snmp:
+        location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-024-RU37
+        contact: XXXXXXXX:ncons-hec03-26.stl.hec.sap.biz:1026
+      oob_ip: 10.9.241.119
+      nwmgmt_ip: 198.19.156.91
+      spine_port_towards_leaf: Et3/3/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 100gfull
+      ports:
+        - id: 30/1
+          description: sw-hec03-str-07b, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec03-str-07b, Et31/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 7b
+      pod: 4 
+      snmp:
+        location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-025-RU37
+        contact: XXXXXXXX:ncons-hec03-26.stl.hec.sap.biz:1027
+      oob_ip: 10.9.241.120
+      nwmgmt_ip: 198.19.156.92
+      spine_port_towards_leaf: Et3/4/1
+      uplinks:
+        - 25/1
+        - 26/1
+        - 35/1
+        - 36/1
+      uplinks_speed: 100gfull
+      ports:
+        - id: 30/1
+          description: sw-hec03-str-07a, Et30/1
+          po: 42
+        - id: 31/1
+          description: sw-hec03-str-07a, Et31/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 8a
+      pod: 4
+      snmp:
+        location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-024-RU17
+        contact: 34912694:ncons-hec03-26.stl.hec.sap.biz:1028
+      oob_ip: 10.9.241.121
+      nwmgmt_ip: 198.19.156.93
+      spine_port_towards_leaf: Et3/5/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 100gfull
+      ports:
+        - id: 49/1
+          description: sw-hec03-str-08b,Et49/1
+          po: 42
+        - id: 50/1
+          description: sw-hec03-str-08b,Et50/1
+          po: 42
+      port_channels:
+        - id: 42
+          description: mlag peer link
+    - number: 8b
+      pod: 4
+      snmp:
+        location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-025-RU17
+        contact: XXXXXXXX:ncons-hec03-26.stl.hec.sap.biz:1029
+      oob_ip: 10.9.241.122
+      nwmgmt_ip: 198.19.156.94
+      spine_port_towards_leaf: Et3/6/1
+      uplinks:
+        - 51/1
+        - 52/1
+        - 53/1
+        - 54/1
+      uplinks_speed: 100gfull
+      ports:
+        - id: 49/1
+          description: sw-hec03-str-08a,Et49/1
+          po: 42
+        - id: 50/1
+          description: sw-hec03-str-08a,Et50/1
           po: 42
       port_channels:
         - id: 42

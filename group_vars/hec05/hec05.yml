@@ -540,6 +540,51 @@ hec:
             remote_asn: 64536
           - ipv4: 198.19.224.1
             remote_asn: 64531
+    - number: "02"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.4/23
+      snmp:
+        contact: 34672508:ncons-hec13-oob-01:1023
+        location: Toronto1-(TR3)-Cage2-3.1-11-41
+    - number: "03"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.5/23
+      snmp:
+        contact: 34672507:ncons-hec13-oob-03:1003
+        location: Toronto1-(TR3)-Cage1-1.1-9-34
+    - number: "04"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.47/23
+      snmp:
+        contact: 34879543:ncons-hec13-oob-03.hec.oob.net.sap:1018
+        location: Toronto1 (TR3)-Cage1- Rack 1.1-7 RU40
+    - number: "05"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.48/23
+      snmp:
+        contact: 34879544:ncons-hec13-oob-03.hec.oob.net.sap:1019
+        location: Toronto1(TR3)-Cage1- Rack 1.1-7 RU42
+    - number: "06"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.244.49/23
+      snmp:
+        contact: 635968:ncons-hec13-oob-02.hec.oob.net.sap:1012
+        location: Toronto 1 (TR3)-Cage2- Rack 3.1-12 RU41
   fwt:
     - number: "01a"
       snmp:
@@ -1699,7 +1744,7 @@ hec:
       90 permit vlan 50 0x000 ip 198.18.144.0/22 host 198.18.144.1
       100 deny vlan 50 0x000 ip 198.18.144.0/22 198.18.144.0/22 log
       110 permit vlan 50 0x000 ip 198.18.144.0/22 any
-      120 permit vlan 50 0x000 ip any any log
+      120 permit vlan 50 0x000 ip any any
       130 permit vlan 60 0x000 icmp any any
       140 permit vlan 60 0x000 pim any any
       150 permit vlan 60 0x000 92 any any
@@ -1709,7 +1754,7 @@ hec:
       190 permit vlan 60 0x000 ip 198.18.152.0/21 host 198.18.152.1
       200 deny vlan 60 0x000 ip 198.18.152.0/21 198.18.152.0/21 log
       210 permit vlan 60 0x000 ip 198.18.152.0/21 any
-      220 permit vlan 60 0x000 ip any any log
+      220 permit vlan 60 0x000 ip any any
       230 permit ip any any
 #       ip access-list sw-hec05-235#
   hana_acl_rules: |

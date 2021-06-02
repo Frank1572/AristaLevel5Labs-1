@@ -155,6 +155,7 @@
     - vxlan1-shutdown
     - maintenancemode
     - maintenancemode-ha
+    - hec_rt_str_shared
   tags:
     - configlets
 
@@ -261,6 +262,17 @@
   tags:
     - configlets
     - fwt
+
+- name: Render rt-hec-str-xx
+  delegate_to: 127.0.0.1
+  template:
+    src: "templates/hec_rt_str_xx.j2"
+    dest: "{{role_path}}/files/configs/rt-hec-str-{{ item.number }}"
+  with_items: "{{ hec.strrt }}"
+  when: hec.strrt|default("") != ""
+  tags:
+    - configlets
+    - strrt
 
 - set_fact:
     id: 'b'

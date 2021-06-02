@@ -176,20 +176,20 @@ router bgp 641{{ hec.hec_nr }}.10999
                    eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
    neighbor PG-EDGE-ROUTER {{ setting }}
  {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' hec.hec_nr + '.10999', 'update-source Loopback1',
+ {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10999', 'update-source Loopback1',
                    eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
    neighbor PG-HA-ROUTER {{ setting }}
  {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' hec.ngdr_overlay.remote_hec_nr + '.10999', 'next-hop-unchanged', 'update-source Loopback1',
+ {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.ngdr_overlay.remote_hec_nr + '.10999', 'next-hop-unchanged', 'update-source Loopback1',
                    eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'route-map RM-HAPEER out'] %}
    neighbor PG-RMT-HA-ROUTER {{ setting }}
  {% endfor %}
- {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' hec.hec_nr + '.10000',
+ {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000',
                    eos_cmd.c_neighbor_fall_over_bfd, 'send-community', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'allowas-in 3'] %}
    neighbor PG-SPINE {{ setting }}
  {% endfor %}
 {% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
-{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' hec.hec_nr + '.1000', 'next-hop-unchanged', 'update-source Loopback1',
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.1000', 'next-hop-unchanged', 'update-source Loopback1',
                   eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'ebgp-multihop 2'] %}
   neighbor PG-SPINE-EVPN {{ setting }}
 {% endfor %}

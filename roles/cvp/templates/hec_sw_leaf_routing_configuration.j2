@@ -217,7 +217,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd 10.{{ 200 + (cell_id/100) }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}:1
+      rd 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}:1
       route-target both 1:1
       redistribute learned
 {% if leafpurpose != 'b' %}

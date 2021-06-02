@@ -46,10 +46,12 @@ bfd local-address {{ item.loopback1_ip }}
 {% endif %}
 {% set link_ip = ip %} #}
 {% set uplink_ipv4 = funcs.uplink_port_ip(item.spine_port_towards_leaf) %}
+{% set nextsubnet = uplink_ipv4.split('.')[0] %}
+{% set link_ip = uplink_ipv4.split('.')[1] %}
 {% for interface in item.uplinks %}
 interface Ethernet{{ interface }}
-   description ->sw-hec{{ hec.hec_nr }}-spine-{{ loop.index + 10 }}, {{ spine_port_towards_leaf }}
-   ip address 10.{{ loop.index + 10 }}.{{ uplink_ipv4 }}/31
+   description ->sw-hec{{ hec.hec_nr }}-spine-{{ loop.index + 10 }}, {{ item.spine_port_towards_leaf }}
+   ip address 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip }}/31
 !
 {% endfor %}
 !

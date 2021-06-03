@@ -1,7 +1,5 @@
-{% import "templates/libs.j2" as funcs with context %}
 {# hec_sw_leaf_routing_configuration.j2 #}
 {% set asn_generated_global = [] %}
-{% import "templates/libs.j2" as funcs with context %}
 {#
  first, let's find out the leaf's purpose.
   - 'b' is a borderleaf
@@ -65,7 +63,7 @@
 {% set offset = spine_lc|int - 3 %}
 {% set cell_id = cell_id + (offset * 18) %}
 {% endif %} #}
-{% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid) %}
+{% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid)|int %}
 {% if allbrdrs.pod is not defined %}
 {% set asn_part = cell_id + 10000 %}
 {% set asn_spine_part = 10000 %}

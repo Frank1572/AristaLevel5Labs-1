@@ -79,9 +79,8 @@ interface Management1
 ip routing
 no ip routing vrf OOB
 !
-ip prefix-list MATCH_ANY seq 5 permit 0.0.0.0/0 le 32
 {% for prefix in hec.admin_mpls.prefix_mask %}
-ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 10 }} permit {{ prefix }}
+ip prefix-list PREF_ADMIN_MPLS seq {{ loop.index * 5 }} permit {{ prefix }}
 {% endfor %}
 !
 {{ funcs.admin_mpls_filtering() }}

@@ -65,10 +65,10 @@
 {% endif %} #}
 {% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid)|int %}
 {% if allbrdrs.pod is not defined %}
-{% set asn_part = cell_id + 10000 %}
+{% set asn_part = cell_id|int + 10000 %}
 {% set asn_spine_part = 10000 %}
 {% else %}
-{% set asn_part = cell_id + (10000 * allbrdrs.pod|int) %}
+{% set asn_part = cell_id|int + (10000 * allbrdrs.pod|int) %}
 {% set asn_spine_part = 10000 * allbrdrs.pod|int %}
 {% endif %}
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
@@ -227,7 +227,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}:1
+      rd 10.{{ 200 + (cell_id|int / 100) }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id|int % 100 }}:1
       route-target both 1:1
       redistribute learned
 {% if leafpurpose != 'b' %}

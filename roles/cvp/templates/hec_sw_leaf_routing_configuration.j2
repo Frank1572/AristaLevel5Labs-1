@@ -32,8 +32,8 @@
 #}
 {% for allbrdrs in loop_items if allbrdrs.number == id_short %}
 {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
-{% set hec_spine_model = {'name' : 'none'} %}
-{% if allbrdrs.pod is not defined %}
+{# {% set hec_spine_model = {'name' : 'none'} %} #}
+{# {% if allbrdrs.pod is not defined %}
 {% if hec_spine_model.update({'name':hec.spine.model})%}{% endif %}
 {% else %}
 {% for i in hec.spine.pod.number %}
@@ -41,8 +41,8 @@
 {% if hec_spine_model.update({'name':i.model})%}{% endif %}
 {% endif %}
 {% endfor %}
-{% endif %}
-! {{hec_spine_model.name}}
+{% endif %} #}
+{# ! {{hec_spine_model.name}} #}
 {# {% if hec_spine_model.name|string is search('75[01][486].*')  %} #}
 {# Chassis based devices #}
 {# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
@@ -64,16 +64,17 @@
 {% set cell_id = cell_id + (offset * 18) %}
 {% endif %} #}
 {% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid)|int %}
-{% if allbrdrs.pod is not defined %}
-{% set asn_part = cell_id|int + 10000 %}
 {% set asn_spine_part = 10000 %}
+{% set asn_part = cell_id|int %}
+{% if allbrdrs.pod is not defined %}{# START if switch is not assigned to a POD #}
+{% set asn_part = asn_part + 10000 %}
 {% else %}
-{% set asn_part = cell_id|int + (10000 * allbrdrs.pod|int) %}
-{% set asn_spine_part = 10000 * allbrdrs.pod|int %}
-{% endif %}
-{% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
-{% set _ = asn_generated_global.append(asn_generated) %}
-{% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}
+{% set asn_part = asn_part + (10000 * allbrdrs.pod|int) %}
+{% set asn_spine_part = asn_spine_part * allbrdrs.pod|int %}
+{% endif %}{# END if switch is assigned to a POD #}
+{% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}{# this is the ASN for a leaf #}
+{# set _ = asn_generated_global.append(asn_generated) #}{# looks like this isn't needed anymore?! #}
+{% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}{# this is the ASN for a spine #}
 {# {% if leafid == 'b' %}
 {% set Lo1 = (cell_id % 100) + 100 %}
 {% else %}

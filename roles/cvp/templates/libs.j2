@@ -232,7 +232,7 @@ interface Port-Channel{{ portchannel.id }}
 !
 {%- endmacro %}
 
-{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp, asn) -%}
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp, asn=1) -%}
 {% set route_statement = 'ip route' %}
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}

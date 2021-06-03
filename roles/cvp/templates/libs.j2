@@ -232,7 +232,7 @@ interface Port-Channel{{ portchannel.id }}
 !
 {%- endmacro %}
 
-{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp, asn) -%}
 {% set route_statement = 'ip route' %}
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}
@@ -249,7 +249,8 @@ interface Port-Channel{{ portchannel.id }}
 {% endif %}
 {{ route_statement }}
 {% if red_bgp == True %}
-router bgp {{ asn_generated_global[0]|string }}
+router bgp {{ asn|string }}
+{#router bgp {{ asn_generated_global[0]|string }}#}
 {% if vrf != '' %}
    vrf {{ vrf }}
      redistribute static

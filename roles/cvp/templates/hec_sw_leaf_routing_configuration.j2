@@ -171,12 +171,12 @@ router bgp {{ asn_generated }}
    !
 {% for i in range(1,5) %}
 {% if allbrdrs.pod is not defined %}
-   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip|int - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
 {% else %}
 {% if allbrdrs.pod == 1 %}
-   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+   neighbor 10.{{ loop.index + 10 }}.{{ nextsubnet }}.{{ link_ip|int - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
 {% else %}
-   neighbor 10.{{ loop.index + 10 + (10 * (allbrdrs.pod - 1)) }}.{{ nextsubnet }}.{{ link_ip - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
+   neighbor 10.{{ loop.index + 10 + (10 * (allbrdrs.pod - 1)) }}.{{ nextsubnet }}.{{ link_ip|int - 1 }} {{eos_cmd.c_neighbor_peer_group}} SPINE-PG
 {% endif %}
 {% endif %}
 {% endfor %}

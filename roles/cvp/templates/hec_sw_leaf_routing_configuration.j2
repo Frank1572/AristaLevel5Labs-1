@@ -76,17 +76,21 @@
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}
 {% set _ = asn_generated_global.append(asn_generated) %}
 {% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}
-{% if leafid == 'b' %}
+{# {% if leafid == 'b' %}
 {% set Lo1 = (cell_id % 100) + 100 %}
 {% else %}
 {% set Lo1 = cell_id % 100 %}
-{% endif %}
+{% endif %} #}
+{% set intf_loopback1 = funcs.leaf_routerid(spine_port_towards_leaf, leafid, allbrdrs.pod|default(1)) %}
+{% set intf_loopback2 = funcs.leaf_vtepid(spine_port_towards_leaf, leafid, allbrdrs.pod|default(1)) %}
 interface Loopback1
    description Router-ID
-   ip address 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
+{#   ip address 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32#}
+   ip address {{ intf_loopback1 }}
 !
 interface Loopback2
-   ip address 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32
+{#   ip address 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32#}
+   ip address {{ intf_loopback2 }}
 !
 {# {% if spine_lc|int > 0 %}
 {% set offset = spine_lc|int - 3 %}
@@ -118,9 +122,9 @@ ip routing
 no ip routing vrf OOB
 !
 {% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
-ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
-ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
-ip prefix-list PL-EDGE seq 30 permit 10.254.200.0/24 eq 32
+{% for entry in ['198.19.249.0/24', '198.19.251.0/24', '10.254.200.0/24'] %}
+ip prefix-list PL-EDGE seq {{ loop.index * 10 }} permit {{ entry }} eq 32
+{% endfor %}
 !
 route-map RM-EDGE permit 10
    match ip address prefix-list PL-EDGE
@@ -130,7 +134,8 @@ route-map RM-EDGE deny 20
 !
 router bgp {{ asn_generated }}
    bgp asn notation asdot
-   router-id 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}
+{# router-id 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }} #}
+   router-id {{ intf_loopback1.split('/')[0] }}
    maximum-paths 8 ecmp 16
    !
    neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
@@ -183,9 +188,11 @@ router bgp {{ asn_generated }}
 {% endif %}
    neighbor {{ mlag_ip_peer }} {{eos_cmd.c_neighbor_peer_group}} MLPEER-PG
    !
-   network 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
-   network 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32
-   network {{allbrdrs.nwmgmt_ip}}/32
+{# network 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
+   network 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32 #}
+{% for network in [ intf_loopback1, intf_loopback2, allbrdrs.nwmgmt_ip + '/32'] %}
+   network {{ network }}
+{% endfor %}
 {% if (brdrtype == '2') and (leafpurpose == 'b') %}
    network {{ hec.inband_trans_net }}
 {% endif %}

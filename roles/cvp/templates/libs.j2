@@ -327,6 +327,21 @@ router bgp {{ asn_generated_global[0]|string }}
 {{ cell_id }}
 {%- endmacro %}
 
+{% macro leaf_routerid(intf_uplink, leafid, pod=1) -%}
+{% set cell_id = cell_id(intf_uplink, leafid) %}
+{% if leafid == 'b' %}
+{% set Lo1 = (cell_id % 100) + 100 %}
+{% else %}
+{% set Lo1 = cell_id % 100 %}
+{% endif %}
+10.{{ 100 + (cell_id/100)|int }}.{{ pod }}.{{ Lo1 }}/32
+{%- endmacro %}
+
+{% macro leaf_vtepid(intf_uplink, leafid, pod=1) -%}
+{% set cell_id = cell_id(intf_uplink, leafid) %}
+10.{{ 200 + (cell_id/100)|int }}.{{ pod }}.{{ cell_id % 100 }}/32
+{%- endmacro %}
+
 {% macro admin_mpls_filtering() -%}
 route-map ADMIN_MPLS_IN deny 10
    description REJECT our own advertised subnets if we receive them from external.

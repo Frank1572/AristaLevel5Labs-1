@@ -73,7 +73,8 @@
 {% set asn_spine_part = asn_spine_part * allbrdrs.pod|int %}
 {% endif %}{# END if switch is assigned to a POD #}
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}{# this is the ASN for a leaf #}
-{# set _ = asn_generated_global.append(asn_generated) #}{# looks like this isn't needed anymore?! #}
+{% set _ = asn_generated_global.append(asn_generated) %}
+!{{ asn_generated_global[0] }}
 {% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}{# this is the ASN for a spine #}
 {# {% if leafid == 'b' %}
 {% set Lo1 = (cell_id % 100) + 100 %}

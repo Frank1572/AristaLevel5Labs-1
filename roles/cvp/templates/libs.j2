@@ -334,12 +334,12 @@ router bgp {{ asn_generated_global[0]|string }}
 {% else %}
 {% set Lo1 = cell_id|int % 100 %}
 {% endif %}
-10.{{ 100 + (cell_id|int / 100) }}.{{ pod }}.{{ Lo1 }}/32
+10.{{ 100 + (cell_id|int / 100)|int }}.{{ pod }}.{{ Lo1 }}/32
 {%- endmacro %}
 
 {% macro leaf_vtepid(intf_uplink, leafid, pod=1) -%}
 {% set cell_id = cell_id(intf_uplink, leafid)|int %}
-10.{{ 200 + (cell_id|int / 100) }}.{{ pod }}.{{ cell_id|int % 100 }}/32
+10.{{ 200 + (cell_id|int / 100)|int }}.{{ pod }}.{{ cell_id|int % 100 }}/32
 {%- endmacro %}
 
 {% macro admin_mpls_filtering() -%}

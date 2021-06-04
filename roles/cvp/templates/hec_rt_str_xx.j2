@@ -1,0 +1,49 @@
+{# #jinja2: trim_blocks: 'yes', lstrip_blocks: 'yes' #}
+{% import "templates/libs.j2" as funcs with context %}
+hostname rt-hec{{ hec.hec_nr }}-str-{{ item.number }}
+!
+snmp-server contact {{ item.snmp.contact}}
+snmp-server location {{ item.snmp.location}}
+!
+{% set leafid = funcs.leafid(item.number) %}
+{% set intf_ip_offset = 2 %}
+{% if leafid == "b" %}
+{% set intf_ip_offset = 3 %}
+{% endif %}
+{% if item.ports is defined %}
+{# Inband Management IP #}
+interface Vlan900
+   {{eos_cmd.c_vrf_forwarding}} MGMT
+   ip address {{ item.nwmgmt_ip }}/{{ hec.vl900_mask }}
+!
+{# OOB Management IP #}
+interface Management1
+   description OOB MGMT
+   {{eos_cmd.c_vrf_forwarding}} OOB
+   ip address {{ item.oob_ip }}/{{ hec.oob_mask }}
+!
+{% for port in item.ports %}
+{{ funcs.switchport(port) }}
+{% endfor %}
+{% endif %}{# end of port generation #}
+{% if item.port_channels is defined %}
+{% for po in item.port_channels %}
+{{ funcs.switchportchannels(po) }}
+{% endfor %}
+{% endif %}{# end of port-channel generation #}
+!
+{% if customers is defined %}{# START check if any customers have been defined. #}
+{% for customer in customers %}{# START loop through ALL customer #}
+{% if customer.backup is defined  %}{# START of logic that for setup the customer on the storage router #}
+{% set vlanid = customer.id + 2000 %}
+interface Vlan{{ vlanid }}
+{% for net in customer.backup %}
+{# determine IP offset based on hostname (a? b?) #}
+{% set conf_str_ip = 'ip address ' + net|ipaddr(intf_ip_offset)|ipaddr('address') + ' ' + net|ipaddr('netmask') %}
+{% if not loop.first %}{% set conf_str_ip = conf_str_ip + ' secondary' %}{% endif %}
+   {{ conf_str_ip }}
+{% endfor %}
+{% endif %}{# END of logic that for setup the customer on the storage router #}
+{% endfor %}{# END loop through ALL customer #}
+{% endif %}{# END check if any customers have been defined. #}
+!

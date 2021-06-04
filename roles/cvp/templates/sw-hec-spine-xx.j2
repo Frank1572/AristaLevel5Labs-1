@@ -36,6 +36,10 @@ snmp-server location {{a.snmp.location}}
 !
 {% endif %}
 {% endfor %}
+{% if item.id == 11 or item.id == 13 %}
+schedule syslog_hbeat at 01:00:00 12/01/2020 interval 1440 timeout 30 max-log-files 0 command bash python /mnt/flash/syslog_heartbeat.py
+!
+{% endif %}
 {% if hec_spine_model.name|string is search('75[01][486].*')  %}
 {% set lc_start = 3 %}
 {% set lc_end   = lc_start + hec_spine_model.linecards %}

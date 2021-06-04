@@ -38,7 +38,8 @@ interface Management1
 !
 {% for interface in item.ports %}
 {% if interface.id == '26/1' %}
-{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(interface.ip) %}
+{% set x = interface.ip %}
+{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(x) %}
 {% for remote_edge in hec.ngdr_overlay.remote_edge_routers %}
 ip route {{ remote_edge.ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }}
 {% endfor %}
@@ -54,7 +55,8 @@ router bgp 641{{ hec.hec_nr }}.10999
 
 {% for interface in item.ports %}
 {% if interface.id == '26/1' %}
-{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(interface.ip) %}
+{% set x = interface.ip %}
+{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(x) %}
    neighbor {{ remote_ha_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-RMT-HA-ROUTER
    neighbor {{ remote_ha_ip }} description *** BGP to rt-hec{{ hec.ngdr_overlay.remote_hec_nr }}-ha-core-0{{ item.number}} ***
    !

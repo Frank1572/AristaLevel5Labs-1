@@ -354,3 +354,14 @@ route-map ADMIN_MPLS_IN permit 20
 route-map ADMIN_MPLS_OUT permit 10
    match ip address prefix-list PREF_ADMIN_MPLS
 {%- endmacro %}
+
+{% macro ngdr_rmt_ha_intf_ip(localipv4) -%}
+{# based on the local interface's ipv4 that connects to the remote DC's peering HA-Router, calculate it's IPv4 in the /31 subnet #}
+{% set local_ha_ip_last_octett = localipv4.split("/")[0].split(".")[3] | int %}
+{% if local_ha_ip_last_octett % 2 == 0 %}
+{% set remote_ha_ip = interface.ip|ipmath(1) %}
+{% else %}
+{% set remote_ha_ip = interface.ip|ipmath(-1) %}
+{% endif %}
+{{ remote_ha_ip }}
+{%- endmacro %}

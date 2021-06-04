@@ -38,28 +38,10 @@ interface Management1
 !
 {% for interface in item.ports %}
 {% if interface.id == '26/1' %}
-{% set local_ha_ip_last_octett = interface.ip.split("/")[0].split(".")[3] | int %}
-{% if local_ha_ip_last_octett % 2 == 0 %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int +1 %}
-{% else %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int -1 %}
-{% endif %}
-{% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
+{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(interface.ip) %}
 {% for remote_edge in hec.ngdr_overlay.remote_edge_routers %}
 ip route {{ remote_edge.ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }}
 {% endfor %}
-{% endif %}
-{% endfor %}
-
-{% for interface in item.ports %}
-{% if interface.id == '26/1' %}
-{% set local_ha_ip_last_octett = interface.ip.split("/")[0].split(".")[3] | int %}
-{% if local_ha_ip_last_octett % 2 == 0 %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int +1 %}
-{% else %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int -1 %}
-{% endif %}
-{% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
 ip route {{ item.remote_ha_ip }}/32 Ethernet{{ interface.id }} {{ remote_ha_ip }}
 {% endif %}
 {% endfor %}
@@ -72,20 +54,14 @@ router bgp 641{{ hec.hec_nr }}.10999
 
 {% for interface in item.ports %}
 {% if interface.id == '26/1' %}
-{% set local_ha_ip_last_octett = interface.ip.split("/")[0].split(".")[3] | int %}
-{% if local_ha_ip_last_octett % 2 == 0 %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int +1 %}
-{% else %}
-{% set remote_ha_ip_last_octett = local_ha_ip_last_octett | int -1 %}
-{% endif %}
-{% set remote_ha_ip = interface.ip.split(".")[0] + "." + interface.ip.split(".")[1] + "." + interface.ip.split(".")[2] + "." + remote_ha_ip_last_octett | string %}
+{% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(interface.ip) %}
    neighbor {{ remote_ha_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-RMT-HA-ROUTER
    neighbor {{ remote_ha_ip }} description *** BGP to rt-hec{{ hec.ngdr_overlay.remote_hec_nr }}-ha-core-0{{ item.number}} ***
+   !
    address-family evpn
       neighbor {{ remote_ha_ip }} activate
 {% endif %}
 {% endfor %}
-
 {% set myip = item.loopback1_ip %}
 {% set ippart = myip.split(".")[3] %}
 {% if item.number is search('\da') %}
@@ -98,55 +74,15 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set mydict = [ {'neighbor': 'a', 'ipv4': (myip|ipmath(-3))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(-1))}  ] %}
 {% endif %}
 {% for n in mydict %}
+   neighbor {{ n['ipv4'] }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
    neighbor {{ n['ipv4'] }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ n['neighbor'] }} ***
    !
    address-family evpn
       neighbor {{ n['ipv4'] }} activate
-   exit
+   !
 {% endfor %}
-
-{% if item.number == '1a' %}
-{% set ha_neighbor1_ip = item.loopback1_ip.split(".")[3] | int +1 %}
-{% set ha_neighbor1_letter = 'b' %}
-{% set ha_neighbor2_ip = item.loopback1_ip.split(".")[3] | int +2 %}
-{% set ha_neighbor2_letter = 'c' %}
-{% set ha_neighbor3_ip = item.loopback1_ip.split(".")[3] | int +3 %}
-{% set ha_neighbor3_letter = 'd' %}
-{% elif item.number == '1b' %}
-{% set ha_neighbor1_ip = item.loopback1_ip.split(".")[3] | int -1 %}
-{% set ha_neighbor1_letter = 'a' %}
-{% set ha_neighbor2_ip = item.loopback1_ip.split(".")[3] | int +1 %}
-{% set ha_neighbor2_letter = 'c' %}
-{% set ha_neighbor3_ip = item.loopback1_ip.split(".")[3] | int +2 %}
-{% set ha_neighbor3_letter = 'd' %}
-{% elif item.number == '1c' %}
-{% set ha_neighbor1_ip = item.loopback1_ip.split(".")[3] | int -2 %}
-{% set ha_neighbor1_letter = 'a' %}
-{% set ha_neighbor2_ip = item.loopback1_ip.split(".")[3] | int -1 %}
-{% set ha_neighbor2_letter = 'b' %}
-{% set ha_neighbor3_ip = item.loopback1_ip.split(".")[3] | int +1 %}
-{% set ha_neighbor3_letter = 'd' %}
-{% elif item.number == '1d' %}
-{% set ha_neighbor1_ip = item.loopback1_ip.split(".")[3] | int -3 %}
-{% set ha_neighbor1_letter = 'a' %}
-{% set ha_neighbor2_ip = item.loopback1_ip.split(".")[3] | int -2 %}
-{% set ha_neighbor2_letter = 'b' %}
-{% set ha_neighbor3_ip = item.loopback1_ip.split(".")[3] | int -1 %}
-{% set ha_neighbor3_letter = 'c' %}
-{% endif %}
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor1_letter }} ***
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor2_letter }} ***
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER
-   neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ ha_neighbor3_letter }} ***
-   !
-   address-family evpn
-      neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor1_ip }} activate
-      neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor2_ip }} activate
-      neighbor {{ item.loopback1_ip.split(".")[0] }}.{{ item.loopback1_ip.split(".")[1] }}.{{ item.loopback1_ip.split(".")[2] }}.{{ ha_neighbor3_ip }} activate
-   !
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
+   !
    vlan-aware-bundle all-vlans
       rd {{ item.loopback1_ip }}:1
    !

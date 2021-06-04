@@ -367,7 +367,7 @@ hec:
         router_id: 198.19.251.192
         local_asn: 64531.8
         peers:
-          - ipv4: 10.255.143.141
+          - ipv4: 10.255.193.141
             remote_asn: 65999
           - ipv4: 198.19.224.2
             remote_asn: 64531.8

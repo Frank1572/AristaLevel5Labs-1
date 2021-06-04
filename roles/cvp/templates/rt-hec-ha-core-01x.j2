@@ -90,23 +90,20 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set ippart = myip.split(".")[3] %}
 {% if item.number is search('\da') %}
 {% set mydict = [ {'neighbor': 'b', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(3))}  ] %}
-{# {% set mydict = {'b': (myip|ipmath(1)), 'c': (myip|ipmath(2)), 'd': (myip|ipmath(3)) } %} #}
-{# {% elif item.number is search('\db') %}
-{% set mydict = {'c': myip|ipmath(1), 'd': myip|ipmath(2), 'a': myip|ipmath(-1) } %}
+{% elif item.number is search('\db') %}
+{% set mydict = [ {'neighbor': 'c', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-1))}  ] %}
 {% elif item.number is search('\dc') %}
-{% set mydict = {'d': myip|ipmath(1), 'a': myip|ipmath(-2), {'b': myip|ipmath(-1) } %}
+{% set mydict = [ {'neighbor': 'd', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-1))}  ] %}
 {% elif item.number is search('\dd') %}
-{% set mydict = {'a': myip|ipmath(-3), 'b': myip|ipmath(-2), {'c': myip|ipmath(-1) } %} #}
+{% set mydict = [ {'neighbor': 'a', 'ipv4': (myip|ipmath(-3))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(-1))}  ] %}
 {% endif %}
-!--------------------------
-MYDICT {{ mydict }}
 {% for n in mydict %}
    neighbor {{ n['ipv4'] }} description *** EVPN to rt-hec{{ hec.hec_nr }}-ha-core-01{{ n['neighbor'] }} ***
    !
    address-family evpn
       neighbor {{ n['ipv4'] }} activate
+   exit
 {% endfor %}
-!--------------------------
 
 {% if item.number == '1a' %}
 {% set ha_neighbor1_ip = item.loopback1_ip.split(".")[3] | int +1 %}

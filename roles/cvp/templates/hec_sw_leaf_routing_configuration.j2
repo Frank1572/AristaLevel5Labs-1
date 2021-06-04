@@ -96,7 +96,7 @@ router bgp {{ asn_generated }}
 {% endfor %}
    !
 {% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
-{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as, 'route-map RM-EDGE in', 'route-map RM-EDGE out',
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as|string, 'route-map RM-EDGE in', 'route-map RM-EDGE out',
                'maximum-routes ' + hec.fabric.bgp_maximum_routes|string, 'send-community', eos_cmd.c_neighbor_fall_over_bfd, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
    neighbor EDGE-PG {{ setting }}
 {% endfor %}

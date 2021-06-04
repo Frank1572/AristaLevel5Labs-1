@@ -307,11 +307,11 @@ hec:
           speed: 10000full
         - id: 6
           description: ncons-hec08-05
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 7
           description: ncons-hec08-06
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 8
           description: sw-hec01-oob-06
@@ -403,11 +403,11 @@ hec:
           speed: 10000full
         - id: 6
           description: ncons-hec08-05, Uplink2
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 7
           description: ncons-hec08-06, Uplink2
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 8
           description: sw-hec01-oob-06

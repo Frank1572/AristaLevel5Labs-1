@@ -32,37 +32,6 @@
 #}
 {% for allbrdrs in loop_items if allbrdrs.number == id_short %}
 {% set spine_port_towards_leaf = allbrdrs.spine_port_towards_leaf %}
-{# {% set hec_spine_model = {'name' : 'none'} %} #}
-{# {% if allbrdrs.pod is not defined %}
-{% if hec_spine_model.update({'name':hec.spine.model})%}{% endif %}
-{% else %}
-{% for i in hec.spine.pod.number %}
-{% if allbrdrs.pod == i.id %}
-{% if hec_spine_model.update({'name':i.model})%}{% endif %}
-{% endif %}
-{% endfor %}
-{% endif %} #}
-{# ! {{hec_spine_model.name}} #}
-{# {% if hec_spine_model.name|string is search('75[01][486].*')  %} #}
-{# Chassis based devices #}
-{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*\d{1,2}/(?P<ponr>\d{1,2})/.*$', '\\g<ponr>')%}
-{% endif %}
-{% if hec_spine_model.name|string is search('7280.*') %} #}
-{# Non-modular switches like 7280 #}
-{# {% set spine_lc = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<lcnr>\d{1,2})/1$', '0') %}
-{% set spine_po = spine_port_towards_leaf | regex_replace('^Et[a-zA-Z]*(?P<ponr>\d{1,2})/1$', '\\g<ponr>')%}
-{% endif %} #}
-{# {% if leafid == 'a' %}
-{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
-{% endif %}
-{% if leafid == 'b' %}
-{% set cell_id  = (( spine_po|int ) / 2 )|int %}
-{% endif %}
-{% if spine_lc|int > 0 %}
-{% set offset = spine_lc|int - 3 %}
-{% set cell_id = cell_id + (offset * 18) %}
-{% endif %} #}
 {% set cell_id = funcs.cell_id(spine_port_towards_leaf, leafid)|int %}
 {% set asn_spine_part = 10000 %}
 {% set asn_part = cell_id|int %}
@@ -74,41 +43,17 @@
 {% endif %}{# END if switch is assigned to a POD #}
 {% set asn_generated = '641' + hec.hec_nr + '.' + asn_part|string %}{# this is the ASN for a leaf #}
 {% set _ = asn_generated_global.append(asn_generated) %}
-!{{ asn_generated_global[0] }}
+{# !{{ asn_generated_global[0] }} #}
 {% set asn_spine = '641' + hec.hec_nr + '.' + asn_spine_part|string %}{# this is the ASN for a spine #}
-{# {% if leafid == 'b' %}
-{% set Lo1 = (cell_id % 100) + 100 %}
-{% else %}
-{% set Lo1 = cell_id % 100 %}
-{% endif %} #}
 {% set intf_loopback1 = funcs.leaf_routerid(spine_port_towards_leaf, leafid, allbrdrs.pod|default(1)) %}
 {% set intf_loopback2 = funcs.leaf_vtepid(spine_port_towards_leaf, leafid, allbrdrs.pod|default(1)) %}
 interface Loopback1
    description Router-ID
-{#   ip address 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32#}
    ip address {{ intf_loopback1 }}
 !
 interface Loopback2
-{#   ip address 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32#}
    ip address {{ intf_loopback2 }}
 !
-{# {% if spine_lc|int > 0 %}
-{% set offset = spine_lc|int - 3 %}
-{% else %}
-{% set offset = 0 %}
-{% endif %}
-{% set ip = spine_po|int * 2 - 1 %}
-{% set ip = ip + 72 * offset %}
-{% set nextsubnet = 0 %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 1 %}
-{% endif %}
-{% if ip > 255 %}
-{% set ip = ip - 256 %}
-{% set nextsubnet = 2 %}
-{% endif %}
-{% set link_ip = ip %} #}
 {% set uplink_ipv4 = funcs.uplink_port_ip(item.spine_port_towards_leaf) %}
 {% set nextsubnet = uplink_ipv4.split('.')[0] %}
 {% set link_ip = uplink_ipv4.split('.')[1] %}
@@ -134,34 +79,27 @@ route-map RM-EDGE deny 20
 !
 router bgp {{ asn_generated }}
    bgp asn notation asdot
-{# router-id 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }} #}
    router-id {{ intf_loopback1.split('/')[0] }}
    maximum-paths 8 ecmp 16
    !
-   neighbor SPINE-PG {{eos_cmd.c_neighbor_peer_group}}
-   neighbor SPINE-PG remote-as {{ asn_spine }}
-   neighbor SPINE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_spine, 'route-map MLPEER-RM out',
+                'send-community', 'maximum-routes ' + hec.fabric.bgp_maximum_routes, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+   neighbor SPINE-PG {{ setting }}
+{% endfor %}
 {% if hec.spine.underlay_bfd %}
    neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}
-   neighbor SPINE-PG route-map MLPEER-RM out
-   neighbor SPINE-PG send-community
-   neighbor SPINE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
    !
-   neighbor MLPEER-PG {{eos_cmd.c_neighbor_peer_group}}
-   neighbor MLPEER-PG remote-as {{ asn_generated }}
-   neighbor MLPEER-PG next-hop-self
-   neighbor MLPEER-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_generated, 'next-hop-self',
+               'maximum-routes ' + hec.fabric.bgp_maximum_routes] %}
+   neighbor MLPEER-PG {{ setting }}
+{% endfor %}
    !
 {% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
-   neighbor EDGE-PG {{eos_cmd.c_neighbor_peer_group}}
-   neighbor EDGE-PG remote-as {{ hec.ngdr_underlay.edge_as }}
-   neighbor EDGE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
-   neighbor EDGE-PG {{eos_cmd.c_neighbor_soft_reconfiguration}} all
-   neighbor EDGE-PG route-map RM-EDGE in
-   neighbor EDGE-PG route-map RM-EDGE out
-   neighbor EDGE-PG send-community
-   neighbor EDGE-PG maximum-routes {{ hec.fabric.bgp_maximum_routes }}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as, 'route-map RM-EDGE in', 'route-map RM-EDGE out',
+               'maximum-routes ' + hec.fabric.bgp_maximum_routes, 'send-community', eos_cmd.c_neighbor_fall_over_bfd, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+   neighbor EDGE-PG {{ setting }}
+{% endfor %}
 {% for edge_neighbor in allbrdrs.ports %}
 {% if (edge_neighbor.type is defined) and (edge_neighbor.type == "vlan") and (edge_neighbor.ngdr_underlay is defined) and (edge_neighbor.ngdr_underlay)%}
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} {{eos_cmd.c_neighbor_peer_group}} EDGE-PG
@@ -188,8 +126,6 @@ router bgp {{ asn_generated }}
 {% endif %}
    neighbor {{ mlag_ip_peer }} {{eos_cmd.c_neighbor_peer_group}} MLPEER-PG
    !
-{# network 10.{{ 100 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ Lo1 }}/32
-   network 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}/32 #}
 {% for network in [ intf_loopback1, intf_loopback2, allbrdrs.nwmgmt_ip + '/32'] %}
    network {{ network }}
 {% endfor %}
@@ -198,13 +134,10 @@ router bgp {{ asn_generated }}
 {% endif %}
    !
 {% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode== "migrate" %}
-   neighbor EVPN-PG {{eos_cmd.c_neighbor_peer_group}}
-   neighbor EVPN-PG remote-as {{ asn_spine }}
-   neighbor EVPN-PG update-source Loopback1
-   neighbor EVPN-PG send-community standard extended
-   neighbor EVPN-PG ebgp-multihop 2
-   neighbor EVPN-PG maximum-routes {{hec.fabric.evpn_maximum_routes}}
-   neighbor EVPN-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_spine, 'update-source Loopback1', 'ebgp-multihop 2',
+               'maximum-routes ' + hec.fabric.evpn_maximum_routes, 'send-community standard extended', eos_cmd.c_neighbor_fall_over_bfd] %}
+   neighbor EVPN-PG {{ setting }}
+{% endfor %}
    !
 {% for i in range(11,15) %}
 {% if allbrdrs.pod is not defined %}

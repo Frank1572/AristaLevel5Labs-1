@@ -540,7 +540,42 @@ hec:
             remote_asn: 64536
           - ipv4: 198.19.224.1
             remote_asn: 64531
-  #2a config 
+    - number: "02"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.192.16.113/23
+      snmp:
+        contact: 34358731:ncons-hec05-04.net.sap.corp:1013
+        location: JP-Tokyo-TK6-Cage5-K2A-271-U32
+      uplinks:
+        - Ethernet49
+        - Ethernet50
+    - number: "03"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.192.16.114/23
+      snmp:
+        contact: 34358733:ncons-hec05-05.net.sap.corp:1001
+        location: JP-Tokyo-TK6-Cage5-K1C-029-U8
+      uplinks:
+        - Ethernet49
+        - Ethernet50
+    - number: "04"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.192.16.112/23
+      snmp:
+        contact: 34358732:ncons-hec05-04.net.sap.corp:1012
+        location: JP-Tokyo-TK6-Cage5-K2A-270-U32
+      uplinks:
+        - Ethernet49
+        - Ethernet50
   fwt:
     - number: "01a"
       snmp:

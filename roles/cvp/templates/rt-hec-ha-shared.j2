@@ -102,8 +102,9 @@ ip route vrf {{ route.vrf }} {{ route.network }} {{ route.interface }} {{ route.
 {% endfor %}
 {% endif %}
 !
-ip prefix-list PL-EDGE seq 10 permit 198.19.249.0/24 eq 32
-ip prefix-list PL-EDGE seq 20 permit 198.19.251.0/24 eq 32
+{% for entry in ['198.19.249.0/24', '198.19.251.0/24'] %}
+ip prefix-list PL-EDGE seq {{ loop.index * 10 }} permit {{ entry }} eq 32
+{% endfor %}
 ip prefix-list PL-FORBIDDEN-PREF seq 10 permit 10.0.0.0/8 le 32
 ip extcommunity-list FILTER_LOCAL_MAC permit rt 1:1
 !

@@ -62,11 +62,10 @@ router bgp 641{{ hec.hec_nr }}.10999
    !
    address-family evpn
       neighbor {{ remote_ha_ip }} activate
+   !
 {% endif %}
 {% endfor %}
 {% set myip = item.loopback1_ip %}
-{# {% set ippart = myip.split(".")[3] %} #}
-{% set mydict = [] %}
 {% if item.number is search('\da') %}
 {% set mydict = [ {'neighbor': 'b', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(3))} ] %}
 {% elif item.number is search('\db') %}

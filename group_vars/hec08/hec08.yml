@@ -485,6 +485,9 @@ hec:
       snmp:
         contact: 34844062:ncons-hec08-08.hec.oob.net.sap:1021
         location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U25
+      uplinks:
+        - Eth49
+        - Eth50
     - number: "04"
       ports:
         - id: 21

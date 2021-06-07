@@ -67,13 +67,13 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% set myip = item.loopback1_ip %}
 {% set ippart = myip.split(".")[3] %}
 {% if item.number is search('\da') %}
-{% set mydict = [ {'neighbor': 'b', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(3))}  ] %}
+{% set mydict = [ {'neighbor': 'b', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(3))} ] %}
 {% elif item.number is search('\db') %}
-{% set mydict = [ {'neighbor': 'c', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-1))}  ] %}
+{% set mydict = [ {'neighbor': 'c', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-1))} ] %}
 {% elif item.number is search('\dc') %}
-{% set mydict = [ {'neighbor': 'd', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-1))}  ] %}
+{% set mydict = [ {'neighbor': 'd', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'a', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-1))} ] %}
 {% elif item.number is search('\dd') %}
-{% set mydict = [ {'neighbor': 'a', 'ipv4': (myip|ipmath(-3))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(-1))}  ] %}
+{% set mydict = [ {'neighbor': 'a', 'ipv4': (myip|ipmath(-3))}, {'neighbor': 'b', 'ipv4': (myip|ipmath(-2))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(-1))} ] %}
 {% endif %}
 {% for n in mydict %}
    neighbor {{ n['ipv4'] }} {{eos_cmd.c_neighbor_peer_group}} PG-HA-ROUTER

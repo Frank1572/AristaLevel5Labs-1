@@ -65,7 +65,8 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% endif %}
 {% endfor %}
 {% set myip = item.loopback1_ip %}
-{% set ippart = myip.split(".")[3] %}
+{# {% set ippart = myip.split(".")[3] %} #}
+{% set mydict = [] %}
 {% if item.number is search('\da') %}
 {% set mydict = [ {'neighbor': 'b', 'ipv4': (myip|ipmath(1))}, {'neighbor': 'c', 'ipv4': (myip|ipmath(2))}, {'neighbor': 'd', 'ipv4': (myip|ipmath(3))} ] %}
 {% elif item.number is search('\db') %}
@@ -84,7 +85,6 @@ router bgp 641{{ hec.hec_nr }}.10999
    !
 {% endfor %}
 {% if hec.fabric.vtep_distribution_mode == "evpn" %}
-   !
    vlan-aware-bundle all-vlans
       rd {{ item.loopback1_ip }}:1
    !

@@ -223,7 +223,7 @@ router bgp {{ asn_generated }}
 {% set ns = namespace(vlans_right_side_end=0) %}
 {% for item in vlans.ranges -%}
   {% if item.name == 'cust_static_trans' %}
-    {% set ns.vlans_right_side_end = item.range|split('-') %}
+    {% set ns.vlans_right_side_end = item.range.split('-') %}
     {% set _ = ns.vlans_right_side_end[1] %}
   {% endif %}
 {%- endfor %}

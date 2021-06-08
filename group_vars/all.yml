@@ -6,6 +6,7 @@ vlandb:
   7: {name: 'DHCP03'}
   10: {name: 'IPMI01'}
   20: {name: 'HV-MGMT01'}
+  21: {name: 'OOB'}
   30: {name: 'IBM-PWR-MGMT01'}
   31: {name: 'IBM-PWR-LPM'}
   32: {name: 'IBM-PWR-ISCSI'}

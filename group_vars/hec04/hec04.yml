@@ -7372,7 +7372,7 @@ hec:
   - number: '04'
     snmp:
       location: CA01-Cage10-POD29-32-42
-      contact: 667970:ncons-hec04-05:1021
+      contact: 667970:ncons-hec04-09:1015
     ports:
     - id: 21
       type: vlan

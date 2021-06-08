@@ -14,6 +14,10 @@ vlan {{item.vid}}
 vlan {{item.range}}
 !
 {% endif %}
+{% if item.name == "hana2hana" %}
+vlan {{item.range}}
+!
+{% endif %}
 {% endfor %}
 ! === VLAN range for internal VLANs (routed interfaces) ===
 {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999

@@ -10,7 +10,7 @@ no sflow source-interface loopback900
 sflow source-interface Vlan21
 !
 vlan 21
-   name OOB
+   name {{ vlandb.21.name }}
 !
 {{eos_cmd.c_enable_secret}} 5 $1$P/hi307D$hTnbrBpberMN8.D02plrF1
 !

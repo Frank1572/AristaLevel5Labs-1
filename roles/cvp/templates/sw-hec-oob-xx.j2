@@ -119,24 +119,21 @@ interface Port-Channel101
 !
 {% if item.uplinks is defined %}
 {% for uplink in item.uplinks %}
-interface {{ uplink }}
+interface Ethernet{{ uplink|regex_replace('\D*') }}
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 101 mode active
 !
 {% endfor %}
 {% else %}
-interface Ethernet51
+{% for num in [51, 52] %}
+interface Ethernet{{ num }}
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 101 mode active
 !
-interface Ethernet52
-   switchport trunk allowed vlan 21
-   switchport mode trunk
-   channel-group 101 mode active
+{% endfor %}
 {% endif %}
-!
 ip route 0.0.0.0/0 {{ hec.oob_def_gw }}
 !
 {% endif %}

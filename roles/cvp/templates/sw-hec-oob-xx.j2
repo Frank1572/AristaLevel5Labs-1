@@ -119,7 +119,7 @@ interface Port-Channel101
 !
 {% if item.uplinks is defined %}
 {% for uplink in item.uplinks %}
-interface Ethernet{{ uplink|regex_replace('\D*') }}
+interface Ethernet{{ uplink|regex_replace('^\D*') }}
    switchport trunk allowed vlan 21
    switchport mode trunk
    channel-group 101 mode active

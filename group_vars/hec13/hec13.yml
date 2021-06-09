@@ -280,6 +280,151 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models: "{{ net.device.leaf_models }}"
+  fwt:
+    - number: "01a"
+      snmp:
+        contact: 34672516:ncons-hec13-oob-02.hec.oob.net.sap:1008
+        location: AMER-Canada-Toronto-1-(TR3)-Cage2-3.1-12-36
+      oob_ip: 10.9.244.6
+      ports:
+        - id: 1
+          description: tordc01-adm-03-co,eth18
+          ip: 10.255.194.12/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec13-01-NEW,eth1-03   
+          speed: 10000full
+          po: 3
+        - id: 3
+          description: fw-hec13-02-NEW,eth1-03
+          speed: 10000full
+          po: 4
+        - id: 4
+          speed: 10000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
+        - id: 47
+          description: fw-hec13-01,et1-03
+          speed: 10000full
+          po: 1
+        - id: 48
+          description: fw-hec13-02,et1-03
+          speed: 10000full
+          po: 2
+        - id: 59/1
+          description: sw-hec13-fwt-01b,59/1
+          po: 42
+        - id: 60/1
+          description: sw-hec13-fwt-01b,60/1
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.185.2/28
+          vrrp:
+            - id: 15
+              priority: 110
+              ip: 10.255.185.1
+              track:
+                object: 494
+                weight: 15
+      port_channels:
+        - id: 1
+          description: fw-hec13-01
+          trunk: 915
+        - id: 2
+          description: fw-hec13-02
+          trunk: 915
+        - id: 3
+          description: fw-hec13-01-NEW
+          trunk: 915
+        - id: 4
+          description: fw-hec13-02-NEW
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.168
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.13
+            remote_asn: 1.463
+          - ipv4: 198.19.224.2
+            remote_asn: 64531.13
+    - number: "01b"
+      snmp:
+        contact: 34672515:ncons-hec13-oob-02.hec.oob.net.sap:1009
+        location: AMER-Canada-Toronto-1-(TR3)-Cage2-3.1-12-35
+      oob_ip: 10.9.244.7
+      ports:
+        - id: 1
+          description: tordc01-adm-04-co,eth18
+          ip: 10.255.194.14/31
+          speed: 10000full
+        - id: 2
+          description: fw-hec13-01-NEW,eth1-04 
+          speed: 10000full
+          po: 3
+        - id: 3
+          description: fw-hec13-02-NEW,eth1-04
+          speed: 10000full
+          po: 4
+        - id: 4
+          speed: 10000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
+        - id: 47
+          description: fw-hec13-01,et1-04
+          speed: 10000full
+          po: 1
+        - id: 48
+          description: fw-hec13-02,et1-04
+          speed: 10000full
+          po: 2
+        - id: 59/1
+          description: sw-hec13-fwt-01a,59/1
+          po: 42
+        - id: 60/1
+          description: sw-hec13-fwt-01a,60/1
+          po: 42
+        - id: 915
+          description: FWT-TRANS
+          type: vlan
+          ip: 10.255.185.3/28
+          vrrp:
+            - id: 15
+              priority: 100
+              ip: 10.255.185.1
+              track:
+                object: 494
+                weight: 15
+      port_channels:
+        - id: 1
+          description: fw-hec13-01
+          trunk: 915
+        - id: 2
+          description: fw-hec13-02
+          trunk: 915
+        - id: 3
+          description: fw-hec13-01-NEW
+          trunk: 915
+        - id: 4
+          description: fw-hec13-02-NEW
+          trunk: 915
+        - id: 42
+          description: MLAG-PEER
+      bgp:
+        router_id: 198.19.251.169
+        local_asn: 64531.13
+        peers:
+          - ipv4: 10.255.194.15
+            remote_asn: 64536
+          - ipv4: 198.19.224.1
+            remote_asn: 64531.13
   oob:
     - number: "01a"
       type: core

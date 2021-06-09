@@ -1369,7 +1369,7 @@ hec:
           po: 42
           mtu: 9214
         - id: 50/1
-          description: sw-hec13-str-01b, Et50/1
+          description: sw-hec13-str-02b, Et50/1
           po: 42
           mtu: 9214
       port_channels:
@@ -1410,7 +1410,7 @@ hec:
           po: 42
           mtu: 9214
         - id: 50/1
-          description: sw-hec13-str-01a, Et50/1
+          description: sw-hec13-str-02a, Et50/1
           po: 42
           mtu: 9214
       port_channels:

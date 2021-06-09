@@ -58,7 +58,7 @@
 10.178.146.43 # naa-hec18-01.hec.oob.net.sap.
 
 [hec90]
-# to be created
+10.177.240.43 # naa-hec90-01.hec.oob.net.sap.
 
 [all:vars]
 ansible_connection=paramiko

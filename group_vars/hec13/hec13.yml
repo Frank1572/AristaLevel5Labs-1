@@ -328,6 +328,12 @@ hec:
           description: sw-hec13-ipmi-04,Mgmt1
           access_vlan: 21
           speed: 1000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec13-01, 3
           access_vlan: 21
@@ -416,6 +422,12 @@ hec:
           po: 106
           trunk: 21
           speed: 10000full
+        - id: 41
+          speed: 1000full
+        - id: 42
+          speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec13-01, 10
           access_vlan: 21

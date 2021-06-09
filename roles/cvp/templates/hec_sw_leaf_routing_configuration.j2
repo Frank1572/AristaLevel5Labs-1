@@ -165,8 +165,16 @@ router bgp {{ asn_generated }}
       rd 10.{{ 200 + (cell_id|int / 100) }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id|int % 100 }}:1
       route-target both 1:1
       redistribute learned
+{% set ns = namespace(vlans_right_side_end=0) %}
+{% for item in vlans.ranges -%}
+  {% if item.name == 'cust_static_trans' %}
+    {% set ns.vlans_right_side_end = item.range.split('-') %}
+    {% set _ = ns.vlans_right_side_end[1] %}
+  {% endif %}
+{%- endfor %}
+! # awesome new code (testing only). result is: {{ns.vlans_right_side_end}}
 {% if leafpurpose != 'b' %}
-      vlan 5-2499
+      vlan 5-{{ns.vlans_right_side_end}}
 {% else %}
 {% if (brdrtype == '1') or (brdrtype == '3') or (brdrtype == '4') or (brdrtype == '5') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}
@@ -199,8 +207,8 @@ interface Vxlan1
   if the core routers and wan/vpn routers are still doing
   static transfer networks for wan/vpn connections
 #}
-{% if (hec.core_vlans is defined) and hec.core_vlans %}
-vlan 3000-3499
+{% if hec.core_vlans|default('', true) %}
+vlan {% for item_range in vlans.ranges %}{% if item_range.name == 'cust_static_trans' %}{{item_range.range}}{% endif %}{% endfor %}
 !
 interface Vxlan1
 {% for i in range(0,500) %}

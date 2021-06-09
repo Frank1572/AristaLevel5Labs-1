@@ -719,6 +719,22 @@ hec:
           nexthop: 198.19.232.1
           interface: Vlan900
           redist_bgp: true
+      fwt01:
+        - destination: 100.96.0.0/19
+          nexthop: 10.255.185.12
+          interface: Vlan915
+        - destination: 100.127.32.0/21
+          nexthop: 10.255.185.12
+          interface: Vlan915
+        - destination: 198.19.180.0/24
+          nexthop: 10.255.185.12
+          interface: Vlan915
+        - destination: 198.19.224.176/28
+          nexthop: 10.255.185.12
+          interface: Vlan915
+        - destination: 198.19.232.0/24
+          nexthop: 10.255.185.12
+          interface: Vlan915
   brdr:
     - number: 1a
       snmp:

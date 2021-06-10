@@ -49,16 +49,6 @@ interface Ethernet {{ num }}/1
    no switchport
 !
 {% endfor %}
-{% if item.ports is defined %}
-{% for port in item.ports %}
-{{ funcs.switchport(port) }}
-{% endfor %}
-{% endif %}{# end of port generation #}
-{% if item.port_channels is defined %}
-{% for po in item.port_channels %}
-{{ funcs.switchportchannels(po) }}
-{% endfor %}
-{% endif %}{# end of port-channel generation #}
 !
 ! ===== Spine Uplinks =====
 {% for uplink in item.uplinks %}
@@ -129,11 +119,11 @@ router bgp 641{{ hec.hec_nr }}.10999
   neighbor PG-EDGE-ROUTER {{ setting }}
 {% endfor %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10999', 'update-source Loopback1',
-                 eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
+                 eos_cmd.c_neighbor_fall_over_bfd, 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
   neighbor PG-HA-ROUTER {{ setting }}
 {% endfor %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.ngdr_overlay.remote_hec_nr + '.10999', 'next-hop-unchanged',
-                 eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'route-map RM-HAPEER out'] %}
+                 eos_cmd.c_neighbor_fall_over_bfd, 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'route-map RM-HAPEER out'] %}
   neighbor PG-RMT-HA-ROUTER {{ setting }}
 {% endfor %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000',
@@ -142,7 +132,7 @@ router bgp 641{{ hec.hec_nr }}.10999
 {% endfor %}
 {% if hec.fabric.vtep_distribution_mode == "evpn" or hec.fabric.vtep_distribution_mode == "migrate" %}
 {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as 641' + hec.hec_nr + '.10000', 'next-hop-unchanged', 'update-source Loopback1',
-                  eos_cmd.c_neighbor_fall_over_bfd, 'ebgp-multihop', 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'ebgp-multihop 2'] %}
+                  eos_cmd.c_neighbor_fall_over_bfd, 'send-community standard extended', 'maximum-routes 0', eos_cmd.c_neighbor_soft_reconfiguration + ' all', 'ebgp-multihop 2'] %}
   neighbor PG-SPINE-EVPN {{ setting }}
 {% endfor %}
 {% for neighbor in ['10.100.0.11', '10.100.0.12', '10.100.0.13', '10.100.0.14'] %}

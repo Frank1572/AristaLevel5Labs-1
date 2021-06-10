@@ -86,12 +86,6 @@ ip virtual-router mac-address 00:1c:73:00:00:98
 !
 ip routing vrf INFRA
 !
-{% if hec.ngdr_overlay.routes is defined %}
-{% for route in hec.ngdr_overlay.routes %}
-ip route vrf {{ route.vrf }} {{ route.network }} {{ route.interface }} {{ route.nexthop }}
-{% endfor %}
-{% endif %}
-!
 {% for entry in ['198.19.249.0/24', '198.19.251.0/24'] %}
 ip prefix-list PL-EDGE seq {{ loop.index * 10 }} permit {{ entry }} eq 32
 {% endfor %}

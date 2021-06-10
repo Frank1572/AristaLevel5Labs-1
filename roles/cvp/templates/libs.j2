@@ -142,6 +142,12 @@ interface Ethernet{{ interface.id }}
 {% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
    mtu {{ interface.mtu }}
 {% endif %}{# End MTU shinans #}
+{% if interface.bfd is defined and interface.bfd %}{# START bfd is defined #}
+   bfd interval {{ net.device.bfd.interval }} min_rx {{ net.device.bfd.min_rx }} multiplier {{ net.device.bfd.multiplier }}
+{% endif %}{# END bfd is defined #}
+{% if interface.vrf is defined %}{# START vrf is defined #}
+   {{ eos_cmd.c_vrf_defintion }} {{ interface.vrf|string }}
+{% endif %}{# END vrf is defined #}
 {% if interface.ip is defined %}{# START ip is defined #}
 {% if (interface.type is defined) and (interface.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}

@@ -38,6 +38,8 @@ interface Management1
 !
 {% for interface in item.ports %}
 {% if interface.id == '26/1' %}
+bfd local-address {{ item.loopback1_ip }}
+!
 {% set x = interface.ip %}
 {% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(x) %}
 {% for remote_edge in hec.ngdr_overlay.remote_edge_routers %}

@@ -41,7 +41,7 @@ vlan 922
 {{eos_cmd.c_vrf_defintion}} INFRA
    description InfraVRF
 !
-bfd multihop interval 1000 min_rx 1000 multiplier 3
+bfd multihop interval {{ net.device.bfd.interval }} min_rx {{ net.device.bfd.min_rx }} multiplier {{ net.device.bfd.multiplier }}
 !
 {% for num in range(1,26) %}
 interface Ethernet {{ num }}/1

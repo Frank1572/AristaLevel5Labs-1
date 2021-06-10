@@ -162,7 +162,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd 10.{{ 200 + (cell_id|int / 100) }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id|int % 100 }}:1
+      rd intf_loopback2:1
       route-target both 1:1
       redistribute learned
 {% set ns = namespace(vlans_right_side_end=0) %}
@@ -189,6 +189,7 @@ router bgp {{ asn_generated }}
       exit
 {% endif %}
    exit
+
 !
 {% endif %}{# END vtep_distribution_mode evpn? #}
 {#

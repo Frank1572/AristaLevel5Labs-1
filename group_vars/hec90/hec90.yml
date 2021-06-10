@@ -1,0 +1,832 @@
+---
+eos:
+  new_syntax: True
+
+idrac:
+  ip: 10.178.136.254
+  mask: 255.255.254.0
+  gw: 10.178.136.1
+  name: naa-hec10-idrac-01
+  dns1: 147.204.148.110
+  dns2: 147.204.148.111
+  domain: hec.oob.net.sap
+  password: arista
+
+cva:
+# attention not .43 :
+  ip: 10.178.136.41
+  mask: 255.255.254.0
+  gw: 10.178.136.1
+  name: naa-hec01-01
+  dns1: 147.204.148.110
+  dns2: 147.204.148.111
+  domain: hec.oob.net.sap
+  password: arista
+
+oob2 and oob3:
+  dhcp:
+    prefix: 10.178.136.0
+    mask: 255.255.254.0
+    router: 10.178.136.1
+    idrac_ip: 10.178.137.248
+    cva_ip: 10.178.137.249
+
+cvp:
+  # there is already 1.3 on arista web page
+  version: cvp-2019.1.2-kvm.tgz
+  # path to be checked
+  path_to_cvp_file: /ens/bin/images/arista/
+  ip_eth0: 10.178.137.253
+  ip_eth1: 10.255.241.69
+  mask_eth0: 255.255.254.0
+  mask_eth1: 255.255.240.0
+  gw: 10.178.136.1
+  name: naa-hec01-cvp-01.hec.oob.net.sap
+  dns1: 10.17.121.30
+  dns2: 10.17.122.10
+  domain: hec.oob.net.sap
+  ntp1: 10.17.122.185
+  ntp2: 10.33.142.104
+  device_int: eth0
+  cluster_int: eth1
+  ingest_key: SecureKey01
+  vmname: cvp-hec01
+  KvmDomain: cvp
+  password: arista
+  backupuser: cvpbkp
+  eth1_routes:
+  # HEC01-NW-MGMT-04 (all router and ipmis)
+    - prefix: 198.19.234.0
+      mask: 24
+      nexthop: 10.255.241.78
+  # HEC01-NW-MGMT05 (all fab)
+    - prefix: 198.19.190.0
+      mask: 24
+      nexthop: 10.255.241.78
+  dhcp:
+    prefix: 10.178.140.0
+    mask: 255.255.254.0
+    range_low: 10.178.137.224
+    range_high: 10.178.137.247
+  aaa_config:
+    aaa_type: RADIUS
+    servers:
+      - ip: 10.17.121.35
+        secret: secretRadPw
+        authMode: PAP
+        authPort: 1645
+        accPort: 1646
+        status: Enabled
+      - ip: 10.17.122.21
+        secret: secretRadPw
+        authMode: PAP
+        authPort: 1645
+        accPort: 1646
+        status: "Enabled"
+hec:
+  hec_nr: "01"
+  hana_hvx_descriptions_PO_MIN: 101
+  hana_hvx_descriptions_PO_MAX: 124
+  hvv_descriptions_PO_MAX: 24
+  hvv_descriptions_PO_RANGE: "{101,151}"
+  ma_domain: "hec.oob.net.sap"
+  lo900_domain: "rot.hec.sap.biz"
+  vl900_domain: "rot.hec.sap.biz"
+  vl900_mask: 24
+  vl900_def_gw: 198.19.234.1
+  vl900_net: 198.19.234.0/24
+  lo900_net: 198.19.190.0/24
+  lo900_prefix: 198.19.190
+  inband_trans_brdr: 10.255.241.78
+  inband_trans_brdr_mac: 00:1c:73:00:00:96
+  inband_trans_net: 10.255.241.64/28
+  inband_trans_prefix: 10.255.241
+  inband_trans_mask: 28
+  inband_trans_gw_vlan: Vlan916
+  inband_trans_gw: 10.255.241.65
+  inband_trans_cvx: 10.255.241.68
+  inband_trans_cvp: 10.255.241.69
+  oob_def_gw: 10.178.136.1
+  oob_prefix: 10.178.136
+  oob_mask: 23
+  oob_vrf: OOB
+  oob_cvx: 10.178.137.252
+  oob_cvp: 10.178.137.253
+  as_low: 4200933137
+  as_high: 4200934335
+  cvp_ingest_key: SecureKey01
+  dns1: 10.127.141.1
+  dns2: 10.127.141.2
+  ntp1: 147.204.148.93
+  ntp2: 147.204.148.92
+  snmp1: 147.204.148.100
+  snmp2: 147.204.148.87
+  syslog:
+    inband:
+      servers:
+        - ipv4: 147.204.148.91
+        - ipv4: 147.204.149.69
+        - ipv4: 147.204.146.42
+  tacacs:
+    nat:
+      servers:
+        - ipv4: 147.204.146.181
+        - ipv4: 147.204.146.182
+        - ipv4: 147.204.146.183
+    oob:
+      servers:
+        - ipv4: 10.16.8.142
+        - ipv4: 10.16.8.32
+        - ipv4: 169.145.33.51
+  sflow:
+    destination:
+      - ipv4: 147.204.148.160
+        port: 9995
+    source: Loopback900
+  admin_mpls:
+    prefix_mask:
+      - 10.178.136.0/23
+      - 10.178.138.0/23
+      - 10.255.241.0/24
+      - 100.124.0.0/19
+      - 147.204.24.0/22
+      - 147.204.144.0/21
+      - 198.18.0.0/19
+      - 198.19.190.0/24
+      - 198.19.192.0/23
+      - 198.19.196.0/23
+      - 198.19.198.0/24
+      - 198.19.208.0/20
+      - 198.19.224.208/28
+      - 198.19.226.0/24
+      - 198.19.234.0/24
+      - 198.19.240.0/24
+      - 198.19.0.0/19
+      - 198.19.228.0/24
+      - 198.19.224.128/28
+      - 100.127.16.0/21
+      - 100.124.254.0/23
+      - 10.255.241.0/28
+  admin_sw_interface: Ethernet1
+  admin_sw_description_oob1a: "rot13dc02-adm-03-co Et1/13"
+  admin_sw_description_oob1b: "rot06dc01-adm-04-co Et1/13"
+  admin_sw_prefix: 10.255.200
+  admin_sw_mask: 31
+  admin_sw_ip_oob1a: 10.255.202.9
+  admin_sw_ip_oob1b: 10.255.202.10
+  admin_sw_neig_ip_oob1a: 10.255.200.9
+  admin_sw_neig_as_oob1a: 65535
+  admin_sw_neig_ip_oob1b: 10.255.200.11
+  admin_sw_neig_as_oob1b: 64536
+  oob01_lo0_prefix: 198.19.249
+  oob01_as: 64531.1
+  spine_nr:
+    - 11
+    - 12
+    - 13
+    - 14
+  spine:
+    # valid models are: 7504, 7508, 7280
+    # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
+    # This number of port per linecard may be appended to each model. If not appended,
+    # the default value of 36 ports is used for port configuration.
+    model: 7504
+    pod:
+      number:
+        - id: 1
+          model: 7504
+          linecards: 4
+    # number of linecards if spine is modular switch
+    # if spine model is fixed chassis then linecards needs to have value of '1'
+    linecards: 4
+    # Enable or disable Bfd for underlay (true or false)
+    underlay_bfd: True
+    # the following list 'port' is a workaround for mixed port speeds in existing
+    # Fabric builds.
+    # list every port and it's speed if it is different from the value
+    # provided in dictionary 'hec.fabric.interlink_speed'!!
+    fortygig: [3/11/1, 3/12/1, 3/13/1, 3/14/1, 3/15/1, 3/16/1, 3/17/1, 3/18/1, 3/19/1, 3/20/1, 3/21/1, 3/22/1, 3/24/1, 3/25/1, 3/26/1, 3/27/1, 3/28/1, 3/29/1, 3/30/1, 3/31/1, 3/32/1, 3/33/1, 3/34/1, 3/35/1, 3/36/1, 4/1/1, 4/2/1, 4/3/1, 4/4/1, 4/5/1, 4/6/1, 4/7/1, 4/8/1, 4/9/1, 4/10/1, 4/11/1, 4/12/1, 4/13/1, 4/14/1, 4/14/1, 4/15/1, 4/16/1, 4/17/1, 4/18/1, 4/19/1, 4/20/1]
+    # list the snmp contact and location for spines in this order
+    number:
+      - id: 11
+        snmp:
+          location: ROT02-RZ44-R1-8-RU2
+          contact: 34344370:ncons4407.wdf.sap.corp:1015
+        oob_ip: 10.178.136.11
+        nwmgmt_ip: 198.19.190.11
+      - id: 12
+        snmp:
+          location: ROT02-RZ44-R1-8-RU9
+          contact: 34344371:ncons4402.wdf.sap.corp:1011
+        oob_ip: 10.178.136.12
+        nwmgmt_ip: 198.19.190.12
+      - id: 13
+        snmp:
+          location: ROT02-RZ54-R1-8-RU14
+          contact: 34344372:ncons5401.wdf.sap.corp:1011
+        oob_ip: 10.178.136.13
+        nwmgmt_ip: 198.19.190.13
+      - id: 14
+        snmp:
+          location: ROT02-RZ54-R1-8-RU22
+          contact: 34344373:ncons5401.wdf.sap.corp:1012
+        oob_ip: 10.178.136.14
+        nwmgmt_ip: 198.19.190.14
+  ngdr_underlay:
+    edge_as: 65200
+  ngdr_overlay:
+    remote_hec_nr: "10"
+    routes:
+      - network: 100.64.0.0/15
+        interface: Vlan922
+        nexthop: 198.19.252.124
+        vrf: INFRA
+    edge_neighbors:
+      - ip: 198.19.251.4
+        hostname: rt-hec01-605
+      - ip: 198.19.251.5
+        hostname: rt-hec01-606
+      - ip: 198.19.251.42
+        hostname: rt-hec01-cwan-01a
+      - ip: 198.19.251.43
+        hostname: rt-hec01-cwan-01b
+      - ip: 198.19.251.46
+        hostname: rt-hec01-vpn-01a
+      - ip: 198.19.251.47
+        hostname: rt-hec01-vpn-01b
+    remote_edge_routers:
+      - ip: 198.19.249.160
+      - ip: 198.19.249.161
+      - ip: 198.19.249.162
+      - ip: 198.19.249.163
+      - ip: 198.19.249.164
+      - ip: 198.19.249.165
+  lrdr_overlay:
+    remote_hec_nr: "02"
+  # Are the core vlans 3000 to 3499 needed
+  core_vlans: true
+  fabric:
+    # valid modes are: manual, cvx, evpn
+    vtep_distribution_mode: manual
+    vtep_ips:
+      - 10.200.1.1
+      - 10.200.1.2
+      - 10.200.1.3
+      - 10.200.1.4
+      - 10.200.1.5
+      - 10.200.1.6
+      - 10.200.1.7
+      - 10.200.1.8
+      - 10.200.1.9
+      - 10.200.1.10
+      - 10.200.1.11
+      - 10.200.1.13
+      - 10.200.1.14
+      - 10.200.1.15
+      - 10.200.1.16
+      - 10.200.1.17
+      - 10.200.1.18
+      - 10.200.1.19
+      - 10.200.1.20
+      - 10.200.1.21
+      - 10.200.1.22
+      - 10.200.1.23
+      - 10.200.1.24
+      - 10.200.1.25
+      - 10.200.1.26
+      - 10.200.1.27
+      - 10.200.1.28
+      - 10.200.1.29
+      - 10.200.1.30
+      - 10.200.1.31
+      - 10.200.1.32 # hvv-27
+      - 10.200.1.33 # hvv-28
+      - 10.200.1.34 # hvv-29
+      - 10.200.1.37 # hvv-30
+      - 10.200.1.38 # hvv-31
+      - 10.200.1.39 # hvv-32
+      - 10.200.1.68 # str04
+      - 10.200.1.69
+      - 10.200.1.70
+      - 10.254.200.1 # vVTEP at rt-hec01-ha-core-01a/b/c/d
+      - 198.19.251.110
+      - 198.19.251.111
+      - 198.19.251.112
+      - 198.19.251.113
+    interlink_mtu: 9214
+    # valid speeds are 40gfull, 100gfull
+    interlink_speed: 100gfull
+    # Spine BGP Listen ranges for EVPN
+    bgp_listen_ranges:
+      - 10.100.0.0/16
+      - 198.19.249.0/24
+      - 198.19.251.0/24
+    bgp_maximum_routes: 12000
+    evpn_maximum_routes: 0
+    mlag_a_ip: 198.19.224.1
+    mlag_b_ip: 198.19.224.2
+    leaf_models: "{{ net.device.leaf_models }}"
+  routes:
+    static:
+      brdr01:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          interface: Vlan900
+          redist_bgp: true
+        - destination: 10.200.1.0/24
+          interface: Null0
+          metric: 240
+        - destination: 10.254.200.1/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.110/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.111/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.112/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.113/32
+          interface: Null0
+          metric: 240
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.193
+          interface: Vlan900
+          redist_bgp: true
+        - destination: 10.200.1.0/24
+          interface: Null0
+          metric: 240
+        - destination: 10.254.200.1/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.110/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.111/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.112/32
+          interface: Null0
+          metric: 240
+        - destination: 198.19.251.113/32
+          interface: Null0
+          metric: 240
+      fwt01:
+        - destination: 100.124.0.0/19
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 100.127.16.0/21
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 147.204.24.0/22
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 147.204.144.0/21
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.18.0.0/19
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.0.0/19
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.190.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.192.0/23
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.196.0/23
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.198.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.208.0/20
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.224.128/28
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.224.208/28
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.226.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.228.0/24
+          nexthop: 10.255.241.7
+          interface: Vlan915
+        - destination: 198.19.234.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 198.19.240.0/24
+          nexthop: 10.255.241.12
+          interface: Vlan915
+        - destination: 0.0.0.0/0
+          nexthop: 10.178.136.1
+          vrf: OOB
+      strrt01:
+        - destination: 100.66.0.0/15
+          nexthop: 10.255.241.81
+          interface: Vlan922
+        - destination: 100.82.0.0/15
+          nexthop: 198.19.252.119
+          interface: Vlan922
+        - destination: 198.19.239.64/26
+          nexthop: 198.19.252.116
+        - destination: 198.19.252.192/28
+          nexthop: 198.19.252.117
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.240.1
+          vrf: MGMT
+  oob: "{{ yml_oob }}"
+  fwt: "{{ yml_fwt }}"
+  brdr: "{{ yml_brdr }}"
+  str: "{{ yml_str }}"
+  interdc: "{{ yml_interdc }}"
+  shs: "{{ yml_shs }}"
+  strrt: "{{ yml_strrt }}"
+  ngdr: "{{ yml_ngdr }}"
+  hvv_hvx_acl_rules: |
+      10 permit vlan 50 0x000 icmp any any
+      20 permit vlan 50 0x000 pim any any
+      30 permit vlan 50 0x000 92 any any
+      40 permit vlan 50 0x000 vrrp any any
+      50 permit vlan 50 0x000 ip any 224.0.0.0/5
+      60 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.51.255
+      70 permit vlan 50 0x000 ip 198.18.48.0/22 198.18.51.0/24
+      80 permit vlan 50 0x000 ip 198.18.51.0/24 198.18.48.0/22
+      90 permit vlan 50 0x000 ip 198.18.48.0/22 host 198.18.48.1
+      100 deny vlan 50 0x000 ip 198.18.48.0/22 198.18.48.0/22
+      110 permit vlan 50 0x000 ip 198.18.48.0/22 any
+      120 permit vlan 50 0x000 ip any any
+      210 permit vlan 55 0x000 icmp any any
+      220 permit vlan 55 0x000 pim any any
+      230 permit vlan 55 0x000 92 any any
+      240 permit vlan 55 0x000 vrrp any any
+      250 permit vlan 55 0x000 ip any 224.0.0.0/5
+      260 permit vlan 55 0x000 ip 100.126.0.0/16 host 100.126.255.255
+      270 permit vlan 55 0x000 ip 100.126.0.0/16 100.126.240.0/20
+      280 permit vlan 55 0x000 ip 100.126.240.0/20 100.126.0.0/16
+      290 permit vlan 55 0x000 ip 100.126.0.0/16 host 100.126.0.1
+      300 deny vlan 55 0x000 ip 100.126.0.0/16 100.126.0.0/16
+      310 permit vlan 55 0x000 ip 100.126.0.0/16 any
+      320 permit vlan 55 0x000 ip any any
+      430 permit vlan 60 0x000 icmp any any
+      440 permit vlan 60 0x000 pim any any
+      450 permit vlan 60 0x000 92 any any
+      460 permit vlan 60 0x000 vrrp any any
+      470 permit vlan 60 0x000 ip any 224.0.0.0/5
+      480 permit vlan 60 0x000 ip 100.124.0.0/19 host 100.124.31.255
+      490 permit vlan 60 0x000 ip 100.124.0.0/19 host 100.124.0.1
+      500 deny vlan 60 0x000 ip 100.124.0.0/19 100.124.0.0/19
+      510 permit vlan 60 0x000 ip 100.124.0.0/19 any
+      520 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.31.255
+      530 permit vlan 60 0x000 ip 198.18.24.0/21 host 198.18.24.1
+      540 deny vlan 60 0x000 ip 198.18.24.0/21 198.18.24.0/21
+      550 permit vlan 60 0x000 ip 198.18.24.0/21 any
+      560 permit vlan 60 0x000 ip 198.19.208.0/20 host 198.19.223.255
+      570 permit vlan 60 0x000 ip 198.19.208.0/20 host 198.19.208.1
+      580 deny vlan 60 0x000 ip 198.19.208.0/20 198.19.208.0/20
+      590 permit vlan 60 0x000 ip 198.19.208.0/20 any
+      600 permit vlan 60 0x000 ip any any
+      610 permit ip any any
+  hana_acl_rules: |
+      10 permit icmp any any
+      20 permit pim any any
+      30 permit 92 any any
+      40 permit vrrp any any
+      50 permit ip any 224.0.0.0/5
+      60 permit ip 198.18.8.0/22 host 198.18.9.255
+      70 permit ip 198.18.8.0/22 host 198.18.11.255
+      80 permit ip 198.18.8.0/22 host 198.18.8.5
+      90 permit ip host 198.18.8.5 198.18.8.0/22
+      100 permit ip 198.18.8.0/22 host 198.18.8.6
+      110 permit ip host 198.18.8.6 198.18.8.0/22
+      120 permit ip 198.18.8.0/22 198.18.9.224/27
+      130 permit ip 198.18.9.224/27 198.18.8.0/22
+      140 permit ip 198.18.8.0/22 198.18.11.192/26
+      150 permit ip 198.18.11.192/26 198.18.8.0/22
+      160 permit ip 198.18.9.224/27 198.18.11.192/26
+      170 permit ip 198.18.11.192/26 198.18.9.224/27
+      180 permit ip 198.18.8.0/22 host 198.18.8.1
+      190 permit ip 198.18.8.0/22 198.18.9.104/29
+      200 permit ip 198.18.9.104/29 198.18.8.0/22
+      210 deny ip 198.18.8.0/22 198.18.8.0/22
+      220 permit ip 198.18.8.0/22 any
+      230 permit ip any any
+  acl_2300_rules: |
+      10 permit ip 100.64.0.0/15 100.64.0.0/24
+      20 permit ip 100.64.0.0/15 100.66.0.0/24
+      30 permit ip 100.64.0.0/15 100.82.0.0/24
+      40 permit ip 198.8.0.0 0.0.252.255 100.64.0.0/24
+      50 permit ip 198.8.0.0 0.0.252.255 100.66.0.0/24
+      60 permit ip 198.19.198.0/24 100.64.0.0/24
+      70 permit ip 198.19.198.0/24 100.66.0.0/24
+      80 deny tcp any any eq 158
+      90 deny tcp any any eq 159
+      100 deny udp any any eq netbios-ns
+      110 deny udp any any eq netbios-dgm
+      120 deny udp any host 224.0.0.252 eq 5355
+      130 deny ip any any log
+  acl_140_rules: |
+      10 permit vrrp 100.64.0.0/24 any
+      20 permit ip any host 224.0.0.1
+      30 permit ip any host 224.0.0.2
+      40 permit tcp 100.64.0.0/15 100.64.0.0/24 eq sunrpc
+      50 permit udp 100.64.0.0/15 100.64.0.0/24 eq sunrpc
+      60 permit tcp 100.64.0.0/15 100.64.0.0/24 eq 1080
+      70 permit tcp 100.64.0.0/15 100.64.0.0/24 range nfs 2052
+      80 permit udp 100.64.0.0/15 100.64.0.0/24 range nfs 2052
+      90 permit tcp 100.64.0.0/15 100.64.0.0/24 eq 5001
+      100 permit tcp 100.64.0.0/15 100.64.0.0/24 range 6278 6279
+      110 permit tcp 100.64.0.0/15 100.64.0.0/24 range 7937 7940
+      120 permit tcp 100.64.0.0/15 100.64.0.0/24 range 10100 10501
+      130 permit tcp 100.64.0.0/15 100.64.0.0/24 range 1111 2222
+      140 permit tcp 100.64.0.0/15 eq sunrpc 100.64.0.0/24
+      150 permit udp 100.64.0.0/15 eq sunrpc 100.64.0.0/24
+      160 permit tcp 100.64.0.0/15 eq 1080 100.64.0.0/24
+      170 permit tcp 100.64.0.0/15 range nfs 2052 100.64.0.0/24
+      180 permit udp 100.64.0.0/15 range nfs 2052 100.64.0.0/24
+      190 permit tcp 100.64.0.0/15 eq 5001 100.64.0.0/24
+      200 permit tcp 100.64.0.0/15 range 6278 6279 100.64.0.0/24
+      210 permit tcp 100.64.0.0/15 range 7937 7940 100.64.0.0/24
+      220 permit tcp 100.64.0.0/15 range 10100 10501 100.64.0.0/24
+      230 permit tcp 100.64.0.0/15 range 1111 2222 100.64.0.0/24
+      240 permit tcp 100.64.0.0/24 eq sunrpc 100.64.0.0/15
+      250 permit udp 100.64.0.0/24 eq sunrpc 100.64.0.0/15
+      260 permit tcp 100.64.0.0/24 eq 1080 100.64.0.0/15
+      270 permit tcp 100.64.0.0/24 range nfs 2052 100.64.0.0/15
+      280 permit udp 100.64.0.0/24 range nfs 2052 100.64.0.0/15
+      290 permit tcp 100.64.0.0/24 eq 5001 100.64.0.0/15
+      300 permit tcp 100.64.0.0/24 range 6278 6279 100.64.0.0/15
+      310 permit tcp 100.64.0.0/24 range 7937 7940 100.64.0.0/15
+      320 permit tcp 100.64.0.0/24 range 10100 10501 100.64.0.0/15
+      330 permit tcp 100.64.0.0/24 range 1111 2222 100.64.0.0/15
+      340 permit tcp 100.64.0.0/24 100.64.0.0/15 eq sunrpc
+      350 permit udp 100.64.0.0/24 100.64.0.0/15 eq sunrpc
+      360 permit tcp 100.64.0.0/24 100.64.0.0/15 eq 1080
+      370 permit tcp 100.64.0.0/24 100.64.0.0/15 range nfs 2052
+      380 permit udp 100.64.0.0/24 100.64.0.0/15 range nfs 2052
+      390 permit tcp 100.64.0.0/24 100.64.0.0/15 eq 5001
+      400 permit tcp 100.64.0.0/24 100.64.0.0/15 range 6278 6279
+      410 permit tcp 100.64.0.0/24 100.64.0.0/15 range 7937 7940
+      420 permit tcp 100.64.0.0/24 100.64.0.0/15 range 10100 10501
+      430 permit tcp 100.64.0.0/24 100.64.0.0/15 range 1111 2222
+      440 permit tcp 100.64.0.0/15 100.66.0.0/24 eq sunrpc
+      450 permit udp 100.64.0.0/15 100.66.0.0/24 eq sunrpc
+      460 permit tcp 100.64.0.0/15 100.66.0.0/24 eq 1080
+      470 permit tcp 100.64.0.0/15 100.66.0.0/24 range nfs 2052
+      480 permit udp 100.64.0.0/15 100.66.0.0/24 range nfs 2052
+      490 permit tcp 100.64.0.0/15 100.66.0.0/24 eq 5001
+      500 permit tcp 100.64.0.0/15 100.66.0.0/24 range 6278 6279
+      510 permit tcp 100.64.0.0/15 100.66.0.0/24 range 7937 7940
+      520 permit tcp 100.64.0.0/15 100.66.0.0/24 range 10100 10501
+      530 permit tcp 100.64.0.0/15 100.66.0.0/24 range 1111 2222
+      540 permit tcp 100.64.0.0/15 eq sunrpc 100.66.0.0/24
+      550 permit udp 100.64.0.0/15 eq sunrpc 100.66.0.0/24
+      560 permit tcp 100.64.0.0/15 eq 1080 100.66.0.0/24
+      570 permit tcp 100.64.0.0/15 range nfs 2052 100.66.0.0/24
+      580 permit udp 100.64.0.0/15 range nfs 2052 100.66.0.0/24
+      590 permit tcp 100.64.0.0/15 eq 5001 100.66.0.0/24
+      600 permit tcp 100.64.0.0/15 range 6278 6279 100.66.0.0/24
+      610 permit tcp 100.64.0.0/15 range 7937 7940 100.66.0.0/24
+      620 permit tcp 100.64.0.0/15 range 10100 10501 100.66.0.0/24
+      630 permit tcp 100.64.0.0/15 range 1111 2222 100.66.0.0/24
+      640 permit icmp 100.64.0.0/15 100.64.0.0/24
+      650 permit icmp 100.64.0.0/15 100.66.0.0/24
+      660 permit icmp 100.64.0.0/24 100.64.0.0/15
+      670 permit icmp 100.66.0.0/24 100.64.0.0/15
+      680 permit ip 100.64.0.0/24 100.66.0.0/24
+      690 permit ip 100.66.0.0/24 100.64.0.0/24
+      700 permit tcp 100.64.0.0/15 100.82.0.0/24 eq sunrpc
+      710 permit udp 100.64.0.0/15 100.82.0.0/24 eq sunrpc
+      720 permit tcp 100.64.0.0/15 100.82.0.0/24 eq 1080
+      730 permit tcp 100.64.0.0/15 100.82.0.0/24 range nfs 2052
+      740 permit udp 100.64.0.0/15 100.82.0.0/24 range nfs 2052
+      750 permit tcp 100.64.0.0/15 100.82.0.0/24 eq 5001
+      760 permit tcp 100.64.0.0/15 100.82.0.0/24 range 6278 6279
+      770 permit tcp 100.64.0.0/15 100.82.0.0/24 range 7937 7940
+      780 permit tcp 100.64.0.0/15 100.82.0.0/24 range 10100 10501
+      790 permit tcp 100.64.0.0/15 100.82.0.0/24 range 1111 2222
+      800 permit tcp 100.64.0.0/15 eq sunrpc 100.82.0.0/24
+      810 permit udp 100.64.0.0/15 eq sunrpc 100.82.0.0/24
+      820 permit tcp 100.64.0.0/15 eq 1080 100.82.0.0/24
+      830 permit tcp 100.64.0.0/15 range nfs 2052 100.82.0.0/24
+      840 permit udp 100.64.0.0/15 range nfs 2052 100.82.0.0/24
+      850 permit tcp 100.64.0.0/15 eq 5001 100.82.0.0/24
+      860 permit tcp 100.64.0.0/15 range 6278 6279 100.82.0.0/24
+      870 permit tcp 100.64.0.0/15 range 7937 7940 100.82.0.0/24
+      880 permit tcp 100.64.0.0/15 range 10100 10501 100.82.0.0/24
+      890 permit tcp 100.64.0.0/15 range 1111 2222 100.82.0.0/24
+      900 permit icmp 100.64.0.0/15 100.82.0.0/24
+      910 permit icmp 100.82.0.0/24 100.64.0.0/15
+      920 permit ip 100.64.0.0/24 100.82.0.0/24
+      930 permit ip 100.82.0.0/24 100.64.0.0/24
+      940 permit tcp 198.19.198.0/24 100.64.0.0/24 eq sunrpc
+      950 permit udp 198.19.198.0/24 100.64.0.0/24 eq sunrpc
+      960 permit tcp 198.19.198.0/24 100.64.0.0/24 eq 1080
+      970 permit tcp 198.19.198.0/24 100.64.0.0/24 range nfs 2052
+      980 permit udp 198.19.198.0/24 100.64.0.0/24 range nfs 2052
+      990 permit tcp 198.19.198.0/24 100.64.0.0/24 eq 5001
+      1000 permit tcp 198.19.198.0/24 100.64.0.0/24 range 6278 6279
+      1010 permit tcp 198.19.198.0/24 100.64.0.0/24 range 7937 7940
+      1020 permit tcp 198.19.198.0/24 100.64.0.0/24 range 10100 10501
+      1030 permit tcp 198.19.198.0/24 100.64.0.0/24 range 1111 2222
+      1040 permit tcp 198.19.198.0/24 eq sunrpc 100.64.0.0/24
+      1050 permit udp 198.19.198.0/24 eq sunrpc 100.64.0.0/24
+      1060 permit tcp 198.19.198.0/24 eq 1080 100.64.0.0/24
+      1070 permit tcp 198.19.198.0/24 range nfs 2052 100.64.0.0/24
+      1080 permit udp 198.19.198.0/24 range nfs 2052 100.64.0.0/24
+      1090 permit tcp 198.19.198.0/24 eq 5001 100.64.0.0/24
+      1100 permit tcp 198.19.198.0/24 range 6278 6279 100.64.0.0/24
+      1110 permit tcp 198.19.198.0/24 range 7937 7940 100.64.0.0/24
+      1120 permit tcp 198.19.198.0/24 range 10100 10501 100.64.0.0/24
+      1130 permit tcp 198.19.198.0/24 range 1111 2222 100.64.0.0/24
+      1140 permit tcp 100.64.0.0/24 eq sunrpc 198.19.198.0/24
+      1150 permit udp 100.64.0.0/24 eq sunrpc 198.19.198.0/24
+      1160 permit tcp 100.64.0.0/24 eq 1080 198.19.198.0/24
+      1170 permit tcp 100.64.0.0/24 range nfs 2052 198.19.198.0/24
+      1180 permit udp 100.64.0.0/24 range nfs 2052 198.19.198.0/24
+      1190 permit tcp 100.64.0.0/24 eq 5001 198.19.198.0/24
+      1200 permit tcp 100.64.0.0/24 range 6278 6279 198.19.198.0/24
+      1210 permit tcp 100.64.0.0/24 range 7937 7940 198.19.198.0/24
+      1220 permit tcp 100.64.0.0/24 range 10100 10501 198.19.198.0/24
+      1230 permit tcp 100.64.0.0/24 range 1111 2222 198.19.198.0/24
+      1240 permit tcp 100.64.0.0/24 198.19.198.0/24 eq sunrpc
+      1250 permit udp 100.64.0.0/24 198.19.198.0/24 eq sunrpc
+      1260 permit tcp 100.64.0.0/24 198.19.198.0/24 eq 1080
+      1270 permit tcp 100.64.0.0/24 198.19.198.0/24 range nfs 2052
+      1280 permit udp 100.64.0.0/24 198.19.198.0/24 range nfs 2052
+      1290 permit tcp 100.64.0.0/24 198.19.198.0/24 eq 5001
+      1300 permit tcp 100.64.0.0/24 198.19.198.0/24 range 6278 6279
+      1310 permit tcp 100.64.0.0/24 198.19.198.0/24 range 7937 7940
+      1320 permit tcp 100.64.0.0/24 198.19.198.0/24 range 10100 10501
+      1330 permit tcp 100.64.0.0/24 198.19.198.0/24 range 1111 2222
+      1340 permit tcp 198.19.198.0/24 100.66.0.0/24 eq sunrpc
+      1350 permit udp 198.19.198.0/24 100.66.0.0/24 eq sunrpc
+      1360 permit tcp 198.19.198.0/24 100.66.0.0/24 eq 1080
+      1370 permit tcp 198.19.198.0/24 100.66.0.0/24 range nfs 2052
+      1380 permit udp 198.19.198.0/24 100.66.0.0/24 range nfs 2052
+      1390 permit tcp 198.19.198.0/24 100.66.0.0/24 eq 5001
+      1400 permit tcp 198.19.198.0/24 100.66.0.0/24 range 6278 6279
+      1410 permit tcp 198.19.198.0/24 100.66.0.0/24 range 7937 7940
+      1420 permit tcp 198.19.198.0/24 100.66.0.0/24 range 10100 10501
+      1430 permit tcp 198.19.198.0/24 100.66.0.0/24 range 1111 2222
+      1440 permit tcp 198.19.198.0/24 eq sunrpc 100.66.0.0/24
+      1450 permit udp 198.19.198.0/24 eq sunrpc 100.66.0.0/24
+      1460 permit tcp 198.19.198.0/24 eq 1080 100.66.0.0/24
+      1470 permit tcp 198.19.198.0/24 range nfs 2052 100.66.0.0/24
+      1480 permit udp 198.19.198.0/24 range nfs 2052 100.66.0.0/24
+      1490 permit tcp 198.19.198.0/24 eq 5001 100.66.0.0/24
+      1500 permit tcp 198.19.198.0/24 range 6278 6279 100.66.0.0/24
+      1510 permit tcp 198.19.198.0/24 range 7937 7940 100.66.0.0/24
+      1520 permit tcp 198.19.198.0/24 range 10100 10501 100.66.0.0/24
+      1530 permit tcp 198.19.198.0/24 range 1111 2222 100.66.0.0/24
+      1540 permit icmp 198.19.198.0/24 100.64.0.0/24
+      1550 permit icmp 198.19.198.0/24 100.66.0.0/24
+      1560 permit icmp 100.64.0.0/24 198.19.198.0/24
+      1570 permit icmp 100.66.0.0/24 198.19.198.0/24
+      1580 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 eq sunrpc
+      1590 permit udp 198.18.0.0 0.0.252.255 100.64.0.0/24 eq sunrpc
+      1600 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 eq 1080
+      1610 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 range nfs 2052
+      1620 permit udp 198.18.0.0 0.0.252.255 100.64.0.0/24 range nfs 2052
+      1630 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 eq 5001
+      1640 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 range 6278 6279
+      1650 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 range 7937 7940
+      1660 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 range 10100 10501
+      1670 permit tcp 198.18.0.0 0.0.252.255 100.64.0.0/24 range 1111 2222
+      1680 permit tcp 198.18.0.0 0.0.252.255 eq sunrpc 100.64.0.0/24
+      1690 permit udp 198.18.0.0 0.0.252.255 eq sunrpc 100.64.0.0/24
+      1700 permit tcp 198.18.0.0 0.0.252.255 eq 1080 100.64.0.0/24
+      1710 permit tcp 198.18.0.0 0.0.252.255 range nfs 2052 100.64.0.0/24
+      1720 permit udp 198.18.0.0 0.0.252.255 range nfs 2052 100.64.0.0/24
+      1730 permit tcp 198.18.0.0 0.0.252.255 eq 5001 100.64.0.0/24
+      1740 permit tcp 198.18.0.0 0.0.252.255 range 6278 6279 100.64.0.0/24
+      1750 permit tcp 198.18.0.0 0.0.252.255 range 7937 7940 100.64.0.0/24
+      1760 permit tcp 198.18.0.0 0.0.252.255 range 10100 10501 100.64.0.0/24
+      1770 permit tcp 198.18.0.0 0.0.252.255 range 1111 2222 100.64.0.0/24
+      1780 permit tcp 100.64.0.0/24 eq sunrpc 198.18.0.0 0.0.252.255
+      1790 permit udp 100.64.0.0/24 eq sunrpc 198.18.0.0 0.0.252.255
+      1800 permit tcp 100.64.0.0/24 eq 1080 198.18.0.0 0.0.252.255
+      1810 permit tcp 100.64.0.0/24 range nfs 2052 198.18.0.0 0.0.252.255
+      1820 permit udp 100.64.0.0/24 range nfs 2052 198.18.0.0 0.0.252.255
+      1830 permit tcp 100.64.0.0/24 eq 5001 198.18.0.0 0.0.252.255
+      1840 permit tcp 100.64.0.0/24 range 6278 6279 198.18.0.0 0.0.252.255
+      1850 permit tcp 100.64.0.0/24 range 7937 7940 198.18.0.0 0.0.252.255
+      1860 permit tcp 100.64.0.0/24 range 10100 10501 198.18.0.0 0.0.252.255
+      1870 permit tcp 100.64.0.0/24 range 1111 2222 198.18.0.0 0.0.252.255
+      1880 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 eq sunrpc
+      1890 permit udp 100.64.0.0/24 198.18.0.0 0.0.252.255 eq sunrpc
+      1900 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 eq 1080
+      1910 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 range nfs 2052
+      1920 permit udp 100.64.0.0/24 198.18.0.0 0.0.252.255 range nfs 2052
+      1930 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 eq 5001
+      1940 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 range 6278 6279
+      1950 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 range 7937 7940
+      1960 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 range 10100 10501
+      1970 permit tcp 100.64.0.0/24 198.18.0.0 0.0.252.255 range 1111 2222
+      1980 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 eq sunrpc
+      1990 permit udp 198.18.0.0 0.0.252.255 100.66.0.0/24 eq sunrpc
+      2000 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 eq 1080
+      2010 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 range nfs 2052
+      2020 permit udp 198.18.0.0 0.0.252.255 100.66.0.0/24 range nfs 2052
+      2030 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 eq 5001
+      2040 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 range 6278 6279
+      2050 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 range 7937 7940
+      2060 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 range 10100 10501
+      2070 permit tcp 198.18.0.0 0.0.252.255 100.66.0.0/24 range 1111 2222
+      2080 permit tcp 198.18.0.0 0.0.252.255 eq sunrpc 100.66.0.0/24
+      2090 permit udp 198.18.0.0 0.0.252.255 eq sunrpc 100.66.0.0/24
+      2100 permit tcp 198.18.0.0 0.0.252.255 eq 1080 100.66.0.0/24
+      2110 permit tcp 198.18.0.0 0.0.252.255 range nfs 2052 100.66.0.0/24
+      2120 permit udp 198.18.0.0 0.0.252.255 range nfs 2052 100.66.0.0/24
+      2130 permit tcp 198.18.0.0 0.0.252.255 eq 5001 100.66.0.0/24
+      2140 permit tcp 198.18.0.0 0.0.252.255 range 6278 6279 100.66.0.0/24
+      2150 permit tcp 198.18.0.0 0.0.252.255 range 7937 7940 100.66.0.0/24
+      2160 permit tcp 198.18.0.0 0.0.252.255 range 10100 10501 100.66.0.0/24
+      2170 permit tcp 198.18.0.0 0.0.252.255 range 1111 2222 100.66.0.0/24
+      2180 permit icmp 198.18.0.0 0.0.252.255 100.64.0.0/24
+      2190 permit icmp 198.18.0.0 0.0.252.255 100.66.0.0/24
+      2200 permit icmp 100.64.0.0/24 198.18.0.0 0.0.252.255
+      2210 permit icmp 100.66.0.0/24 198.18.0.0 0.0.252.255
+      2220 permit tcp 100.82.0.0/15 100.64.0.0/24 eq sunrpc
+      2230 permit udp 100.82.0.0/15 100.64.0.0/24 eq sunrpc
+      2240 permit tcp 100.82.0.0/15 100.64.0.0/24 eq 1080
+      2250 permit tcp 100.82.0.0/15 100.64.0.0/24 range nfs 2052
+      2260 permit udp 100.82.0.0/15 100.64.0.0/24 range nfs 2052
+      2270 permit tcp 100.82.0.0/15 100.64.0.0/24 eq 5001
+      2280 permit tcp 100.82.0.0/15 100.64.0.0/24 range 6278 6279
+      2290 permit tcp 100.82.0.0/15 100.64.0.0/24 range 7937 7940
+      2300 permit tcp 100.82.0.0/15 100.64.0.0/24 range 10100 10501
+      2310 permit tcp 100.82.0.0/15 100.64.0.0/24 range 1111 2222
+      2320 permit tcp 100.82.0.0/15 eq sunrpc 100.64.0.0/24
+      2330 permit udp 100.82.0.0/15 eq sunrpc 100.64.0.0/24
+      2340 permit tcp 100.82.0.0/15 eq 1080 100.64.0.0/24
+      2350 permit tcp 100.82.0.0/15 range nfs 2052 100.64.0.0/24
+      2360 permit udp 100.82.0.0/15 range nfs 2052 100.64.0.0/24
+      2370 permit tcp 100.82.0.0/15 eq 5001 100.64.0.0/24
+      2380 permit tcp 100.82.0.0/15 range 6278 6279 100.64.0.0/24
+      2390 permit tcp 100.82.0.0/15 range 7937 7940 100.64.0.0/24
+      2400 permit tcp 100.82.0.0/15 range 10100 10501 100.64.0.0/24
+      2410 permit tcp 100.82.0.0/15 range 1111 2222 100.64.0.0/24
+      2420 permit tcp 100.64.0.0/24 eq sunrpc 100.82.0.0/15
+      2430 permit udp 100.64.0.0/24 eq sunrpc 100.82.0.0/15
+      2440 permit tcp 100.64.0.0/24 eq 1080 100.82.0.0/15
+      2450 permit tcp 100.64.0.0/24 range nfs 2052 100.82.0.0/15
+      2460 permit udp 100.64.0.0/24 range nfs 2052 100.82.0.0/15
+      2470 permit tcp 100.64.0.0/24 eq 5001 100.82.0.0/15
+      2480 permit tcp 100.64.0.0/24 range 6278 6279 100.82.0.0/15
+      2490 permit tcp 100.64.0.0/24 range 7937 7940 100.82.0.0/15
+      2500 permit tcp 100.64.0.0/24 range 10100 10501 100.82.0.0/15
+      2510 permit tcp 100.64.0.0/24 range 1111 2222 100.82.0.0/15
+      2520 permit tcp 100.64.0.0/24 100.82.0.0/15 eq sunrpc
+      2530 permit udp 100.64.0.0/24 100.82.0.0/15 eq sunrpc
+      2540 permit tcp 100.64.0.0/24 100.82.0.0/15 eq 1080
+      2550 permit tcp 100.64.0.0/24 100.82.0.0/15 range nfs 2052
+      2560 permit udp 100.64.0.0/24 100.82.0.0/15 range nfs 2052
+      2570 permit tcp 100.64.0.0/24 100.82.0.0/15 eq 5001
+      2580 permit tcp 100.64.0.0/24 100.82.0.0/15 range 6278 6279
+      2590 permit tcp 100.64.0.0/24 100.82.0.0/15 range 7937 7940
+      2600 permit tcp 100.64.0.0/24 100.82.0.0/15 range 10100 10501
+      2610 permit tcp 100.64.0.0/24 100.82.0.0/15 range 1111 2222
+      2620 permit tcp 100.82.0.0/15 100.66.0.0/24 eq sunrpc
+      2630 permit udp 100.82.0.0/15 100.66.0.0/24 eq sunrpc
+      2640 permit tcp 100.82.0.0/15 100.66.0.0/24 eq 1080
+      2650 permit tcp 100.82.0.0/15 100.66.0.0/24 range nfs 2052
+      2660 permit udp 100.82.0.0/15 100.66.0.0/24 range nfs 2052
+      2670 permit tcp 100.82.0.0/15 100.66.0.0/24 eq 5001
+      2680 permit tcp 100.82.0.0/15 100.66.0.0/24 range 6278 6279
+      2690 permit tcp 100.82.0.0/15 100.66.0.0/24 range 7937 7940
+      2700 permit tcp 100.82.0.0/15 100.66.0.0/24 range 10100 10501
+      2710 permit tcp 100.82.0.0/15 100.66.0.0/24 range 1111 2222
+      2720 permit tcp 100.82.0.0/15 eq sunrpc 100.66.0.0/24
+      2730 permit udp 100.82.0.0/15 eq sunrpc 100.66.0.0/24
+      2740 permit tcp 100.82.0.0/15 eq 1080 100.66.0.0/24
+      2750 permit tcp 100.82.0.0/15 range nfs 2052 100.66.0.0/24
+      2760 permit udp 100.82.0.0/15 range nfs 2052 100.66.0.0/24
+      2770 permit tcp 100.82.0.0/15 eq 5001 100.66.0.0/24
+      2780 permit tcp 100.82.0.0/15 range 6278 6279 100.66.0.0/24
+      2790 permit tcp 100.82.0.0/15 range 7937 7940 100.66.0.0/24
+      2800 permit tcp 100.82.0.0/15 range 10100 10501 100.66.0.0/24
+      2810 permit tcp 100.82.0.0/15 range 1111 2222 100.66.0.0/24
+      2820 permit icmp 100.82.0.0/15 100.64.0.0/24
+      2830 permit icmp 100.82.0.0/15 100.66.0.0/24
+      2840 permit icmp 100.64.0.0/24 100.82.0.0/15
+      2850 permit icmp 100.66.0.0/24 100.82.0.0/15
+      2860 permit udp 100.64.0.0/24 host 100.82.0.4 eq sunrpc log
+      2870 permit tcp 100.64.0.0/24 host 100.82.0.4 eq sunrpc log
+      2880 permit tcp 100.64.0.0/24 host 100.82.0.4 eq nfs log
+      2890 permit tcp 100.64.0.0/24 host 100.82.0.4 eq 2051 log
+      2900 permit tcp 100.64.0.0/24 host 100.82.0.4 eq 2052 log
+      2910 deny tcp any any eq 158
+      2920 deny tcp any any eq 159
+      2930 deny udp any any eq netbios-ns
+      2940 deny udp any any eq netbios-dgm
+      2950 deny udp any host 224.0.0.252 eq 5355
+      2960 deny ip any any log

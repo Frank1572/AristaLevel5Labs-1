@@ -82,24 +82,24 @@ router bgp {{ asn_generated }}
    router-id {{ intf_loopback1.split('/')[0] }}
    maximum-paths 8 ecmp 16
    !
-{# {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_spine, 'route-map MLPEER-RM out',
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_spine, 'route-map MLPEER-RM out',
                 'send-community', 'maximum-routes ' + hec.fabric.bgp_maximum_routes|string, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
    neighbor SPINE-PG {{ setting }}
-{% endfor %} #}
+{% endfor %}
 {% if hec.spine.underlay_bfd %}
    neighbor SPINE-PG {{eos_cmd.c_neighbor_fall_over_bfd}}
 {% endif %}
    !
-{# {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_generated, 'next-hop-self',
-               'maximum-routes ' + hec.fabric.bgp_maximum_routes] %}
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + asn_generated, 'next-hop-self',
+               'maximum-routes ' + hec.fabric.bgp_maximum_routes|string] %}
    neighbor MLPEER-PG {{ setting }}
-{% endfor %} #}
+{% endfor %}
    !
 {% if (hec.ngdr_underlay is defined) and (leafpurpose == 'b') %}
-{# {% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as|string, 'route-map RM-EDGE in', 'route-map RM-EDGE out',
+{% for setting in [eos_cmd.c_neighbor_peer_group, 'remote-as ' + hec.ngdr_underlay.edge_as|string, 'route-map RM-EDGE in', 'route-map RM-EDGE out',
                'maximum-routes ' + hec.fabric.bgp_maximum_routes|string, 'send-community', eos_cmd.c_neighbor_fall_over_bfd, eos_cmd.c_neighbor_soft_reconfiguration + ' all'] %}
    neighbor EDGE-PG {{ setting }}
-{% endfor %} #}
+{% endfor %}
 {% for edge_neighbor in allbrdrs.ports %}
 {% if (edge_neighbor.type is defined) and (edge_neighbor.type == "vlan") and (edge_neighbor.ngdr_underlay is defined) and (edge_neighbor.ngdr_underlay)%}
    neighbor {{ edge_neighbor.ngdr_underlay_neighbor }} {{eos_cmd.c_neighbor_peer_group}} EDGE-PG

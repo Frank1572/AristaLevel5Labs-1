@@ -162,7 +162,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd intf_loopback2:1
+      rd {{ intf_loopback2 }}:1
       route-target both 1:1
       redistribute learned
 {% set ns = namespace(vlans_right_side_end=0) %}
@@ -171,7 +171,7 @@ router bgp {{ asn_generated }}
     {% set ns.vlans_right_side_end = item.range.split('-') %}
     {% set _ = ns.vlans_right_side_end[1] %}
   {% endif %}
-{%- endfor %}
+{% endfor %}
 ! # awesome new code (testing only). result is: {{ns.vlans_right_side_end}}
 {% if leafpurpose != 'b' %}
       vlan 5-{{ns.vlans_right_side_end}}
@@ -189,7 +189,6 @@ router bgp {{ asn_generated }}
       exit
 {% endif %}
    exit
-
 !
 {% endif %}{# END vtep_distribution_mode evpn? #}
 {#
@@ -210,6 +209,7 @@ interface Vxlan1
 #}
 {% if hec.core_vlans|default('', true) %}
 vlan {% for item_range in vlans.ranges %}{% if item_range.name == 'cust_static_trans' %}{{item_range.range}}{% endif %}{% endfor %}
+
 !
 interface Vxlan1
 {% for i in range(0,500) %}

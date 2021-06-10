@@ -167,14 +167,14 @@ router bgp {{ asn_generated }}
       redistribute learned
 {% set ns = namespace(vlans_right_side_end=0) %}
 {% for item in vlans.ranges -%}
-  {% if item.name == 'cust_static_trans' %}
+  {% if item.name == 'cust_backend' %}
     {% set ns.vlans_right_side_end = item.range.split('-') %}
     {% set _ = ns.vlans_right_side_end[1] %}
   {% endif %}
-{% endfor %}
+{%- endfor %}
 ! # awesome new code (testing only). result is: {{ns.vlans_right_side_end}}
 {% if leafpurpose != 'b' %}
-      vlan 5-{{ns.vlans_right_side_end}}
+      vlan 5-{{ns.vlans_right_side_end[1]}}
 {% else %}
 {% if (brdrtype == '1') or (brdrtype == '3') or (brdrtype == '4') or (brdrtype == '5') %}
 {% if (hec.core_vlans is defined) and (hec.core_vlans == true) %}

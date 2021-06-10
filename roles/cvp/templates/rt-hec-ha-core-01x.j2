@@ -40,6 +40,12 @@ interface Management1
 {% if interface.id == '26/1' %}
 bfd local-address {{ item.loopback1_ip }}
 !
+{% if hec.ngdr_overlay.routes is defined %}
+{% for route in hec.ngdr_overlay.routes %}
+ip route vrf {{ route.vrf }} {{ route.network }} {{ route.interface }} {{ route.nexthop }}
+{% endfor %}
+{% endif %}
+!
 {% set x = interface.ip %}
 {% set remote_ha_ip = funcs.ngdr_rmt_ha_intf_ip(x) %}
 {% for remote_edge in hec.ngdr_overlay.remote_edge_routers %}

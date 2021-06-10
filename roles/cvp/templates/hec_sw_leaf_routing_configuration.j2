@@ -162,7 +162,7 @@ router bgp {{ asn_generated }}
    !
 {% if hec.fabric.vtep_distribution_mode != "migrate" %}
    vlan-aware-bundle all-vlans
-      rd {{ intf_loopback2 }}:1
+      rd 10.{{ 200 + (cell_id/100)|int }}.{{ allbrdrs.pod|default(1) }}.{{ cell_id % 100 }}:1
       route-target both 1:1
       redistribute learned
 {% set ns = namespace(vlans_right_side_end=0) %}
@@ -239,7 +239,7 @@ interface Vxlan1
 {# ! {{item_rt_static}}
 ! {{hec.routes.static[item_rt_static]}} #}
 {# get the type number (tailing integer like 1,2,3,...) #}
-{% set num_tailing = item_rt_static | regex_replace('^.*(?P<num_tailing>[123456])$', '\\g<num_tailing>') %}
+{% set num_tailing = item_rt_static | regex_replace('^.*(?P<num_tailing>[123456789])$', '\\g<num_tailing>') %}
 {#
   loop through all subitems. depending on the actual switch purpose we are working at,
   we do loop through all the subitems.

@@ -225,11 +225,18 @@ hec:
         nexthop: 198.19.252.124
         vrf: INFRA
     edge_neighbors:
-      - ip: 198.19.251.42
-        hostname: rt-hec90-cwan-01a # 	rt-hec90-cwan-01a
+      - ip: 198.19.251.4
+        hostname: rt-hec01-605
+      - ip: 198.19.251.5
+        hostname: rt-hec01-606
       - ip: 198.19.251.76
-        hostname: rt-hec90-cwan-01b  # 	rt-hec90-cwan-01b
+        hostname: rt-hec90-cwan-01a # 	rt-hec90-cwan-01a
       - ip: 198.19.251.77
+        hostname: rt-hec90-cwan-01b  # 	rt-hec90-cwan-01b
+      - ip: 198.19.251.46
+        hostname: rt-hec01-vpn-01a
+      - ip: 198.19.251.47
+        hostname: rt-hec01-vpn-01b
     remote_edge_routers:
       - ip: 198.19.249.160
       - ip: 198.19.249.161

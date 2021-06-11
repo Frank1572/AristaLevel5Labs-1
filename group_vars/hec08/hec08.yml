@@ -307,11 +307,11 @@ hec:
           speed: 10000full
         - id: 6
           description: ncons-hec08-05
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 7
           description: ncons-hec08-06
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 8
           description: sw-hec01-oob-06
@@ -367,7 +367,7 @@ hec:
         router_id: 198.19.251.192
         local_asn: 64531.8
         peers:
-          - ipv4: 10.255.143.141
+          - ipv4: 10.255.193.141
             remote_asn: 65999
           - ipv4: 198.19.224.2
             remote_asn: 64531.8
@@ -403,11 +403,11 @@ hec:
           speed: 10000full
         - id: 6
           description: ncons-hec08-05, Uplink2
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 7
           description: ncons-hec08-06, Uplink2
-          trunk: 21
+          access_vlan: 21
           speed: 10000full
         - id: 8
           description: sw-hec01-oob-06
@@ -473,45 +473,268 @@ hec:
           type: vlan
           description: OOB Access Vlan
           ip: 10.192.22.4/23
+        - id: 1
+          description: sw-hec08-spine-11
+        - id: 2
+          description: sw-hec08-brdr-01a
+        - id: 3
+          description: sw-hec08-brdr-03a
+        - id: 4
+          description: sw-hec08-brdr-02a
+        - id: 5
+          description: rt-hec08-cwan-01a
+        - id: 6
+          description: rt-hec08-vpn-01a
+        - id: 7
+          description: rt-hec08-ha-core-1a
+        - id: 8
+          description: sw-hec08-cwan-01a
+        - id: 9
+          description: lb-hec08-01
+        - id: 10
+          description: naa-hec08-cvp-01
+        - id: 11
+          description: ncons-hec08-07-Uplink1
+        - id: 12
+          description: ncons-hec08-01-Uplink1
+        - id: 13
+          description: ncons-hec08-02-Uplink1
       snmp:
         contact: 34844061:ncons-hec08-07.hec.oob.net.sap:1021
         location: AU-SYD-SYD2-SYD10-Cage1-S120-5-17-U25
+      uplinks:
+        - Eth49
+        - Eth50
     - number: "03"
       ports:
         - id: 21
           type: vlan
           description: OOB Access Vlan
           ip: 10.192.22.5/23
+        - id: 1
+          description: sw-hec08-spine-12
+        - id: 2
+          description: sw-hec08-brdr-01b
+        - id: 3
+          description: sw-hec08-brdr-03b
+        - id: 4
+          description: sw-hec08-brdr-02b
+        - id: 5
+          description: rt-hec08-vpn-01b
+        - id: 6
+          description: rt-hec08-cwan-01b
+        - id: 7
+          description: rt-hec08-ha-core-1b
+        - id: 8
+          description: sw-hec08-cwan-01b
+        - id: 9
+          description: lb-hec08-02
+        - id: 10
+          description: naa-hec08-cvp-01
+        - id: 11
+          description: ncons-hec08-07-Uplink2
+        - id: 12
+          description: ncons-hec08-08-Uplink1
+        - id: 13
+          description: ncons-hec08-03-Uplink1
+        - id: 14
+          description: ncons-hec08-04-Uplink1
       snmp:
         contact: 34844062:ncons-hec08-08.hec.oob.net.sap:1021
         location: AU-SYD-SYD2-SYD10-Cage1-S120-5-18-U25
+      uplinks:
+        - Eth49
+        - Eth50
     - number: "04"
       ports:
         - id: 21
           type: vlan
           description: OOB Access Vlan
           ip: 10.192.22.6/23
+        - id: 1
+          description: sw-hec08-spine-13
+        - id: 2
+          description: sw-hec08-spine-14
+        - id: 3
+          description: sw-hec08-brdr-04a
+        - id: 4
+          description: sw-hec08-brdr-04b
+        - id: 5
+          description: sw-hec08-str-01a
+        - id: 6
+          description: sw-hec08-str-01b
+        - id: 7
+          description: sw-hec08-str-02a
+        - id: 8
+          description: sw-hec08-str-02b
+        - id: 9
+          description: sw-hec08-shs-01a
+        - id: 10
+          description: sw-hec08-shs-01b
+        - id: 11
+          description: sw-hec08-shs-02a
+        - id: 12
+          description: sw-hec08-shs-02b
+        - id: 13
+          description: rt-hec08-str-01a
+        - id: 14
+          description: rt-hec08-str-01b
+        - id: 15
+          description: rt-hec08-inet-01a
+        - id: 16
+          description: rt-hec08-inet-01b
+        - id: 17
+          description: rt-hec08-ha-core-1c
+        - id: 18
+          description: rt-hec08-ha-core-1d
+        - id: 19
+          description: sw-hec08-fwt-01a
+        - id: 20
+          description: sw-hec08-fwt-01b
+        - id: 21
+          description: ncons-hec08-08-Uplink2
       snmp:
         contact: 34844063:ncons-hec08-07.hec.oob.net.sap:1022
         location: AU-SYD-SYD2-SYD10-Cage1-S120-6-4-U25
+      uplinks:
+        - Eth49
+        - Eth50
     - number: "05"
       ports:
         - id: 21
           type: vlan
           description: OOB Access Vlan
           ip: 10.192.22.7/23
+        - id: 1
+          description: sw-hec08-223
+        - id: 2
+          description: sw-hec08-224
+        - id: 3
+          description: sw-hec08-311
+        - id: 4
+          description: sw-hec08-312
+        - id: 5
+          description: sw-hec08-313
+        - id: 6
+          description: sw-hec08-314
+        - id: 7
+          description: sw-hec08-601
+        - id: 8
+          description: sw-hec08-602
+        - id: 9
+          description: sw-hec08-603
+        - id: 10
+          description: sw-hec08-604
+        - id: 11
+          description: sw-hec08-605
+        - id: 12
+          description: sw-hec08-606
+        - id: 13
+          description: sw-hec08-912
+        - id: 14
+          description: sw-hec08-913
+        - id: 15
+          description: sw-hec08-914
+        - id: 16
+          description: sw-hec08-916
       snmp:
         contact: 34844064:ncons-hec08-06.hec.oob.net.sap:1004
         location: AU-SYD-SYD2-SYD10-Cage3-S140B-2-13-U30
+      uplinks:
+        - Eth49
+        - Eth50
     - number: "06"
       ports:
         - id: 21
           type: vlan
           description: OOB Access Vlan
           ip: 10.192.22.155/23
+        - id: 1
+          description:
+        - id: 2
+          description:
+        - id: 3
+          description:
+        - id: 4
+          description:
+        - id: 5
+          description: fw-hec08-01
+        - id: 6
+          description: sw-hec08-101
+        - id: 7
+          description: sw-hec08-203
+        - id: 8
+          description: sw-hec08-207
+        - id: 9
+          description: sw-hec08-209
+        - id: 10
+          description: sw-hec08-211
+        - id: 11
+          description: sw-hec08-215
+        - id: 12
+          description: sw-hec08-301
+        - id: 13
+          description: sw-hec08-305
+        - id: 14
+          description: sw-hec08-307
+        - id: 15
+          description: sw-hec08-803
+        - id: 16
+          description: ncons-hec08-01-Uplink2
+        - id: 17
+          description: ncons-hec08-02-Uplink2
+        - id: 18
+          description: ncons-hec08-03-Uplink2
+        - id: 19
+          description: ncons-hec08-04-Uplink2
+        - id: 20
+          description: fw-hec08-02
+        - id: 21
+          description: sw-hec08-102
+        - id: 22
+          description: sw-hec08-204
+        - id: 23
+          description: sw-hec08-208
+        - id: 24
+          description: sw-hec08-210
+        - id: 25
+          description: sw-hec08-212
+        - id: 26
+          description: sw-hec08-216
+        - id: 27
+          description: sw-hec08-302
+        - id: 28
+          description: sw-hec08-306
+        - id: 29
+          description: sw-hec08-308
+        - id: 30
+          description: sw-hec08-804
+        - id: 31
+          description: sw-hec08-901
+        - id: 32
+          description: sw-hec08-902
+        - id: 33
+          description: sw-hec08-903
+        - id: 34
+          description: sw-hec08-904
+        - id: 35
+          description: sw-hec08-905
+        - id: 36
+          description: sw-hec08-906
+        - id: 37
+          description: sw-hec08-907
+        - id: 38
+          description: sw-hec08-908
+        - id: 39
+          description: sw-hec08-909
+        - id: 40
+          description: sw-hec08-910
       snmp:
         contact:  34719367:ncons-hec08-04.hec.oob.net.sap:1005
         location: AU-SYD-SYD2-SYD10-Cage1-S120-8-11-U28
+      uplinks:
+        - Eth49
+        - Eth50
   fwt:
     - number: "01a"
       snmp:
@@ -1376,28 +1599,17 @@ hec:
       100 deny vlan 50 0x000 ip 198.18.240.0/22 198.18.240.0/22 log
       110 permit vlan 50 0x000 ip 198.18.240.0/22 any
       120 permit vlan 50 0x000 ip any any
-#      130 permit vlan 55 0x000 icmp any any
-#      140 permit vlan 55 0x000 pim any any
-#      160 permit vlan 55 0x000 vrrp any any
-#      170 permit vlan 55 0x000 ip any 224.0.0.0/5
-#      180 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.127.255
-#      190 permit vlan 55 0x000 ip 100.122.64.0/18 100.122.124.0/22
-#      200 permit vlan 55 0x000 ip 100.122.124.0/22 100.122.64.0/18
-#      210 permit vlan 55 0x000 ip 100.122.64.0/18 host 100.122.64.1
-#      220 deny vlan 55 0x000 ip 100.122.64.0/18 100.122.64.0/18 log
-#      230 permit vlan 55 0x000 ip 100.122.64.0/18 any
-#      240 permit vlan 55 0x000 ip any any
-      250 permit vlan 60 0x000 icmp any any
-      260 permit vlan 60 0x000 pim any any
-      270 permit vlan 60 0x000 92 any any
-      280 permit vlan 60 0x000 vrrp any any
-      290 permit vlan 60 0x000 ip any 224.0.0.0/5
-      300 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.251.255
-      310 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.248.1
-      320 deny vlan 60 0x000 ip 198.18.248.0/21 198.18.248.0/22 log
-      330 permit vlan 60 0x000 ip 198.18.248.0/21 any
-      380 permit vlan 60 0x000 ip any any
-      390 permit ip any any
+      130 permit vlan 60 0x000 icmp any any
+      140 permit vlan 60 0x000 pim any any
+      150 permit vlan 60 0x000 92 any any
+      160 permit vlan 60 0x000 vrrp any any
+      170 permit vlan 60 0x000 ip any 224.0.0.0/5
+      180 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.251.255
+      190 permit vlan 60 0x000 ip 198.18.248.0/21 host 198.18.248.1
+      200 deny vlan 60 0x000 ip 198.18.248.0/21 198.18.248.0/22 log
+      210 permit vlan 60 0x000 ip 198.18.248.0/21 any
+      220 permit vlan 60 0x000 ip any any
+      230 permit ip any any
   hana_acl_rules: |
       10 permit icmp any any
       20 permit pim any any

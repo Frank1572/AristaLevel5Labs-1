@@ -3,71 +3,70 @@ eos:
   new_syntax: True
 
 idrac:
-  ip: 10.178.136.254
-  mask: 255.255.254.0
-  gw: 10.178.136.1
-  name: naa-hec10-idrac-01
-  dns1: 147.204.148.110
-  dns2: 147.204.148.111
+  ip: 10.177.240.254 # HEC90 Reserved in IPAM
+  mask: 255.255.255.0 # HEC90 - note it is only a /24 as Lab
+  gw: 10.177.240.1 # HEC90
+  name: naa-hec90-01-idrac
+  # dns not required by day one but set to the landscape dns1 and dns2 reserved in TIC HEC90-CIS01-DNS01
+  # dns-vip.lab2.hec.sap.biz.1 and dns01-lab2.lab2.hec.sap.biz .2
+  dns1: 100.127.213.1 # HEC90-CIS01-DNS01 - dns-vip
+  dns2: 100.127.213.2 # HEC90-CIS01-DNS01 - dns01-lab2
   domain: hec.oob.net.sap
   password: arista
 
 cva:
-# attention not .43 :
-  ip: 10.178.136.41
-  mask: 255.255.254.0
-  gw: 10.178.136.1
-  name: naa-hec01-01
-  dns1: 147.204.148.110
-  dns2: 147.204.148.111
+  ip: 10.177.240.43 # naa-hec90-01
+  mask: 255.255.255.0 # HEC90 - note it is only a /24 as Lab
+  gw: 10.177.240.1 # HEC90
+  name: naa-hec01-01 # HEC90 TIC
+  # dns not required by day one but set to the landscape dns1 and dns2 reserved in TIC HEC90-CIS01-DNS01
+  # dns-vip.lab2.hec.sap.biz.1 and dns01-lab2.lab2.hec.sap.biz .2
+  dns1: 100.127.213.1 # HEC90-CIS01-DNS01 - dns-vip
+  dns2: 100.127.213.2 # HEC90-CIS01-DNS01 - dns01-lab2
   domain: hec.oob.net.sap
   password: arista
 
-oob2 and oob3:
+oob01:
   dhcp:
-    prefix: 10.178.136.0
-    mask: 255.255.254.0
-    router: 10.178.136.1
-    idrac_ip: 10.178.137.248
-    cva_ip: 10.178.137.249
+    prefix: 10.177.240.0 #HEC90
+    mask: 255.255.255.0  #HEC90
+    router: 10.177.240.1  #HEC90
+    idrac_ip: 10.177.240.248 # cvp-hec90-installation-01
+    cva_ip: 10.177.240.249 # 	cvp-hec90-installation-02
 
 cvp:
-  # there is already 1.3 on arista web page
-  version: cvp-2019.1.2-kvm.tgz
-  # path to be checked
-  path_to_cvp_file: /ens/bin/images/arista/
-  ip_eth0: 10.178.137.253
-  ip_eth1: 10.255.241.69
-  mask_eth0: 255.255.254.0
-  mask_eth1: 255.255.240.0
-  gw: 10.178.136.1
-  name: naa-hec01-cvp-01.hec.oob.net.sap
-  dns1: 10.17.121.30
-  dns2: 10.17.122.10
+  version: cvp-2020.2.4-kvm.tgz # Golden Release 2021
+  path_to_cvp_file: /data/ # file to be on nw-admin-02.rot
+  ip_eth0: 10.177.240.253 # naa-hec90-cvp-01
+  ip_eth1: 10.255.239.69 # HEC90 reserved in Transfer xls sheet
+  mask_eth0: 255.255.255.0 # HEC90 - note it is only a /24 as Lab
+  mask_eth1: 255.255.240.0 # Standard
+  gw: 10.177.240.1 # HEC90
+  name: naa-hec90-cvp-01.hec.oob.net.sap
+  dns1: 100.127.213.1 # HEC90-CIS01-DNS01 - dns-vip
+  dns2: 100.127.213.2 # HEC90-CIS01-DNS01 - dns01-lab2
   domain: hec.oob.net.sap
-  ntp1: 10.17.122.185
-  ntp2: 10.33.142.104
+  ntp1: 10.4.12.100 # taken from HEC19 oob1a but not sure
+  ntp2: 10.4.12.128 # taken from HEC19 oob1a
   device_int: eth0
   cluster_int: eth1
-  ingest_key: SecureKey01
-  vmname: cvp-hec01
+  ingest_key: SecureKey90
+  vmname: cvp-hec90
   KvmDomain: cvp
   password: arista
   backupuser: cvpbkp
   eth1_routes:
-  # HEC01-NW-MGMT-04 (all router and ipmis)
-    - prefix: 198.19.234.0
+    - prefix: 198.19.154.0 # rt ipmi vlan900 mgm
       mask: 24
-      nexthop: 10.255.241.78
-  # HEC01-NW-MGMT05 (all fab)
-    - prefix: 198.19.190.0
+      nexthop: 10.255.239.78 # brdr2 vip
+    - prefix: 198.19.155.0 # fab lb mgm
       mask: 24
-      nexthop: 10.255.241.78
+      nexthop: 10.255.239.78 # brdr2 vip
   dhcp:
-    prefix: 10.178.140.0
-    mask: 255.255.254.0
-    range_low: 10.178.137.224
-    range_high: 10.178.137.247
+    prefix: 10.178.239.0
+    mask: 255.255.255.0
+    range_low: 10.177.240.224
+    range_high: 10.177.240.247
   aaa_config:
     aaa_type: RADIUS
     servers:
@@ -84,121 +83,105 @@ cvp:
         accPort: 1646
         status: "Enabled"
 hec:
-  hec_nr: "01"
+  hec_nr: "90"
   hana_hvx_descriptions_PO_MIN: 101
   hana_hvx_descriptions_PO_MAX: 124
   hvv_descriptions_PO_MAX: 24
   hvv_descriptions_PO_RANGE: "{101,151}"
   ma_domain: "hec.oob.net.sap"
-  lo900_domain: "rot.hec.sap.biz"
-  vl900_domain: "rot.hec.sap.biz"
+  lo900_domain: "lab2.hec.sap.biz"
+  vl900_domain: "lab2.hec.sap.biz"
   vl900_mask: 24
-  vl900_def_gw: 198.19.234.1
-  vl900_net: 198.19.234.0/24
-  lo900_net: 198.19.190.0/24
-  lo900_prefix: 198.19.190
-  inband_trans_brdr: 10.255.241.78
+  vl900_def_gw: 198.19.154.1 # HEC90
+  vl900_net: 198.19.154.0/24 # HEC90-NW-MGMT01
+  lo900_net: 198.19.155.0/24 # HEC90-NW-MGMT02
+  lo900_prefix: 198.19.155
+  inband_trans_brdr: 10.255.239.78 # brdr2ab vir
   inband_trans_brdr_mac: 00:1c:73:00:00:96
-  inband_trans_net: 10.255.241.64/28
-  inband_trans_prefix: 10.255.241
+  inband_trans_net: 10.255.239.64/28 # HEC90
+  inband_trans_prefix: 10.255.239
   inband_trans_mask: 28
   inband_trans_gw_vlan: Vlan916
-  inband_trans_gw: 10.255.241.65
-  inband_trans_cvx: 10.255.241.68
-  inband_trans_cvp: 10.255.241.69
-  oob_def_gw: 10.178.136.1
-  oob_prefix: 10.178.136
-  oob_mask: 23
+  inband_trans_gw: 10.255.239.65
+  inband_trans_cvx: 10.255.239.68
+  inband_trans_cvp: 10.255.239.69
+  oob_def_gw: 10.177.240.1
+  oob_prefix: 10.177.240
+  oob_mask: 24
   oob_vrf: OOB
-  oob_cvx: 10.178.137.252
-  oob_cvp: 10.178.137.253
-  as_low: 4200933137
-  as_high: 4200934335
-  cvp_ingest_key: SecureKey01
-  dns1: 10.127.141.1
-  dns2: 10.127.141.2
-  ntp1: 147.204.148.93
-  ntp2: 147.204.148.92
-  snmp1: 147.204.148.100
-  snmp2: 147.204.148.87
+  oob_cvx: 10.177.240.252  # not required as no cvx
+  oob_cvp: 10.177.240.253
+  as_low: 4206765841 # https://submit.apnic.net/cgi-bin/convert-asn.pl 64190.10001
+  as_high: 4206767039 # https://submit.apnic.net/cgi-bin/convert-asn.pl 64190.11199
+  cvp_ingest_key: SecureKey90 # HEC90
+  dns1: 100.127.213.1 # HEC90-CIS01-DNS01 - dns-vip
+  dns2: 100.127.213.2 # HEC90-CIS01-DNS01 - dns01-lab2
+  ntp1: 100.127.212.36 # to be reserved in TIC still as I got a error message
+  ntp2: 100.127.212.37 # to be reserved in TIC still as I got a error message
+  snmp1: 147.204.148.100 # to be checked not done yet
+  snmp2: 147.204.148.87  # to be checked not done yet
   syslog:
     inband:
       servers:
-        - ipv4: 147.204.148.91
-        - ipv4: 147.204.149.69
-        - ipv4: 147.204.146.42
+        - ipv4: 147.204.148.91  # to be checked not done yet
+        - ipv4: 147.204.149.69  # to be checked not done yet
+        - ipv4: 147.204.146.42  # to be checked not done yet
   tacacs:
     nat:
       servers:
-        - ipv4: 147.204.146.181
-        - ipv4: 147.204.146.182
-        - ipv4: 147.204.146.183
+        - ipv4: 147.204.146.181  # to be checked not done yet
+        - ipv4: 147.204.146.182  # to be checked not done yet
+        - ipv4: 147.204.146.183  # to be checked not done yet
     oob:
       servers:
-        - ipv4: 10.16.8.142
-        - ipv4: 10.16.8.32
-        - ipv4: 169.145.33.51
+        - ipv4: 10.16.8.142  # to be checked not done yet
+        - ipv4: 10.16.8.32  # to be checked not done yet
+        - ipv4: 169.145.33.51  # to be checked not done yet
   sflow:
     destination:
-      - ipv4: 147.204.148.160
-        port: 9995
+      - ipv4: 147.204.148.160  # to be checked not done yet
+        port: 9995  # to be checked not done yet
     source: Loopback900
   admin_mpls:
     prefix_mask:
-      - 10.178.136.0/23
-      - 10.178.138.0/23
-      - 10.255.241.0/24
-      - 100.124.0.0/19
-      - 147.204.24.0/22
-      - 147.204.144.0/21
-      - 198.18.0.0/19
-      - 198.19.190.0/24
-      - 198.19.192.0/23
-      - 198.19.196.0/23
-      - 198.19.198.0/24
-      - 198.19.208.0/20
-      - 198.19.224.208/28
-      - 198.19.226.0/24
-      - 198.19.234.0/24
-      - 198.19.240.0/24
-      - 198.19.0.0/19
-      - 198.19.228.0/24
-      - 198.19.224.128/28
-      - 100.127.16.0/21
-      - 100.124.254.0/23
-      - 10.255.241.0/28
+      - 10.177.240.0/24 # HEC90-NW-OOB-MGMT01(VLAN21)
+      - 10.255.239.0 # HEC90-Transit
+      - 198.19.154.0/24 # HEC90-NW-MGMT01(VLAN900)
+      - 198.19.155.0/24 # HEC90-NW-MGMT02(Loopback900)
+      - 100.127.208.0/21 # HEC90-TS01(VLAN70) and HEC90-TIC01(VLAN75) 
+      - 100.97.0.0/24 # HEC90-IPMI-01(VLAN10)
   admin_sw_interface: Ethernet1
-  admin_sw_description_oob1a: "rot13dc02-adm-03-co Et1/13"
-  admin_sw_description_oob1b: "rot06dc01-adm-04-co Et1/13"
-  admin_sw_prefix: 10.255.200
-  admin_sw_mask: 31
-  admin_sw_ip_oob1a: 10.255.202.9
-  admin_sw_ip_oob1b: 10.255.202.10
-  admin_sw_neig_ip_oob1a: 10.255.200.9
-  admin_sw_neig_as_oob1a: 65535
-  admin_sw_neig_ip_oob1b: 10.255.200.11
-  admin_sw_neig_as_oob1b: 64536
-  oob01_lo0_prefix: 198.19.249
-  oob01_as: 64531.1
+  admin_sw_description_oob1a: "wdf51dc04-adm-03-co Et1/21" # p45 on oob - see visio / mcs as agreed with Brian
+  admin_sw_description_oob1b: "wdf51dc04-adm-04-co Et1/21" # p45 on oob - see visio as agreed with Brian
+  admin_sw_prefix: 10.255.193 # see visio as agreed with Brian
+  admin_sw_mask: 31 # see visio as agreed with Brian
+  admin_sw_ip_oob1a: 10.255.193.98 # HEC90 see visio as agreed with Brian
+  admin_sw_ip_oob1b: 10.255.193.100 # HEC90 see visio as agreed with Brian
+  admin_sw_neig_ip_oob1a: 10.255.193.99 # HEC90 see visio as agreed with Brian
+  admin_sw_neig_as_oob1a: 65536 # Verizon
+  admin_sw_neig_ip_oob1b: 10.255.193.101 # HEC90 see visio as agreed with Brian
+  admin_sw_neig_as_oob1b: 65999 # Centurylink
+  oob01_lo0_prefix: 198.19.51 # sw-hec90-oob-01a - 198.19.251.50	HEC-Router-Loopback-global-02
+  oob01_as: 64531.90
   spine_nr:
     - 11
     - 12
-    - 13
-    - 14
+    - 13 # does not exist as its a lab
+    - 14 # does not exist as its a lab
   spine:
     # valid models are: 7504, 7508, 7280
     # appending a "-$number" f.e. "-60", "-90" defines the number of ports per linecard!
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
-    model: 7504
+    model: 7280-32 # 7280CR3-32P4-F
     pod:
       number:
         - id: 1
-          model: 7504
-          linecards: 4
+          model: 7280-32 # 7280CR3-32P4-F
+          linecards: 1
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
-    linecards: 4
+    linecards: 1
     # Enable or disable Bfd for underlay (true or false)
     underlay_bfd: True
     # the following list 'port' is a workaround for mixed port speeds in existing
@@ -210,16 +193,16 @@ hec:
     number:
       - id: 11
         snmp:
-          location: ROT02-RZ44-R1-8-RU2
-          contact: 34344370:ncons4407.wdf.sap.corp:1015
-        oob_ip: 10.178.136.11
-        nwmgmt_ip: 198.19.190.11
+          location: WDF51-NT1-R2-10-RU37
+          contact: xxxxxxx:ncons-01.hec.oob.net.sap:1001
+        oob_ip: 10.177.240.11
+        nwmgmt_ip: 198.19.155.11
       - id: 12
         snmp:
-          location: ROT02-RZ44-R1-8-RU9
-          contact: 34344371:ncons4402.wdf.sap.corp:1011
-        oob_ip: 10.178.136.12
-        nwmgmt_ip: 198.19.190.12
+          location: WDF51-NT2-R2-10-RU37
+          contact: xxxxxxx:ncons-02.hec.oob.net.sap:1001
+        oob_ip: 10.177.240.12
+        nwmgmt_ip: 198.19.155.12
       - id: 13
         snmp:
           location: ROT02-RZ54-R1-8-RU14
@@ -233,27 +216,20 @@ hec:
         oob_ip: 10.178.136.14
         nwmgmt_ip: 198.19.190.14
   ngdr_underlay:
-    edge_as: 65200
+    edge_as: 65200 # no ngdr
   ngdr_overlay:
-    remote_hec_nr: "10"
+    remote_hec_nr: "10" # fake as hec91 not yet build
     routes:
-      - network: 100.64.0.0/15
+      - network: 100.64.0.0/15 # ?????
         interface: Vlan922
         nexthop: 198.19.252.124
         vrf: INFRA
     edge_neighbors:
-      - ip: 198.19.251.4
-        hostname: rt-hec01-605
-      - ip: 198.19.251.5
-        hostname: rt-hec01-606
       - ip: 198.19.251.42
-        hostname: rt-hec01-cwan-01a
-      - ip: 198.19.251.43
-        hostname: rt-hec01-cwan-01b
-      - ip: 198.19.251.46
-        hostname: rt-hec01-vpn-01a
-      - ip: 198.19.251.47
-        hostname: rt-hec01-vpn-01b
+        hostname: rt-hec90-cwan-01a # 	rt-hec90-cwan-01a
+      - ip: 198.19.251.76
+        hostname: rt-hec90-cwan-01b  # 	rt-hec90-cwan-01b
+      - ip: 198.19.251.77
     remote_edge_routers:
       - ip: 198.19.249.160
       - ip: 198.19.249.161
@@ -262,65 +238,19 @@ hec:
       - ip: 198.19.249.164
       - ip: 198.19.249.165
   lrdr_overlay:
-    remote_hec_nr: "02"
+    remote_hec_nr: "02" # fake no lrdr yet
   # Are the core vlans 3000 to 3499 needed
   core_vlans: true
   fabric:
-    # valid modes are: manual, cvx, evpn
-    vtep_distribution_mode: manual
-    vtep_ips:
-      - 10.200.1.1
-      - 10.200.1.2
-      - 10.200.1.3
-      - 10.200.1.4
-      - 10.200.1.5
-      - 10.200.1.6
-      - 10.200.1.7
-      - 10.200.1.8
-      - 10.200.1.9
-      - 10.200.1.10
-      - 10.200.1.11
-      - 10.200.1.13
-      - 10.200.1.14
-      - 10.200.1.15
-      - 10.200.1.16
-      - 10.200.1.17
-      - 10.200.1.18
-      - 10.200.1.19
-      - 10.200.1.20
-      - 10.200.1.21
-      - 10.200.1.22
-      - 10.200.1.23
-      - 10.200.1.24
-      - 10.200.1.25
-      - 10.200.1.26
-      - 10.200.1.27
-      - 10.200.1.28
-      - 10.200.1.29
-      - 10.200.1.30
-      - 10.200.1.31
-      - 10.200.1.32 # hvv-27
-      - 10.200.1.33 # hvv-28
-      - 10.200.1.34 # hvv-29
-      - 10.200.1.37 # hvv-30
-      - 10.200.1.38 # hvv-31
-      - 10.200.1.39 # hvv-32
-      - 10.200.1.68 # str04
-      - 10.200.1.69
-      - 10.200.1.70
-      - 10.254.200.1 # vVTEP at rt-hec01-ha-core-01a/b/c/d
-      - 198.19.251.110
-      - 198.19.251.111
-      - 198.19.251.112
-      - 198.19.251.113
+    vtep_distribution_mode: evpn
     interlink_mtu: 9214
     # valid speeds are 40gfull, 100gfull
     interlink_speed: 100gfull
     # Spine BGP Listen ranges for EVPN
     bgp_listen_ranges:
-      - 10.100.0.0/16
-      - 198.19.249.0/24
-      - 198.19.251.0/24
+      - 10.100.0.0/16 # Router ID
+      - 198.19.249.0/24 # Global Loopback
+      - 198.19.251.0/24 # Global Loopback
     bgp_maximum_routes: 12000
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
@@ -330,28 +260,28 @@ hec:
     static:
       brdr01:
         - destination: 0.0.0.0/0
-          nexthop: 198.19.240.1
+          nexthop: 198.19.155.1 # HEC90-NW-MGMT02	(Loopback900) 198.19.155.0/24
           interface: Vlan900
           redist_bgp: true
-        - destination: 10.200.1.0/24
+        - destination: 10.200.1.0/24 # VTEP
           interface: Null0
           metric: 240
-        - destination: 10.254.200.1/32
+        - destination: 10.254.200.1/32 # ?????
           interface: Null0
           metric: 240
-        - destination: 198.19.251.110/32
+        - destination: 198.19.251.74/32 # lb rt-hec90-ha-core-01a
           interface: Null0
           metric: 240
-        - destination: 198.19.251.111/32
+        - destination: 198.19.251.75/32 # lb rt-hec90-ha-core-01b
           interface: Null0
           metric: 240
-        - destination: 198.19.251.112/32
+        - destination: 198.19.251.112/32 # fake as rt-hec90-ha-core-01c not exist
           interface: Null0
           metric: 240
-        - destination: 198.19.251.113/32
+        - destination: 198.19.251.113/32 # fake as rt-hec90-ha-core-01d not exist
           interface: Null0
           metric: 240
-      brdr03:
+      brdr03: # brdr3 does not exisit
         - destination: 0.0.0.0/0
           nexthop: 198.19.240.193
           interface: Vlan900
@@ -375,59 +305,19 @@ hec:
           interface: Null0
           metric: 240
       fwt01:
-        - destination: 100.124.0.0/19
-          nexthop: 10.255.241.12
+        - destination: 100.97.0.0/24 # HEC90-IPMI-01(VLAN10)
+          nexthop: 10.255.239.12
           interface: Vlan915
-        - destination: 100.127.16.0/21
-          nexthop: 10.255.241.7
+        - destination: 100.127.208.0/21 # HEC90-TS01(VLAN70) and HEC90-TIC01(VLAN75)
+          nexthop: 10.255.239.12
           interface: Vlan915
-        - destination: 147.204.24.0/22
-          nexthop: 10.255.241.12
+        - destination: 198.19.154.0/24 # HEC90-NW-MGMT01(VLAN900)
+          nexthop: 10.255.239.12
           interface: Vlan915
-        - destination: 147.204.144.0/21
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.18.0.0/19
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.0.0/19
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.190.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.192.0/23
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.196.0/23
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.198.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.208.0/20
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.224.128/28
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.224.208/28
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.226.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.228.0/24
-          nexthop: 10.255.241.7
-          interface: Vlan915
-        - destination: 198.19.234.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
-        - destination: 198.19.240.0/24
-          nexthop: 10.255.241.12
-          interface: Vlan915
+        - destination: 198.19.155.0/24 # HEC90-NW-MGMT02(Loopback900)
+          nexthop: 10.255.239.12
         - destination: 0.0.0.0/0
-          nexthop: 10.178.136.1
+          nexthop: 10.177.240.0/24 # HEC90-NW-OOB-MGMT01(VLAN21)
           vrf: OOB
       strrt01:
         - destination: 100.66.0.0/15
@@ -451,6 +341,7 @@ hec:
   shs: "{{ yml_shs }}"
   strrt: "{{ yml_strrt }}"
   ngdr: "{{ yml_ngdr }}"
+  # to be updated still for hec90 - below is a copy
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any
       20 permit vlan 50 0x000 pim any any
@@ -495,6 +386,7 @@ hec:
       590 permit vlan 60 0x000 ip 198.19.208.0/20 any
       600 permit vlan 60 0x000 ip any any
       610 permit ip any any
+# no hana at hec90 so below is fake      
   hana_acl_rules: |
       10 permit icmp any any
       20 permit pim any any

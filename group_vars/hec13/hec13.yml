@@ -1580,7 +1580,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/242833//ZYO:HEC13:HEC14:rt-hec14-ha-core-01a_Et26/1
           ip: 10.254.254.0/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1607,7 +1608,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/258161//ZYO:HEC13:HEC14:rt-hec14-ha-core-01b_Et26/1
           ip: 10.254.254.2/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1634,7 +1636,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/256571//ZYO:HEC13:HEC14:rt-hec14-ha-core-01c_Et26/1
           ip: 10.254.254.4/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1661,7 +1664,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:CenturyLink_441165153:HEC13:HEC14:rt-hec14-ha-core-01d_Et26/1
           ip: 10.254.254.6/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS

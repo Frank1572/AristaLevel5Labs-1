@@ -788,29 +788,12 @@ hec:
   routes:
     static:
       brdr01:
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.246.1
-          interface: Vlan900
-          redist_bgp: true
-        - destination: 10.200.1.0/24
-          interface: Null0
-          metric: 240
       brdr03:
+      brdr02:
         - destination: 0.0.0.0/0
           nexthop: 198.19.246.1
           interface: Vlan900
           redist_bgp: true
-        - destination: 10.200.1.0/24
-          interface: Null0
-          metric: 240
-      brdr04:
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.246.1
-          interface: Vlan900
-          redist_bgp: true
-        - destination: 10.200.1.0/24 # to be checked
-          interface: Null0
-          metric: 240
       fwt01:
         - destination: 100.124.128.0/21
           nexthop: 10.255.180.12
@@ -841,14 +824,6 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et1/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.102/24
-          vrrp:
-            - id: 250
-              priority: 120
-              ip: 198.19.246.104
         - id: 961
           type: vlan
           description: Transfer to rt-hec07-cwan-01a
@@ -888,21 +863,13 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et2/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.103/24
-          vrrp:
-            - id: 250
-              priority: 110
-              ip: 198.19.246.104
         - id: 962
           type: vlan
           description: Transfer to rt-hec07-cwan-01a
           mtu: 9100
           ip: 10.254.253.3/31
           ngdr_underlay: true
-          ngdr_underlay_neighbor: 10.254.253.4
+          ngdr_underlay_neighbor: 10.254.253.2
         - id: 33/1
           description: rt-hec07-cwan-01a, Et52/1
           po: 1501
@@ -935,14 +902,6 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et3/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.105/24
-          vrrp:
-            - id: 250
-              priority: 120
-              ip: 198.19.246.107
         - id: 965
           type: vlan
           description: Transfer to rt-hec07-vpn-01a
@@ -1041,14 +1000,6 @@ hec:
         - 54/1
       spine_port_towards_leaf: Et4/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.106/24
-          vrrp:
-            - id: 250
-              priority: 110
-              ip: 198.19.246.107
         - id: 966
           type: vlan
           description: Transfer to rt-hec07-vpn-01a
@@ -1147,21 +1098,13 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et5/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.108/24
-          vrrp:
-            - id: 250
-              priority: 120
-              ip: 198.19.246.110
         - id: 963
           type: vlan
           description: Transfer to rt-hec07-cwan-01b
           mtu: 9100
           ip: 10.254.253.5/31
           ngdr_underlay: true
-          ngdr_underlay_neighbor: 10.254.253.6
+          ngdr_underlay_neighbor: 10.254.253.4
         - id: 33/1
           description: rt-hec07-cwan-01b, Et51/1
           po: 1502
@@ -1194,21 +1137,13 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et6/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.246.109/24
-          vrrp:
-            - id: 250
-              priority: 110
-              ip: 198.19.246.110
         - id: 964
           type: vlan
           description: Transfer to rt-hec07-cwan-01b
           mtu: 9100
           ip: 10.254.253.7/31
           ngdr_underlay: true
-          ngdr_underlay_neighbor: 10.254.253.8
+          ngdr_underlay_neighbor: 10.254.253.6
         - id: 33/1
           description: rt-hec07-cwan-01b, Et52/1
           po: 1502
@@ -1248,14 +1183,14 @@ hec:
           ip: 198.19.246.111/24
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
-              priority: 105
+              priority: 120
               ip: 198.19.246.113
               auth: FWTTRANS
         - id: 32/1 # 100G Link to L2 core switch
-          description: sw-hec07-103 Et29/1
+          description: sw-hec07-104 Et29/1
           po: 103
         - id: 33/1 # 100G Link to L2 core switch
-          description: sw-hec07-104 Et29/1
+          description: sw-hec07-103 Et29/1
           po: 103
         - id: 30/1
           description: sw-hec07-brdr-04b, Et30/1
@@ -1289,14 +1224,14 @@ hec:
           ip: 198.19.246.112/25
           vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
             - id: 250
-              priority: 105
+              priority: 110
               ip: 198.19.246.113
               auth: FWTTRANS
         - id: 32/1 # 100G Link to L2 core switch
-          description: sw-hec07-103 Et30/1
+          description: sw-hec07-104 Et30/1
           po: 103
         - id: 33/1 # 100G Link to L2 core switch
-          description: sw-hec07-104 Et30/1
+          description: sw-hec07-103 Et30/1
           po: 103
         - id: 30/1
           description: sw-hec07-brdr-04a, Et30/1

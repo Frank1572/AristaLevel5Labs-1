@@ -787,8 +787,6 @@ hec:
             remote_asn: 64531.7
   routes:
     static:
-      brdr01:
-      brdr03:
       brdr02:
         - destination: 0.0.0.0/0
           nexthop: 198.19.246.1

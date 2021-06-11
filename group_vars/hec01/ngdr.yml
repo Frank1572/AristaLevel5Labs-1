@@ -19,6 +19,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01a, et26/1
         ip: 10.254.254.0/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -46,6 +47,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01b, et26/1
         ip: 10.254.254.2/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -73,6 +75,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01c, et26/1
         ip: 10.254.254.4/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -100,6 +103,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01d, et26/1
         ip: 10.254.254.6/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS

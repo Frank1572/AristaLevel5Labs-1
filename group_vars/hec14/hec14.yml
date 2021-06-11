@@ -1468,7 +1468,7 @@ hec:
         - id: 26/1
           description: DCP2Pb:OQYX/242833//ZYO:HEC14:HEC13:rt-hec13-ha-core-01a_Et26/1
           ip: 10.254.254.1/31
-          mtu: 9100
+          mtu: 9214
           speed: 100gfull
           bfd: true
         - id: 922
@@ -1496,7 +1496,7 @@ hec:
         - id: 26/1
           description: DCP2Pb:OQYX/258161//ZYO:HEC14:HEC13:rt-hec13-ha-core-01b_Et26/1
           ip: 10.254.254.3/31
-          mtu: 9100
+          mtu: 9214
           speed: 100gfull
           bfd: true
         - id: 922
@@ -1524,7 +1524,7 @@ hec:
         - id: 26/1
           description: DCP2Pb:OQYX/256571//ZYO:HEC14:HEC13:rt-hec13-ha-core-01c_Et26/1
           ip: 10.254.254.5/31
-          mtu: 9100
+          mtu: 9214
           speed: 100gfull
           bfd: true
         - id: 922
@@ -1552,7 +1552,7 @@ hec:
         - id: 26/1
           description: DCP2Pb:CenturyLink_441165153:HEC14:HEC13:rt-hec13-ha-core-01d_Et26/1
           ip: 10.254.254.7/31
-          mtu: 9100
+          mtu: 9214
           speed: 100gfull
           bfd: true
         - id: 922

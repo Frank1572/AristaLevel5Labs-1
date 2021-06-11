@@ -9,7 +9,7 @@
 #}
 {% set id_short = id | regex_replace('^.*(?P<id>[123456789][ab])$', '\\g<id>') %}
 {% set leafpurpose = id | regex_replace('^(?P<purpose>[bsh])[123456789][ab]$', '\\g<purpose>') %}
-{% set leafid = id | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') %}
+{% set leafid = funcs.leafid(id) %}
 {% set brdrtype = id | regex_replace('^.*(?P<one_or_two>[123456789])[ab]$', '\\g<one_or_two>') %}
 {% set speed = hec.fabric.interlink_speed %}
 {#
@@ -35,9 +35,9 @@ mlag configuration
    domain-id MLAG-{{ mlagText }}-0{{ id_short[0] }}
 !
 {% if leafpurpose == 'b' %}
-! Start: Remove config which can't be used on BRDRs 
+! Start: Remove config which can't be used on BRDRs
 no {{eos_cmd.c_vlan_internal_allocation_policy}} descending range 3100 3999
-! End: Remove config which can't be used on BRDRs 
+! End: Remove config which can't be used on BRDRs
 !
 vlan 30
    name HEC{{ hec.hec_nr }}-{{vlandb.30.name}}

@@ -1580,7 +1580,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/242833//ZYO:HEC13:HEC14:rt-hec14-ha-core-01a_Et26/1
           ip: 10.254.254.0/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1588,7 +1589,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 10.255.185.90/28
-          virtual_router_ip: 10.255.185.94
+          virtual_router_ip: ['10.255.185.94']
     - number: 1b
       oob_ip: 10.9.244.52
       nwmgmt_ip: 198.19.180.26
@@ -1607,7 +1608,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/258161//ZYO:HEC13:HEC14:rt-hec14-ha-core-01b_Et26/1
           ip: 10.254.254.2/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1615,7 +1617,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 10.255.185.91/28
-          virtual_router_ip: 10.255.185.94
+          virtual_router_ip: ['10.255.185.94']
     - number: 1c
       oob_ip: 10.9.244.53
       nwmgmt_ip: 198.19.180.27
@@ -1634,7 +1636,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:OQYX/256571//ZYO:HEC13:HEC14:rt-hec14-ha-core-01c_Et26/1
           ip: 10.254.254.4/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1642,7 +1645,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 10.255.185.92/28
-          virtual_router_ip: 10.255.185.94
+          virtual_router_ip: ['10.255.185.94']
     - number: 1d
       oob_ip: 10.9.244.54
       nwmgmt_ip: 198.19.180.28
@@ -1661,7 +1664,8 @@ hec:
         - id: 26/1
           description: DCP2Pa:CenturyLink_441165153:HEC13:HEC14:rt-hec14-ha-core-01d_Et26/1
           ip: 10.254.254.6/31
-          mtu: 9100
+          mtu: 9214
+          speed: 100gfull
           bfd: true
         - id: 922
           description: BACKUP-TRANS
@@ -1669,7 +1673,7 @@ hec:
           mtu: 9100
           vrf: INFRA
           ip: 10.255.185.93/28
-          virtual_router_ip: 10.255.185.94
+          virtual_router_ip: ['10.255.185.94']
   hvv_hvx_acl_rules: |
     10 permit vlan 50 0x000 icmp any any
     20 permit vlan 50 0x000 pim any any

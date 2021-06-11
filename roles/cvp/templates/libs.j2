@@ -1,3 +1,9 @@
+{#
+  for each template that need those functions, import them via
+
+  {% import "templates/libs.j2" as funcs with context %}
+
+#}
 {% macro podid_calculation(number) %}
 {% set podid = 0 %}
 {% if (spineid|int > 10) and (spineid|int < 20) %}
@@ -136,6 +142,12 @@ interface Ethernet{{ interface.id }}
 {% if interface.mtu is defined %} {# Hard set MTU per port (non uplinks) #}
    mtu {{ interface.mtu }}
 {% endif %}{# End MTU shinans #}
+{% if interface.bfd is defined and interface.bfd %}{# START bfd is defined #}
+   bfd interval {{ net.device.bfd.interval }} min_rx {{ net.device.bfd.min_rx }} multiplier {{ net.device.bfd.multiplier }}
+{% endif %}{# END bfd is defined #}
+{% if interface.vrf is defined %}{# START vrf is defined #}
+   {{ eos_cmd.c_vrf_forwarding }} {{ interface.vrf|string }}
+{% endif %}{# END vrf is defined #}
 {% if interface.ip is defined %}{# START ip is defined #}
 {% if (interface.type is defined) and (interface.type == "spine_link") %}
    mtu {{ hec.fabric.interlink_mtu }}
@@ -226,7 +238,7 @@ interface Port-Channel{{ portchannel.id }}
 !
 {%- endmacro %}
 
-{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp) -%}
+{% macro render_route_statement(dest, gw, vrf, intf, met, red_bgp, asn=1) -%}
 {% set route_statement = 'ip route' %}
 {% if vrf != '' %}
 {% set route_statement = route_statement + ' vrf ' + vrf %}
@@ -243,7 +255,8 @@ interface Port-Channel{{ portchannel.id }}
 {% endif %}
 {{ route_statement }}
 {% if red_bgp == True %}
-router bgp {{ asn_generated_global[0]|string }}
+router bgp {{ asn|string }}
+{#router bgp {{ asn_generated_global[0]|string }}#}
 {% if vrf != '' %}
    vrf {{ vrf }}
      redistribute static
@@ -257,7 +270,83 @@ router bgp {{ asn_generated_global[0]|string }}
 {%- endmacro %}
 
 {% macro leafid(name) -%}
+{# from a given hostname, extract the matchin letter 'a' or 'b' from the end and return it #}
 {{ name | regex_replace('^.*(?P<a_or_b>[ab])$', '\\g<a_or_b>') }}
+{%- endmacro %}
+
+{% macro spine_lc(portname) -%}
+{% if portname|string is search('^Et\d{1,2}/\d{1,2}/\d$') %}
+{# Chassis based devices #}
+{{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/\d{1,2}/1$', '\\g<lcnr>') }}
+{% elif portname|string is search('^Et\d{1,2}/\d$') %}
+{# Non-modular switches like 7280 #}
+{{ portname | regex_replace('^Et(?P<lcnr>\d{1,2})/1$', '0') }}
+{% endif %}
+{%- endmacro %}
+
+{% macro spine_po(portname) -%}
+{% if portname|string is search('^Et\d{1,2}/\d{1,2}/\d$') %}
+{# Chassis based devices #}
+{{ portname | regex_replace('^Et\d{1,2}/(?P<ponr>.*)/.*$', '\\g<ponr>') }}
+{% elif portname|string is search('^Et\d{1,2}/\d$') %}
+{# Non-modular switches like 7280 #}
+{{ portname | regex_replace('^Et(?P<ponr>.*)/1$', '\\g<ponr>') }}
+{% endif %}
+{%- endmacro %}
+
+{% macro uplink_port_ip(intf_uplink) -%}
+{% set spine_lc = spine_lc(intf_uplink) %}
+{% set spine_po = spine_po(intf_uplink) %}
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% else %}
+{% set offset = 0 %}
+{% endif %}
+{% set ip = spine_po|int * 2 - 1 %}
+{% set ip = ip + 72 * offset %}
+{% set nextsubnet = 0 %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 1 %}
+{% endif %}
+{% if ip > 255 %}
+{% set ip = ip - 256 %}
+{% set nextsubnet = 2 %}
+{% endif %}
+{% set link_ip = ip %}
+{# is it enough to only return the 3rd and 4th octet of the IPv4 address? #}
+{{ nextsubnet }}.{{ ip }}
+{%- endmacro %}
+
+{% macro cell_id(intf_uplink, leafid) -%}
+{% set spine_lc = spine_lc(intf_uplink) %}
+{% set spine_po = spine_po(intf_uplink) %}
+{% if leafid == 'a' %}
+{% set cell_id  = (( spine_po|int + 1 ) / 2 )|int %}
+{% endif %}
+{% if leafid == 'b' %}
+{% set cell_id  = (( spine_po|int ) / 2 )|int %}
+{% endif %}
+{% if spine_lc|int > 0 %}
+{% set offset = spine_lc|int - 3 %}
+{% set cell_id = cell_id + (offset * 18) %}
+{% endif %}
+{{ cell_id }}
+{%- endmacro %}
+
+{% macro leaf_routerid(intf_uplink, leafid, pod=1) -%}
+{% set cell_id = cell_id(intf_uplink, leafid) %}
+{% if leafid == 'b' %}
+{% set Lo1 = (cell_id|int % 100) + 100 %}
+{% else %}
+{% set Lo1 = cell_id|int % 100 %}
+{% endif %}
+10.{{ 100 + (cell_id|int / 100)|int }}.{{ pod }}.{{ Lo1 }}/32
+{%- endmacro %}
+
+{% macro leaf_vtepid(intf_uplink, leafid, pod=1) -%}
+{% set cell_id = cell_id(intf_uplink, leafid)|int %}
+10.{{ 200 + (cell_id|int / 100)|int }}.{{ pod }}.{{ cell_id|int % 100 }}/32
 {%- endmacro %}
 
 {% macro admin_mpls_filtering() -%}
@@ -270,4 +359,15 @@ route-map ADMIN_MPLS_IN permit 20
 !
 route-map ADMIN_MPLS_OUT permit 10
    match ip address prefix-list PREF_ADMIN_MPLS
+{%- endmacro %}
+
+{% macro ngdr_rmt_ha_intf_ip(localipv4) -%}
+{# based on the local interface's ipv4 that connects to the remote DC's peering HA-Router, calculate it's IPv4 in the /31 subnet #}
+{% set local_ha_ip_last_octett = localipv4.split("/")[0].split(".")[3] | int %}
+{% if local_ha_ip_last_octett % 2 == 0 %}
+{% set remote_ha_ip = localipv4|ipmath(1) %}
+{% else %}
+{% set remote_ha_ip = localipv4|ipmath(-1) %}
+{% endif %}
+{{ remote_ha_ip }}
 {%- endmacro %}

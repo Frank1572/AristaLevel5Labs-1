@@ -19,6 +19,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01a, et26/1
         ip: 10.254.254.0/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -26,7 +27,7 @@ yml_ngdr:
         mtu: 9100
         vrf: INFRA
         ip: 198.19.252.120/28
-        virtual_router_ip: 198.19.252.119
+        virtual_router_ip: ['198.19.252.119']
   - number: 1b
     oob_ip: 10.178.136.56
     nwmgmt_ip: 198.19.190.26
@@ -46,6 +47,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01b, et26/1
         ip: 10.254.254.2/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -53,7 +55,7 @@ yml_ngdr:
         mtu: 9100
         vrf: INFRA
         ip: 198.19.252.121/28
-        virtual_router_ip: 198.19.252.119
+        virtual_router_ip: ['198.19.252.119']
   - number: 1c
     oob_ip: 10.178.136.57
     nwmgmt_ip: 198.19.190.27
@@ -73,6 +75,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01c, et26/1
         ip: 10.254.254.4/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -80,7 +83,7 @@ yml_ngdr:
         mtu: 9100
         vrf: INFRA
         ip: 198.19.252.122/28
-        virtual_router_ip: 198.19.252.119
+        virtual_router_ip: ['198.19.252.119']
   - number: 1d
     oob_ip: 10.178.136.58
     nwmgmt_ip: 198.19.190.28
@@ -100,6 +103,7 @@ yml_ngdr:
         description: rt-hec10-ha-core-01d, et26/1
         ip: 10.254.254.6/31
         mtu: 9214
+        speed: 100gfull
         bfd: true
       - id: 922
         description: BACKUP-TRANS
@@ -107,4 +111,4 @@ yml_ngdr:
         mtu: 9100
         vrf: INFRA
         ip: 198.19.252.123/28
-        virtual_router_ip: 198.19.252.119
+        virtual_router_ip: ['198.19.252.119']

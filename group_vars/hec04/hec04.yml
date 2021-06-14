@@ -7638,6 +7638,11 @@ hec:
           nexthop: 198.19.243.1
           interface: Vlan900
           redist_bgp: true
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.243.1
+          interface: Vlan900
+          redist_bgp: true
       fwt01:
         - destination: 100.124.0.0/19
           nexthop: 10.255.241.12

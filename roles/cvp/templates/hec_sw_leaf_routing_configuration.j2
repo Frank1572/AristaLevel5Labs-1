@@ -66,7 +66,7 @@ interface Ethernet{{ intf }}
 ip routing
 no ip routing vrf OOB
 !
-{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') %}
+{% if (hec.spine.underlay_bfd) and (leafpurpose == 'b') and (hec.ngdr_underlay is defined) %}
 {% for entry in ['198.19.249.0/24', '198.19.251.0/24', '10.254.200.0/24'] %}
 ip prefix-list PL-EDGE seq {{ loop.index * 10 }} permit {{ entry }} eq 32
 {% endfor %}

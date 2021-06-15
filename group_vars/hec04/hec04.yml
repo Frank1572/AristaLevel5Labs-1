@@ -1455,63 +1455,64 @@ hec:
       - 32/1
     spine_port_towards_leaf: Et3/3/1
     ports:
+    ports:
     - id: 900
       description: NW-MGMT
       type: vlan
-      ip_address: 198.19.243.130/24
+      ip: 198.19.243.130/24
       vrrp:
       - id: 250
         priority: 120
         ip: 198.19.243.119
     - id: 1/1
-      description: ->rt-hec04-core-01a, Fo0/2/0
+      description: rt-hec04-core-01a, Fo0/2/0
       po: 1101
       speed: 40gfull
     - id: 2/1
-      description: ->rt-hec04-core-01b, Fo0/2/0
+      description: rt-hec04-core-01b, Fo0/2/0
       po: 1102
       speed: 40gfull
     - id: 3/1
-      description: ->rt-hec04-cwan-01a, Fo0/0/0
+      description: rt-hec04-cwan-01a, Fo0/0/0
       po: 1501
       speed: 40gfull
     - id: 4/1
-      description: ->rt-hec04-idc-01a, Fo0/0/0
+      description: rt-hec04-idc-01a, Fo0/0/0
       po: 1601
       speed: 40gfull
     - id: 5/1
-      description: ->rt-hec04-vpn-01a, Fo0/2/0
+      description: rt-hec04-vpn-01a, Fo0/2/0
       po: 1503
       speed: 40gfull
     - id: 6/1
-      description: ->rt-hec04-inet-01a, Fo0/2/0
+      description: rt-hec04-inet-01a, Fo0/2/0
       po: 1401
       speed: 40gfull
     - id: 27/1
-      description: ->sw-hec04-brdr-01b, Eth27/1
+      description: sw-hec04-brdr-01b, Eth27/1
       po: 42
       speed: 100gfull
     - id: 28/1
-      description: ->sw-hec04-brdr-01b, Eth28/1
+      description: sw-hec04-brdr-01b, Eth28/1
       po: 42
       speed: 100gfull
     - id: 29/1
-      description: ->sw-hec04-spine-11, Eth3/3
+      description: sw-hec04-spine-11, Eth3/3
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.5/31
     - id: 30/1
-      description: ->sw-hec04-spine-12, Eth3/3
+      description: sw-hec04-spine-12, Eth3/3
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.5/31
     - id: 31/1
-      description: ->sw-hec04-spine-13, Eth3/3
+      description: sw-hec04-spine-13, Eth3/3
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.5/31
     - id: 32/1
-      description: ->sw-hec04-spine-14, Eth3/3
+      description: sw-hec04-spine-14, Eth3/3
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.5/31
@@ -1560,60 +1561,60 @@ hec:
     - id: 900
       type: vlan
       description: NW-MGMT
-      ip_address: 198.19.243.131/24
+      ip: 198.19.243.131/24
       vrrp:
       - id: 250
         priority: 115
         ip: 198.19.243.119
     - id: 1/1
-      description: ->rt-hec04-core-01a, Fo0/2/1
+      description: rt-hec04-core-01a, Fo0/2/1
       po: 1101
       speed: 40gfull
     - id: 2/1
-      description: ->rt-hec04-core-01b, Fo0/2/1
+      description: rt-hec04-core-01b, Fo0/2/1
       po: 1102
       speed: 40gfull
     - id: 3/1
-      description: ->rt-hec04-cwan-01a, Fo0/1/0
+      description: rt-hec04-cwan-01a, Fo0/1/0
       po: 1501
       speed: 40gfull
     - id: 4/1
-      description: ->rt-hec04-idc-01a, Fo1/0/0
+      description: rt-hec04-idc-01a, Fo1/0/0
       po: 1601
       speed: 40gfull
     - id: 5/1
-      description: ->rt-hec04-vpn-01a, Fo0/2/1
+      description: rt-hec04-vpn-01a, Fo0/2/1
       po: 1503
       speed: 40gfull
     - id: 6/1
-      description: ->rt-hec04-inet-01a, Fo0/2/1
+      description: rt-hec04-inet-01a, Fo0/2/1
       po: 1401
       speed: 40gfull
     - id: 27/1
-      description: ->sw-hec04-brdr-01a, Eth27/1
+      description: sw-hec04-brdr-01a, Eth27/1
       po: 42
       speed: 100gfull
     - id: 28/1
-      description: ->sw-hec04-brdr-01a, Eth28/1
+      description: sw-hec04-brdr-01a, Eth28/1
       po: 42
       speed: 100gfull
     - id: 29/1
-      description: ->sw-hec04-spine-11, Eth3/4
+      description: sw-hec04-spine-11, Eth3/4
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.7/31
     - id: 30/1
-      description: ->sw-hec04-spine-12, Eth3/4
+      description: sw-hec04-spine-12, Eth3/4
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.7/31
     - id: 31/1
-      description: ->sw-hec04-spine-13, Eth3/4
+      description: sw-hec04-spine-13, Eth3/4
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.7/31
     - id: 32/1
-      description: ->sw-hec04-spine-14, Eth3/4
+      description: sw-hec04-spine-14, Eth3/4
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.7/31
@@ -1661,7 +1662,7 @@ hec:
     ports:
     - id: 916
       type: vlan
-      description: ->Transfer network for inband management
+      description: Transfer network for inband management
       ip_address: 10.255.177.76/28
     - id: '1'
       description: '##lb-hec04-01 1.1 NEW LB-external interface (Internet facing,
@@ -1685,38 +1686,41 @@ hec:
     - id: '6'
       description: fw-hec04-01-new,eth1-01
       speed: 10000full
+      po: 10
     - id: '7'
       description: fw-hec04-02-new,eth1-02
       speed: 10000full
+      po: 20
     - id: '48'
-      description: ->naa-hec04-01, E3
+      description: naa-hec04-01, E3
       po: 48
       speed: 1000full
+      access_vlan: 916
     - id: 49/1
-      description: ->sw-hec04-brdr-02b, Eth49/1
+      description: sw-hec04-brdr-02b, Eth49/1
       po: 42
       speed: 100gfull
     - id: 50/1
-      description: ->sw-hec04-brdr-02b, Eth50/1
+      description: sw-hec04-brdr-02b, Eth50/1
       po: 42
       speed: 100gfull
     - id: 51/1
-      description: ->sw-hec04-spine-11, Eth3/5/1
+      description: sw-hec04-spine-11, Eth3/5/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.9/31
     - id: 52/1
-      description: ->sw-hec04-spine-12, Eth3/5/1
+      description: sw-hec04-spine-12, Eth3/5/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.9/31
     - id: 53/1
-      description: ->sw-hec04-spine-13, Eth3/5/1
+      description: sw-hec04-spine-13, Eth3/5/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.9/31
     - id: 54/1
-      description: ->sw-hec04-spine-14, Eth3/5/1
+      description: sw-hec04-spine-14, Eth3/5/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.9/31
@@ -1724,8 +1728,14 @@ hec:
     - id: 42
       description: MLAG-PEER
       trunk: all
+    - id: 10
+      description: fw-hec04-01-NEW   
+      trunk: all
+    - id: 20
+      description: fw-hec04-02-NEW
+      trunk: all
     - id: 48
-      description: '"->naa-hec04-01, eth2 in-band"'
+      description: '"naa-hec04-01, eth2 in-band"'
       access_vlan: 916
   - number: 2b
     snmp:
@@ -1742,7 +1752,7 @@ hec:
     ports:
     - id: 916
       type: vlan
-      description: ->Transfer network for inband management
+      description: Transfer network for inband management
       ip_address: 10.255.177.77/28
     - id: '1'
       description: '##lb-hec04-02 1.1 NEW LB-external interface (Internet facing,
@@ -1766,38 +1776,41 @@ hec:
     - id: '6'
       description: fw-hec04-01-new,eth1-02
       speed: 10000full
+      po: 10
     - id: '7'
       description: fw-hec04-02-new,eth1-01
       speed: 10000full
+      po: 20
     - id: '48'
-      description: ->naa-hec04-01, E4
+      description: naa-hec04-01, E4
       po: 48
       speed: 1000full
+      access_vlan: 916
     - id: 49/1
-      description: ->sw-hec04-brdr-02a, Eth49/1
+      description: sw-hec04-brdr-02a, Eth49/1
       po: 42
       speed: 100gfull
     - id: 50/1
-      description: ->sw-hec04-brdr-02a, Eth50/1
+      description: sw-hec04-brdr-02a, Eth50/1
       po: 42
       speed: 100gfull
     - id: 51/1
-      description: ->sw-hec04-spine-11, Eth3/6/1
+      description: sw-hec04-spine-11, Eth3/6/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.11/31
     - id: 52/1
-      description: ->sw-hec04-spine-12, Eth3/6/1
+      description: sw-hec04-spine-12, Eth3/6/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.11/31
     - id: 53/1
-      description: ->sw-hec04-spine-13, Eth3/6/1
+      description: sw-hec04-spine-13, Eth3/6/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.11/31
     - id: 54/1
-      description: ->sw-hec04-spine-14, Eth3/6/1
+      description: sw-hec04-spine-14, Eth3/6/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.11/31
@@ -1806,8 +1819,15 @@ hec:
       description: MLAG-PEER
       trunk: all
     - id: 48
-      description: '"->naa-hec04-01, eth2 in-band"'
+      description: '"naa-hec04-01, eth2 in-band"'
       access_vlan: 916
+      trunk: all
+    - id: 10
+      description: fw-hec04-01-NEW
+      trunk: all
+    - id: 20
+      description: fw-hec04-02-NEW
+      trunk: all
   - number: 3a
     snmp:
       location: US-CA01-P30-C48-U41
@@ -1824,60 +1844,60 @@ hec:
     - id: 900
       description: NW-MGMT
       type: vlan
-      ip_address: 198.19.243.132/24
+      ip: 198.19.243.132/24
       vrrp:
       - id: 250
         priority: 110
         ip: 198.19.243.119
     - id: 1/1
-      description: ->rt-hec04-core-01c, Fo0/2/0
+      description: rt-hec04-core-01c, Fo0/2/0
       po: 1103
       speed: 40gfull
     - id: 2/1
-      description: ->rt-hec04-core-1d, Fo0/2/0
+      description: rt-hec04-core-1d, Fo0/2/0
       po: 1104
       speed: 40gfull
     - id: 3/1
-      description: ->rt-hec04-cwan-01b, Fo0/0/0
+      description: rt-hec04-cwan-01b, Fo0/0/0
       po: 1502
       speed: 40gfull
     - id: 4/1
-      description: ->rt-hec04-idc-01b, Fo0/0/0
+      description: rt-hec04-idc-01b, Fo0/0/0
       po: 1602
       speed: 40gfull
     - id: 5/1
-      description: ->rt-hec04-vpn-01b, Fo0/2/0
+      description: rt-hec04-vpn-01b, Fo0/2/0
       po: 1504
       speed: 40gfull
     - id: 6/1
-      description: ->rt-hec04-inet-01b, Fo0/2/0
+      description: rt-hec04-inet-01b, Fo0/2/0
       po: 1402
       speed: 40gfull
     - id: 27/1
-      description: ->sw-hec04-brdr-03b, Eth27/1
+      description: sw-hec04-brdr-03b, Eth27/1
       po: 42
       speed: 100gfull
     - id: 28/1
-      description: ->sw-hec04-brdr-03b, Eth28/1
+      description: sw-hec04-brdr-03b, Eth28/1
       po: 42
       speed: 100gfull
     - id: 29/1
-      description: ->sw-hec04-spine-11, Eth3/7/1
+      description: sw-hec04-spine-11, Eth3/7/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.13/31
     - id: 30/1
-      description: ->sw-hec04-spine-12, Eth3/7/1
+      description: sw-hec04-spine-12, Eth3/7/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.13/31
     - id: 31/1
-      description: ->sw-hec04-spine-13, Eth3/7/1
+      description: sw-hec04-spine-13, Eth3/7/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.13/31
     - id: 32/1
-      description: ->sw-hec04-spine-14, Eth3/7/1
+      description: sw-hec04-spine-14, Eth3/7/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.13/31
@@ -1926,60 +1946,60 @@ hec:
     - id: 900
       description: NW-MGMT
       type: vlan
-      ip_address: 198.19.243.133/24
+      ip: 198.19.243.133/24
       vrrp:
       - id: 250
         priority: 105
         ip: 198.19.243.119
     - id: 1/1
-      description: ->rt-hec04-core-01c, Fo0/2/1
+      description: rt-hec04-core-01c, Fo0/2/1
       po: 1103
       speed: 40gfull
     - id: 2/1
-      description: ->rt-hec04-core-1d, Fo0/2/1
+      description: rt-hec04-core-1d, Fo0/2/1
       po: 1104
       speed: 40gfull
     - id: 3/1
-      description: ->rt-hec04-cwan-01b, Fo0/1/0
+      description: rt-hec04-cwan-01b, Fo0/1/0
       po: 1502
       speed: 40gfull
     - id: 4/1
-      description: ->rt-hec04-idc-01b, Fo1/0/0
+      description: rt-hec04-idc-01b, Fo1/0/0
       po: 1602
       speed: 40gfull
     - id: 5/1
-      description: ->rt-hec04-vpn-01b, Fo0/2/1
+      description: rt-hec04-vpn-01b, Fo0/2/1
       po: 1504
       speed: 40gfull
     - id: 6/1
-      description: ->rt-hec04-inet-01b, Fo0/2/1
+      description: rt-hec04-inet-01b, Fo0/2/1
       po: 1402
       speed: 40gfull
     - id: 27/1
-      description: ->sw-hec04-brdr-03a, Eth27/1
+      description: sw-hec04-brdr-03a, Eth27/1
       po: 42
       speed: 100gfull
     - id: 28/1
-      description: ->sw-hec04-brdr-03a, Eth28/1
+      description: sw-hec04-brdr-03a, Eth28/1
       po: 42
       speed: 100gfull
     - id: 29/1
-      description: ->sw-hec04-spine-11, Eth3/8/1
+      description: sw-hec04-spine-11, Eth3/8/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.11.0.15/31
     - id: 30/1
-      description: ->sw-hec04-spine-12, Eth3/8/1
+      description: sw-hec04-spine-12, Eth3/8/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.12.0.15/31
     - id: 31/1
-      description: ->sw-hec04-spine-13, Eth3/8/1
+      description: sw-hec04-spine-13, Eth3/8/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.13.0.15/31
     - id: 32/1
-      description: ->sw-hec04-spine-14, Eth3/8/1
+      description: sw-hec04-spine-14, Eth3/8/1
       speed: 100gfull
       mtu: 9214
       ip_address: 10.14.0.15/31
@@ -7613,6 +7633,15 @@ hec:
 
   routes:
     static:
+      brdr01:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.243.1
+          interface: Vlan900
+          redist_bgp: true
+      brdr03:
+        - destination: 0.0.0.0/0
+          nexthop: 198.19.243.1
+          interface: Vlan900
       fwt01:
         - destination: 100.124.0.0/19
           nexthop: 10.255.241.12

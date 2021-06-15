@@ -161,9 +161,44 @@ hec:
     # This number of port per linecard may be appended to each model. If not appended,
     # the default value of 36 ports is used for port configuration.
     model: 7280
+    pod:
+      number:
+        - id: 1
+          model: 7280
+          linecards: 1
+          fortygig: []
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1
+    number:
+      - id: 11
+        snmp:
+          contact: 34373952:ncons-hec03-oob-02.net.sap.corp:1003
+          location: US-STL1-CAGE5-EV15-U29
+        oob_ip: 10.9.240.11
+        nwmgmt_ip: 198.19.156.11
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
+      - id: 12
+        snmp:
+          contact: 34373951:ncons-hec03-oob-02.net.sap.corp:1001
+          location: US-STL1-CAGE5-EV15-U22
+        oob_ip: 10.9.240.12
+        nwmgmt_ip: 198.19.156.12
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
+      - id: 13
+        snmp:
+          contact: 34373950:ncons-hec03-oob-02.net.sap.corp:1004
+          location: US-STL1-CAGE5-EV16-U29
+        oob_ip: 10.9.240.13
+        nwmgmt_ip: 198.19.156.13
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
+      - id: 14
+        snmp:
+          contact: 34373949:ncons-hec03-oob-02.net.sap.corp:1002
+          location: US-STL1-CAGE5-EV16-U22
+        oob_ip: 10.9.240.14
+        nwmgmt_ip: 198.19.156.14
+        spine_port_towards_superspine: [ 'Et53/1', 'Et54/1', 'Et55/1', 'Et56/1']
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual

@@ -280,6 +280,7 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models: "{{ net.device.leaf_models }}"
+  strrt: "{{ yml_str }}"
   fwt:
     - number: "01a"
       snmp:
@@ -292,7 +293,7 @@ hec:
           ip: 10.255.194.12/31
           speed: 10000full
         - id: 2
-          description: fw-hec13-01-NEW,eth1-03   
+          description: fw-hec13-01-NEW,eth1-03
           speed: 10000full
           po: 3
         - id: 3
@@ -364,7 +365,7 @@ hec:
           ip: 10.255.194.14/31
           speed: 10000full
         - id: 2
-          description: fw-hec13-01-NEW,eth1-04 
+          description: fw-hec13-01-NEW,eth1-04
           speed: 10000full
           po: 3
         - id: 3

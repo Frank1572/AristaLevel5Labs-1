@@ -1663,7 +1663,7 @@ hec:
     - id: 916
       type: vlan
       description: Transfer network for inband management
-      ip_address: 10.255.177.76/28
+      ip: 10.255.177.76/28
     - id: '1'
       description: '##lb-hec04-01 1.1 NEW LB-external interface (Internet facing,
         external VLAN 940)##'
@@ -1753,7 +1753,7 @@ hec:
     - id: 916
       type: vlan
       description: Transfer network for inband management
-      ip_address: 10.255.177.77/28
+      ip: 10.255.177.77/28
     - id: '1'
       description: '##lb-hec04-02 1.1 NEW LB-external interface (Internet facing,
         external VLAN 940)##'

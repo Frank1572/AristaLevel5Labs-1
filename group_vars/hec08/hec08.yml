@@ -47,7 +47,7 @@ cvp:
   ip_eth0: 10.192.23.253
   ip_eth1: 10.255.181.69
   mask_eth0: 255.255.254.0
-  mask_eth1: 255.255.240.0
+  mask_eth1: 255.255.255.240
   gw: 10.192.22.1
   name: naa-hec08-cvp-01.hec.oob.net.sap
   dns1: 10.17.121.30
@@ -839,26 +839,26 @@ hec:
             remote_asn: 64531.8
   routes:
     static:
-      brdr01:
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.247.1
-          interface: Vlan900
-          redist_bgp: true
+      #brdr01:
+      #  - destination: 0.0.0.0/0
+      #    nexthop: 198.19.247.1
+      #    interface: Vlan900
+      #    redist_bgp: true
       brdr02:
         - destination: 0.0.0.0/0
           nexthop: 198.19.247.1
           interface: Vlan900
           redist_bgp: true
-      brdr03:
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.247.1
-          interface: Vlan900
-          redist_bgp: true
-      brdr04:
-        - destination: 0.0.0.0/0
-          nexthop: 198.19.247.1
-          interface: Vlan900
-          redist_bgp: true
+      #brdr03:
+      #  - destination: 0.0.0.0/0
+      #    nexthop: 198.19.247.1
+      #    interface: Vlan900
+      #    redist_bgp: true
+      #brdr04:
+      #  - destination: 0.0.0.0/0
+      #    nexthop: 198.19.247.1
+      #    interface: Vlan900
+      #    redist_bgp: true
       fwt01:
         - destination: 169.145.208.0/21
           nexthop: 10.255.181.12
@@ -886,14 +886,14 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et1/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.74/24
-          vrrp:
-            - id: 250
-              priority: 120
-              ip: 198.19.247.76
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.74/24
+      #    vrrp:
+      #      - id: 250
+      #        priority: 120
+      #        ip: 198.19.247.76
         - id: 961
           type: vlan
           description: Transfer to rt-hec08-cwan-01a
@@ -935,14 +935,14 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et2/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.75/24
-          vrrp:
-            - id: 250
-              priority: 110
-              ip: 198.19.247.76
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.75/24
+      #    vrrp:
+      #      - id: 250
+      #        priority: 110
+      #        ip: 198.19.247.76
         - id: 962
           type: vlan
           description: Transfer to rt-hec08-cwan-01a
@@ -1196,14 +1196,14 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et5/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.80/24
-          vrrp:
-            - id: 250
-              priority: 120
-              ip: 198.19.247.82
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.80/24
+      #    vrrp:
+      #      - id: 250
+      #        priority: 120
+      #        ip: 198.19.247.82
         - id: 963
           type: vlan
           description: Transfer to rt-hec08-cwan-01a
@@ -1245,14 +1245,14 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et6/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.81/24
-          vrrp:
-            - id: 250
-              priority: 110
-              ip: 198.19.247.82
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.81/24
+      #    vrrp:
+      #      - id: 250
+      #        priority: 110
+      #        ip: 198.19.247.82
         - id: 964
           type: vlan
           description: Transfer to rt-hec08-cwan-01b
@@ -1295,15 +1295,15 @@ hec:
         - 36/1
       spine_port_towards_leaf: Et7/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.83/24
-          vrrp: # VRRP gw for FWTRANS towards HEC08 Fabric
-            - id: 250
-              priority: 105
-              ip: 198.19.247.85
-              auth: FWTTRANS
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.83/24
+      #    vrrp: # VRRP gw for FWTRANS towards HEC08 Fabric
+      #      - id: 250
+      #        priority: 105
+      #        ip: 198.19.247.85
+      #        auth: FWTTRANS
         - id: 32/1 # 40G Link to L2 core switch
           description: sw-hec08-101 Et5/23
           po: 101
@@ -1339,15 +1339,15 @@ hec:
         #uplinks_speed: 40gfull
       spine_port_towards_leaf: Et8/1
       ports:
-        - id: 900
-          type: vlan
-          description: NW-MGMT
-          ip: 198.19.247.84/24
-          vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
-            - id: 250
-              priority: 105
-              ip: 198.19.247.85
-              auth: FWTTRANS
+      #  - id: 900
+      #    type: vlan
+      #    description: NW-MGMT
+      #    ip: 198.19.247.84/24
+      #    vrrp: # VRRP gw for FWTRANS towards HEC07 Fabric
+      #      - id: 250
+      #        priority: 105
+      #        ip: 198.19.247.85
+      #        auth: FWTTRANS
         - id: 32/1 # 40G Link to L2 core switch
           description: sw-hec08-103 Et5/24
           po: 101

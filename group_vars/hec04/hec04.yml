@@ -1823,7 +1823,6 @@ hec:
     - id: 48
       description: '"naa-hec04-01, eth2 in-band"'
       access_vlan: 916
-      trunk: all
     - id: 10
       description: fw-hec04-01-NEW
       trunk: all

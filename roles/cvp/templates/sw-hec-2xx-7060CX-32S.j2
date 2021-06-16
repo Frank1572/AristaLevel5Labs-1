@@ -74,8 +74,6 @@ interface Ethernet9/1,9/2
 interface Ethernet9/3,9/4
    channel-group 118 mode active
 !
-{% endfor %}
-!
 interface Ethernet33
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
    switchport mode trunk

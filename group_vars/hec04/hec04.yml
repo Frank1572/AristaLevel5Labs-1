@@ -219,6 +219,8 @@ hec:
           contact: 34412898:ncons-hec04-oob-01.net:1010
         oob_ip: 10.9.242.14
         nwmgmt_ip: 198.19.158.14
+  # Are the core vlans 3000 to 3499 needed
+  core_vlans: true  
   fabric:
     # valid modes are: manual, cvx, evpn, manual
     vtep_distribution_mode: manual
@@ -7642,6 +7644,7 @@ hec:
         - destination: 0.0.0.0/0
           nexthop: 198.19.243.1
           interface: Vlan900
+          redist_bgp: true
       fwt01:
         - destination: 100.124.0.0/19
           nexthop: 10.255.241.12

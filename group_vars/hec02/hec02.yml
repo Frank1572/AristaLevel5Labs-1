@@ -338,6 +338,11 @@ hec:
         - id: 999
           description: ->sw-hec01 Po999
           trunk: 961,962
+  fwt: []
+  brdr: []
+  str: []
+  shs: []
+  ngdr: []
   strrt: "{{ yml_strrt }}"
   hvv_hvx_acl_rules: |
       10 permit vlan 50 0x000 icmp any any

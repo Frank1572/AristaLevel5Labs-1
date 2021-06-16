@@ -199,6 +199,8 @@ configlet_list_global:
   - sw-hec-hana-7160-32CQ
   - sw-hec-hana-pwr-7160-32CQ
   - sw-hec-hana-7160-48YC6
+  - sw-hec-2xx-7160-32CQ
+  - sw-hec-2xx-7150S-64-CL
   - sw-hec-hvv-7160-32CQ
   - sw-hec-6xx-7160-32CQ
   - sw-hec-6xx-7150S-64-CL

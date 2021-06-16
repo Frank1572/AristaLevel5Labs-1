@@ -1685,6 +1685,8 @@ hec:
       description: '##lb-hec04-01 1.4 NEW LB-HA interface (HA interface, VLAN 902)##'
       speed: 10000full
       access_vlan: 902
+    - id: '5'
+      speed: 10000full
     - id: '6'
       description: fw-hec04-01-new,eth1-01
       speed: 10000full
@@ -1693,6 +1695,14 @@ hec:
       description: fw-hec04-02-new,eth1-02
       speed: 10000full
       po: 20
+    - id: '8'
+      speed: 10000full
+    - id: '45'
+      speed: 1000full
+    - id: '46'
+      speed: 1000full
+    - id: '47'
+      speed: 1000full
     - id: '48'
       description: naa-hec04-01, E3
       po: 48
@@ -1775,6 +1785,8 @@ hec:
       description: '##lb-hec04-02 1.4 NEW LB-HA interface (HA interface, VLAN 902)##'
       speed: 10000full
       access_vlan: 902
+    - id: '5'
+      speed: 10000full
     - id: '6'
       description: fw-hec04-01-new,eth1-02
       speed: 10000full
@@ -1783,6 +1795,14 @@ hec:
       description: fw-hec04-02-new,eth1-01
       speed: 10000full
       po: 20
+    - id: '8'
+      speed: 10000full
+    - id: '45'
+      speed: 1000full
+    - id: '46'
+      speed: 1000full
+    - id: '47'
+      speed: 1000full
     - id: '48'
       description: naa-hec04-01, E4
       po: 48

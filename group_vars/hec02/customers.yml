@@ -2,48 +2,48 @@
   customers:
     - id: 7
       name: AMO
-      backup:
+      backup: []
         - 100.104.12.0/24
         - 100.104.91.0/24
     - id: 9
       name: TVI
-      backup:
+      backup: []
     - id: 11
       name: STD
-      backup:
+      backup: []
     - id: 13
       name: MEW
-      backup:
+      backup: []
     - id: 15
       name: MCA
-      backup:
+      backup: []
     - id: 20
       name: SIB
-      backup:
+      backup: []
     - id: 24
       name: GID
-      backup:
+      backup: []
     - id: 25
       name: THC
-      backup:
+      backup: []
     - id: 26
       name: MDM
-      backup:
+      backup: []
     - id: 28
       name: CSR
-      backup:
+      backup: []
     - id: 29
       name: BNT
-      backup:
+      backup: []
     - id: 32
       name: KAS
-      backup:
+      backup: []
     - id: 34
       name: MVB
-      backup:
+      backup: []
     - id: 36
       name: APG
-      backup:
+      backup: []
     - id: 37
       name: WAK
-      backup:
+      backup: []

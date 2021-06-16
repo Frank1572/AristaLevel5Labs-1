@@ -170,6 +170,13 @@ hec:
     # number of linecards if spine is modular switch
     # if spine model is fixed chassis then linecards needs to have value of '1'
     linecards: 1
+    # Enable or disable Bfd for underlay (true or false)
+    underlay_bfd: True
+    # the following list 'port' is a workaround for mixed port speeds in existing
+    # Fabric builds.
+    # list every port and it's speed if it is different from the value
+    # provided in dictionary 'hec.fabric.interlink_speed'!!
+    fortygig: []
     number:
       - id: 11
         snmp:

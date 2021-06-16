@@ -2,7 +2,7 @@
   customers:
     - id: 7
       name: AMO
-      backup: []
+      backup:
         - 100.104.12.0/24
         - 100.104.91.0/24
     - id: 9

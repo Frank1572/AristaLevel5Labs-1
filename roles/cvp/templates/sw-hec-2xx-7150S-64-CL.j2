@@ -23,11 +23,7 @@ interface Ethernet49/1,50/1
    mtu {{hec.fabric.interlink_mtu}}
    channel-group 42 mode active
 !
-! === Core Switch Uplinks: ===
-interface Ethernet {{ intf_spines['name'] }}
-   switchport
-   switchport mode trunk
-   speed forced 40gfull
+{{ funcs.leaf_uplinks("7150S-64-CL", type="tor", speed="40gfull") }}
 !
 {% for i in range(1,19) %}
 interface Ethernet{{i}},{{i+24}}

@@ -1,5 +1,10 @@
 {# 7150S-64-CL #}
-
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == "7150S-64-CL" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
 interface Ethernet 1-18,25-42
    speed forced 10000full
    switchport trunk native vlan 40
@@ -19,7 +24,7 @@ interface Ethernet49/1,50/1
    channel-group 42 mode active
 !
 ! === Core Switch Uplinks: ===
-interface Ethernet51/1,52/1
+interface Ethernet {{ intf_spines['name'] }}
    switchport
    switchport mode trunk
    speed forced 40gfull

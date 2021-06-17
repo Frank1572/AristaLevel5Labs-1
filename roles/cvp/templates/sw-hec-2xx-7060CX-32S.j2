@@ -1,6 +1,11 @@
 {# 7060CX-32S #}
-
-interface Ethernet 1/1,1/2,1/3,1/4,2/1,2/2,2/3,2/4,3/1,3/2,3/3,3/4,4/1,4/2,4/3,4/4,5/1,5/2,5/3,5/4,6/1,6/2,6/3,6/4,7/1,7/2,7/3,7/4,8/1,8/2,8/3,8/4,9/1,9/2,9/3,9/4
+{% set intf_spines = {'name' : 'none'} %}
+{% for m in hec.fabric.leaf_models %}
+{% if m.model == "7060CX-32S" %}
+{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
+{% endif %}
+{% endfor %}
+interface Ethernet 1/1-9/4
    speed forced 25gfull
    switchport trunk native vlan 40
    switchport trunk allowed vlan 5,40
@@ -15,7 +20,7 @@ interface Ethernet29/1,30/1,31/1,32/1
    channel-group 42 mode active
 !
 ! === Core Switch Uplinks: ===
-interface Ethernet23/1,24/1
+interface Ethernet {{ intf_spines['name'] }}
    switchport
    switchport mode trunk
    speed forced 40gfull

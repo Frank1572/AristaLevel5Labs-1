@@ -28,7 +28,7 @@ interface Vlan{{ vlanid }}
    ip proxy-arp
 {% for net in customer.backup %}
   {% set conf_str_ip = 'ip virtual-router address ' + net|ipaddr('1')|ipaddr('address') %}
-     {{ conf_str_ip }}
+   {{ conf_str_ip }}
 {% endfor %}
 {% endif %}{# END of logic that for setup the customer on the storage router #}
 !

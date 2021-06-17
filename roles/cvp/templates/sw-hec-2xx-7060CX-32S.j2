@@ -1,10 +1,5 @@
 {# 7060CX-32S #}
-{% set intf_spines = {'name' : 'none'} %}
-{% for m in hec.fabric.leaf_models %}
-{% if m.model == "7060CX-32S" %}
-{% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
-{% endif %}
-{% endfor %}
+{% import "templates/libs.j2" as funcs with context %}
 interface Ethernet 1/1-9/4
    speed forced 25gfull
    switchport trunk native vlan 40
@@ -19,11 +14,7 @@ interface Ethernet29/1,30/1,31/1,32/1
    mtu {{hec.fabric.interlink_mtu}}
    channel-group 42 mode active
 !
-! === Core Switch Uplinks: ===
-interface Ethernet {{ intf_spines['name'] }}
-   switchport
-   switchport mode trunk
-   speed forced 40gfull
+{{ funcs.leaf_uplinks("7060CX-32S", type="tor", speed="40gfull") }}
 !
 interface Ethernet1/1,1/2
    channel-group 101 mode active

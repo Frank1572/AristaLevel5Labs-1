@@ -709,11 +709,6 @@ hec:
           nexthop: 198.19.232.1
           interface: Vlan900
           redist_bgp: true
-      brdr02:
-        - destination: 10.9.245.253/32
-          nexthop: 10.255.185.69
-          interface: Vlan916
-          redist_bgp: true
       brdr03:
         - destination: 0.0.0.0/0
           nexthop: 198.19.232.1
@@ -979,14 +974,26 @@ hec:
           speed: 10000full
           mtu: 9214
           access_vlan: 902
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec13-01-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec13-02-NEW,eth1-01
           speed: 10000full
           mtu: 9214
+          po: 20
+        - id: 8
+          speed: 10000full
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec13-01,11
           po: 48
@@ -1006,6 +1013,12 @@ hec:
           description: MLAG-PEER
           trunk: all
           mtu: 9214
+        - id: 10
+          description: fw-hec13-01-NEW 
+          trunk: all
+        - id: 20
+          description: fw-hec13-02-NEW 
+          trunk: all
         - id: 48
           description: naa-hec13-01, in-band
           access_vlan: 916
@@ -1047,14 +1060,26 @@ hec:
           speed: 10000full
           mtu: 9214
           access_vlan: 902
+        - id: 5
+          speed: 10000full
         - id: 6
           description: fw-hec13-01-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 10
         - id: 7
           description: fw-hec13-02-NEW,eth1-02
           speed: 10000full
           mtu: 9214
+          po: 20
+        - id: 8
+          speed: 10000full
+        - id: 45
+          speed: 1000full
+        - id: 46
+          speed: 1000full
+        - id: 47
+          speed: 1000full
         - id: 48
           description: naa-hec13-01, 12
           po: 48
@@ -1073,6 +1098,12 @@ hec:
           description: MLAG-PEER
           trunk: all
           mtu: 9214
+        - id: 10
+          description: fw-hec13-01-NEW 
+          trunk: all
+        - id: 20
+          description: fw-hec13-02-NEW 
+          trunk: all
         - id: 48
           description: naa-hec13-01, in-band
           access_vlan: 916

@@ -1317,6 +1317,54 @@ hec:
           description: rt-hec13-vpn-01b
           mtu: 9100
           trunk: all
+    - number: 4a
+      snmp:
+        location: AMER-Canada-Toronto-Toronto1(TR3)-Cage2-CAB2.2-9-28
+        contact: 34902674:ncons-hec13-oob-02.hec.oob.net.sap:1020
+      oob_ip: 10.9.244.133
+      nwmgmt_ip: 198.19.180.17
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et3/21/1
+      ports:
+        - id: 27/1
+          description: sw-hec13-brdr-04b, Et27/1
+          speed: 100gfull
+          po: 42
+        - id: 28/1
+          description: sw-hec13-brdr-04b, Et28/1
+          speed: 100gfull
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
+    - number: 4b
+      snmp:
+        location: AMER-Canada-Toronto-Toronto1(TR3)-Cage2-CAB2.2-11-28
+        contact: 34902675:ncons-hec13-oob-02.hec.oob.net.sap:1026
+      oob_ip: 10.9.244.134
+      nwmgmt_ip: 198.19.180.18
+      uplinks:
+        - 29/1
+        - 30/1
+        - 31/1
+        - 32/1
+      spine_port_towards_leaf: Et3/22/1
+      ports:
+        - id: 27/1
+          description: sw-hec13-brdr-04a, Et27/1
+          speed: 100gfull
+          po: 42
+        - id: 28/1
+          description: sw-hec13-brdr-04a, Et28/1
+          speed: 100gfull
+          po: 42
+      port_channels:
+        - id: 42
+          description: MLAG-PEER
   str:
     - number: 1a
       snmp:

@@ -253,7 +253,8 @@ hec:
     evpn_maximum_routes: 0
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
-    leaf_models: "{{ net.device.leaf_models }}" 
+    leaf_models: "{{ net.device.leaf_models }}"
+  strrt: "{{ yml_strrt }}"
   fwt:
   - number: "01a"
     snmp:

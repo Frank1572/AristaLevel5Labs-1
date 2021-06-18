@@ -87,17 +87,29 @@
    spanning-tree portfast
 {%- endmacro %}
 
-{% macro leaf_uplinks(model) %}
+{% macro leaf_uplinks(model, type="leaf", speed="") %}
+{% set comment="Spine" %}
 {% set intf_spines = {'name' : 'none'} %}
 {% for m in hec.fabric.leaf_models %}
 {% if m.model == model %}
 {% if intf_spines.update({'name':m.uplink_ports})%}{% endif %}
 {% endif %}
 {% endfor %}
-! === Spine Uplinks: ===
+{% if type == "tor" %}
+{% set comment="Core" %}
+{% endif %}
+! === {{ comment }} Uplinks: ===
 interface Ethernet{{ intf_spines['name'] }}
    mtu {{hec.fabric.interlink_mtu}}
+ {% if type == "tor" %}
+   switchport
+   switchport mode trunk
+ {% else %}
    no switchport
+ {% endif %}
+ {% if speed != "" %}
+   speed forced {{ speed }}
+ {% endif %}
 {% endmacro %}
 
 {# convert ASN between asdot and asplain notation #}

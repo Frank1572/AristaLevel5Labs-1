@@ -1,5 +1,7 @@
 {% include "templates/sw-hec-hana-7160-32CQ.j2" %}
 {% import "templates/libs.j2" as funcs with context %}
+
 {{ funcs.leaf_uplinks("7160-32CQ", type="tor") }}
 !
 no int port-channel 900
+default interface ethernet 26/1

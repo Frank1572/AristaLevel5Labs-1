@@ -21,6 +21,8 @@ configlet_list_dc_specific:
   - sw-hec-superspine-02
   - sw-hec-superspine-03
   - sw-hec-superspine-04
+  - sw-hec-brdr-04a
+  - sw-hec-brdr-04b
   - sw-hec-brdr-05a
   - sw-hec-brdr-05b
   - sw-hec-str-03a

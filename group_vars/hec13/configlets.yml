@@ -8,5 +8,7 @@ configlet_list_dc_specific:
   - rt-hec-ha-core-01b
   - rt-hec-ha-core-01c
   - rt-hec-ha-core-01d
+  - sw-hec-brdr-04a
+  - sw-hec-brdr-04b
   - rt-hec-str-01a
   - rt-hec-str-01b

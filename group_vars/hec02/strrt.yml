@@ -1,0 +1,110 @@
+---
+yml_strrt:
+  - number: "01a"
+    oob_ip: 10.178.137.179
+    nwmgmt_ip: 198.19.240.99
+    snmp:
+      location: NL-AMS-AM7-Cage2-(Z1C)-02-04-41
+      contact: xxxxxxxx:ncons-hec02-11.hec.oob.net.sap:1004
+    ports:
+      - id: 51/1
+        description: rt-hec02-str-01b
+        po: 42
+      - id: 52/1
+        description: rt-hec02-str-01b
+        po: 42
+      - id: 53/1
+        description: sw-hec02-str-01a
+        po: 700
+      - id: 54/1
+        description: sw-hec02-str-01b
+        po: 700
+      - id: 40
+        description: "{{vlandb.40.name}}"
+        type: vlan
+        ip: 198.18.8.76/22
+        virtual_router_ip: ["198.18.8.75"]
+        proxy_arp: true
+      - id: 50
+        description: "{{vlandb.50.name}}"
+        type: vlan
+        ip: 198.18.16.2/22
+        virtual_router_ip: ["198.18.16.1"]
+        proxy_arp: true
+      - id: 55
+        description: "{{vlandb.55.name}}"
+        type: vlan
+        ip: 100.126.0.2/16
+        virtual_router_ip: ["100.126.0.1"]
+        proxy_arp: true
+      - id: 130
+        description: "{{vlandb.130.name}}"
+        type: vlan
+        ip: 198.19.239.194/26
+        secondary: ["100.64.1.2/25", "100.65.255.2/24"]
+        virtual_router_ip: ["198.19.239.193", "100.64.1.1", "100.65.255.1"]
+        proxy_arp: false
+      - id: 140
+        description: "{{vlandb.140.name}}"
+        type: vlan
+        ip: 100.64.0.2/24
+        virtual_router_ip: ["100.64.0.1"]
+        proxy_arp: true
+    port_channels:
+      - id: 700
+        description: sw-hec02-str-01a/b
+        trunk: 40,50,130,140,900,920,922,2001-2999
+  - number: "01b"
+    oob_ip: 10.178.137.178
+    nwmgmt_ip: 198.19.240.98
+    snmp:
+      location: NL-AMS-AM7-Cage2-(Z1C)-02-02-41
+      contact: xxxxxxxx:ncons-hec02-11.hec.oob.net.sap:1005
+    ports:
+      - id: 51/1
+        description: rt-hec02-str-01a
+        po: 42
+      - id: 52/1
+        description: rt-hec02-str-01a
+        po: 42
+      - id: 53/1
+        description: sw-hec02-str-01a
+        po: 700
+      - id: 54/1
+        description: sw-hec02-str-01b
+        po: 700
+      - id: 40
+        description: "{{vlandb.40.name}}"
+        type: vlan
+        ip: 198.18.8.77/22
+        virtual_router_ip: ["198.18.8.75"]
+        proxy_arp: true
+      - id: 50
+        description: "{{vlandb.50.name}}"
+        type: vlan
+        ip: 198.18.16.3/22
+        virtual_router_ip: ["198.18.16.1"]
+        proxy_arp: true
+      - id: 55
+        description: "{{vlandb.55.name}}"
+        type: vlan
+        ip: 100.126.0.3/16
+        virtual_router_ip: ["100.126.0.1"]
+        proxy_arp: true
+      - id: 130
+        description: "{{vlandb.130.name}}"
+        type: vlan
+        ip: 198.19.239.195/26
+        secondary: ["100.64.1.3/25", "100.65.255.3/24"]
+        virtual_router_ip: ["198.19.239.193", "100.64.1.1", "100.65.255.1"]
+        proxy_arp: false
+      - id: 140
+        description: "{{vlandb.140.name}}"
+        type: vlan
+        ip: 100.64.0.3/24
+        virtual_router_ip: ["100.64.0.1"]
+        proxy_arp: true
+    port_channels:
+      - id: 700
+        description: sw-hec02-str-01a/b
+        trunk: 40,50,130,140,900,920,922,2001-2999

@@ -134,11 +134,11 @@ hec:
   ntp2: 169.145.84.11
   snmp1: 147.204.148.100
   snmp2: 147.204.148.87
-  # syslog3: 147.204.146.42	  
+  # syslog3: 147.204.146.42
   syslog:
     inband:
-      servers:	
-        - ipv4: 169.145.82.65	
+      servers:
+        - ipv4: 169.145.82.65
         - ipv4: 169.145.84.91
   tacacs:
     nat:
@@ -457,6 +457,7 @@ hec:
     mlag_a_ip: 198.19.224.1
     mlag_b_ip: 198.19.224.2
     leaf_models: "{{ net.device.leaf_models }}"
+  strrt: "{{ yml_strrt }}"
   oob:
     - number: "01a"
       type: core
@@ -2493,7 +2494,7 @@ hec:
         - id: 42
           description: mlag peer link
     - number: 7b
-      pod: 4 
+      pod: 4
       snmp:
         location: Sterling 2 (DC3)-Cage 2 (01.CK.004)-DB-025-RU37
         contact: XXXXXXXX:ncons-hec03-26.stl.hec.sap.biz:1027

@@ -1,6 +1,5 @@
-{% include "templates/7160.j2" %}
+{# 7060CX-32S #}
 {% import "templates/libs.j2" as funcs with context %}
-
 interface Ethernet 1/1-9/4
    speed forced 25gfull
    switchport trunk native vlan 40
@@ -10,12 +9,12 @@ interface Ethernet 1/1-9/4
    spanning-tree portfast
 !
 ! === MLAG Peer Link: ===
-interface Ethernet27/1,28/1
+interface Ethernet29/1,30/1,31/1,32/1
+   speed forced 100gfull
    mtu {{hec.fabric.interlink_mtu}}
-   speed forced {{hec.fabric.interlink_speed}}
    channel-group 42 mode active
 !
-{{ funcs.leaf_uplinks("7160-32CQ")}}
+{{ funcs.leaf_uplinks("7060CX-32S", type="tor", speed="40gfull") }}
 !
 interface Ethernet1/1,1/2
    channel-group 101 mode active
@@ -71,8 +70,9 @@ interface Ethernet9/1,9/2
 interface Ethernet9/3,9/4
    channel-group 118 mode active
 !
-interface Ethernet26/1
+interface Ethernet33
    description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
-   speed forced 10000full
    switchport mode trunk
-   channel-group 900 mode active
+!
+no int port-channel 900
+default interface Ethernet26/1

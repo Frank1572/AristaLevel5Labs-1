@@ -1,6 +1,6 @@
 ---
   customers:
-    - id: 35
+    - id: 4
       name: IO4
       network:
         - 10.207.142.0/24
@@ -13,10 +13,309 @@
       dr:
         remote_dc: 4
         remote_c_id: 234
-    - id: 42
+    - id: 10
+      name: SQS
+      backup: ['100.64.244.0/24']
+    - id: 16
+      name: YAZ
+      backup: ['100.64.122.0/24']
+    - id: 22
+      name: SCL
+      backup: ['100.64.123.0/24']
+    - id: 25
+      name: BBC
+      backup: ['100.64.121.0/24']
+    - id: 26
+      name: ARL
+      backup: ['100.64.125.0/24']
+    - id: 34
+      name: VER
+      backup: ['100.64.41.0/24']
+    - id: 35
+      name: KHL
+      backup: ['100.64.138.0/24']
+    - id: 39
+      name: SAS
+      backup: ['100.64.120.0/24']
+    - id: 41
+      name: CET
+      backup: ['100.64.94.0/24']
+    - id: 43
+      name: JAC
+      backup: ['100.64.72.0/24']
+    - id: 48
+      name: xxx
+      backup: ['100.64.20.0/23']
+    - id: 52
+      name: BWI
+      backup: ['100.64.64.0/25']
+    - id: 57
+      name: BBV
+      backup: ['100.64.87.0/24']
+    - id: 65
+      name: CIM
+      backup: ['100.64.96.0/24']
+    - id: 69
+      name: ORB
+      backup: ['100.64.127.0/24']
+    - id: 72
+      name: BIR
+      backup: ['100.64.192.0/24']
+    - id: 75
+      name: NSR
+      backup: ['100.64.45.0/24']
+    - id: 76
+      name: HID
+      backup: ['100.64.3.0/24']
+    - id: 79
+      name: IEC
+      backup: ['100.64.194.0/24']
+    - id: 84
+      name: XSE
+      backup: ['100.64.166.0/23']
+    - id: 93
+      name: NEO
+      backup: ['100.64.66.0/25']
+    - id: 94
+      name: KNO
+      backup: ['100.64.200.0/23']
+    - id: 98
+      name: SIR
+      backup: ['100.64.169.0/24']
+    - id: 107
+      name: SNA
+      backup: ['100.64.141.0/24']
+    - id: 112
+      name: IDO
+      backup: ['100.64.77.0/24']
+    - id: 114
+      name: XY5
+      backup: ['100.64.34.0/24']
+    - id: 115
+      name: MEW
+      backup: ['100.64.204.0/23']
+    - id: 117
+      name: LAN
+      backup: ['100.64.49.0/24']
+    - id: 120
+      name: FWU
+      backup: ['100.64.95.0/24']
+    # - id: 130
+    #   name: XY2
+    #   backup: ['100.64.22.0/24']
+    - id: 132
       name: TRU
-      network:
-        - 10.42.42.0/21
-      backup:
-        - 100.104.12.0/24
-        - 100.104.91.0/24
+      backup: ['100.64.171.0/24']
+    - id: 135
+      name: SWH
+      backup: ['100.64.206.0/24']
+    - id: 145
+      name: KOC
+      backup: ['100.64.35.0/24']
+    - id: 151
+      name: PPG
+      backup: ['100.64.81.0/24']
+    - id: 167
+      name: SAP-BSS
+      backup: ['100.64.6.0/23']
+    - id: 168
+      name: AEL
+      backup: ['100.64.109.0/24']
+    - id: 169
+      name: GIC
+      backup: ['100.64.99.0/24']
+    - id: 171
+      name: UFS
+      backup: ['100.64.98.0/24']
+    - id: 172
+      name: GLB
+      backup: ['100.64.100.0/22']
+    - id: 184
+      name: ZDF
+      backup: ['100.64.223.0/24']
+    - id: 186
+      name: XY4
+      backup: ['100.64.23.0/24']
+    - id: 187
+      name: PUT
+      backup: ['100.64.163.0/24']
+    - id: 196
+      name: MIH
+      backup: ['100.64.56.0/22']
+    - id: 197
+      name: GFE
+      backup: ['100.64.133.0/24']
+    - id: 199
+      name: APG
+      backup: ['100.64.32.0/24']
+    - id: 209
+      name: NTT
+      backup: ['100.64.110.0/23']
+    - id: 219
+      name: IKI
+      backup: ['100.64.208.0/24']
+    - id: 234
+      name: GVS
+      backup: ['100.64.225.0/24']
+    - id: 236
+      name: POR
+      backup: ['100.64.212.0/22']
+    - id: 237
+      name: AHS
+      backup: ['100.64.221.0/24']
+    - id: 243
+      name: OMV
+      backup: ['100.64.220.0/24']
+    - id: 245
+      name: PRI
+      backup: ['100.64.128.0/22']
+    - id: 247
+      name: ERD
+      backup: ['100.64.134.0/24']
+    - id: 248
+      name: NAS
+      backup: ['100.64.135.0/24']
+    - id: 253
+      name: DEU
+      backup: ['100.64.2.0/24']
+    - id: 254
+      name: AVP
+      backup: ['100.64.50.0/24']
+    - id: 256
+      name: SWR
+      backup: ['100.64.52.0/24']
+    - id: 257
+      name: WAK
+      backup: ['100.64.61.0/24']
+    - id: 259
+      name: SCF
+      backup: ['100.64.156.0/24']
+    - id: 260
+      name: BBS
+      backup: ['100.64.157.0/24']
+    - id: 261
+      name: FGR
+      backup: ['100.64.159.0/24']
+    - id: 262
+      name: MGB
+      backup: ['100.64.158.0/24']
+    - id: 263
+      name: SOC
+      backup: ['100.64.226.0/24']
+    - id: 264
+      name: TMF
+      backup: ['100.64.224.0/24']
+    - id: 268
+      name: PUR
+      backup: ['100.64.74.0/23']
+    - id: 269
+      name: KAR
+      backup: ['100.64.73.0/24']
+    - id: 270
+      name: NOK
+      backup: ['100.64.76.0/24']
+    - id: 271
+      name: DYS
+      backup: ['100.64.80.0/24']
+    - id: 272
+      name: ENX
+      backup: ['100.64.83.0/24']
+    - id: 273
+      name: END
+      backup: ['100.64.84.0/24']
+    - id: 274
+      name: INO
+      backup: ['100.64.228.0/23']
+    - id: 277
+      name: EDF
+      backup: ['100.64.88.0/24']
+    - id: 278
+      name: WRL
+      backup: ['100.64.90.0/23']
+    - id: 280
+      name: JET
+      backup: ['100.64.92.0/24']
+    - id: 281
+      name: MCA
+      backup: ['100.64.112.0/22']
+    - id: 282
+      name: HRE
+      backup: ['100.64.106.0/24']
+    - id: 283
+      name: KOM
+      backup: ['100.64.107.0/24']
+    - id: 286
+      name: AMM
+      backup: ['100.64.168.0/24']
+    - id: 287
+      name: EPO
+      backup: ['100.64.246.0/24']
+    - id: 288
+      name: APA
+      backup: ['100.64.247.0/24']
+    - id: 289
+      name: BKF
+      backup: ['100.64.40.0/24']
+    - id: 291
+      name: CAV
+      backup: ['100.64.44.0/24']
+    - id: 293
+      name: AMK
+      backup: ['100.64.65.0/24']
+    - id: 295
+      name: COA
+      backup: ['100.64.152.0/24']
+    - id: 296
+      name: TGI
+      backup: ['100.64.154.0/24']
+    - id: 297
+      name: EDR
+      backup: ['100.64.155.0/24']
+    - id: 298
+      name: TMU
+      backup: ['100.64.172.0/24']
+    - id: 299
+      name: XY8
+      backup: ['100.64.175.0/24']
+    - id: 300
+      name: ABJ
+      backup: ['100.64.174.0/24']
+    - id: 301
+      name: CAZ
+      backup: ['100.64.145.0/24']
+    - id: 302
+      name: SYC
+      backup: ['100.64.144.0/24']
+    - id: 303
+      name: GBA
+      backup: ['100.64.146.0/24']
+    - id: 304
+      name: SOD
+      backup: ['100.64.147.0/24']
+    - id: 305
+      name: HMD
+      backup: ['100.64.148.0/23']
+    - id: 306
+      name: BWI
+      backup: ['100.64.197.0/26']
+    - id: 307
+      name: DIS
+      backup: ['100.64.69.0/24']
+    - id: 450
+      name: S4H
+      backup: ['100.64.8.0/22']
+    - id: 451
+      name: S4H
+      backup: ['100.64.12.0/22']
+    - id: 454
+      name: S4H
+      backup: ['100.64.24.0/21']
+    - id: 457
+      name: MD2
+      backup: ['100.64.164.0/23']
+    - id: 459
+      name: SFD
+      backup: ['100.64.54.0/23']
+    - id: 496
+      name: MDS
+      backup: ['100.64.78.0/23']

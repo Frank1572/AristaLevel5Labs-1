@@ -540,7 +540,7 @@ hec:
             remote_asn: 64536
           - ipv4: 198.19.224.1
             remote_asn: 64531
-      - number: "02"
+    - number: "02"
       ports:
         - id: 21
           type: vlan

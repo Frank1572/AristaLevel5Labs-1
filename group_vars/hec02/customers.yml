@@ -1,0 +1,181 @@
+---
+  customers:
+    - id: 7
+      name: AMO
+      backup:
+        - 100.104.12.0/24
+        - 100.104.91.0/24
+    - id: 9
+      name: TVI
+      backup: ['100.66.108.0/24']
+    - id: 11
+      name: STD
+      backup: ['100.66.57.0/24', '100.66.60.0/24', '100.66.61.0/24']
+    - id: 13
+      name: MEW
+      backup: ['100.66.42.0/23']
+    - id: 15
+      name: MCA
+      backup: ['100.66.24.0/22', '100.66.28.0/22', '100.66.32.0/24']
+    - id: 17
+      name: XY2
+      backup: ['100.66.4.0/24']
+    - id: 20
+      name: SIB
+      backup: ['100.66.13.0/24']
+    - id: 24
+      name: GID
+      backup: ['100.66.86.0/24']
+    - id: 25
+      name: THC
+      backup: ['100.66.14.0/24']
+    - id: 26
+      name: MDM
+      backup: ['100.66.93.0/24']
+    - id: 28
+      name: CSR
+      backup: ['100.66.105.0/24']
+    - id: 29
+      name: BNT
+      backup: ['100.66.109.0/24']
+    - id: 32
+      name: KAS
+      backup: ['100.66.111.0/24']
+    - id: 34
+      name: MVB
+      backup: ['100.66.112.0/24']
+    - id: 36
+      name: APG
+      backup: ['100.66.3.0/24']
+    - id: 37
+      name: WAK
+      backup: ['100.66.8.0/24']
+    - id: 38
+      name: PPG
+      backup: ['100.66.5.0/24', '100.66.80.0/24']
+    - id: 39
+      name: FOD
+      backup: ['100.66.84.0/23']
+    - id: 40
+      name: XY4
+      backup: ['100.66.9.0/24']
+    - id: 41
+      name: VEN
+      backup: ['100.66.12.0/24']
+    - id: 43
+      name: ASB
+      backup: ['100.66.90.0/24']
+    - id: 44
+      name: XY5
+      backup: ['100.66.15.0/24']
+    - id: 45
+      name: IDO
+      backup: ['100.66.40.0/24']
+    - id: 46
+      name: NTT
+      backup: ['100.66.34.0/23']
+    - id: 47
+      name: JBO
+      backup: ['100.66.36.0/23']
+    - id: 48
+      name: IKE
+      backup: ['100.66.38.0/24', '100.66.33.0/24']
+    - id: 49
+      name: SCL
+      backup: ['100.66.39.0/24']
+    - id: 50
+      name: GVS
+      backup: ['100.66.53.0/24']
+    - id: 51
+      name: WRL
+      backup: ['100.66.48.0/23']
+    - id: 55
+      name: NOK
+      backup: ['100.66.54.0/24']
+    - id: 58
+      name: BBC
+      backup: ['100.66.58.0/24']
+    - id: 59
+      name: SBB
+      backup: []
+    - id: 60
+      name: GAV
+      backup: ['100.66.104.0/24']
+    - id: 61
+      name: AMM
+      backup: ['100.66.63.0/24']
+    - id: 62
+      name: CIM
+      backup: ['100.66.66.0/24', '100.66.82.0/24']
+    - id: 63
+      name: JDW
+      backup: ['100.66.68.0/24', '100.66.70.0/24']
+    - id: 64
+      name: AVL
+      backup: ['100.66.67.0/24']
+    - id: 65
+      name: HAI
+      backup: ['100.66.106.0/24']
+    - id: 66
+      name: NOB
+      backup: []
+    - id: 67
+      name: ARL
+      backup: ['100.66.73.0/24']
+    - id: 68
+      name: KOF
+      backup: ['100.66.74.0/24', '100.66.94.0/24', '100.66.96.0/22', '100.66.100.0/23']
+    - id: 69
+      name: INO
+      backup: ['100.66.76.0/23']
+    - id: 70
+      name: CHV
+      backup: ['100.66.75.0/24']
+    - id: 71
+      name: TUS
+      backup: ['100.66.78.0/24']
+    - id: 72
+      name: ADP
+      backup: ['100.66.79.0/24']
+    - id: 74
+      name: VEL
+      backup: ['100.66.81.0/24']
+    - id: 75
+      name: AVL-2
+      backup: ['100.66.69.0/24']
+    - id: 76
+      name: ETL
+      backup: ['100.66.83.0/24']
+    - id: 77
+      name: LPR
+      backup: ['100.66.87.0/24']
+    - id: 78
+      name: BLG
+      backup: ['100.66.59.0/24']
+    - id: 79
+      name: VKF
+      backup: ['100.66.88.0/23']
+    - id: 80
+      name: ALV
+      backup: ['100.66.50.0/24']
+    - id: 82
+      name: SUS
+      backup: ['100.66.91.0/24']
+    - id: 83
+      name: XY8
+      backup: ['100.66.92.0/24']
+    - id: 84
+      name: IFU
+      backup: ['100.66.62.0/24']
+    - id: 85
+      name: SHC
+      backup: ['100.66.95.0/24']
+    - id: 86
+      name: XS3
+      backup: ['100.66.102.0/23']
+    - id: 87
+      name: PRC
+      backup: ['100.66.107.0/24']
+    - id: 454
+      name: SFH
+      backup: ['100.66.16.0/21']

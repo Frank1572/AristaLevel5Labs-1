@@ -1,0 +1,32 @@
+{# 7150S-64-CL #}
+{% import "templates/libs.j2" as funcs with context %}
+interface Ethernet 1-18,25-42
+   speed forced 10000full
+   switchport trunk native vlan 40
+   switchport trunk allowed vlan 5,40
+   switchport mode trunk
+   ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
+   spanning-tree portfast
+!
+!
+interface Ethernet19,20,21,22,23,24,43,44,45,46,47
+   shutdown
+!
+! === MLAG Peer Link: ===
+interface Ethernet49/1,50/1
+   speed forced 40gfull
+   mtu {{hec.fabric.interlink_mtu}}
+   channel-group 42 mode active
+!
+{{ funcs.leaf_uplinks("7150S-64-CL", type="tor", speed="40gfull") }}
+!
+{% for i in range(1,19) %}
+interface Ethernet{{i}},{{i+24}}
+   channel-group {{i+100}} mode active
+!
+{% endfor %}
+interface Ethernet48
+   description ->sw-hec{{ hec.hec_nr }}-ipmi-xx
+   switchport mode trunk
+!
+no int port-channel 900

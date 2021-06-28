@@ -25,7 +25,7 @@ cva:
   dns2: 100.127.213.2 # HEC90-CIS01-DNS01 - dns01-lab2
   domain: hec.oob.net.sap
   password: arista
-
+# test
 oob01:
   dhcp:
     prefix: 10.177.240.0 #HEC90

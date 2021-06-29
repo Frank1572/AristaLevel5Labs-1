@@ -4,7 +4,7 @@
 interface Port-Channel{{ 100 + i }}
    mlag {{ 100 + i }}
    switchport trunk native vlan 40
-   switchport trunk allowed vlan 5,40
+   switchport trunk allowed vlan 40
    switchport mode trunk
    ip access-group HEC{{ hec.hec_nr }}-L2-HANA in
    port-channel lacp fallback static

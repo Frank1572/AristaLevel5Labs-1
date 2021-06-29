@@ -140,6 +140,11 @@ hec:
       servers:
         - ipv4: 169.145.82.65
         - ipv4: 169.145.84.91
+    oob:
+      servers:
+        - ipv4: 169.145.82.65
+        - ipv4: 169.145.84.91
+        - ipv4: 169.145.85.69
   tacacs:
     nat:
       servers:

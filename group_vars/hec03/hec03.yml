@@ -845,6 +845,18 @@ hec:
       uplinks:
         - Ethernet49
         - Ethernet50
+    - number: "06"
+      ports:
+        - id: 21
+          type: vlan
+          description: OOB Access Vlan
+          ip: 10.9.240.49/23
+      snmp:
+        contact: notInSISM:ncons-hec03-oob-10.net:1003
+        location: US-STL2-Cage2-DB24-RU44
+      uplinks:
+        - Ethernet49
+        - Ethernet50
     - number: "07"
       ports:
         - id: 21

@@ -50,6 +50,10 @@ load-interval default 5
 !
 ip access-list standard ACL_SNMP_VTY
 {% for i in ACL_SNMP_VTY %}
+{% if i is search('.*/32$') %}
+{# EOS converts /32 entries to "host $IP", so we will do that here instead of every device doing it. #}
+{% set i = "host " + i.split('/')[0] %}
+{% endif %}
  {{ loop.index * 10 }} permit {{ i }}
  {% if loop.last %}
  {{ loop.index * 10 + 10 }} deny any

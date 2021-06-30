@@ -552,16 +552,24 @@ hec:
           description: fw-hec03-01-new
           access_vlan: 21
           speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec03-01, E1
           access_vlan: 21
           speed: 1000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
         - id: 47
           description: sw-hec03-oob-01b-mlag-peer
+          speed: 10000full
           po: 42
           trunk: all
         - id: 48
           description: sw-hec03-oob-01b-mlag-peer
+          speed: 10000full
           po: 42
           trunk: all
         - id: 21
@@ -718,17 +726,25 @@ hec:
           description: fw-hec03-02-new
           access_vlan: 21
           speed: 1000full
+        - id: 43
+          speed: 1000full
         - id: 44
           description: naa-hec03-01, E2
           access_vlan: 21
           speed: 1000full
+        - id: 45
+          speed: 10000full
+        - id: 46
+          speed: 10000full
         - id: 47
           description: sw-hec03-oob-01a-mlag-peer
           po: 42
+          speed: 10000full
           trunk: all
         - id: 48
           description: sw-hec03-oob-01a-mlag-peer
           po: 42
+          speed: 10000full
           trunk: all
         - id: 21
           type: vlan

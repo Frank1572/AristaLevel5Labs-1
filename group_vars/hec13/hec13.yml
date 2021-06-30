@@ -703,18 +703,6 @@ hec:
       uplinks:
         - Ethernet49
         - Ethernet50
-    - number: "07"
-      ports:
-        - id: 21
-          type: vlan
-          description: OOB Access Vlan
-          ip: 10.9.244.50/23
-      snmp:
-        contact: 635968:ncons-hec13-oob-02.hec.oob.net.sap:1012
-        location: Toronto 1 (TR3)-Cage2- Rack 3.1-12 RU41
-      uplinks:
-        - Ethernet49
-        - Ethernet50
   routes:
     static:
       brdr01:

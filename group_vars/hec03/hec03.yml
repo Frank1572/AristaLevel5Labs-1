@@ -856,7 +856,7 @@ hec:
           description: OOB Access Vlan
           ip: 10.9.240.42/23
       snmp:
-        contact: 34414790:ncons-hec03-oob-xx.net.sap.corp:100x
+        contact: 34414790:ncons-hec03-oob-03.net.sap.corp:1001
         location: US-STL1-CAGE4-GK17-RU44
       uplinks:
         - Ethernet49

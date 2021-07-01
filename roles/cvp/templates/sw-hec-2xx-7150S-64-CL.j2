@@ -1,7 +1,6 @@
 {# 7150S-64-CL #}
 {% import "templates/libs.j2" as funcs with context %}
 interface Ethernet 1-18,25-42
-   speed forced 10000full
    switchport trunk native vlan 40
    switchport trunk allowed vlan 40
    switchport mode trunk

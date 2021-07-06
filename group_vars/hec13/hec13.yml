@@ -1015,10 +1015,10 @@ hec:
           trunk: all
           mtu: 9214
         - id: 10
-          description: fw-hec13-01-NEW 
+          description: fw-hec13-01-NEW
           trunk: all
         - id: 20
-          description: fw-hec13-02-NEW 
+          description: fw-hec13-02-NEW
           trunk: all
         - id: 48
           description: naa-hec13-01, in-band
@@ -1100,10 +1100,10 @@ hec:
           trunk: all
           mtu: 9214
         - id: 10
-          description: fw-hec13-01-NEW 
+          description: fw-hec13-01-NEW
           trunk: all
         - id: 20
-          description: fw-hec13-02-NEW 
+          description: fw-hec13-02-NEW
           trunk: all
         - id: 48
           description: naa-hec13-01, in-band

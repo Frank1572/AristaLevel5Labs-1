@@ -51,7 +51,7 @@ router bgp $BGP_AS
    !
 {% if  hec.fabric.vtep_distribution_mode == "evpn" %}
    vlan-aware-bundle service-vlans
-      rd $LOOPBACK1_IP:1
+      rd $LOOPBACK2_IP:1
       route-target both 1:1
       redistribute learned
       vlan 5-2999
